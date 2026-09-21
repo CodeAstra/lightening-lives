@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lightening Lives — Extraction-Free Genetic Screening</title>
+<meta name="description" content="Lightening Lives is a molecular diagnostics organisation making rapid, affordable, extraction-free genetic screening kits for laboratories and public-health programmes.">
+<meta name="design-rationale" content="Radical restraint: one typeface, one accent, no decoration; the content carries everything through spacing and rhythm.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #141a1e;
+    --muted: #5b6670;
+    --green: #1e6b4e;
+    --paper: #ffffff;
+    --hair: #e8ebe9;
+    --f: "Inter", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { background: var(--paper); color: var(--ink); font: 400 17px/1.7 var(--f); -webkit-font-smoothing: antialiased; }
+  .col { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--green); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--green); outline-offset: 3px;
+  }
+  .skip { position: absolute; left: -9999px; top: 0; background: var(--green); color: #fff; padding: 10px 16px; z-index: 99; font-weight: 600; }
+  .skip:focus { left: 0; }
+  .dot { color: var(--green); }
+
+  header.site { padding: 40px 0 0; }
+  header.site .col { display: flex; align-items: baseline; gap: 24px; flex-wrap: wrap; }
+  .mark { font-weight: 600; font-size: 17px; color: var(--ink); }
+  .mark:hover { text-decoration: none; }
+  nav.primary { margin-left: auto; display: flex; gap: 20px; }
+  nav.primary a { color: var(--muted); font-size: 15px; }
+  nav.primary a:hover { color: var(--green); }
+
+  main { padding-bottom: 32px; }
+  section { padding-top: 104px; }
+  .label { font: 600 13px/1.5 var(--f); letter-spacing: .06em; text-transform: uppercase; color: var(--green); margin-bottom: 20px; }
+
+  /* hero */
+  .hero { padding-top: 112px; }
+  h1 { font: 600 clamp(34px, 5.5vw, 52px)/1.14 var(--f); letter-spacing: -.028em; max-width: 16ch; }
+  .hero-sub { margin-top: 26px; font-size: 19px; color: var(--muted); max-width: 32em; }
+  .cta-row { margin-top: 34px; display: flex; gap: 22px; align-items: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; background: var(--green); color: #fff; font: 500 15.5px/1 var(--f);
+    padding: 15px 24px; border: 0; cursor: pointer;
+  }
+  .btn:hover { background: #17573f; text-decoration: none; }
+  .alt { font-weight: 500; }
+  .tagline { margin-top: 40px; font: 600 19px/1.4 var(--f); letter-spacing: -.01em; }
+
+  h2 { font: 600 clamp(22px, 3vw, 28px)/1.3 var(--f); letter-spacing: -.02em; margin-bottom: 24px; }
+  p.body-max { max-width: 62ch; }
+  .lede { font-size: 19px; line-height: 1.65; }
+  .lede em { font-style: normal; color: var(--green); }
+
+  /* why */
+  .why-list { list-style: none; margin: 0; padding: 0; }
+  .why-list li { padding: 17px 0; border-top: 1px solid var(--hair); }
+  .why-list li:first-child { border-top: 0; padding-top: 0; }
+  .why-list h3 { font: 600 17px/1.5 var(--f); display: inline; letter-spacing: -.01em; }
+  .why-list h3::after { content: " · "; color: var(--green); font-weight: 600; }
+  .why-list p { display: inline; color: var(--muted); font-size: 16px; }
+
+  /* products */
+  .prod-list { list-style: none; margin: 0; padding: 0; }
+  .prod-list li { padding: 19px 0; border-top: 1px solid var(--hair); }
+  .prod-list li:first-child { border-top: 0; padding-top: 0; }
+  .prod-list h3 { font: 600 18px/1.4 var(--f); letter-spacing: -.01em; }
+  .prod-list h3 a { color: var(--ink); }
+  .prod-list h3 a:hover { color: var(--green); text-decoration: none; }
+  .prod-list h3 .cert { font: 500 13px/1 var(--f); color: var(--green); margin-left: 10px; letter-spacing: 0; }
+  .prod-list p { color: var(--muted); font-size: 15.5px; margin-top: 3px; max-width: 58ch; }
+  .after-note { margin-top: 26px; color: var(--muted); font-size: 14.5px; }
+
+  /* how */
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  .steps li { padding: 15px 0 15px 44px; position: relative; counter-increment: s; }
+  .steps li::before {
+    content: counter(s); position: absolute; left: 0; top: 17px;
+    font: 600 14px/1 var(--f); color: var(--green);
+    width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--green); border-radius: 50%;
+  }
+  .steps h3 { font: 600 17px/1.5 var(--f); display: inline; letter-spacing: -.01em; }
+  .steps h3::after { content: " — "; color: var(--muted); font-weight: 400; }
+  .steps p { display: inline; color: var(--muted); font-size: 16px; }
+
+  /* numbers */
+  .nums { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 32px; }
+  .num .v { font: 600 clamp(34px, 5vw, 46px)/1.1 var(--f); letter-spacing: -.03em; }
+  .num.ok .v { color: var(--green); }
+  .num.pending .v { color: var(--muted); }
+  .num .k { color: var(--muted); font-size: 15px; margin-top: 6px; max-width: 26ch; }
+  .num .note { display: block; font-size: 13px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* collaborations */
+  .coll { color: var(--muted); font-size: 16.5px; line-height: 2; max-width: 60ch; }
+  .coll b { color: var(--ink); font-weight: 600; }
+  .coll .dot { padding: 0 6px; }
+
+  /* audiences */
+  .aud-block + .aud-block { margin-top: 40px; }
+  .aud-block h3 { font: 600 18px/1.4 var(--f); letter-spacing: -.01em; }
+  .aud-block p { color: var(--muted); margin-top: 8px; max-width: 58ch; }
+  .aud-block a { font-weight: 500; }
+
+  /* team */
+  .team p { margin-top: 0; }
+  .team-line { padding: 13px 0; border-top: 1px solid var(--hair); }
+  .team-line:first-of-type { border-top: 0; padding-top: 0; }
+  .team-line b { font-weight: 600; }
+  .team-line span { color: var(--muted); }
+
+  /* updates */
+  .upd-list { list-style: none; margin: 0; padding: 0; }
+  .upd-list li { padding: 15px 0; border-top: 1px solid var(--hair); }
+  .upd-list li:first-child { border-top: 0; padding-top: 0; }
+  .upd-list time { display: block; font-size: 13.5px; color: var(--muted); }
+  .upd-list a { font-weight: 500; color: var(--ink); font-size: 17px; }
+  .upd-list a:hover { color: var(--green); text-decoration: none; }
+
+  /* contact */
+  .contact dl { margin: 0 0 40px; }
+  .contact dt { font: 600 13px/1.5 var(--f); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 20px; }
+  .contact dt:first-child { margin-top: 0; }
+  .contact dd { margin: 3px 0 0; }
+  form { max-width: 480px; }
+  .fld { margin-bottom: 20px; }
+  label { display: block; font: 500 14.5px/1.6 var(--f); margin-bottom: 5px; }
+  input, select, textarea {
+    width: 100%; font: 400 16px/1.5 var(--f); color: var(--ink);
+    padding: 10px 0; border: 0; border-bottom: 1px solid var(--ink); background: transparent; border-radius: 0;
+  }
+  textarea { min-height: 88px; resize: vertical; }
+  .form-note { font-size: 13.5px; color: var(--muted); margin-top: 14px; }
+
+  footer { padding: 104px 0 56px; }
+  footer .col > p { color: var(--muted); font-size: 15px; max-width: 52ch; }
+  footer nav { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 22px; }
+  footer nav a { color: var(--muted); font-size: 14.5px; }
+  footer nav a:hover { color: var(--green); }
+  .fin { margin-top: 40px; font: 600 15px/1.5 var(--f); }
+
+  @media (max-width: 560px) {
+    section { padding-top: 84px; }
+    .hero { padding-top: 88px; }
+    .nums { grid-template-columns: 1fr; gap: 32px; }
+    nav.primary { display: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#products">Skip to products</a>
+
+<header class="site">
+  <div class="col">
+    <a class="mark" href="#top">Lightening Lives<span class="dot">.</span></a>
+    <nav class="primary" aria-label="Primary">
+      <a href="#products">Products</a>
+      <a href="#how">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-labelledby="hero-h" style="padding-top:112px">
+    <div class="col">
+      <p class="label">Molecular diagnostics · Hyderabad, India</p>
+      <h1 id="hero-h">Extraction-free genetic screening<span class="dot">.</span></h1>
+      <p class="hero-sub">One drop of blood on a card. Results in under 24 hours. Built for laboratories and public-health programmes at scale.</p>
+      <div class="cta-row">
+        <a class="btn" href="#contact">Request a kit</a>
+        <a class="alt" href="#contact">Talk to us</a>
+      </div>
+      <p class="tagline">One drop<span class="dot">.</span> One day<span class="dot">.</span></p>
+    </div>
+  </section>
+
+  <section id="about" aria-labelledby="about-h">
+    <div class="col">
+      <p class="label" id="about-h">Who we are</p>
+      <p class="lede body-max">Lightening Lives is a research-oriented and innovation-driven molecular diagnostics organisation, focused on <em>rapid, affordable, scalable, extraction-free, highly accurate</em> diagnostic solutions for various genetic disorders that reach even the most underserved communities.</p>
+    </div>
+  </section>
+
+  <section id="why" aria-labelledby="why-h">
+    <div class="col">
+      <p class="label">Why Lightening Lives</p>
+      <h2 id="why-h">Eight plain facts</h2>
+      <ul class="why-list">
+        <li><h3>One-drop blood-based test</h3><p>A dried blood spot on a card. Anyone can collect it, as with a routine blood-sugar test.</p></li>
+        <li><h3>Extraction-free genetic testing</h3><p>The assay runs directly from the card. No DNA extraction step, no extraction equipment.</p></li>
+        <li><h3>Rapid turnaround</h3><p>Reports in under 24 hours of the sample reaching the laboratory.</p></li>
+        <li><h3>Affordable and accessible</h3><p>Priced for screening at population scale. Contact us for a quote.</p></li>
+        <li><h3>Minimal laboratory infrastructure</h3><p>Runs in a basic molecular laboratory — no extraction line required.</p></li>
+        <li><h3>High-throughput screening</h3><p>Current capacity: 1,000 samples in under 24 hours.</p></li>
+        <li><h3>Automation-friendly workflow</h3><p>The card-based format slots into automated, batch-based workflows.</p></li>
+        <li><h3>Built for public-health programmes</h3><p>Designed for large-scale screening across districts and states.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="products" aria-labelledby="products-h">
+    <div class="col">
+      <p class="label">Products</p>
+      <h2 id="products-h">Seven kits</h2>
+      <ul class="prod-list">
+        <li>
+          <h3><a href="#contact">Sickle Cell Anaemia</a><span class="cert">ICMR certified</span></h3>
+          <p>Screening and diagnosis from a single dried blood spot. Developed and commercialised under an MOU with CCMB.</p>
+        </li>
+        <li>
+          <h3><a href="#contact">Thalassaemia</a></h3>
+          <p>Carrier and patient screening for alpha and beta thalassaemia.</p>
+        </li>
+        <li>
+          <h3><a href="#contact">Spinal Muscular Atrophy</a></h3>
+          <p>Screening for SMA in symptomatic children and at-risk couples.</p>
+        </li>
+        <li>
+          <h3><a href="#contact">Duchenne Muscular Dystrophy</a></h3>
+          <p>Screening for DMD, including maternal carrier testing.</p>
+        </li>
+        <li>
+          <h3><a href="#contact">Haemophilia</a></h3>
+          <p>Screening for haemophilia and related coagulation disorders.</p>
+        </li>
+        <li>
+          <h3><a href="#contact">Pharmacogenomics</a></h3>
+          <p>Metaboliser status to inform treatment and dosing decisions.</p>
+        </li>
+        <li>
+          <h3><a href="#contact">Custom Panels</a></h3>
+          <p>Custom screening panels for programmes and research collaborations.</p>
+        </li>
+      </ul>
+      <p class="after-note">Kits are supplied to laboratories, hospitals and screening programmes — not to individuals.</p>
+    </div>
+  </section>
+
+  <section id="how" aria-labelledby="how-h">
+    <div class="col">
+      <p class="label">How it works</p>
+      <h2 id="how-h">Four steps</h2>
+      <ol class="steps">
+        <li><h3>Collect one drop</h3><p>a finger-prick drop of blood, collected by any trained worker — no phlebotomist required.</p></li>
+        <li><h3>Dry on the card</h3><p>the spot dries on the card and travels by ordinary post — no cold chain.</p></li>
+        <li><h3>Run the assay</h3><p>the extraction-free assay runs directly from the card in a basic molecular laboratory.</p></li>
+        <li><h3>Result in under 24 hours</h3><p>a clinical report is returned within 24 hours of the sample reaching the laboratory.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="numbers" aria-labelledby="numbers-h">
+    <div class="col">
+      <p class="label">Numbers</p>
+      <h2 id="numbers-h">What the capacity looks like</h2>
+      <div class="nums">
+        <div class="num ok">
+          <p class="v">1,000</p>
+          <p class="k">samples screened in under 24 hours — current capacity</p>
+        </div>
+        <div class="num ok">
+          <p class="v">7</p>
+          <p class="k">screening kits in the product range</p>
+        </div>
+        <div class="num pending">
+          <p class="v">[TBC]</p>
+          <p class="k">samples processed to date</p>
+          <span class="note">awaiting client confirmation</span>
+        </div>
+        <div class="num pending">
+          <p class="v">[TBC]</p>
+          <p class="k">districts &amp; programmes served</p>
+          <span class="note">awaiting client confirmation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="collaborations" aria-labelledby="collab-h">
+    <div class="col">
+      <p class="label">Collaborations</p>
+      <h2 id="collab-h">In whose company</h2>
+      <p class="coll">
+        <b>CSIR–CCMB</b><span class="dot">·</span><b>ICMR</b><span class="dot">·</span>Atal Incubation Centre<span class="dot">·</span>Nucleome Genomics<span class="dot">·</span>Tata Trusts<span class="dot">·</span>Tata Steel Foundation<span class="dot">·</span>Manasthya Foundation<span class="dot">·</span>Thalassemia &amp; Sickle Cell Society<span class="dot">·</span>Cure SMA India<span class="dot">·</span>Sickle Cell Saksham Rajasthan Foundation<span class="dot">·</span>IAMD<span class="dot">·</span>Blood Warriors<span class="dot">·</span>IDO<span class="dot">·</span>NASCO
+      </p>
+      <p class="after-note">The sickle cell assay is developed and commercialised under an MOU with CCMB, and is ICMR certified. Organisation names shown as text; approved logos to be placed.</p>
+    </div>
+  </section>
+
+  <section id="audiences" aria-labelledby="aud-h">
+    <div class="col">
+      <p class="label">Who we work with</p>
+      <h2 id="aud-h">Two audiences</h2>
+      <div class="aud-block">
+        <h3>Laboratories &amp; hospitals</h3>
+        <p>Adopt the assay with minimal new infrastructure, integrate the card-based workflow into existing operations, and scale throughput without an extraction bottleneck. <a href="#contact">For laboratories →</a></p>
+      </div>
+      <div class="aud-block">
+        <h3>Public-health programmes</h3>
+        <p>District- and state-scale screening with field collection by non-specialist workers, and programme support for NGOs and CSR initiatives. <a href="#contact">For programmes →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="team" aria-labelledby="team-h">
+    <div class="col team">
+      <p class="label">Team &amp; advisors</p>
+      <h2 id="team-h">The people</h2>
+      <p class="team-line"><b>Dr. Giriraj Ratan Chandak</b> — Founder<br><span>Physician-scientist. Former Chief Scientist, CSIR–CCMB; former Director, CDFD.</span></p>
+      <p class="team-line"><b>Mrs. Nidhi Chandak</b> — Co-Founder<br><span>Leads statistical data management and operations.</span></p>
+      <p class="team-line"><b>Dr. D. Nageshwar Reddy</b> — Patron<br><span>Founder, AIG Hospitals.</span></p>
+      <p class="team-line"><b>Prof. Kalyanaraman Kumaran</b> · <b>Prof. G.V. Krishnaveni</b> — Advisory board</p>
+      <p class="after-note">Plus a six-person team across science, diagnostics, finance and operations. <a href="#contact">Meet the team →</a></p>
+    </div>
+  </section>
+
+  <section id="updates" aria-labelledby="upd-h">
+    <div class="col">
+      <p class="label">Latest updates</p>
+      <h2 id="upd-h">Recently</h2>
+      <ul class="upd-list">
+        <li><time datetime="2026-09">September 2026</time><a href="#contact">Field screening programme — Nandurbar district, Maharashtra</a></li>
+        <li><time datetime="2026-08">August 2026</time><a href="#contact">Screening programme photographs — Kothagudem, Telangana</a></li>
+        <li><time datetime="2026-07">July 2026</time><a href="#contact">Programme photographs — Jharkhand</a></li>
+      </ul>
+      <p class="after-note">Update titles and dates are placeholders for review; final items come from the news feed.</p>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-h" class="contact">
+    <div class="col">
+      <p class="label">Contact</p>
+      <h2 id="contact-h">Request a kit, or talk to us about a programme</h2>
+      <dl>
+        <dt>Email</dt>
+        <dd><a href="mailto:admin@lighteninglives.in">admin@lighteninglives.in</a></dd>
+        <dt>Phone</dt>
+        <dd><a href="tel:+919182588191">+91 91825 88191</a></dd>
+        <dt>Laboratory &amp; corporate office</dt>
+        <dd>Flat No. 201, 2nd Floor, S B Hare Krishna Towers, H.No. 4-7-195/2/55, HMT Nagar, Nacharam, Hyderabad, Telangana – 500076</dd>
+        <dt>Registered office</dt>
+        <dd>D-306, Sy. No. 117, Indu Aranya Pallavi GSI (SR), Bandlaguda, Hayathnagar, Hyderabad – 500068, Telangana</dd>
+      </dl>
+      <form action="#" method="post" aria-label="Enquiry form">
+        <div class="fld">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name">
+        </div>
+        <div class="fld">
+          <label for="f-org">Organisation</label>
+          <input id="f-org" name="organisation" type="text" autocomplete="organization">
+        </div>
+        <div class="fld">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email">
+        </div>
+        <div class="fld">
+          <label for="f-topic">I am enquiring about</label>
+          <select id="f-topic" name="topic">
+            <option>Requesting a kit</option>
+            <option>Partnership or collaboration</option>
+            <option>Awareness or counselling programmes</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label for="f-msg">Message</label>
+          <textarea id="f-msg" name="message"></textarea>
+        </div>
+        <button class="btn" type="submit">Send enquiry</button>
+        <p class="form-note">Placeholder for the embedded enquiry form. The details above are live contact routes.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="col">
+    <p>Lightening Lives LLP is a molecular diagnostics company in Hyderabad, India. Kits are supplied to laboratories, hospitals and screening programmes — not to individuals. If you are looking for a test for yourself or your family, please speak to your clinician or laboratory.</p>
+    <nav aria-label="Footer">
+      <a href="#products">Products</a>
+      <a href="#how">How it works</a>
+      <a href="#collaborations">Collaborations</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <p class="fin">© 2026 Lightening Lives LLP — One drop<span class="dot">.</span> One day<span class="dot">.</span></p>
+  </div>
+</footer>
+</body>
+</html>
