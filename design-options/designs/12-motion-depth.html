@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lightening Lives — Extraction-Free Genetic Screening</title>
+<meta name="description" content="Lightening Lives is a molecular diagnostics organisation making rapid, affordable, extraction-free genetic screening kits for laboratories and public-health programmes.">
+<meta name="design-rationale" content="Layered light surfaces, soft shadows and gentle lift on scroll; a modern SaaS feel that stays bright and clinical.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #141a1e;
+    --muted: #5b6670;
+    --green: #1e6b4e;
+    --green-dark: #17573f;
+    --amber: #e8b04b;
+    --paper: #ffffff;
+    --layer: #f7f9f8;
+    --layer2: #eef2f0;
+    --line: #e5e9e7;
+    --shadow-lg: 0 24px 60px rgba(20, 26, 30, .10);
+    --shadow-md: 0 12px 32px rgba(20, 26, 30, .08);
+    --f: "Instrument Sans", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { background: var(--paper); color: var(--ink); font: 400 16px/1.62 var(--f); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 3px solid var(--green); outline-offset: 2px; border-radius: 8px;
+  }
+  .skip { position: absolute; left: -9999px; top: 0; background: var(--green); color: #fff; padding: 10px 16px; z-index: 99; font-weight: 700; text-decoration: none; }
+  .skip:focus { left: 0; }
+
+  /* nav */
+  header.site { position: sticky; top: 0; z-index: 50; background: rgba(255, 255, 255, .82); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(20, 26, 30, .06); }
+  header.site .wrap { display: flex; align-items: center; gap: 22px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+  .mark { display: flex; align-items: center; gap: 10px; font: 700 17px/1 var(--f); letter-spacing: -.02em; color: var(--ink); text-decoration: none; }
+  nav.primary { margin-left: auto; display: flex; gap: 4px; }
+  nav.primary a { font: 500 14px/1 var(--f); color: var(--muted); text-decoration: none; padding: 9px 13px; border-radius: 10px; }
+  nav.primary a:hover { color: var(--ink); background: var(--layer); }
+  .btn {
+    display: inline-block; background: var(--green); color: #fff; text-decoration: none;
+    font: 600 15px/1 var(--f); padding: 13px 22px; border-radius: 12px; border: 0; cursor: pointer;
+    box-shadow: 0 8px 20px rgba(30, 107, 78, .28); transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(30, 107, 78, .34); background: var(--green-dark); }
+  .btn.soft { background: var(--layer); color: var(--ink); box-shadow: none; }
+  .btn.soft:hover { background: var(--layer2); box-shadow: none; }
+
+  /* ambient orbs */
+  .orb { position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; }
+
+  /* hero */
+  .hero { position: relative; padding: 88px 0 110px; overflow: visible; }
+  .hero .orb.g { width: 480px; height: 480px; background: rgba(30, 107, 78, .12); top: -140px; right: -120px; }
+  .hero .orb.a { width: 360px; height: 360px; background: rgba(232, 176, 75, .16); bottom: -120px; left: -100px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: center; position: relative; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--layer); border-radius: 999px;
+    font: 600 13px/1 var(--f); color: var(--green); padding: 9px 15px;
+  }
+  .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); }
+  h1 { font: 700 clamp(38px, 5.4vw, 62px)/1.05 var(--f); letter-spacing: -.035em; margin-top: 24px; }
+  h1 .grad { background: linear-gradient(100deg, var(--green) 20%, #3a9b74 60%, var(--amber) 130%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero-sub { margin-top: 20px; font-size: 18px; color: var(--muted); max-width: 30em; }
+  .cta-row { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .tagline { margin-top: 30px; font: 600 15px/1 var(--f); color: var(--muted); letter-spacing: -.01em; }
+  .tagline b { color: var(--green); }
+
+  /* layered stack */
+  .stack { position: relative; min-height: 420px; }
+  .layercard { position: absolute; background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow-lg); will-change: transform; }
+  .lc-report { top: 0; right: 0; width: min(320px, 82%); padding: 22px; z-index: 3; }
+  .lc-report .rh { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .lc-report .rh b { font-size: 15px; letter-spacing: -.01em; }
+  .lc-chipok { background: #e7f2ec; color: var(--green); font: 700 11px/1 var(--f); padding: 6px 10px; border-radius: 999px; }
+  .lc-report .row { display: flex; justify-content: space-between; font-size: 13.5px; color: var(--muted); padding: 9px 0; border-bottom: 1px solid var(--layer2); }
+  .lc-report .row:last-child { border-bottom: 0; }
+  .lc-report .row b { color: var(--ink); font-weight: 600; }
+  .lc-card { bottom: 28px; left: 0; width: min(280px, 74%); padding: 18px; z-index: 2; }
+  .lc-card svg { display: block; width: 100%; height: auto; border-radius: 10px; }
+  .lc-card p { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+  .lc-stat { top: 200px; right: 40px; padding: 16px 20px; z-index: 4; display: flex; align-items: center; gap: 12px; }
+  .lc-stat .v { font: 700 26px/1 var(--f); letter-spacing: -.03em; color: var(--green); }
+  .lc-stat .k { font-size: 12px; color: var(--muted); max-width: 14ch; }
+
+  /* sections */
+  section { padding: 84px 0; position: relative; }
+  .kicker { font: 600 13px/1 var(--f); letter-spacing: .1em; text-transform: uppercase; color: var(--green); }
+  h2.title { font: 700 clamp(26px, 3.4vw, 38px)/1.15 var(--f); letter-spacing: -.03em; margin-top: 12px; }
+  .sec-sub { color: var(--muted); margin-top: 12px; max-width: 44em; }
+  .on-layer { background: linear-gradient(180deg, var(--paper) 0%, var(--layer) 18%, var(--layer) 82%, var(--paper) 100%); }
+
+  /* bento why */
+  .bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+  .cell {
+    background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px 22px;
+    transition: transform .22s ease, box-shadow .22s ease;
+  }
+  .cell:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .cell.wide { grid-column: span 2; }
+  .cell .ic { width: 38px; height: 38px; border-radius: 11px; background: var(--layer); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+  .cell h3 { font: 600 16.5px/1.3 var(--f); letter-spacing: -.02em; }
+  .cell p { font-size: 14px; color: var(--muted); margin-top: 7px; }
+  .cell.hero-cell { background: linear-gradient(135deg, var(--green) 0%, #2a8663 100%); color: #fff; border: 0; }
+  .cell.hero-cell h3 { color: #fff; font-size: 20px; }
+  .cell.hero-cell p { color: #d3e6dc; font-size: 14.5px; }
+  .cell.hero-cell .big { font: 700 40px/1 var(--f); letter-spacing: -.03em; color: #fff; margin-bottom: 8px; }
+  .cell.hero-cell .big small { font-size: 16px; color: var(--amber); font-weight: 600; }
+
+  /* products */
+  .prod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+  .prod {
+    background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 26px 24px;
+    text-decoration: none; color: var(--ink); display: flex; flex-direction: column; gap: 10px;
+    transition: transform .22s ease, box-shadow .22s ease;
+  }
+  .prod:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+  .prod .glyph { width: 42px; height: 42px; border-radius: 12px; background: var(--layer); display: flex; align-items: center; justify-content: center; }
+  .prod h3 { font: 600 18px/1.3 var(--f); letter-spacing: -.02em; }
+  .prod p { font-size: 14px; color: var(--muted); flex: 1; }
+  .prod .go { font: 600 14px/1 var(--f); color: var(--green); }
+  .badge { display: inline-block; background: var(--green); color: #fff; font: 700 11px/1 var(--f); letter-spacing: .06em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; }
+  .prod.flag { grid-column: span 3; flex-direction: row; align-items: center; gap: 30px; background: linear-gradient(115deg, #ffffff 45%, #eef7f2 100%); }
+
+  /* how */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+  .step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px 22px; position: relative; transition: transform .22s ease, box-shadow .22s ease; }
+  .step:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .step .sn { position: absolute; top: -12px; left: 20px; background: var(--amber); color: #4a3510; font: 700 12px/1 var(--f); border-radius: 8px; padding: 6px 10px; box-shadow: 0 4px 10px rgba(232, 176, 75, .4); }
+  .step h3 { font: 600 16.5px/1.3 var(--f); margin-top: 8px; letter-spacing: -.02em; }
+  .step p { font-size: 13.5px; color: var(--muted); margin-top: 7px; }
+
+  /* numbers */
+  .nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+  .num { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 26px 22px; }
+  .num .v { font: 700 clamp(30px, 3.4vw, 42px)/1 var(--f); letter-spacing: -.035em; color: var(--green); }
+  .num.pending .v { color: var(--muted); }
+  .num .k { font-size: 13.5px; color: var(--muted); margin-top: 10px; }
+  .tbc { display: inline-block; margin-top: 10px; font: 700 10.5px/1 var(--f); letter-spacing: .08em; text-transform: uppercase; color: #8a6a24; background: #faf3e2; padding: 5px 9px; border-radius: 999px; }
+
+  /* collaborations */
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+  .chip { background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 11px 18px; font: 600 13.5px/1.3 var(--f); color: var(--muted); }
+  .chip.lead { color: var(--green); background: #e7f2ec; border-color: #cfe5da; }
+  .placeholder-note { margin-top: 22px; font-size: 13px; color: var(--muted); }
+
+  /* audiences */
+  .aud { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 40px; }
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 32px 30px; display: flex; flex-direction: column; transition: transform .22s ease, box-shadow .22s ease; }
+  .panel:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .panel h3 { font: 600 21px/1.25 var(--f); letter-spacing: -.02em; }
+  .panel ul { list-style: none; margin: 16px 0 24px; padding: 0; }
+  .panel li { padding: 9px 0 9px 28px; font-size: 15px; color: var(--muted); position: relative; }
+  .panel li::before { content: "✓"; position: absolute; left: 2px; color: var(--green); font-weight: 700; }
+  .panel .btn { align-self: flex-start; margin-top: auto; }
+
+  /* team */
+  .team-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 40px; }
+  .tcard { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 22px 16px; text-align: center; transition: transform .22s ease, box-shadow .22s ease; }
+  .tcard:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .tcard .ava {
+    width: 60px; height: 60px; margin: 0 auto 12px; border-radius: 50%;
+    background: linear-gradient(135deg, #e7f2ec, #cfe5da); color: var(--green);
+    display: flex; align-items: center; justify-content: center; font: 700 18px/1 var(--f);
+  }
+  .tcard .role { font: 700 10.5px/1.6 var(--f); letter-spacing: .08em; text-transform: uppercase; color: var(--amber); }
+  .tcard h3 { font: 600 14.5px/1.3 var(--f); margin-top: 3px; letter-spacing: -.01em; }
+  .tcard p { font-size: 12px; color: var(--muted); margin-top: 5px; }
+  .team-note { margin-top: 26px; font-size: 14.5px; color: var(--muted); }
+  .team-note a { color: var(--green); font-weight: 600; text-decoration: none; }
+
+  /* updates */
+  .upd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+  .upd { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px; text-decoration: none; color: var(--ink); transition: transform .22s ease, box-shadow .22s ease; }
+  .upd:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .upd time { font: 700 12px/1 var(--f); letter-spacing: .08em; text-transform: uppercase; color: var(--amber); }
+  .upd h3 { font: 600 16.5px/1.4 var(--f); margin-top: 9px; letter-spacing: -.015em; }
+
+  /* contact */
+  .contact-shell {
+    margin-top: 40px; background: #fff; border: 1px solid var(--line); border-radius: 26px;
+    box-shadow: var(--shadow-lg); display: grid; grid-template-columns: 1fr 1.1fr; overflow: hidden;
+  }
+  .contact-info { padding: 36px 32px; background: linear-gradient(160deg, var(--layer) 0%, #ffffff 90%); }
+  .contact-info h3 { font: 600 21px/1.3 var(--f); letter-spacing: -.02em; }
+  .contact-list { list-style: none; margin: 18px 0 0; padding: 0; }
+  .contact-list li { padding: 12px 0; border-bottom: 1px solid var(--layer2); font-size: 14.5px; }
+  .contact-list li:last-child { border-bottom: 0; }
+  .contact-list .k { display: block; font: 700 11px/2 var(--f); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .contact-list a { color: var(--green); font-weight: 600; text-decoration: none; }
+  .contact-list a:hover { text-decoration: underline; }
+  form { padding: 36px 32px; }
+  .fld { margin-bottom: 14px; }
+  label { display: block; font: 600 13.5px/1.7 var(--f); margin-bottom: 4px; }
+  input, select, textarea {
+    width: 100%; font: 500 15px/1.4 var(--f); color: var(--ink);
+    padding: 12px 14px; border: 1px solid var(--line); background: var(--layer); border-radius: 12px;
+    transition: border-color .18s ease, background .18s ease;
+  }
+  input:focus, select:focus, textarea:focus { background: #fff; border-color: var(--green); }
+  textarea { min-height: 84px; resize: vertical; }
+  form .btn { width: 100%; margin-top: 6px; }
+  .form-note { font-size: 12.5px; color: var(--muted); margin-top: 12px; }
+
+  /* footer */
+  footer { background: var(--layer); border-top: 1px solid var(--line); }
+  footer .wrap { padding: 48px 24px 28px; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+  footer h2 { font: 700 17px/1.3 var(--f); letter-spacing: -.02em; display: flex; align-items: center; gap: 9px; }
+  footer p { font-size: 13.5px; color: var(--muted); margin-top: 12px; max-width: 44ch; }
+  footer .lab { font: 700 11px/1 var(--f); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  footer nav { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  footer nav a { color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 500; }
+  footer nav a:hover { color: var(--green); }
+  .legal { border-top: 1px solid var(--line); }
+  .legal .wrap { display: flex; justify-content: space-between; gap: 12px; padding: 16px 24px; font-size: 12.5px; color: var(--muted); flex-wrap: wrap; }
+
+  /* reveal */
+  .rv { opacity: 0; transform: translateY(16px) scale(.985); transition: opacity .55s ease, transform .55s ease; }
+  .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .rv { opacity: 1; transform: none; transition: none; }
+    .layercard { transform: none !important; }
+    .cell, .prod, .step, .panel, .tcard, .upd, .btn { transition: none; }
+  }
+
+  /* responsive */
+  @media (max-width: 980px) {
+    nav.primary { display: none; }
+    .hero .wrap { grid-template-columns: 1fr; gap: 56px; }
+    .stack { min-height: 380px; max-width: 480px; }
+    .bento { grid-template-columns: 1fr 1fr; }
+    .prod-grid { grid-template-columns: 1fr 1fr; }
+    .prod.flag { grid-column: span 2; }
+    .steps, .nums { grid-template-columns: 1fr 1fr; }
+    .steps { gap: 24px 16px; }
+    .team-row { grid-template-columns: repeat(3, 1fr); }
+    .contact-shell { grid-template-columns: 1fr; }
+    footer .wrap { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 620px) {
+    section { padding: 60px 0; }
+    .bento, .prod-grid, .steps, .upd-grid { grid-template-columns: 1fr; }
+    .cell.wide, .prod.flag { grid-column: span 1; }
+    .prod.flag { flex-direction: column; align-items: flex-start; }
+    .nums { grid-template-columns: 1fr 1fr; }
+    .aud { grid-template-columns: 1fr; }
+    .team-row { grid-template-columns: 1fr 1fr; }
+    footer .wrap { grid-template-columns: 1fr; gap: 26px; }
+    .steps { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#products">Skip to products</a>
+
+<header class="site">
+  <div class="wrap">
+    <a class="mark" href="#top">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="24" rx="7" fill="#1e6b4e"/>
+        <path d="M13 5.5 C13 5.5 8.5 11 8.5 14 a4.5 4.5 0 0 0 9 0 C17.5 11 13 5.5 13 5.5 Z" fill="#fff"/>
+        <circle cx="11.4" cy="14.6" r="1.6" fill="#e8b04b"/>
+      </svg>
+      Lightening Lives
+    </a>
+    <nav class="primary" aria-label="Primary">
+      <a href="#products">Products</a>
+      <a href="#how">How it works</a>
+      <a href="#numbers">Numbers</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn" href="#contact">Request a kit</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-h">
+    <span class="orb g" data-depth="0.25" aria-hidden="true"></span>
+    <span class="orb a" data-depth="0.18" aria-hidden="true"></span>
+    <div class="wrap">
+      <div>
+        <span class="pill"><span class="dot" aria-hidden="true"></span>Molecular diagnostics · Hyderabad, India</span>
+        <h1 id="hero-h">Extraction-free <span class="grad">genetic screening</span></h1>
+        <p class="hero-sub">One drop of blood on a card. Results in under 24 hours. Built for laboratories and public-health programmes at scale.</p>
+        <div class="cta-row">
+          <a class="btn" href="#contact">Request a kit</a>
+          <a class="btn soft" href="#contact">Talk to us</a>
+        </div>
+        <p class="tagline"><b>One drop. One day.</b> — the whole pitch, in five words.</p>
+      </div>
+      <div class="stack" aria-label="Layered illustration: the collection card, the throughput, and the report it becomes">
+        <div class="layercard lc-card" data-depth="0.55">
+          <svg viewBox="0 0 260 150" role="img" aria-label="The collection card: one dried blood spot and sample fields">
+            <rect width="260" height="150" rx="10" fill="#f7f9f8"/>
+            <rect x="14" y="14" width="232" height="122" rx="8" fill="#fff" stroke="#e5e9e7" stroke-width="2"/>
+            <circle cx="62" cy="72" r="24" fill="#a33a2a"/>
+            <circle cx="54" cy="64" r="6" fill="#c9573f"/>
+            <line x1="104" y1="52" x2="220" y2="52" stroke="#1e6b4e" stroke-width="3"/>
+            <line x1="104" y1="74" x2="196" y2="74" stroke="#1e6b4e" stroke-width="3"/>
+            <line x1="104" y1="96" x2="208" y2="96" stroke="#e5e9e7" stroke-width="3"/>
+          </svg>
+          <p>The specimen: one dried blood spot.</p>
+        </div>
+        <div class="layercard lc-report" data-depth="0.35">
+          <div class="rh"><b>Screening report</b><span class="lc-chipok">Ready in &lt; 24 h</span></div>
+          <div style="margin-top:10px">
+            <div class="row"><span>Assay</span><b>Sickle cell anaemia</b></div>
+            <div class="row"><span>Specimen</span><b>DBS · 1 spot</b></div>
+            <div class="row"><span>Extraction</span><b>None required</b></div>
+            <div class="row"><span>Certification</span><b>ICMR</b></div>
+          </div>
+        </div>
+        <div class="layercard lc-stat" data-depth="0.7">
+          <span class="v">1,000</span>
+          <span class="k">samples in under 24 hours</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" aria-labelledby="about-h" style="padding-top:20px">
+    <div class="wrap rv">
+      <p class="kicker" id="about-h">Who we are</p>
+      <p style="margin-top:16px; font: 500 clamp(19px,2.4vw,24px)/1.55 var(--f); letter-spacing:-.015em; max-width:44em">Lightening Lives is a research-oriented and innovation-driven molecular diagnostics organisation, focused on <span style="color:var(--green)">rapid, affordable, scalable, extraction-free, highly accurate</span> diagnostic solutions for various genetic disorders that reach even the most underserved communities.</p>
+    </div>
+  </section>
+
+  <!-- WHY: bento -->
+  <section class="on-layer" id="why" aria-labelledby="why-h">
+    <div class="wrap rv">
+      <p class="kicker">Why Lightening Lives</p>
+      <h2 class="title" id="why-h">Eight reasons, one platform</h2>
+      <div class="bento">
+        <div class="cell hero-cell wide">
+          <p class="big">1,000 <small>samples / 24 h</small></p>
+          <h3>High-throughput screening</h3>
+          <p>Current capacity: 1,000 samples in under 24 hours — built for population scale.</p>
+        </div>
+        <div class="cell">
+          <div class="ic"><svg width="18" height="22" viewBox="0 0 18 22" aria-hidden="true"><path d="M9 1 C9 1 2.5 9.5 2.5 14 a6.5 6.5 0 0 0 13 0 C15.5 9.5 9 1 9 1 Z" fill="none" stroke="#1e6b4e" stroke-width="1.8"/></svg></div>
+          <h3>One-drop test</h3>
+          <p>A dried blood spot on a card. Anyone can collect it, as with a blood-sugar test.</p>
+        </div>
+        <div class="cell">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 2 h14 M3 18 h14 M5.5 2 c0 6 9 8 9 16 M14.5 2 c0 6 -9 8 -9 16" fill="none" stroke="#1e6b4e" stroke-width="1.7"/></svg></div>
+          <h3>Extraction-free</h3>
+          <p>The assay runs directly from the card. No DNA extraction step, no extraction equipment.</p>
+        </div>
+        <div class="cell">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#1e6b4e" stroke-width="1.7"/><path d="M10 5.5 v4.5 l3 2.4" fill="none" stroke="#1e6b4e" stroke-width="1.7"/></svg></div>
+          <h3>Under 24 hours</h3>
+          <p>Reports within a day of the sample reaching the laboratory.</p>
+        </div>
+        <div class="cell">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 10 h16 M10 2 v16" stroke="#1e6b4e" stroke-width="1.7"/><circle cx="10" cy="10" r="8" fill="none" stroke="#1e6b4e" stroke-width="1.7"/></svg></div>
+          <h3>Affordable</h3>
+          <p>Priced for screening at population scale. Contact us for a quote.</p>
+        </div>
+        <div class="cell">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="7.5" width="15" height="10" rx="1.5" fill="none" stroke="#1e6b4e" stroke-width="1.7"/><path d="M6.5 7.5 V5 a3.5 3.5 0 0 1 7 0 v2.5" fill="none" stroke="#1e6b4e" stroke-width="1.7"/></svg></div>
+          <h3>Minimal infrastructure</h3>
+          <p>Runs in a basic molecular laboratory — no extraction line required.</p>
+        </div>
+        <div class="cell">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="5.5" cy="5.5" r="2.8" fill="none" stroke="#1e6b4e" stroke-width="1.7"/><circle cx="14.5" cy="14.5" r="2.8" fill="none" stroke="#1e6b4e" stroke-width="1.7"/><path d="M5.5 8.5 v3.5 a2.5 2.5 0 0 0 2.5 2.5 h3.5" fill="none" stroke="#1e6b4e" stroke-width="1.7"/></svg></div>
+          <h3>Automation-friendly</h3>
+          <p>The card-based format slots into automated, batch-based workflows.</p>
+        </div>
+        <div class="cell">
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#1e6b4e" stroke-width="1.7"/><path d="M2 10 h16 M10 2 c2.8 2.8 2.8 13.2 0 16 M10 2 c-2.8 2.8 -2.8 13.2 0 16" fill="none" stroke="#1e6b4e" stroke-width="1.7"/></svg></div>
+          <h3>Built for programmes</h3>
+          <p>Designed for large-scale public-health screening across districts and states.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products" aria-labelledby="products-h">
+    <div class="wrap rv">
+      <p class="kicker">Products</p>
+      <h2 class="title" id="products-h">Kits that lift the workload</h2>
+      <p class="sec-sub">Kits are supplied to laboratories, hospitals and screening programmes — not to individuals.</p>
+      <div class="prod-grid">
+        <a class="prod flag" href="#contact">
+          <span class="glyph" style="width:72px; height:72px; border-radius:18px" aria-hidden="true">
+            <svg width="42" height="30" viewBox="0 0 42 30"><rect x="1.5" y="1.5" width="39" height="27" rx="5" fill="#fff" stroke="#1e6b4e" stroke-width="2"/><circle cx="13" cy="15" r="6" fill="#a33a2a"/><line x1="23" y1="11" x2="35" y2="11" stroke="#1e6b4e" stroke-width="2"/><line x1="23" y1="18" x2="31" y2="18" stroke="#1e6b4e" stroke-width="2"/></svg>
+          </span>
+          <span style="flex:1">
+            <span class="badge">ICMR certified · flagship</span>
+            <h3 style="margin-top:10px; font-size:23px">Sickle Cell Anaemia screening kit</h3>
+            <p style="margin-top:8px">Screening and diagnosis from a single dried blood spot. Developed and commercialised under an MOU with CCMB.</p>
+            <span class="go" style="display:inline-block; margin-top:12px">View the kit →</span>
+          </span>
+        </a>
+        <a class="prod" href="#contact"><span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="7" cy="11" r="4" fill="#a33a2a" opacity=".75"/><circle cx="15" cy="11" r="4" fill="#a33a2a" opacity=".45"/></svg></span><h3>Thalassaemia</h3><p>Carrier and patient screening for alpha and beta thalassaemia.</p><span class="go">View kit →</span></a>
+        <a class="prod" href="#contact"><span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M4 18 C4 10 18 12 18 4" fill="none" stroke="#1e6b4e" stroke-width="2"/></svg></span><h3>Spinal Muscular Atrophy</h3><p>Screening for SMA in symptomatic children and at-risk couples.</p><span class="go">View kit →</span></a>
+        <a class="prod" href="#contact"><span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M4 4 c4 0 4 4 0 4 s-4 4 0 4 4 4 0 4 M18 4 c-4 0 -4 4 0 4 s4 4 0 4 -4 4 0 4" fill="none" stroke="#1e6b4e" stroke-width="1.8"/></svg></span><h3>Duchenne Muscular Dystrophy</h3><p>Screening for DMD, including maternal carrier testing.</p><span class="go">View kit →</span></a>
+        <a class="prod" href="#contact"><span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M11 2 C11 2 5.5 9 5.5 13 a5.5 5.5 0 0 0 11 0 C16.5 9 11 2 11 2 Z" fill="none" stroke="#1e6b4e" stroke-width="1.8"/></svg></span><h3>Haemophilia</h3><p>Screening for haemophilia and related coagulation disorders.</p><span class="go">View kit →</span></a>
+        <a class="prod" href="#contact"><span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><rect x="3" y="9" width="4.5" height="9" rx="1" fill="#1e6b4e"/><rect x="9" y="5" width="4.5" height="13" rx="1" fill="#1e6b4e" opacity=".6"/><rect x="15" y="12" width="4.5" height="6" rx="1" fill="#e8b04b"/></svg></span><h3>Pharmacogenomics</h3><p>Metaboliser status to inform treatment and dosing decisions.</p><span class="go">View kit →</span></a>
+        <a class="prod" href="#contact"><span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 22 22"><rect x="3" y="3" width="16" height="16" rx="4" fill="none" stroke="#1e6b4e" stroke-width="1.8" stroke-dasharray="4 3"/><path d="M11 7 v8 M7 11 h8" stroke="#1e6b4e" stroke-width="1.8"/></svg></span><h3>Custom Panels</h3><p>Custom screening panels for programmes and research collaborations.</p><span class="go">Enquire →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="on-layer" id="how" aria-labelledby="how-h">
+    <div class="wrap rv">
+      <p class="kicker">How it works</p>
+      <h2 class="title" id="how-h">From drop to report in four steps</h2>
+      <div class="steps" style="margin-top:48px">
+        <div class="step">
+          <span class="sn">Step 1</span>
+          <h3>Collect one drop</h3>
+          <p>A finger-prick drop of blood, collected by any trained worker — no phlebotomist required.</p>
+        </div>
+        <div class="step">
+          <span class="sn">Step 2</span>
+          <h3>Dry on the card</h3>
+          <p>The spot dries on the card and travels by ordinary post — no cold chain.</p>
+        </div>
+        <div class="step">
+          <span class="sn">Step 3</span>
+          <h3>Run the assay</h3>
+          <p>The extraction-free assay runs directly from the card in a basic molecular laboratory.</p>
+        </div>
+        <div class="step">
+          <span class="sn">Step 4</span>
+          <h3>Result in under 24 h</h3>
+          <p>A clinical report is returned within 24 hours of the sample reaching the laboratory.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section id="numbers" aria-labelledby="numbers-h">
+    <div class="wrap rv">
+      <p class="kicker">Numbers</p>
+      <h2 class="title" id="numbers-h">Scale, stated plainly</h2>
+      <div class="nums">
+        <div class="num">
+          <p class="v">1,000</p>
+          <p class="k">samples screened in under 24 hours — current capacity</p>
+        </div>
+        <div class="num">
+          <p class="v">7</p>
+          <p class="k">screening kits in the product range</p>
+        </div>
+        <div class="num pending">
+          <p class="v">[TBC]</p>
+          <p class="k">samples processed to date</p>
+          <span class="tbc">awaiting confirmation</span>
+        </div>
+        <div class="num pending">
+          <p class="v">[TBC]</p>
+          <p class="k">districts &amp; programmes served</p>
+          <span class="tbc">awaiting confirmation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLABORATIONS -->
+  <section class="on-layer" id="collaborations" aria-labelledby="collab-h">
+    <div class="wrap rv">
+      <p class="kicker">Collaborations</p>
+      <h2 class="title" id="collab-h">Built alongside institutes and foundations</h2>
+      <p class="sec-sub">The sickle cell assay is developed and commercialised under an MOU with CCMB, and is ICMR certified.</p>
+      <div class="chips" role="list" aria-label="Collaborating organisations">
+        <span class="chip lead" role="listitem">CSIR–CCMB</span>
+        <span class="chip lead" role="listitem">ICMR</span>
+        <span class="chip" role="listitem">Atal Incubation Centre</span>
+        <span class="chip" role="listitem">Nucleome Genomics</span>
+        <span class="chip" role="listitem">Tata Trusts</span>
+        <span class="chip" role="listitem">Tata Steel Foundation</span>
+        <span class="chip" role="listitem">Manasthya Foundation</span>
+        <span class="chip" role="listitem">Thalassemia &amp; Sickle Cell Society</span>
+        <span class="chip" role="listitem">Cure SMA India</span>
+        <span class="chip" role="listitem">Sickle Cell Saksham Rajasthan Foundation</span>
+        <span class="chip" role="listitem">IAMD</span>
+        <span class="chip" role="listitem">Blood Warriors</span>
+        <span class="chip" role="listitem">IDO</span>
+        <span class="chip" role="listitem">NASCO</span>
+      </div>
+      <p class="placeholder-note">Organisation marks shown as wordmarks; approved logos to be placed.</p>
+    </div>
+  </section>
+
+  <!-- AUDIENCES -->
+  <section id="audiences" aria-labelledby="aud-h">
+    <div class="wrap rv">
+      <p class="kicker">Who we work with</p>
+      <h2 class="title" id="aud-h">Two audiences, two doors</h2>
+      <div class="aud">
+        <div class="panel">
+          <h3>Laboratories &amp; hospitals</h3>
+          <ul>
+            <li>Adopt the assay with minimal new infrastructure</li>
+            <li>Integrate the card-based workflow into existing operations</li>
+            <li>Scale throughput without an extraction bottleneck</li>
+          </ul>
+          <a class="btn soft" href="#contact">For laboratories →</a>
+        </div>
+        <div class="panel">
+          <h3>Public-health programmes</h3>
+          <ul>
+            <li>District- and state-scale screening programmes</li>
+            <li>Field collection by non-specialist workers</li>
+            <li>Programme support for NGOs and CSR initiatives</li>
+          </ul>
+          <a class="btn soft" href="#contact">For programmes →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="on-layer" id="team" aria-labelledby="team-h">
+    <div class="wrap rv">
+      <p class="kicker">Team &amp; advisors</p>
+      <h2 class="title" id="team-h">The people behind the assay</h2>
+      <div class="team-row">
+        <div class="tcard">
+          <div class="ava" aria-hidden="true">GC</div>
+          <p class="role">Founder</p>
+          <h3>Dr. Giriraj Ratan Chandak</h3>
+          <p>Physician-scientist. Former Chief Scientist, CSIR–CCMB; former Director, CDFD.</p>
+        </div>
+        <div class="tcard">
+          <div class="ava" aria-hidden="true">NC</div>
+          <p class="role">Co-Founder</p>
+          <h3>Mrs. Nidhi Chandak</h3>
+          <p>Leads statistical data management and operations.</p>
+        </div>
+        <div class="tcard">
+          <div class="ava" aria-hidden="true">DR</div>
+          <p class="role">Patron</p>
+          <h3>Dr. D. Nageshwar Reddy</h3>
+          <p>Founder, AIG Hospitals.</p>
+        </div>
+        <div class="tcard">
+          <div class="ava" aria-hidden="true">KK</div>
+          <p class="role">Advisory board</p>
+          <h3>Prof. Kalyanaraman Kumaran</h3>
+        </div>
+        <div class="tcard">
+          <div class="ava" aria-hidden="true">GK</div>
+          <p class="role">Advisory board</p>
+          <h3>Prof. G.V. Krishnaveni</h3>
+        </div>
+      </div>
+      <p class="team-note">Plus a six-person team across science, diagnostics, finance and operations. <a href="#contact">Meet the team →</a></p>
+    </div>
+  </section>
+
+  <!-- UPDATES -->
+  <section id="updates" aria-labelledby="upd-h">
+    <div class="wrap rv">
+      <p class="kicker">Latest updates</p>
+      <h2 class="title" id="upd-h">What we shipped from the field</h2>
+      <div class="upd-grid">
+        <a class="upd" href="#contact">
+          <time datetime="2026-09">Sep 2026</time>
+          <h3>Field screening programme — Nandurbar district, Maharashtra</h3>
+        </a>
+        <a class="upd" href="#contact">
+          <time datetime="2026-08">Aug 2026</time>
+          <h3>Screening programme photographs — Kothagudem, Telangana</h3>
+        </a>
+        <a class="upd" href="#contact">
+          <time datetime="2026-07">Jul 2026</time>
+          <h3>Programme photographs — Jharkhand</h3>
+        </a>
+      </div>
+      <p class="placeholder-note">Update titles and dates are placeholders for review; final items come from the news feed.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="on-layer" id="contact" aria-labelledby="contact-h" style="padding-bottom:96px">
+    <div class="wrap rv">
+      <p class="kicker">Contact</p>
+      <h2 class="title" id="contact-h">Request a kit, or talk to us about a programme</h2>
+      <div class="contact-shell">
+        <div class="contact-info">
+          <h3>Reach the team directly</h3>
+          <ul class="contact-list">
+            <li><span class="k">Email</span><a href="mailto:admin@lighteninglives.in">admin@lighteninglives.in</a></li>
+            <li><span class="k">Phone</span><a href="tel:+919182588191">+91 91825 88191</a></li>
+            <li><span class="k">Laboratory &amp; corporate office</span>Flat No. 201, 2nd Floor, S B Hare Krishna Towers, H.No. 4-7-195/2/55, HMT Nagar, Nacharam, Hyderabad, Telangana – 500076</li>
+            <li><span class="k">Registered office</span>D-306, Sy. No. 117, Indu Aranya Pallavi GSI (SR), Bandlaguda, Hayathnagar, Hyderabad – 500068, Telangana</li>
+          </ul>
+        </div>
+        <form action="#" method="post" aria-label="Enquiry form">
+          <div class="fld">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name">
+          </div>
+          <div class="fld">
+            <label for="f-org">Organisation</label>
+            <input id="f-org" name="organisation" type="text" autocomplete="organization">
+          </div>
+          <div class="fld">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email">
+          </div>
+          <div class="fld">
+            <label for="f-topic">I am enquiring about</label>
+            <select id="f-topic" name="topic">
+              <option>Requesting a kit</option>
+              <option>Partnership or collaboration</option>
+              <option>Awareness or counselling programmes</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="fld">
+            <label for="f-msg">Message</label>
+            <textarea id="f-msg" name="message"></textarea>
+          </div>
+          <button class="btn" type="submit">Send enquiry</button>
+          <p class="form-note">Placeholder for the embedded enquiry form. Details on the left are live contact routes.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h2>
+        <svg width="24" height="24" viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="7" fill="#1e6b4e"/><path d="M13 5.5 C13 5.5 8.5 11 8.5 14 a4.5 4.5 0 0 0 9 0 C17.5 11 13 5.5 13 5.5 Z" fill="#fff"/><circle cx="11.4" cy="14.6" r="1.6" fill="#e8b04b"/></svg>
+        Lightening Lives
+      </h2>
+      <p>Lightening Lives LLP is a molecular diagnostics company in Hyderabad, India. Kits are supplied to laboratories, hospitals and screening programmes — not to individuals. If you are looking for a test for yourself or your family, please speak to your clinician or laboratory.</p>
+    </div>
+    <div>
+      <p class="lab">Site</p>
+      <nav aria-label="Footer">
+        <a href="#products">Products</a>
+        <a href="#how">How it works</a>
+        <a href="#collaborations">Collaborations</a>
+        <a href="#team">Team &amp; advisors</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div>
+      <p class="lab">Contact</p>
+      <nav aria-label="Contact details">
+        <a href="mailto:admin@lighteninglives.in">admin@lighteninglives.in</a>
+        <a href="tel:+919182588191">+91 91825 88191</a>
+      </nav>
+      <p>HMT Nagar, Nacharam,<br>Hyderabad, Telangana – 500076</p>
+    </div>
+  </div>
+  <div class="legal">
+    <div class="wrap" style="display:flex">
+      <span>© 2026 Lightening Lives LLP</span>
+      <span>One drop. One day.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) {
+    document.querySelectorAll('.rv').forEach(function (el) { el.classList.add('in'); });
+    return;
+  }
+  // reveals
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
+
+  // gentle parallax on hero layers and orbs
+  var layers = Array.prototype.slice.call(document.querySelectorAll('[data-depth]'));
+  var ticking = false;
+  function parallax() {
+    var y = window.scrollY || 0;
+    if (y < 900) {
+      layers.forEach(function (el) {
+        var d = parseFloat(el.getAttribute('data-depth')) || 0;
+        el.style.transform = 'translateY(' + (y * d * -0.25) + 'px)';
+      });
+    }
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(parallax); }
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
