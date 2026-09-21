@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lightening Lives — 12 design options</title>
+<meta name="description" content="Comparison page for the 12 home-page design options for the Lightening Lives website redesign.">
+<style>
+  :root {
+    --ink: #141a1e;
+    --muted: #5b6670;
+    --line: #e2e5e3;
+    --green: #1e6b4e;
+    --bar-h: auto;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: #eceeed;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    flex: none;
+    position: relative;
+    z-index: 2;
+  }
+  .brand {
+    font-weight: 700;
+    letter-spacing: .01em;
+    white-space: nowrap;
+  }
+  .brand small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+  .picker { display: flex; align-items: center; gap: 6px; }
+  select {
+    font: inherit;
+    padding: 6px 8px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ink);
+    max-width: 300px;
+  }
+  button {
+    font: inherit;
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  button:hover { border-color: var(--green); color: var(--green); }
+  button:focus-visible, select:focus-visible, a:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+  }
+  .widths { display: flex; gap: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .widths button { border: 0; border-radius: 0; }
+  .widths button + button { border-left: 1px solid var(--line); }
+  .widths button[aria-pressed="true"] { background: var(--green); color: #fff; }
+  .rationale {
+    flex: 1 1 260px;
+    min-width: 200px;
+    color: var(--muted);
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .hint { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  @media (max-width: 720px) {
+    .hint { display: none; }
+    .rationale { white-space: normal; flex-basis: 100%; }
+  }
+  main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    overflow: hidden;
+    padding: 0;
+  }
+  main.framed { padding: 16px; }
+  iframe {
+    border: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: block;
+  }
+  main.framed iframe {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(20, 26, 30, .10);
+    height: auto;
+    align-self: stretch;
+  }
+  main[data-width="390"] iframe { width: 390px; }
+  main[data-width="820"] iframe { width: 820px; }
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">Lightening Lives<small>design options</small></span>
+  <span class="picker">
+    <button id="prev" type="button" aria-label="Previous design" title="Previous (←)">←</button>
+    <select id="select" aria-label="Choose a design"></select>
+    <button id="next" type="button" aria-label="Next design" title="Next (→)">→</button>
+  </span>
+  <span class="widths" role="group" aria-label="Preview width">
+    <button type="button" data-w="390"  aria-pressed="false">Mobile</button>
+    <button type="button" data-w="820"  aria-pressed="false">Tablet</button>
+    <button type="button" data-w="full" aria-pressed="true">Desktop</button>
+  </span>
+  <span class="rationale" id="rationale"></span>
+  <span class="hint">← → switch designs</span>
+</header>
+<main id="stage" data-width="full">
+  <iframe id="frame" title="Design preview"></iframe>
+</main>
+
+<!-- Fallback copy of manifest.json for file:// viewing, where fetch() is
+     blocked. Served over HTTP, manifest.json itself is used. When adding a
+     design, add the entry to manifest.json AND to this block. -->
+<script type="application/json" id="manifest-fallback">
+[
+  { "id": "01", "file": "designs/01-clinical-clarity.html",     "name": "Clinical Clarity",     "rationale": "Swiss-style grid with a single deep green accent; dense, factual hierarchy for the lab director who wants specifications fast." },
+  { "id": "02", "file": "designs/02-daylight.html",             "name": "Daylight",             "rationale": "The company name taken literally: warm daylight gradients and amber highlights over white, airy and optimistic without losing clinical credibility." },
+  { "id": "03", "file": "designs/03-field-notes.html",          "name": "Field Notes",          "rationale": "Photography-led and human-scale on an earthy off-white; full-bleed field imagery frames the science for the public-health audience." },
+  { "id": "04", "file": "designs/04-data-sheet.html",           "name": "Data Sheet",           "rationale": "A beautifully typeset technical datasheet: monospace numerals, ruled tables and specification blocks that treat the assay like the instrument it is." },
+  { "id": "05", "file": "designs/05-editorial.html",            "name": "Editorial",            "rationale": "Magazine editorial: serif display, asymmetric columns and pull-quotes that let the eight differentiators read like reported facts." },
+  { "id": "06", "file": "designs/06-card-deck.html",            "name": "Card Deck",            "rationale": "The blood-spot card is the interface: every component is a rounded, tactile card, modular like a kit laid out on a bench." },
+  { "id": "07", "file": "designs/07-precision-instrument.html", "name": "Precision Instrument", "rationale": "Hairline rules, fine engineering type and cool greys with green; the restraint of a calibrated laboratory instrument." },
+  { "id": "08", "file": "designs/08-bold-public-health.html",   "name": "Bold Public Health",   "rationale": "Poster-scale type and solid green blocks on white; built to be read on a district health officer's phone in sunlight." },
+  { "id": "09", "file": "designs/09-minimal.html",              "name": "Minimal",              "rationale": "Radical restraint: one typeface, one accent, no decoration; the content carries everything through spacing and rhythm." },
+  { "id": "10", "file": "designs/10-diagram-first.html",        "name": "Diagram-First",        "rationale": "Every section anchored by an explanatory SVG diagram — workflow, assay, throughput — the site as an illustrated explainer." },
+  { "id": "11", "file": "designs/11-warm-institutional.html",   "name": "Warm Institutional",   "rationale": "Muted green and gold with serif headings and prominent credentials; the settled confidence of an established research institute." },
+  { "id": "12", "file": "designs/12-motion-depth.html",         "name": "Motion & Depth",       "rationale": "Layered light surfaces, soft shadows and gentle lift on scroll; a modern SaaS feel that stays bright and clinical." }
+]
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  var select    = document.getElementById('select');
+  var frame     = document.getElementById('frame');
+  var stage     = document.getElementById('stage');
+  var rationale = document.getElementById('rationale');
+  var designs   = [];
+
+  function fallbackManifest() {
+    return JSON.parse(document.getElementById('manifest-fallback').textContent);
+  }
+
+  function init(list) {
+    designs = list;
+    select.innerHTML = '';
+    designs.forEach(function (d, i) {
+      var opt = document.createElement('option');
+      opt.value = String(i);
+      opt.textContent = d.id + ' — ' + d.name;
+      select.appendChild(opt);
+    });
+    show(indexFromHash(), false);
+  }
+
+  function indexFromHash() {
+    var h = (location.hash || '').replace('#', '');
+    if (!h) return 0;
+    var i = designs.findIndex(function (d) {
+      return d.id === h || String(parseInt(d.id, 10)) === h;
+    });
+    return i >= 0 ? i : 0;
+  }
+
+  function show(i, pushHash) {
+    if (!designs.length) return;
+    i = Math.max(0, Math.min(designs.length - 1, i));
+    var d = designs[i];
+    select.value = String(i);
+    frame.src = d.file;
+    rationale.textContent = d.id + ' ' + d.name + ' — ' + d.rationale;
+    rationale.title = d.rationale;
+    document.title = d.id + ' ' + d.name + ' — Lightening Lives design options';
+    if (pushHash !== false && location.hash !== '#' + d.id) {
+      history.replaceState(null, '', '#' + d.id);
+    }
+  }
+
+  function current() { return parseInt(select.value || '0', 10); }
+  function step(delta) { show(current() + delta); }
+
+  select.addEventListener('change', function () { show(current()); });
+  document.getElementById('prev').addEventListener('click', function () { step(-1); });
+  document.getElementById('next').addEventListener('click', function () { step(1); });
+
+  window.addEventListener('keydown', function (e) {
+    if (e.target === select) return; // native arrow behaviour in the dropdown
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); step(-1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+  });
+
+  window.addEventListener('hashchange', function () { show(indexFromHash(), false); });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.widths button'), function (btn) {
+    btn.addEventListener('click', function () {
+      Array.prototype.forEach.call(document.querySelectorAll('.widths button'), function (b) {
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      var w = btn.getAttribute('data-w');
+      stage.setAttribute('data-width', w);
+      stage.classList.toggle('framed', w !== 'full');
+    });
+  });
+
+  // manifest.json over HTTP; embedded fallback on file://
+  fetch('manifest.json')
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(init)
+    .catch(function () { init(fallbackManifest()); });
+})();
+</script>
+</body>
+</html>

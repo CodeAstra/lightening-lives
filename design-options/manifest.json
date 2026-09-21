@@ -1,0 +1,74 @@
+[
+  {
+    "id": "01",
+    "file": "designs/01-clinical-clarity.html",
+    "name": "Clinical Clarity",
+    "rationale": "Swiss-style grid with a single deep green accent; dense, factual hierarchy for the lab director who wants specifications fast."
+  },
+  {
+    "id": "02",
+    "file": "designs/02-daylight.html",
+    "name": "Daylight",
+    "rationale": "The company name taken literally: warm daylight gradients and amber highlights over white, airy and optimistic without losing clinical credibility."
+  },
+  {
+    "id": "03",
+    "file": "designs/03-field-notes.html",
+    "name": "Field Notes",
+    "rationale": "Photography-led and human-scale on an earthy off-white; full-bleed field imagery frames the science for the public-health audience."
+  },
+  {
+    "id": "04",
+    "file": "designs/04-data-sheet.html",
+    "name": "Data Sheet",
+    "rationale": "A beautifully typeset technical datasheet: monospace numerals, ruled tables and specification blocks that treat the assay like the instrument it is."
+  },
+  {
+    "id": "05",
+    "file": "designs/05-editorial.html",
+    "name": "Editorial",
+    "rationale": "Magazine editorial: serif display, asymmetric columns and pull-quotes that let the eight differentiators read like reported facts."
+  },
+  {
+    "id": "06",
+    "file": "designs/06-card-deck.html",
+    "name": "Card Deck",
+    "rationale": "The blood-spot card is the interface: every component is a rounded, tactile card, modular like a kit laid out on a bench."
+  },
+  {
+    "id": "07",
+    "file": "designs/07-precision-instrument.html",
+    "name": "Precision Instrument",
+    "rationale": "Hairline rules, fine engineering type and cool greys with green; the restraint of a calibrated laboratory instrument."
+  },
+  {
+    "id": "08",
+    "file": "designs/08-bold-public-health.html",
+    "name": "Bold Public Health",
+    "rationale": "Poster-scale type and solid green blocks on white; built to be read on a district health officer's phone in sunlight."
+  },
+  {
+    "id": "09",
+    "file": "designs/09-minimal.html",
+    "name": "Minimal",
+    "rationale": "Radical restraint: one typeface, one accent, no decoration; the content carries everything through spacing and rhythm."
+  },
+  {
+    "id": "10",
+    "file": "designs/10-diagram-first.html",
+    "name": "Diagram-First",
+    "rationale": "Every section anchored by an explanatory SVG diagram — workflow, assay, throughput — the site as an illustrated explainer."
+  },
+  {
+    "id": "11",
+    "file": "designs/11-warm-institutional.html",
+    "name": "Warm Institutional",
+    "rationale": "Muted green and gold with serif headings and prominent credentials; the settled confidence of an established research institute."
+  },
+  {
+    "id": "12",
+    "file": "designs/12-motion-depth.html",
+    "name": "Motion & Depth",
+    "rationale": "Layered light surfaces, soft shadows and gentle lift on scroll; a modern SaaS feel that stays bright and clinical."
+  }
+]
