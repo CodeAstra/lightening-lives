@@ -23,7 +23,10 @@ block in `index.html` (served over HTTP, only `manifest.json` matters).
 
 - **Real:** all copy, the eight differentiators, the tagline, the team / patron / advisor
   names, the collaborating organisations, both addresses, phone and email — all taken from the
-  approved brief and the current staging site's approved data.
+  approved brief and the current staging site's approved data. The company logo is the real
+  brand mark (embedded from the repo's brand assets; every header and footer carries the sun
+  mark, and design 11's hero uses the full lockup). SVG originals and the exact brand green
+  remain open item 8 of the brief — the embedded PNGs can be swapped for vectors when supplied.
 - **Placeholder:** every image (grey/duotone SVG blocks — real field and lab photography goes
   here), the partner logos (shown as text wordmarks until vector logos arrive), the three
   "Latest updates" items (illustrative titles and dates), and the enquiry form (a visual
