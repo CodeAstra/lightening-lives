@@ -70,5 +70,29 @@
     "file": "designs/12-motion-depth.html",
     "name": "Motion & Depth",
     "rationale": "Layered light surfaces, soft shadows and gentle lift on scroll; a modern SaaS feel that stays bright and clinical."
+  },
+  {
+    "id": "13",
+    "file": "designs/13-enterprise-trust.html",
+    "name": "Enterprise Trust",
+    "rationale": "Agent-directed via ui-ux-pro-max ('molecular diagnostics B2B' → Trust & Authority system): navy-and-sky enterprise palette, Lexend headings, and a credential proof bar directly after the hero — certifications before product, the order a lab director actually evaluates in."
+  },
+  {
+    "id": "14",
+    "file": "designs/14-soft-clinic.html",
+    "name": "Soft Clinic",
+    "rationale": "Agent-directed via ui-ux-pro-max ('medical device manufacturer' → Neumorphism, tempered for AA): a calm cyan monochrome ground with softly embossed surfaces and pill controls — the tactile, instrument-like calm of a well-made medical device, with text contrast kept clinical."
+  },
+  {
+    "id": "15",
+    "file": "designs/15-glasshouse.html",
+    "name": "Glasshouse",
+    "rationale": "Agent-directed via ui-ux-pro-max ('biotech genomics research platform' → light Glassmorphism + scroll-storytelling): frosted panels over soft sky-and-green colour fields, Exo headings with mono chapter annotations, the page read as a numbered narrative — fully legible with scrolling effects off."
+  },
+  {
+    "id": "16",
+    "file": "designs/16-operations-console.html",
+    "name": "Operations Console",
+    "rationale": "Agent-directed via ui-ux-pro-max ('field operations logistics at scale' → Real-Time/Operations landing): a screening operation rendered as a working console — metrics band straight after the hero, mono status chips, the 24-hour protocol as a tracked timeline — in a tracking-blue and delivery-orange utility palette."
   }
 ]

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lightening Lives — 12 design options</title>
-<meta name="description" content="Comparison page for the 12 home-page design options for the Lightening Lives website redesign.">
+<title>Lightening Lives — 16 design options</title>
+<meta name="description" content="Comparison page for the 16 home-page design options for the Lightening Lives website redesign.">
 <style>
   :root {
     --ink: #141a1e;
@@ -123,6 +123,9 @@
     <button type="button" data-w="820"  aria-pressed="false">Tablet</button>
     <button type="button" data-w="full" aria-pressed="true">Desktop</button>
   </span>
+  <span class="picker">
+    <select id="palette" aria-label="Apply a palette (designs 13–16)" title="Applies to designs 13–16, which share a palette-variable contract"></select>
+  </span>
   <span class="rationale" id="rationale"></span>
   <span class="hint">← → switch designs</span>
 </header>
@@ -146,7 +149,25 @@
   { "id": "09", "file": "designs/09-minimal.html",              "name": "Minimal",              "rationale": "Radical restraint: one typeface, one accent, no decoration; the content carries everything through spacing and rhythm." },
   { "id": "10", "file": "designs/10-diagram-first.html",        "name": "Diagram-First",        "rationale": "Every section anchored by an explanatory SVG diagram — workflow, assay, throughput — the site as an illustrated explainer." },
   { "id": "11", "file": "designs/11-warm-institutional.html",   "name": "Warm Institutional",   "rationale": "Muted green and gold with serif headings and prominent credentials; the settled confidence of an established research institute." },
-  { "id": "12", "file": "designs/12-motion-depth.html",         "name": "Motion & Depth",       "rationale": "Layered light surfaces, soft shadows and gentle lift on scroll; a modern SaaS feel that stays bright and clinical." }
+  { "id": "12", "file": "designs/12-motion-depth.html",         "name": "Motion & Depth",       "rationale": "Layered light surfaces, soft shadows and gentle lift on scroll; a modern SaaS feel that stays bright and clinical." },
+  { "id": "13", "file": "designs/13-enterprise-trust.html",     "name": "Enterprise Trust",     "rationale": "Agent-directed via ui-ux-pro-max ('molecular diagnostics B2B' → Trust & Authority system): navy-and-sky enterprise palette, Lexend headings, and a credential proof bar directly after the hero — certifications before product, the order a lab director actually evaluates in." },
+  { "id": "14", "file": "designs/14-soft-clinic.html",          "name": "Soft Clinic",          "rationale": "Agent-directed via ui-ux-pro-max ('medical device manufacturer' → Neumorphism, tempered for AA): a calm cyan monochrome ground with softly embossed surfaces and pill controls — the tactile, instrument-like calm of a well-made medical device, with text contrast kept clinical." },
+  { "id": "15", "file": "designs/15-glasshouse.html",           "name": "Glasshouse",           "rationale": "Agent-directed via ui-ux-pro-max ('biotech genomics research platform' → light Glassmorphism + scroll-storytelling): frosted panels over soft sky-and-green colour fields, Exo headings with mono chapter annotations, the page read as a numbered narrative — fully legible with scrolling effects off." },
+  { "id": "16", "file": "designs/16-operations-console.html",   "name": "Operations Console",   "rationale": "Agent-directed via ui-ux-pro-max ('field operations logistics at scale' → Real-Time/Operations landing): a screening operation rendered as a working console — metrics band straight after the hero, mono status chips, the 24-hour protocol as a tracked timeline — in a tracking-blue and delivery-orange utility palette." }
+]
+</script>
+
+<!-- Fallback copy of palettes.json for file:// viewing. The palette switcher
+     applies these shared variables (postMessage) to designs built on the
+     shared-variable contract (13-16); designs 01-12 predate it and keep their
+     own palette. When adding a palette, update palettes.json AND this block. -->
+<script type="application/json" id="palettes-fallback">
+[
+  { "id": "brand-green",        "label": "Brand Green — brief default",            "design": null, "vars": { "--bg": "#ffffff", "--bg-alt": "#f7f8f6", "--ink": "#141a1e", "--muted": "#5b6670", "--primary": "#1e6b4e", "--primary-ink": "#ffffff", "--accent": "#8a6116", "--line": "#e2e5e3" } },
+  { "id": "enterprise-trust",   "label": "13 · Enterprise Trust — navy & sky",     "design": "13", "vars": { "--bg": "#ffffff", "--bg-alt": "#f1f5f9", "--ink": "#0f172a", "--muted": "#475569", "--primary": "#0369a1", "--primary-ink": "#ffffff", "--accent": "#0f766e", "--line": "#e2e8f0" } },
+  { "id": "soft-clinic",        "label": "14 · Soft Clinic — calm cyan",           "design": "14", "vars": { "--bg": "#eaf4f8", "--bg-alt": "#f8fcfe", "--ink": "#123c4d", "--muted": "#43626f", "--primary": "#155e75", "--primary-ink": "#ffffff", "--accent": "#047857", "--line": "#cfe3ec" } },
+  { "id": "glasshouse",         "label": "15 · Glasshouse — sky & leaf",           "design": "15", "vars": { "--bg": "#ffffff", "--bg-alt": "#f0f7fc", "--ink": "#0c4a6e", "--muted": "#44647c", "--primary": "#075985", "--primary-ink": "#ffffff", "--accent": "#15803d", "--line": "#d3e3f0" } },
+  { "id": "operations-console", "label": "16 · Operations Console — blue & orange","design": "16", "vars": { "--bg": "#ffffff", "--bg-alt": "#eff6ff", "--ink": "#1e293b", "--muted": "#475569", "--primary": "#2563eb", "--primary-ink": "#ffffff", "--accent": "#c2410c", "--line": "#dbeafe" } }
 ]
 </script>
 
@@ -158,11 +179,65 @@
   var frame     = document.getElementById('frame');
   var stage     = document.getElementById('stage');
   var rationale = document.getElementById('rationale');
+  var palSelect = document.getElementById('palette');
   var designs   = [];
+  var palettes  = [];
 
   function fallbackManifest() {
     return JSON.parse(document.getElementById('manifest-fallback').textContent);
   }
+
+  function fallbackPalettes() {
+    return JSON.parse(document.getElementById('palettes-fallback').textContent);
+  }
+
+  // Palette switcher: sends the shared colour variables into the previewed
+  // design. Designs 13-16 listen and restyle; 01-12 predate the contract and
+  // simply ignore the message.
+  function initPalettes(list) {
+    palettes = list;
+    palSelect.innerHTML = '';
+    var d = document.createElement('option');
+    d.value = '-1';
+    d.textContent = 'Palette: design default';
+    palSelect.appendChild(d);
+    palettes.forEach(function (p, i) {
+      var opt = document.createElement('option');
+      opt.value = String(i);
+      opt.textContent = p.label;
+      palSelect.appendChild(opt);
+    });
+    // palettes.json and manifest.json load independently; if the design is
+    // already showing, point the dropdown at its palette now.
+    if (designs.length) syncPalette(designs[current()]);
+  }
+
+  function applyPalette() {
+    if (!frame.contentWindow) return;
+    var i = parseInt(palSelect.value || '-1', 10);
+    var pal = (i >= 0 && palettes[i]) ? palettes[i] : null;
+    frame.contentWindow.postMessage({ type: 'palette', vars: pal ? pal.vars : null }, '*');
+  }
+
+  // Each of designs 13-16 has a palette of its own in palettes.json (linked by
+  // the "design" field). When a design is shown, point the palette dropdown at
+  // that design's own palette so the selector reflects its default colours;
+  // 01-12 have no linked palette and show "design default".
+  function paletteIndexForDesign(d) {
+    if (!d) return -1;
+    for (var i = 0; i < palettes.length; i++) {
+      if (palettes[i].design === d.id) return i;
+    }
+    return -1;
+  }
+
+  function syncPalette(d) {
+    palSelect.value = String(paletteIndexForDesign(d));
+    applyPalette();
+  }
+
+  palSelect.addEventListener('change', applyPalette);
+  frame.addEventListener('load', applyPalette); // re-send after the new document is ready
 
   function init(list) {
     designs = list;
@@ -194,6 +269,7 @@
     rationale.textContent = d.id + ' ' + d.name + ' — ' + d.rationale;
     rationale.title = d.rationale;
     document.title = d.id + ' ' + d.name + ' — Lightening Lives design options';
+    syncPalette(d);
     if (pushHash !== false && location.hash !== '#' + d.id) {
       history.replaceState(null, '', '#' + d.id);
     }
@@ -207,7 +283,7 @@
   document.getElementById('next').addEventListener('click', function () { step(1); });
 
   window.addEventListener('keydown', function (e) {
-    if (e.target === select) return; // native arrow behaviour in the dropdown
+    if (e.target === select || e.target === palSelect) return; // native arrow behaviour in the dropdowns
     if (e.key === 'ArrowLeft')  { e.preventDefault(); step(-1); }
     if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
   });
@@ -230,6 +306,12 @@
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(init)
     .catch(function () { init(fallbackManifest()); });
+
+  // palettes.json over HTTP; embedded fallback on file://
+  fetch('palettes.json')
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(initPalettes)
+    .catch(function () { initPalettes(fallbackPalettes()); });
 })();
 </script>
 </body>

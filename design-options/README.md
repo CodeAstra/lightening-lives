@@ -1,9 +1,18 @@
-# Lightening Lives — 12 home-page design options
+# Lightening Lives — 16 home-page design options
 
-Twelve deliberately different aesthetic directions for the Lightening Lives home page, built
-against `website-details.md` (the source of truth). All twelve share the same approved copy,
+Sixteen deliberately different aesthetic directions for the Lightening Lives home page, built
+against `website-details.md` (the source of truth). All sixteen share the same approved copy,
 facts and section list — what changes between them is the visual direction. The goal of this
 round is to pick a direction, not a finished page.
+
+Designs **01–12** were built to directions specified in the brief round. Designs **13–16**
+were **agent-directed via the ui-ux-pro-max design-intelligence skill**: the agent queried its
+database under several industry framings ("molecular diagnostics B2B", "medical device
+manufacturer", "biotech genomics research platform", "field operations logistics at scale"),
+adopted the design system each framing returned — pattern, style, palette and font pairing —
+and rejected framings whose results collided with 01–12 or with the brief (a dark-OLED system
+and an entertainment-red system were discarded; two recommended font pairings were swapped for
+adjacent pairings from the same database to avoid reusing fonts from 01–12).
 
 ## How to review
 
@@ -18,6 +27,16 @@ The dropdown is populated from `manifest.json`. Because browsers block `fetch()`
 pages, `index.html` also carries an embedded copy of the manifest — when adding a design later,
 add the entry to `manifest.json` **and** to the fallback `<script type="application/json">`
 block in `index.html` (served over HTTP, only `manifest.json` matters).
+
+**Palette switcher:** the second dropdown applies any palette from `palettes.json` to the
+previewed design. Designs 13–16 are built on a shared colour-variable contract (`--bg`,
+`--bg-alt`, `--ink`, `--muted`, `--primary`, `--primary-ink`, `--accent`, `--line`; every
+colour in those files is derived from these eight variables), so any palette can be applied to
+any of their layouts. Designs 01–12 predate the contract and keep their own palette — the
+switcher leaves them unchanged. `palettes.json` carries the four new palettes plus the brief's
+brand-green default; all five pass WCAG AA (≥ 4.5:1) on every text/background pair the
+contract uses (body, secondary, links, button fills, accent labels and badge fills). Like the
+manifest, palettes have an embedded fallback block in `index.html` for `file://` viewing.
 
 ## What is real and what is placeholder
 
@@ -98,7 +117,42 @@ card, collection card, stat chip) drifts with gentle parallax over blurred colou
 differentiators sit in a bento grid, and every card lifts on hover with soft diffuse shadows.
 Glassy sticky nav; reduced-motion is fully respected. Instrument Sans.
 
-## Constraints honoured across all twelve
+## The four agent-directed directions (13–16)
+
+**13 · Enterprise Trust** — from the "molecular diagnostics B2B" query, which returned a
+*Trust & Authority + Conversion* system: proof before product. Navy ink and a sky-blue CTA on
+white and slate — the only navy design in the set — with a credential proof bar (ICMR, CCMB
+MOU, <24 h, 1,000/24 h) directly after the hero, because that is the order a lab director
+actually evaluates a vendor in. Sticky nav with a persistent Request-a-kit button, card grid
+for the differentiators, dark navy footer. Lexend + Source Sans 3 ("Corporate Trust" pairing —
+the system's recommended Plus Jakarta Sans was already used by design 06).
+
+**14 · Soft Clinic** — from the "medical device manufacturer" query, which returned a
+*Neumorphism* system: the tactile calm of a well-made medical instrument. A calm cyan
+monochrome ground where every component is softly embossed or carved into the same surface —
+pill buttons, inset step counters, gauge-like inset numbers — the only soft-UI and the only
+cyan design in the set. The style's known accessibility risk is tempered: text stays dark
+(AA everywhere), controls keep visible edges and focus rings. Varela Round + Nunito Sans
+("Soft Rounded" pairing — the recommended Figtree was already used by design 07).
+
+**15 · Glasshouse** — from the "biotech genomics research platform" query, which returned
+*Scroll-Triggered Storytelling* on light *Glassmorphism*. Frosted-glass panels float over soft
+sky-and-green colour fields; the page reads as a numbered narrative (Ch. 01–11 in mono
+annotations) with a thin reading-progress bar. The only translucent design in the set, and the
+narrative stays fully legible with scrolling effects off — reduced motion gets every chapter
+in its final state. Exo + Roboto Mono ("Science/Tech" pairing), with the mono reserved for
+chapter labels, spec tables and annotations rather than body copy.
+
+**16 · Operations Console** — from the "field operations logistics at scale" query, which
+returned a *Real-Time / Operations landing* system. The screening operation rendered as a
+working console: a mono system-bar strip, a metrics band straight after the hero (the
+pattern's "key indicators" slot doubles as the brief's Numbers section), a sample-pathway
+tracker card in the hero, the protocol as a tracked timeline, products as an indexed ledger
+and updates as a programme log. Tracking blue with delivery-orange status accents — nothing is
+labelled "live", per the pattern's own rule against unbacked telemetry. Fira Sans + Fira Code
+("Dashboard Data" pairing).
+
+## Constraints honoured across all sixteen
 
 Light palettes only (dark used only in footers, where at all); every word and number present in
 the HTML with JavaScript as enhancement only; self-contained single files with Google Fonts as
