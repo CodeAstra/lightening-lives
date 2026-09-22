@@ -30,6 +30,7 @@ const flag = (n, d) => (n in opts ? opts[n] : d);
 const has = n => opts[n] === true;
 const [fileArg, outDir] = positional;
 const [file, hash = ''] = (fileArg || '').split('#');   // index.html#03/daybreak is allowed
+const isRemote = /^https?:\/\//.test(file);            // also accepts an http(s) URL, to test a deployed copy
 if (!file || !outDir) { console.error('usage: shots.mjs <design.html> <out-dir> [options]'); process.exit(2); }
 
 const widths = flag('widths', '390,1280').split(',').map(Number);
@@ -91,7 +92,7 @@ async function load(width, height) {
     await Promise.race([blank, sleep(5000)]);
   }
   const loaded = once('Page.loadEventFired');
-  await send('Page.navigate', { url: pathToFileURL(path.resolve(file)).href + (hash ? '#' + hash : '') });
+  await send('Page.navigate', { url: (isRemote ? file : pathToFileURL(path.resolve(file)).href) + (hash ? '#' + hash : '') });
   await Promise.race([loaded, sleep(20000)]);
   if (hash) await sleep(1500);   // let an embedded design load inside the comparison page
   await evaluate('document.fonts ? document.fonts.ready.then(()=>true) : true');
