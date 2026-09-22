@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extraction-Free Genetic Screening Kits | Lightening Lives</title>
+<meta name="description" content="Extraction-free, blood-card-based genetic screening kits for laboratories, hospitals and public-health programmes. One drop. Results in under 24 hours.">
+<meta name="robots" content="noindex">
+<meta name="design-rationale" content="Assurance follows the ui-ux-pro-max system for a medical device manufacturer: a Trust and Authority page in the Accessible and Ethical style with Soft UI depth — white cards on a mint ground, 10 to 12px radii, 3px focus rings, Figtree over Noto Sans. Credentials are the proof and sit first: contact details in a two-tier header, and ICMR, CCMB and capacity cards over the hero image. Medical teal (darkened from the database value to pass AA) with an aqua light accent is calm and clinical — the register a laboratory director expects from a manufacturer whose claims can be checked.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* palette:start */
+:root{
+  --bg:#F0FDFA;
+  --bg-alt:#FFFFFF;
+  --ink:#134E4A;
+  --muted:#475569;
+  --primary:#0F766E;
+  --primary-ink:#FFFFFF;
+  --accent:#22D3EE;
+  --line:#C5EDE7;
+}
+/* palette:end */
+
+/* Company logo. The mark is a fixed brand asset and deliberately does NOT recolour with
+   the palette; the wordmark beside it is typeset, so it takes the design's own type and ink. */
+:root{--mark:url("data:image/png;base64,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")}
+.ll-mark{width:34px;height:34px;flex:none;background:var(--mark) center/contain no-repeat}
+
+:root{
+  --font-head:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-body:"Noto Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --gutter:clamp(20px,4vw,40px);
+  --r-sm:8px;
+  --r-md:10px;
+  --r-lg:12px;
+  --r-xl:16px;
+  --tint:color-mix(in srgb,var(--primary) 7%,var(--bg-alt));
+  --tint-strong:color-mix(in srgb,var(--primary) 13%,var(--bg-alt));
+  --shadow-sm:0 1px 2px color-mix(in srgb,var(--ink) 7%,transparent),0 2px 8px color-mix(in srgb,var(--ink) 5%,transparent);
+  --shadow-md:0 1px 2px color-mix(in srgb,var(--ink) 7%,transparent),0 10px 28px color-mix(in srgb,var(--ink) 9%,transparent);
+  --shadow-lg:0 2px 4px color-mix(in srgb,var(--ink) 7%,transparent),0 18px 44px color-mix(in srgb,var(--ink) 13%,transparent);
+  --bar-h:56px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--bar-h) + 16px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--font-body);-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
+h1,h2,h3,h4{font-family:var(--font-head);color:var(--ink);margin:0;text-wrap:balance}
+h1{font-size:clamp(2.375rem,1.55rem + 3.5vw,3.875rem);line-height:1.04;font-weight:700;letter-spacing:-.025em}
+h2{font-size:clamp(1.75rem,1.35rem + 1.7vw,2.5rem);line-height:1.12;font-weight:700;letter-spacing:-.02em}
+h3{font-size:1.1875rem;line-height:1.3;font-weight:600;letter-spacing:-.005em}
+h4{font-size:1.0625rem;line-height:1.3;font-weight:600}
+p{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+a{color:var(--primary);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+svg{display:block}
+address{font-style:normal}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:4px}
+.wrap{width:min(100% - 2*var(--gutter),1200px);margin-inline:auto}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:12px;top:-64px;z-index:100;padding:12px 18px;border-radius:var(--r-md);background:var(--primary);color:var(--primary-ink);font:600 1rem/1 var(--font-head);text-decoration:none}
+.skip-link:focus{top:12px}
+.icon{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:.7rem 1.375rem;border:1.5px solid transparent;border-radius:var(--r-md);font:600 1rem/1.2 var(--font-head);text-decoration:none;cursor:pointer;transition:background-color .2s ease,border-color .2s ease,box-shadow .2s ease}
+.btn--primary{background:var(--primary);color:var(--primary-ink);box-shadow:var(--shadow-sm)}
+.btn--primary:hover{background:color-mix(in srgb,var(--primary) 86%,var(--ink));box-shadow:var(--shadow-md)}
+.btn--secondary{background:var(--bg-alt);color:var(--primary);border-color:var(--primary)}
+.btn--secondary:hover{background:var(--tint)}
+.btn--sm{min-height:44px;padding:.5rem 1.125rem;font-size:.9375rem}
+.btn:focus-visible{border-radius:var(--r-md)}
+.text-link{display:inline-flex;align-items:center;gap:.375rem;min-height:44px;font:600 1rem/1.3 var(--font-head);color:var(--primary);text-decoration:none}
+.text-link:hover{text-decoration:underline;text-decoration-thickness:2px}
+.text-link .icon{width:18px;height:18px;transition:transform .2s ease}
+.text-link:hover .icon{transform:translateX(3px)}
+
+/* header: two tiers */
+.utility{background:var(--tint-strong);border-bottom:1px solid var(--line);font-size:.875rem;color:var(--ink)}
+.utility__in{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:44px}
+.utility__note{color:var(--ink)}
+.utility__contact{display:flex;align-items:center;gap:8px 24px}
+.utility__contact a{display:inline-flex;align-items:center;gap:.4375rem;min-height:44px;color:var(--ink);font-weight:600;text-decoration:none;white-space:nowrap}
+.utility__contact a:hover{text-decoration:underline}
+.utility__contact .icon{width:16px;height:16px;color:var(--primary)}
+.mainbar{background:var(--bg-alt);border-bottom:1px solid var(--line)}
+.mainbar__in{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:72px;flex-wrap:wrap}
+.brand{display:inline-flex;align-items:center;gap:.625rem;min-height:44px;color:var(--ink);text-decoration:none;font:700 1.25rem/1 var(--font-head);letter-spacing:-.015em}
+
+
+
+.primary-nav{display:flex;align-items:center;gap:8px 28px}
+.primary-nav ul{display:flex;align-items:center;gap:4px}
+.primary-nav li a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:var(--r-sm);color:var(--ink);font:500 .9688rem/1 var(--font-head);text-decoration:none;transition:background-color .2s ease,color .2s ease}
+.primary-nav li a:hover{background:var(--tint);color:var(--primary)}
+.menu-btn{display:none;align-items:center;gap:.5rem;min-height:44px;padding:0 14px;border:1.5px solid var(--primary);border-radius:var(--r-md);background:var(--bg-alt);color:var(--primary);font:600 .9375rem/1 var(--font-head);cursor:pointer}
+.menu-btn .icon--close{display:none}
+.menu-btn[aria-expanded="true"] .icon--open{display:none}
+.menu-btn[aria-expanded="true"] .icon--close{display:block}
+
+/* sticky "On this page" bar */
+.onpage{position:sticky;top:0;z-index:40;background:var(--bg-alt);background:color-mix(in srgb,var(--bg-alt) 94%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);box-shadow:0 6px 18px color-mix(in srgb,var(--ink) 5%,transparent)}
+.onpage__in{display:flex;align-items:center;gap:20px;min-height:var(--bar-h)}
+.onpage__label{flex:none;font:600 .8125rem/1 var(--font-head);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.onpage__scroll{flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,var(--ink) calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,var(--ink) calc(100% - 28px),transparent)}
+.onpage__scroll::-webkit-scrollbar{display:none}
+.onpage__list{display:flex;gap:2px;width:max-content;padding:6px 28px 6px 3px}
+.onpage__list a{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 13px;border-radius:var(--r-sm);color:var(--muted);font:500 .9375rem/1 var(--font-head);text-decoration:none;white-space:nowrap;transition:color .2s ease,background-color .2s ease}
+.onpage__list a:hover{color:var(--primary);background:var(--tint)}
+.onpage__list a[aria-current="true"]{color:var(--primary);font-weight:700;background:var(--tint)}
+.onpage__list a[aria-current="true"]::after{content:"";position:absolute;left:13px;right:13px;bottom:5px;height:2px;border-radius:2px;background:var(--primary)}
+.onpage__list a:focus-visible{outline-offset:-3px;border-radius:var(--r-sm)}
+.onpage__cta{flex:none}
+
+/* sections */
+.section{padding-block:clamp(52px,6.2vw,84px);scroll-margin-top:8px}
+.section--band{background:var(--bg-alt);border-block:1px solid var(--line)}
+.section--tint{background:var(--tint);border-top:1px solid var(--line)}
+.sec-head{max-width:46rem;margin-bottom:clamp(28px,3.4vw,44px)}
+.sec-head h2+p{margin-top:16px}
+.lede{font-size:1.125rem;line-height:1.6;color:var(--muted)}
+.sec-foot{margin-top:24px}
+.card{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.section--band .card{background:var(--bg);box-shadow:none}
+
+/* image placeholders */
+.ph{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--tint);background:linear-gradient(155deg,color-mix(in srgb,var(--primary) 11%,var(--bg-alt)),color-mix(in srgb,var(--accent) 16%,var(--bg-alt)))}
+.ph .art{position:absolute;inset:0;width:100%;height:100%}
+figure{margin:0}
+figcaption{margin-top:12px;font-size:.8438rem;line-height:1.45;color:var(--muted)}
+.a-surface{fill:color-mix(in srgb,var(--primary) 10%,var(--bg-alt))}
+.a-paper{fill:var(--bg-alt);stroke:color-mix(in srgb,var(--primary) 30%,var(--bg-alt));stroke-width:1.5}
+.a-band{fill:color-mix(in srgb,var(--primary) 17%,var(--bg-alt))}
+.a-ring{fill:none;stroke:color-mix(in srgb,var(--primary) 48%,var(--bg-alt));stroke-width:1.5;stroke-dasharray:4 4}
+.a-spot{fill:color-mix(in srgb,var(--primary) 72%,var(--ink))}
+.a-rule{fill:none;stroke:color-mix(in srgb,var(--primary) 22%,var(--bg-alt));stroke-width:2;stroke-linecap:round}
+.a-plate{fill:color-mix(in srgb,var(--primary) 5%,var(--bg-alt));stroke:color-mix(in srgb,var(--primary) 32%,var(--bg-alt));stroke-width:1.5}
+.a-well{fill:var(--bg-alt);stroke:color-mix(in srgb,var(--primary) 34%,var(--bg-alt));stroke-width:1.25}
+.a-well-on{fill:color-mix(in srgb,var(--primary) 46%,var(--bg-alt))}
+.a-sun{fill:color-mix(in srgb,var(--accent) 42%,var(--bg-alt))}
+.a-hill-1{fill:color-mix(in srgb,var(--primary) 12%,var(--bg-alt))}
+.a-hill-2{fill:color-mix(in srgb,var(--primary) 21%,var(--bg-alt))}
+.a-hill-3{fill:color-mix(in srgb,var(--primary) 33%,var(--bg-alt))}
+.a-tube{fill:color-mix(in srgb,var(--bg-alt) 70%,transparent);stroke:color-mix(in srgb,var(--primary) 38%,var(--bg-alt));stroke-width:1.5}
+.a-liquid{fill:color-mix(in srgb,var(--accent) 38%,var(--bg-alt))}
+
+/* hero */
+.hero{position:relative;padding-block:clamp(36px,5vw,72px) clamp(28px,3vw,40px);background:radial-gradient(58% 64% at 88% 8%,color-mix(in srgb,var(--accent) 15%,transparent),transparent 72%),radial-gradient(46% 60% at 100% 70%,color-mix(in srgb,var(--primary) 9%,transparent),transparent 72%)}
+.hero__grid{display:grid;grid-template-columns:minmax(0,6.3fr) minmax(0,5.7fr);gap:clamp(32px,4.5vw,64px);align-items:center}
+.eyebrow{font:600 .8125rem/1.3 var(--font-head);letter-spacing:.08em;text-transform:uppercase;color:var(--primary)}
+.hero h1{margin-top:18px}
+.tagline{position:relative;margin-top:22px;padding-left:18px;font:600 clamp(1.3125rem,1.1rem + .8vw,1.625rem)/1.2 var(--font-head);color:var(--primary);letter-spacing:-.01em}
+.tagline::before{content:"";position:absolute;left:0;top:.12em;bottom:.12em;width:4px;border-radius:4px;background:var(--accent)}
+.hero__sub{margin-top:18px;max-width:34rem;font-size:1.1875rem;line-height:1.6;color:var(--muted)}
+.hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero-facts{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:8px 36px;margin:36px 0 0;padding-top:22px;border-top:1px solid var(--line)}
+.hero-facts div{min-width:0}
+.hero-facts dt{font:600 .75rem/1.3 var(--font-head);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.hero-facts dd{margin:5px 0 0;font:600 1rem/1.35 var(--font-head);color:var(--ink)}
+.hero-fig{position:relative;padding:34px 38px 0 46px}
+.hero-fig .ph{aspect-ratio:1/1.12}
+.hero-fig figcaption{max-width:48%;margin-left:auto;text-align:right}
+.creds{display:block}
+.cred{position:absolute;z-index:2;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center;width:max-content;max-width:272px;padding:14px 18px 14px 14px;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-lg)}
+.cred__seal{display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-md);background:var(--tint-strong);color:var(--primary)}
+.cred__seal .icon{width:24px;height:24px}
+.cred strong{display:block;font:700 1rem/1.25 var(--font-head);color:var(--ink)}
+.cred span{display:block;margin-top:2px;font-size:.8125rem;line-height:1.4;color:var(--muted)}
+.cred--1{top:0;left:0}
+.cred--2{top:43%;right:0}
+.cred--3{bottom:22px;left:14px}
+.proof{display:flex;flex-wrap:wrap;align-items:center;gap:6px 28px;margin-top:clamp(36px,4.5vw,60px);padding-top:22px;border-top:1px solid var(--line)}
+.proof__label{font:600 .8125rem/1.3 var(--font-head);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.proof__list{display:flex;flex-wrap:wrap;gap:4px 28px;flex:1}
+.proof__list li{font:600 1rem/1.5 var(--font-head);color:var(--ink)}
+.proof .text-link{margin-left:auto}
+
+/* description */
+.about{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:clamp(24px,4vw,56px);align-items:start;padding:clamp(26px,3.6vw,48px);border-left:5px solid var(--primary);border-radius:var(--r-lg)}
+.about h2{font:600 .8125rem/1.3 var(--font-head);letter-spacing:.08em;text-transform:uppercase;color:var(--primary);margin-bottom:16px}
+.about__statement{font:500 clamp(1.25rem,1.05rem + .85vw,1.625rem)/1.42 var(--font-head);color:var(--ink);letter-spacing:-.01em;text-wrap:pretty}
+.about__side{padding-top:calc(.8125rem*1.3 + 16px);color:var(--muted)}
+.about__side .text-link{margin-top:10px}
+
+/* why */
+.why-panel{overflow:hidden}
+.why-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.why-item{display:grid;grid-template-columns:32px minmax(0,1fr);gap:16px;padding:26px clamp(20px,3vw,36px);border-top:1px solid var(--line)}
+.why-item:nth-child(-n+2){border-top:0}
+.why-item:nth-child(odd){border-right:1px solid var(--line)}
+.why-item .icon{width:28px;height:28px;margin-top:1px;color:var(--primary)}
+.why-item p{margin-top:6px;color:var(--muted);font-size:1rem;line-height:1.6}
+
+/* products */
+.kits{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,4.5vw,64px);align-items:start}
+.kits__aside{position:sticky;top:calc(var(--bar-h) + 28px)}
+.kits__aside .sec-head{margin-bottom:28px}
+.flagship{position:relative;overflow:hidden;padding:26px 26px 28px;border-top:4px solid var(--primary);box-shadow:var(--shadow-md)}
+.flagship__top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.seal-badge{display:inline-flex;align-items:center;gap:.4375rem;padding:6px 12px 6px 8px;border:1px solid color-mix(in srgb,var(--primary) 40%,var(--bg-alt));border-radius:var(--r-sm);background:var(--tint);color:var(--primary);font:700 .875rem/1.2 var(--font-head)}
+.seal-badge .icon{width:20px;height:20px}
+.gene{flex:none;padding:4px 9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--muted);font:600 .75rem/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em;white-space:nowrap}
+.flagship h3{font-size:1.4375rem;line-height:1.2;letter-spacing:-.015em}
+.flagship p{margin-top:10px;color:var(--muted)}
+.flagship .btn{margin-top:22px}
+.kit-rows{display:grid;gap:12px}
+.kit-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px 18px;align-items:center;padding:18px 20px 18px 22px;transition:box-shadow .2s ease,border-color .2s ease}
+.kit-row:hover{border-color:color-mix(in srgb,var(--primary) 45%,var(--bg-alt));box-shadow:var(--shadow-md)}
+.kit-row h3{font-size:1.125rem}
+.kit-row h3 a{color:var(--ink);text-decoration:none}
+.kit-row h3 a::after{content:"";position:absolute;inset:0;border-radius:var(--r-lg)}
+.kit-row h3 a:focus-visible{outline:none}
+.kit-row h3 a:focus-visible::after{outline:3px solid var(--primary);outline-offset:2px}
+.kit-row p{margin-top:3px;color:var(--muted);font-size:.9688rem;line-height:1.5}
+.kit-row__cta{display:inline-flex;align-items:center;gap:.25rem;color:var(--primary);font:600 .9375rem/1 var(--font-head);white-space:nowrap}
+.kit-row__cta .icon{width:18px;height:18px;transition:transform .2s ease}
+.kit-row:hover .kit-row__cta .icon{transform:translateX(3px)}
+
+/* how it works */
+.how{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,4.5vw,64px);align-items:start}
+.how__fig{position:sticky;top:calc(var(--bar-h) + 28px)}
+.how__fig .ph{aspect-ratio:1/1.08}
+.stepper{position:relative}
+.step{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr);gap:20px;padding-bottom:30px}
+.step:last-child{padding-bottom:0}
+.step::before{content:"";position:absolute;left:23px;top:52px;bottom:4px;width:2px;border-radius:2px;background:var(--line);background:linear-gradient(var(--primary),color-mix(in srgb,var(--primary) 25%,var(--bg-alt)))}
+.step:last-child::before{display:none}
+.step__n{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--bg-alt);border:2px solid var(--primary);color:var(--primary);font:700 1.125rem/1 var(--font-head);box-shadow:var(--shadow-sm)}
+.step:last-child .step__n{background:var(--primary);color:var(--primary-ink)}
+.step__body{padding-top:9px}
+.step__body p{margin-top:6px;color:var(--muted)}
+.note{display:grid;grid-template-columns:24px minmax(0,1fr);gap:14px;margin-top:32px;padding:20px 22px;border-radius:var(--r-lg);background:var(--tint);border:1px solid var(--line);font-size:.9688rem;line-height:1.6;color:var(--ink)}
+.note .icon{width:22px;height:22px;margin-top:2px;color:var(--primary)}
+.note strong{font-family:var(--font-head);font-weight:600}
+
+/* numbers */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.stat{padding:24px 24px 26px;border-top:4px solid var(--primary)}
+.stat__n{font:700 clamp(2.25rem,1.6rem + 2.3vw,3.25rem)/1 var(--font-head);letter-spacing:-.03em;color:var(--ink);font-variant-numeric:tabular-nums}
+.stat__l{margin-top:14px;font:600 1rem/1.35 var(--font-head);color:var(--ink)}
+.stat__s{margin-top:4px;font-size:.875rem;line-height:1.45;color:var(--muted)}
+.stat--tbc{border:1.5px dashed color-mix(in srgb,var(--muted) 55%,var(--bg-alt));border-top-width:1.5px;background:transparent}
+.section--band .stat--tbc{background:transparent}
+.stat--tbc .stat__n{color:var(--muted);font-weight:600;letter-spacing:0}
+
+/* collaborations */
+.cred-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.cred-card{display:grid;grid-template-columns:56px minmax(0,1fr);gap:20px;padding:26px 28px}
+.cred-card__seal{display:grid;place-items:center;width:56px;height:56px;border-radius:var(--r-lg);background:var(--primary);color:var(--primary-ink)}
+.cred-card__seal .icon{width:32px;height:32px}
+.cred-card p{margin-top:8px;color:var(--muted)}
+.logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.logo{display:grid;place-items:center;min-height:84px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--bg-alt);text-align:center;font:600 .9688rem/1.3 var(--font-head);color:var(--ink);text-wrap:balance}
+
+/* audiences */
+.aud{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.aud-card{display:flex;flex-direction:column;overflow:hidden}
+.aud-card .ph{aspect-ratio:16/6.4;border:0;border-bottom:1px solid var(--line);border-radius:0}
+.aud-card figcaption{margin:0;padding:10px 28px 0;font-size:.8125rem}
+.aud-card__body{display:flex;flex-direction:column;flex:1;padding:22px 28px 28px}
+.aud-card__body>p{margin-top:10px;color:var(--muted)}
+.checks{display:grid;gap:10px;margin:20px 0 26px}
+.checks li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;font-weight:500;line-height:1.5}
+.checks .icon{width:20px;height:20px;margin-top:3px;color:var(--primary)}
+.aud-card .btn{align-self:flex-start;margin-top:auto}
+
+/* team */
+.group-title{margin:0 0 16px;font:600 .8125rem/1.3 var(--font-head);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.founders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.person{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;padding:24px}
+.avatar{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:var(--tint-strong);border:1px solid var(--line);color:var(--primary);font:700 1.125rem/1 var(--font-head);letter-spacing:.02em}
+.role{margin-top:3px;font:600 .9063rem/1.4 var(--font-head);color:var(--primary)}
+.person p:not(.role){margin-top:8px;color:var(--muted);font-size:.9688rem;line-height:1.55}
+.patrons{margin-top:20px;padding:clamp(22px,3vw,32px);border-radius:var(--r-lg);background:var(--tint-strong);border:1px solid color-mix(in srgb,var(--primary) 28%,var(--bg-alt))}
+.patrons .group-title{color:var(--ink)}
+.patrons__list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.patron{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;align-items:center;padding:16px 18px;border-radius:var(--r-md);background:var(--bg-alt);border:1px solid var(--line)}
+.patron .avatar{width:52px;height:52px;font-size:1rem}
+.patron .role{color:var(--muted);font-weight:500}
+.staff{margin-top:32px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:grid;grid-template-columns:36px auto;gap:10px;align-items:center;padding:8px 18px 8px 8px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--bg-alt)}
+.chip .avatar{width:36px;height:36px;font-size:.75rem}
+.chip strong{display:block;font:600 .9375rem/1.25 var(--font-head);color:var(--ink)}
+.chip span span{display:block;font-size:.8125rem;line-height:1.3;color:var(--muted)}
+
+/* updates */
+.updates{overflow:hidden}
+.update{position:relative;display:grid;grid-template-columns:minmax(0,11.5rem) minmax(0,1fr) auto;gap:8px 28px;align-items:center;padding:22px clamp(20px,3vw,32px);border-top:1px solid var(--line);transition:background-color .2s ease}
+.update:first-child{border-top:0}
+.update:hover{background:var(--tint)}
+.tag{justify-self:start;padding:5px 10px;border-radius:6px;background:var(--tint-strong);color:var(--ink);font:600 .8125rem/1.2 var(--font-head)}
+.update__meta{display:grid;gap:8px;justify-items:start}
+.update__date{font-size:.875rem;color:var(--muted)}
+.update h3 a{color:var(--ink);text-decoration:none}
+.update h3 a::after{content:"";position:absolute;inset:0}
+.update h3 a:focus-visible{outline:none}
+.update h3 a:focus-visible::after{outline:3px solid var(--primary);outline-offset:-3px}
+.update__go{color:var(--primary)}
+.update__go .icon{transition:transform .2s ease}
+.update:hover .update__go .icon{transform:translateX(3px)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,3.5vw,48px);align-items:start}
+.form-card{padding:clamp(24px,3.4vw,40px);box-shadow:var(--shadow-md)}
+.form-card h3{font-size:1.3125rem}
+.form-card>p{margin-top:6px;color:var(--muted);font-size:.9688rem}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 20px;margin-top:24px}
+.field--full{grid-column:1/-1}
+label{display:block;margin-bottom:7px;font:600 .9375rem/1.3 var(--font-head);color:var(--ink)}
+label small{font:400 .8438rem/1 var(--font-body);color:var(--muted)}
+input,select,textarea{display:block;width:100%;min-height:48px;padding:11px 14px;border:1.5px solid var(--muted);border-radius:var(--r-md);background:var(--bg-alt);color:var(--ink);font:400 1rem/1.4 var(--font-body);transition:border-color .2s ease,box-shadow .2s ease}
+textarea{min-height:132px;resize:vertical}
+select{appearance:none;-webkit-appearance:none;padding-right:42px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 21px) 21px,calc(100% - 15px) 21px;background-size:6px 6px;background-repeat:no-repeat}
+input:hover,select:hover,textarea:hover{border-color:var(--primary)}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--primary);outline-offset:1px;border-color:var(--primary);border-radius:var(--r-md)}
+[aria-invalid="true"]{border-color:var(--ink);border-width:2.5px}
+.field-error{display:flex;gap:6px;margin-top:7px;font-size:.9063rem;font-weight:600;line-height:1.4;color:var(--ink)}
+.field-error::before{content:"";flex:none;width:4px;border-radius:4px;background:var(--ink)}
+.form-errors{margin-top:22px;padding:18px 20px;border:2.5px solid var(--ink);border-radius:var(--r-md);background:var(--bg)}
+.form-errors h4{margin-bottom:8px}
+.form-errors li{margin-top:4px}
+.form-errors a{color:var(--ink);font-weight:600}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:26px}
+.form-foot p{flex:1;min-width:15rem;font-size:.875rem;line-height:1.5;color:var(--muted)}
+.info{display:grid;gap:12px}
+.info-card{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;padding:18px 20px}
+.info-card__icon{display:grid;place-items:center;width:44px;height:44px;border-radius:var(--r-md);background:var(--tint-strong);color:var(--primary)}
+.info-card h3{font-size:.9375rem;color:var(--muted);font-weight:600}
+.info-card__value{margin-top:3px;font:600 1.0625rem/1.4 var(--font-head)}
+.info-card__value a{display:inline-flex;align-items:center;min-height:32px;color:var(--ink);text-decoration-color:color-mix(in srgb,var(--primary) 60%,var(--bg-alt))}
+.info-card address{margin-top:4px;font-size:.9688rem;line-height:1.55;color:var(--ink)}
+.info-card .text-link{min-height:36px;margin-top:4px;font-size:.9375rem}
+.families{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;margin-top:4px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--r-md);font-size:.9063rem;line-height:1.55;color:var(--muted)}
+.families .icon{margin-top:2px;color:var(--primary)}
+.families strong{color:var(--ink);font-family:var(--font-head);font-weight:600}
+
+/* footer */
+.site-footer{background:var(--bg-alt);border-top:1px solid var(--line);padding-block:clamp(44px,5vw,64px) 28px;font-size:.9688rem}
+.footer-grid{display:grid;grid-template-columns:minmax(0,4fr) repeat(3,minmax(0,2.4fr));gap:36px clamp(24px,3vw,48px)}
+.footer-brand p{margin-top:14px;max-width:22rem;color:var(--muted)}
+.social{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:14px}
+.site-footer h3{margin-bottom:10px;font:600 .8125rem/1.3 var(--font-head);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.footer-links a,.social a{display:inline-flex;align-items:center;min-height:36px;color:var(--ink);text-decoration:none}
+.footer-links a:hover,.social a:hover{color:var(--primary);text-decoration:underline}
+.footer-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-size:.875rem;color:var(--muted)}
+
+/* reveal (only when JS is running and motion is allowed) */
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .js .reveal{opacity:0;transform:translateY(12px);transition:opacity .3s ease,transform .3s ease}
+  .js .reveal.is-in{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important;scroll-behavior:auto !important}
+}
+
+/* responsive */
+@media (max-width:1080px){
+  .onpage__cta{display:none}
+  .patrons__list{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:999px){
+  .hero__grid{grid-template-columns:minmax(0,1fr)}
+  .hero__visual{max-width:620px}
+  .kits,.how,.contact{grid-template-columns:minmax(0,1fr)}
+  .kits__aside,.how__fig{position:static}
+  .how__fig .ph{aspect-ratio:16/9}
+  .about{grid-template-columns:minmax(0,1fr)}
+  .about__side{padding-top:0}
+  .footer-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .footer-brand{grid-column:1/-1}
+}
+@media (max-width:959px){
+  .menu-btn{display:inline-flex}
+  .primary-nav{flex-basis:100%;flex-direction:column;align-items:stretch;gap:12px;padding:4px 0 20px}
+  .primary-nav ul{flex-direction:column;align-items:stretch;gap:0}
+  .primary-nav li a{min-height:48px;padding:0 4px;border-radius:0;border-bottom:1px solid var(--line);font-size:1.0625rem}
+  .js .primary-nav{display:none}
+  .js .primary-nav.is-open{display:flex}
+  .mainbar__in{min-height:64px}
+}
+@media (max-width:760px){
+  .utility__note,.onpage__label{display:none}
+  .utility__in{justify-content:center}
+  .why-list,.cred-cards,.aud,.founders{grid-template-columns:minmax(0,1fr)}
+  .why-item:nth-child(odd){border-right:0}
+  .why-item:nth-child(2){border-top:1px solid var(--line)}
+  .update{grid-template-columns:minmax(0,1fr) auto}
+  .update__meta{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+  .kit-row{grid-template-columns:minmax(0,1fr) auto}
+  .kit-row .gene{grid-row:2;justify-self:start}
+  .kit-row__cta{grid-column:2;grid-row:1/span 2}
+  .kit-row__cta span{display:none}
+  .hero-facts{grid-template-columns:minmax(0,1fr);gap:0;padding-top:4px}
+  .hero-facts div{display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line)}
+  .hero-facts dd{margin:0}
+  .proof .text-link{margin-left:0}
+}
+@media (max-width:639px){
+  .hero-fig{padding:0}
+  .hero-fig .ph{aspect-ratio:4/3.4}
+  .creds{position:relative;z-index:2;display:grid;gap:10px;margin:-58px 14px 0}
+  .cred{position:static;width:auto;max-width:none;box-shadow:var(--shadow-md)}
+  .hero-fig figcaption{max-width:none;margin:12px 14px 0;text-align:left}
+  .form-grid{grid-template-columns:minmax(0,1fr)}
+  .stats{gap:12px}
+  .stat{padding:20px 18px 22px}
+  .footer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .logos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .person{grid-template-columns:52px minmax(0,1fr);gap:14px;padding:20px}
+  .person .avatar{width:52px;height:52px;font-size:1rem}
+  .chips{display:grid;grid-template-columns:minmax(0,1fr)}
+  .cred-card{grid-template-columns:48px minmax(0,1fr);gap:16px;padding:22px 20px}
+  .cred-card__seal{width:48px;height:48px}
+  .btn{width:100%}
+  .btn--sm,.aud-card .btn,.flagship .btn{width:auto}
+  .hero__cta .btn{flex:1 1 100%}
+}
+@media (max-width:420px){
+  .utility{font-size:.7813rem}
+  .utility__in{width:min(100% - 24px,1200px)}
+  .utility__contact{gap:0 12px}
+  .utility__contact .icon{width:14px;height:14px}
+  .stats{grid-template-columns:minmax(0,1fr)}
+  .footer-grid{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- icon sprite + shared patterns (kept rendered at zero size so pattern references resolve) -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="p-wells" width="25" height="20" patternUnits="userSpaceOnUse"><circle class="a-well" cx="12.5" cy="10" r="6.5"/></pattern>
+    <symbol id="i-seal" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.25"/><path d="m8.25 12.25 2.6 2.6 4.9-5.2"/></symbol>
+    <symbol id="i-tick" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M21 16.4v2.7a1.9 1.9 0 0 1-2.07 1.9 18.8 18.8 0 0 1-8.2-2.92 18.5 18.5 0 0 1-5.7-5.7A18.8 18.8 0 0 1 2.1 4.1 1.9 1.9 0 0 1 4 2h2.7a1.9 1.9 0 0 1 1.9 1.63c.12.9.34 1.8.66 2.65a1.9 1.9 0 0 1-.43 2L7.7 9.4a15.2 15.2 0 0 0 5.7 5.7l1.13-1.13a1.9 1.9 0 0 1 2-.43c.85.32 1.74.54 2.65.66A1.9 1.9 0 0 1 21 16.4Z"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="1.75"/><path d="M9 21v-4h6v4M8.5 7.5h1.5M14 7.5h1.5M8.5 11.5h1.5M14 11.5h1.5"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9.5 3h5M10 3v6.2L4.9 17.9A2 2 0 0 0 6.6 21h10.8a2 2 0 0 0 1.7-3.1L14 9.2V3M7.4 14.5h9.2"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5.5 6.5 6.5L9 18.5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.25"/><path d="M12 11v5.5M12 7.6v.2"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="utility">
+    <div class="wrap utility__in">
+      <p class="utility__note">Kits for laboratories, hospitals and public-health programmes</p>
+      <ul class="utility__contact" aria-label="Contact details">
+        <li><a href="mailto:admin@lighteninglives.in"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span>admin@lighteninglives.in</span></a></li>
+        <li><a href="tel:+919182588191"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span>+91 91825 88191</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="mainbar">
+    <div class="wrap mainbar__in">
+      <a class="brand" href="#hero" aria-label="Lightening Lives, home">
+        <span class="ll-mark" aria-hidden="true"></span><span>Lightening Lives</span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <svg class="icon icon--open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="icon icon--close" aria-hidden="true"><use href="#i-close"/></svg>
+        <span>Menu</span>
+      </button>
+      <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#audiences">Solutions</a></li>
+          <li><a href="#team">About</a></li>
+          <li><a href="#updates">News</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a class="btn btn--primary btn--sm" href="#contact">Request a kit</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<nav class="onpage" aria-label="On this page">
+  <div class="wrap onpage__in">
+    <span class="onpage__label">On this page</span>
+    <div class="onpage__scroll">
+      <ul class="onpage__list">
+        <li><a href="#why">Why us</a></li>
+        <li><a href="#products">Screening kits</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#numbers">In numbers</a></li>
+        <li><a href="#collaborations">Collaborations</a></li>
+        <li><a href="#audiences">Who we work with</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#updates">Updates</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <a class="btn btn--primary btn--sm onpage__cta" href="#contact">Request a kit</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- 1 HERO -->
+  <section class="hero" id="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero__grid">
+        <div class="hero__text">
+          <p class="eyebrow">Molecular diagnostics · Hyderabad, India</p>
+          <h1 id="hero-title">Extraction-free genetic screening</h1>
+          <p class="tagline">One drop. One day.</p>
+          <p class="hero__sub">One drop of blood on a card. Results in under 24 hours. Built for laboratories and public-health programmes at scale.</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#contact">Request a kit</a>
+            <a class="btn btn--secondary" href="#contact">Talk to us</a>
+          </div>
+          <dl class="hero-facts">
+            <div><dt>Specimen</dt><dd>One drop of blood, dried on a card</dd></div>
+            <div><dt>DNA extraction</dt><dd>None</dd></div>
+            <div><dt>Turnaround</dt><dd>Under 24 hours</dd></div>
+          </dl>
+        </div>
+        <div class="hero__visual">
+          <figure class="hero-fig">
+            <div class="ph" role="img" aria-label="Photograph placeholder: the Lightening Lives laboratory in Nacharam, Hyderabad, with a blood collection card and an assay plate on the bench">
+              <svg class="art" viewBox="0 0 480 538" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                <rect class="a-surface" x="0" y="372" width="480" height="166"/>
+                <g transform="translate(150 62) rotate(5)">
+                  <rect class="a-paper" width="262" height="168" rx="11"/>
+                  <path class="a-band" d="M0 11A11 11 0 0 1 11 0h240a11 11 0 0 1 11 11v23H0Z"/>
+                  <circle class="a-ring" cx="42" cy="92" r="18"/><circle class="a-ring" cx="86" cy="92" r="18"/><circle class="a-ring" cx="130" cy="92" r="18"/><circle class="a-ring" cx="174" cy="92" r="18"/><circle class="a-ring" cx="218" cy="92" r="18"/>
+                  <circle class="a-spot" cx="42" cy="92" r="13.5"/>
+                  <path class="a-rule" d="M24 136h128M24 150h86"/>
+                </g>
+                <g transform="translate(96 308)">
+                  <rect class="a-plate" width="324" height="184" rx="14"/>
+                  <rect x="12" y="12" width="300" height="160" fill="url(#p-wells)"/>
+                  <circle class="a-well-on" cx="24.5" cy="22" r="6.5"/><circle class="a-well-on" cx="49.5" cy="22" r="6.5"/><circle class="a-well-on" cx="74.5" cy="22" r="6.5"/><circle class="a-well-on" cx="99.5" cy="22" r="6.5"/><circle class="a-well-on" cx="124.5" cy="22" r="6.5"/><circle class="a-well-on" cx="149.5" cy="22" r="6.5"/>
+                  <circle class="a-well-on" cx="24.5" cy="42" r="6.5"/><circle class="a-well-on" cx="49.5" cy="42" r="6.5"/><circle class="a-well-on" cx="74.5" cy="42" r="6.5"/><circle class="a-well-on" cx="99.5" cy="42" r="6.5"/>
+                  <circle class="a-well-on" cx="24.5" cy="62" r="6.5"/><circle class="a-well-on" cx="49.5" cy="62" r="6.5"/>
+                </g>
+              </svg>
+            </div>
+            <ul class="creds" aria-label="Credentials">
+              <li class="cred cred--1">
+                <span class="cred__seal"><svg class="icon" aria-hidden="true"><use href="#i-seal"/></svg></span>
+                <p><strong>ICMR certified</strong><span>Sickle Cell Anaemia assay</span></p>
+              </li>
+              <li class="cred cred--2">
+                <span class="cred__seal"><svg class="icon" aria-hidden="true"><use href="#i-seal"/></svg></span>
+                <p><strong>MOU with CCMB</strong><span>Centre for Cellular and Molecular Biology, Hyderabad</span></p>
+              </li>
+              <li class="cred cred--3">
+                <span class="cred__seal"><svg class="icon" aria-hidden="true"><use href="#i-seal"/></svg></span>
+                <p><strong>1,000 samples</strong><span>in under 24 hours · current capacity</span></p>
+              </li>
+            </ul>
+            <figcaption>Laboratory, Nacharam, Hyderabad — photograph to be supplied</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="proof">
+        <p class="proof__label">Collaborations include</p>
+        <ul class="proof__list">
+          <li>CSIR–CCMB</li>
+          <li>ICMR</li>
+          <li>Tata Trusts</li>
+          <li>Tata Steel Foundation</li>
+          <li>Nucleome</li>
+        </ul>
+        <a class="text-link" href="#collaborations">All collaborations<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 DESCRIPTION -->
+  <section class="section" id="description" aria-labelledby="description-title">
+    <div class="wrap">
+      <div class="card about reveal">
+        <div>
+          <h2 id="description-title">About Lightening Lives</h2>
+          <p class="about__statement">Lightening Lives is a research-oriented and innovation-driven molecular diagnostics organisation, focused on rapid, affordable, scalable, extraction-free, highly accurate diagnostic solutions for various genetic disorders that reach even the most underserved communities.</p>
+        </div>
+        <div class="about__side">
+          <p>Lightening Lives LLP is based in Hyderabad. It develops extraction-free, blood-card-based genetic screening kits and supplies them to laboratories, hospitals, clinicians and government and public-health programmes, who run the assay themselves.</p>
+          <a class="text-link" href="#team" data-href="/about/">About the company<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 WHY -->
+  <section class="section" id="why" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="why-title">Why Lightening Lives</h2>
+        <p class="lede">Extraction-free is the technical differentiator. It is what makes a one-drop sample, a turnaround under 24 hours, minimal laboratory infrastructure and high throughput possible.</p>
+      </div>
+      <div class="card why-panel reveal">
+        <ul class="why-list">
+          <li class="why-item"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><h3>One-drop blood-based test</h3><p>A dried blood spot on a card. Anyone can collect it, as with a routine blood-sugar test.</p></div></li>
+          <li class="why-item"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><h3>Extraction-free genetic testing</h3><p>A punch from the card goes straight into the assay. There is no DNA extraction step.</p></div></li>
+          <li class="why-item"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><h3>Rapid turnaround</h3><p>Reports in under 24 hours.</p></div></li>
+          <li class="why-item"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><h3>Affordable and accessible testing</h3><p>Removing the extraction step removes its time, cost and equipment. Contact us for pricing.</p></div></li>
+          <li class="why-item"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><h3>Minimal laboratory infrastructure required</h3><p>No extraction step means fewer instruments, fewer consumables and fewer manual stages.</p></div></li>
+          <li class="why-item"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><h3>High-throughput screening</h3><p>Current capacity: 1,000 samples in under 24 hours.</p></div></li>
+          <li class="why-item"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><h3>Automation-friendly workflow</h3><p>Few manual steps, so the workflow transfers readily to automated platforms.</p></div></li>
+          <li class="why-item"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><h3>Designed for large-scale public-health programmes</h3><p>Card collection by non-specialists in the field, with bulk supply and programme support.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 PRODUCTS -->
+  <section class="section" id="products" aria-labelledby="products-title">
+    <div class="wrap kits">
+      <div class="kits__aside">
+        <div class="sec-head">
+          <h2 id="products-title">Screening kits</h2>
+          <p class="lede">Every kit runs on the same extraction-free, blood-card-based workflow. Contact us for pricing and supply.</p>
+        </div>
+        <article class="card flagship reveal">
+          <div class="flagship__top">
+            <span class="seal-badge"><svg class="icon" aria-hidden="true"><use href="#i-seal"/></svg>ICMR certified</span>
+            <span class="gene" title="Target gene">HBB</span>
+          </div>
+          <h3>Sickle Cell Anaemia screening kit</h3>
+          <p>The flagship assay. ICMR certified, and developed under an MOU with CCMB, Hyderabad.</p>
+          <a class="btn btn--primary" href="#products" data-href="/products/sickle-cell/">View kit<span class="visually-hidden">: Sickle Cell Anaemia screening kit</span></a>
+        </article>
+      </div>
+      <div class="kits__main">
+        <ul class="kit-rows">
+          <li class="card kit-row reveal">
+            <div><h3><a href="#products" data-href="/products/thalassaemia/">Thalassaemia screening kit</a></h3><p>Screening for alpha and beta thalassaemia.</p></div>
+            <span class="gene" title="Target genes">HBA · HBB</span>
+            <span class="kit-row__cta" aria-hidden="true"><span>View kit</span><svg class="icon"><use href="#i-chevron"/></svg></span>
+          </li>
+          <li class="card kit-row reveal">
+            <div><h3><a href="#products" data-href="/products/sma/">Spinal Muscular Atrophy screening kit</a></h3><p>Screening for spinal muscular atrophy (SMA).</p></div>
+            <span class="gene" title="Target gene">SMN1</span>
+            <span class="kit-row__cta" aria-hidden="true"><span>View kit</span><svg class="icon"><use href="#i-chevron"/></svg></span>
+          </li>
+          <li class="card kit-row reveal">
+            <div><h3><a href="#products" data-href="/products/dmd/">Duchenne Muscular Dystrophy screening kit</a></h3><p>Screening for Duchenne muscular dystrophy (DMD).</p></div>
+            <span class="gene" title="Target gene">DMD</span>
+            <span class="kit-row__cta" aria-hidden="true"><span>View kit</span><svg class="icon"><use href="#i-chevron"/></svg></span>
+          </li>
+          <li class="card kit-row reveal">
+            <div><h3><a href="#products" data-href="/products/haemophilia/">Haemophilia screening kit</a></h3><p>Screening for haemophilia.</p></div>
+            <span class="gene" title="Target gene">F8</span>
+            <span class="kit-row__cta" aria-hidden="true"><span>View kit</span><svg class="icon"><use href="#i-chevron"/></svg></span>
+          </li>
+          <li class="card kit-row reveal">
+            <div><h3><a href="#products" data-href="/products/pharmacogenomics/">Pharmacogenomics kit</a></h3><p>Pharmacogenomic testing on the blood-card workflow.</p></div>
+            <span class="kit-row__cta" aria-hidden="true"><span>View kit</span><svg class="icon"><use href="#i-chevron"/></svg></span>
+          </li>
+          <li class="card kit-row reveal">
+            <div><h3><a href="#contact" data-href="/products/custom-panels/">Custom panels</a></h3><p>Panels built around the needs of a specific laboratory or screening programme.</p></div>
+            <span class="kit-row__cta" aria-hidden="true"><span>Discuss a panel</span><svg class="icon"><use href="#i-chevron"/></svg></span>
+          </li>
+        </ul>
+        <p class="sec-foot"><a class="text-link" href="#products" data-href="/products/">All products<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 HOW IT WORKS -->
+  <section class="section" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="how-title">How it works</h2>
+        <p class="lede">Specimen to result in four steps.</p>
+      </div>
+      <div class="how">
+        <figure class="how__fig reveal">
+          <div class="ph" role="img" aria-label="Photograph placeholder: a blood collection card from the screening kit, with one spot filled and the identification fields left blank">
+            <svg class="art" viewBox="0 0 480 518" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+              <rect class="a-surface" x="0" y="400" width="480" height="118"/>
+              <g transform="translate(86 70) rotate(-5)">
+                <rect class="a-paper" width="300" height="372" rx="14"/>
+                <path class="a-band" d="M0 14A14 14 0 0 1 14 0h272a14 14 0 0 1 14 14v40H0Z"/>
+                <circle class="a-ring" cx="78" cy="132" r="30"/><circle class="a-ring" cx="150" cy="132" r="30"/><circle class="a-ring" cx="222" cy="132" r="30"/>
+                <circle class="a-ring" cx="114" cy="212" r="30"/><circle class="a-ring" cx="186" cy="212" r="30"/>
+                <circle class="a-spot" cx="78" cy="132" r="23"/>
+                <path class="a-rule" d="M40 286h220M40 310h220M40 334h140"/>
+              </g>
+              <g transform="translate(372 300)">
+                <path class="a-tube" d="M0 0h34v104a17 17 0 0 1-34 0Z"/>
+                <path class="a-liquid" d="M3 72h28v32a14 14 0 0 1-28 0Z"/>
+              </g>
+            </svg>
+          </div>
+          <figcaption>Blood collection card from the kit — photograph to be supplied</figcaption>
+        </figure>
+        <div>
+          <ol class="stepper">
+            <li class="step reveal"><span class="step__n" aria-hidden="true">1</span><div class="step__body"><h3>Collect one drop</h3><p>A finger-prick drop of blood goes onto the card. Anyone can collect it, as with a routine blood-sugar test.</p></div></li>
+            <li class="step reveal"><span class="step__n" aria-hidden="true">2</span><div class="step__body"><h3>Dry on the card</h3><p>The blood spot dries on the card. The card is labelled and sent to the laboratory.</p></div></li>
+            <li class="step reveal"><span class="step__n" aria-hidden="true">3</span><div class="step__body"><h3>Run the extraction-free assay</h3><p>A punch from the card goes straight into the assay. There is no DNA extraction step.</p></div></li>
+            <li class="step reveal"><span class="step__n" aria-hidden="true">4</span><div class="step__body"><h3>Result in under 24 hours</h3><p>The laboratory reports in under 24 hours. Current capacity is 1,000 samples in under 24 hours.</p></div></li>
+          </ol>
+          <div class="note reveal">
+            <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+            <p><strong>What extraction-free removes.</strong> A conventional workflow adds DNA extraction between specimen and assay — lysis, binding, washing, elution — each with its own reagents, instruments and hands-on time. The extraction-free workflow goes from card punch to assay.</p>
+          </div>
+          <p class="sec-foot"><a class="text-link" href="#how" data-href="/how-it-works/">See the full workflow<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 NUMBERS -->
+  <section class="section section--band" id="numbers" aria-labelledby="numbers-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="numbers-title">In numbers</h2>
+      </div>
+      <ul class="stats">
+        <li class="card stat reveal"><p class="stat__n">1,000</p><p class="stat__l">samples in under 24 hours</p><p class="stat__s">current capacity</p></li>
+        <li class="card stat reveal"><p class="stat__n">7</p><p class="stat__l">screening kits</p><p class="stat__s">in the product range</p></li>
+        <li class="card stat stat--tbc"><p class="stat__n">[TBC]</p><p class="stat__l">samples processed</p><p class="stat__s">figure awaiting client confirmation</p></li>
+        <li class="card stat stat--tbc"><p class="stat__n">[TBC]</p><p class="stat__l">districts and programmes</p><p class="stat__s">figure awaiting client confirmation</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 COLLABORATIONS -->
+  <section class="section section--band" id="collaborations" aria-labelledby="collab-title" style="border-top:0;padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="collab-title">Collaborations</h2>
+      </div>
+      <div class="cred-cards">
+        <article class="card cred-card reveal">
+          <span class="cred-card__seal"><svg class="icon" aria-hidden="true"><use href="#i-seal"/></svg></span>
+          <div><h3>ICMR certified</h3><p>The Sickle Cell Anaemia assay is ICMR certified.</p></div>
+        </article>
+        <article class="card cred-card reveal">
+          <span class="cred-card__seal"><svg class="icon" aria-hidden="true"><use href="#i-seal"/></svg></span>
+          <div><h3>MOU with CCMB</h3><p>MOU with CCMB (Centre for Cellular and Molecular Biology, Hyderabad) for development and commercialisation of the molecular diagnostic assay for sickle cell anaemia.</p></div>
+        </article>
+      </div>
+      <ul class="logos" aria-label="Collaborating organisations">
+        <li class="logo">CSIR–CCMB</li>
+        <li class="logo">ICMR</li>
+        <li class="logo">Atal Incubation Centre, CCMB</li>
+        <li class="logo">Nucleome</li>
+        <li class="logo">Tata Trusts</li>
+        <li class="logo">Tata Steel Foundation</li>
+        <li class="logo">Manasthya Foundation</li>
+        <li class="logo">Thalassemia &amp; Sickle Cell Society</li>
+        <li class="logo">Cure SMA India</li>
+        <li class="logo">Sickle Cell Saksham Rajasthan Foundation</li>
+        <li class="logo">IAMD</li>
+        <li class="logo">Blood Warriors</li>
+        <li class="logo">Indigenous Development Organization (IDO)</li>
+        <li class="logo">NASCO</li>
+      </ul>
+      <p class="sec-foot"><a class="text-link" href="#collaborations" data-href="/collaborations/">All collaborations<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    </div>
+  </section>
+
+  <!-- 8 AUDIENCES -->
+  <section class="section" id="audiences" aria-labelledby="aud-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="aud-title">Who we work with</h2>
+      </div>
+      <div class="aud">
+        <article class="card aud-card reveal">
+          <figure>
+            <div class="ph" role="img" aria-label="Photograph placeholder: assay plates being prepared on a laboratory bench">
+              <svg class="art" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                <rect class="a-surface" x="0" y="168" width="600" height="72"/>
+                <g transform="translate(60 58)"><rect class="a-plate" width="274" height="144" rx="12"/><rect x="12" y="12" width="250" height="120" fill="url(#p-wells)"/><circle class="a-well-on" cx="24.5" cy="22" r="6.5"/><circle class="a-well-on" cx="49.5" cy="22" r="6.5"/><circle class="a-well-on" cx="74.5" cy="22" r="6.5"/><circle class="a-well-on" cx="99.5" cy="22" r="6.5"/><circle class="a-well-on" cx="24.5" cy="42" r="6.5"/><circle class="a-well-on" cx="49.5" cy="42" r="6.5"/></g>
+                <g transform="translate(396 52)"><path class="a-tube" d="M0 0h30v128a15 15 0 0 1-30 0Z"/><path class="a-liquid" d="M3 86h24v42a12 12 0 0 1-24 0Z"/></g>
+                <g transform="translate(446 52)"><path class="a-tube" d="M0 0h30v128a15 15 0 0 1-30 0Z"/><path class="a-liquid" d="M3 70h24v58a12 12 0 0 1-24 0Z"/></g>
+                <g transform="translate(496 52)"><path class="a-tube" d="M0 0h30v128a15 15 0 0 1-30 0Z"/><path class="a-liquid" d="M3 98h24v30a12 12 0 0 1-24 0Z"/></g>
+              </svg>
+            </div>
+            <figcaption>Laboratory bench — photograph to be supplied</figcaption>
+          </figure>
+          <div class="aud-card__body">
+            <h3>Laboratories and hospitals</h3>
+            <p>Laboratories, hospitals and clinicians buy kits and run the assay themselves.</p>
+            <ul class="checks">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-tick"/></svg>Adoption and workflow integration</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-tick"/></svg>Throughput to match your sample load</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-tick"/></svg>Technical support from our laboratory team</li>
+            </ul>
+            <a class="btn btn--secondary" href="#audiences" data-href="/solutions/laboratories/">For laboratories</a>
+          </div>
+        </article>
+        <article class="card aud-card reveal">
+          <figure>
+            <div class="ph" role="img" aria-label="Photograph placeholder: field collection at a screening programme in Nandurbar, Maharashtra">
+              <svg class="art" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                <circle class="a-sun" cx="452" cy="86" r="44"/>
+                <path class="a-hill-1" d="M0 150c70-40 130-52 200-28s120 30 190-6 140-40 210 4v120H0Z"/>
+                <path class="a-hill-2" d="M0 182c80-34 150-30 230-6s150 22 220-8 100-22 150-4v76H0Z"/>
+                <path class="a-hill-3" d="M0 214c90-22 170-18 260-2s190 12 340-14v42H0Z"/>
+              </svg>
+            </div>
+            <figcaption>Field collection, Nandurbar, Maharashtra — photograph to be supplied</figcaption>
+          </figure>
+          <div class="aud-card__body">
+            <h3>Public-health programmes</h3>
+            <p>State and district health departments, NGOs and CSR programmes running large-scale screening contact us for bulk supply and programme support.</p>
+            <ul class="checks">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-tick"/></svg>Built for scale</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-tick"/></svg>Minimal infrastructure</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-tick"/></svg>Field collection by non-specialists</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-tick"/></svg>Programmes in Nandurbar (Maharashtra), Kothagudem (Telangana) and Jharkhand</li>
+            </ul>
+            <a class="btn btn--secondary" href="#audiences" data-href="/solutions/public-health/">For public-health programmes</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 TEAM -->
+  <section class="section" id="team" aria-labelledby="team-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="team-title">Team and advisors</h2>
+      </div>
+      <h3 class="group-title">Founders</h3>
+      <ul class="founders">
+        <li class="card person reveal">
+          <span class="avatar" aria-hidden="true">GC</span>
+          <div><h4>Dr. Giriraj Ratan Chandak</h4><p class="role">Founder</p><p>Physician and scientist. Former Chief Scientist, CSIR–CCMB; former Director, CDFD.</p></div>
+        </li>
+        <li class="card person reveal">
+          <span class="avatar" aria-hidden="true">NC</span>
+          <div><h4>Mrs. Nidhi Chandak</h4><p class="role">Co-Founder</p><p>Leads statistical data management and operations.</p></div>
+        </li>
+      </ul>
+      <div class="patrons reveal">
+        <h3 class="group-title">Patrons and advisors</h3>
+        <ul class="patrons__list">
+          <li class="patron"><span class="avatar" aria-hidden="true">NR</span><div><h4>Dr. D. Nageshwar Reddy</h4><p class="role">Patron · Founder, AIG Hospitals</p></div></li>
+          <li class="patron"><span class="avatar" aria-hidden="true">KK</span><div><h4>Prof. Kalyanaraman Kumaran</h4><p class="role">Advisory Board</p></div></li>
+          <li class="patron"><span class="avatar" aria-hidden="true">GK</span><div><h4>Prof. G.V. Krishnaveni</h4><p class="role">Advisory Board</p></div></li>
+        </ul>
+      </div>
+      <div class="staff">
+        <h3 class="group-title">Team</h3>
+        <ul class="chips">
+          <li class="chip"><span class="avatar" aria-hidden="true">AC</span><span><strong>Mr. Abhishek Chandak</strong><span>Head, Finance</span></span></li>
+          <li class="chip"><span class="avatar" aria-hidden="true">MA</span><span><strong>Ms. Manisha Arumalla</strong><span>Scientific Officer</span></span></li>
+          <li class="chip"><span class="avatar" aria-hidden="true">PP</span><span><strong>Ms. Punyasri PSKDB</strong><span>Technical Officer</span></span></li>
+          <li class="chip"><span class="avatar" aria-hidden="true">JV</span><span><strong>Ms. Jyothi Vislavath</strong><span>Technical Officer</span></span></li>
+          <li class="chip"><span class="avatar" aria-hidden="true">MB</span><span><strong>Ms. Mehraj Begum</strong><span>Admin &amp; Operations Executive</span></span></li>
+          <li class="chip"><span class="avatar" aria-hidden="true">PB</span><span><strong>Mr. Pruthvi Bellamkonda</strong><span>Accounts Executive</span></span></li>
+        </ul>
+      </div>
+      <p class="sec-foot"><a class="text-link" href="#team" data-href="/about/team/">Meet the team<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    </div>
+  </section>
+
+  <!-- 10 UPDATES -->
+  <section class="section" id="updates" aria-labelledby="updates-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="updates-title">Latest updates</h2>
+      </div>
+      <ul class="card updates reveal">
+        <li class="update">
+          <div class="update__meta"><span class="tag">Certification</span><span class="update__date">Date [TBC]</span></div>
+          <h3><a href="#updates" data-href="/news/">Sickle Cell Anaemia assay: ICMR certified</a></h3>
+          <span class="update__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+        </li>
+        <li class="update">
+          <div class="update__meta"><span class="tag">Collaboration</span><span class="update__date">Date [TBC]</span></div>
+          <h3><a href="#updates" data-href="/news/">MOU with CCMB for development and commercialisation of the sickle cell anaemia assay</a></h3>
+          <span class="update__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+        </li>
+        <li class="update">
+          <div class="update__meta"><span class="tag">Programme photographs</span><span class="update__date">Date [TBC]</span></div>
+          <h3><a href="#updates" data-href="/news/">Field photographs from the Nandurbar, Kothagudem and Jharkhand programmes</a></h3>
+          <span class="update__go" aria-hidden="true"><svg class="icon"><use href="#i-arrow"/></svg></span>
+        </li>
+      </ul>
+      <p class="sec-foot"><a class="text-link" href="#updates" data-href="/news/">All updates<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    </div>
+  </section>
+
+  <!-- 11 CONTACT -->
+  <section class="section section--tint" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="contact-title">Request a kit, or talk to us</h2>
+        <p class="lede">Tell us who you are and what you need: kits for your laboratory, bulk supply for a screening programme, or a collaboration. Contact us for pricing.</p>
+      </div>
+      <div class="contact">
+        <div class="card form-card">
+          <h3>Enquiry form</h3>
+          <p>Fields marked required must be completed.</p>
+          <div class="form-errors" id="form-errors" role="alert" tabindex="-1" hidden></div>
+          <form id="enquiry" action="mailto:admin@lighteninglives.in" method="post" enctype="text/plain">
+            <div class="form-grid">
+              <div class="field">
+                <label for="f-name">Name <small>(required)</small></label>
+                <input id="f-name" name="Name" type="text" autocomplete="name" required data-label="your name" aria-describedby="f-name-error">
+                <p class="field-error" id="f-name-error" hidden></p>
+              </div>
+              <div class="field">
+                <label for="f-org">Organisation <small>(required)</small></label>
+                <input id="f-org" name="Organisation" type="text" autocomplete="organization" required data-label="your organisation" aria-describedby="f-org-error">
+                <p class="field-error" id="f-org-error" hidden></p>
+              </div>
+              <div class="field">
+                <label for="f-type">Organisation type</label>
+                <select id="f-type" name="Organisation type">
+                  <option>Laboratory</option>
+                  <option>Hospital</option>
+                  <option>Clinician</option>
+                  <option>Government health programme</option>
+                  <option>NGO or CSR programme</option>
+                  <option>Research collaboration</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-email">Email <small>(required)</small></label>
+                <input id="f-email" name="Email" type="email" autocomplete="email" required data-label="your email address" aria-describedby="f-email-error">
+                <p class="field-error" id="f-email-error" hidden></p>
+              </div>
+              <div class="field">
+                <label for="f-phone">Phone</label>
+                <input id="f-phone" name="Phone" type="tel" autocomplete="tel">
+              </div>
+              <div class="field">
+                <label for="f-enquiry">Enquiry</label>
+                <select id="f-enquiry" name="Enquiry">
+                  <option>Request a kit</option>
+                  <option>Partnership or collaboration</option>
+                  <option>Awareness or counselling programme</option>
+                  <option>Something else</option>
+                </select>
+              </div>
+              <div class="field field--full">
+                <label for="f-message">Message</label>
+                <textarea id="f-message" name="Message" rows="5"></textarea>
+              </div>
+            </div>
+            <div class="form-foot">
+              <button class="btn btn--primary" type="submit">Send enquiry</button>
+              <p>Sending opens your email application with the enquiry addressed to admin@lighteninglives.in.</p>
+            </div>
+          </form>
+        </div>
+        <div class="info">
+          <div class="card info-card">
+            <span class="info-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></span>
+            <div><h3>Email</h3><p class="info-card__value"><a href="mailto:admin@lighteninglives.in">admin@lighteninglives.in</a></p></div>
+          </div>
+          <div class="card info-card">
+            <span class="info-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg></span>
+            <div><h3>Phone</h3><p class="info-card__value"><a href="tel:+919182588191">+91 91825 88191</a></p></div>
+          </div>
+          <div class="card info-card">
+            <span class="info-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-flask"/></svg></span>
+            <div>
+              <h3>Laboratory &amp; Corporate Office</h3>
+              <address>Flat No. 201, 2nd Floor, S B Hare Krishna Towers, H.No. 4-7-195/2/55, HMT Nagar, Nacharam, Hyderabad, Telangana – 500076</address>
+              <a class="text-link" href="https://www.google.com/maps/search/?api=1&amp;query=S+B+Hare+Krishna+Towers+HMT+Nagar+Nacharam+Hyderabad+500076" rel="noopener">Open in Google Maps<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+          <div class="card info-card">
+            <span class="info-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-building"/></svg></span>
+            <div>
+              <h3>Registered Office</h3>
+              <address>D-306, Sy. No. 117, Indu Aranya Pallavi GSI (SR), Bandlaguda, Hayathnagar, Hyderabad – 500068, Telangana</address>
+            </div>
+          </div>
+          <p class="families"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span><strong>Patients and families:</strong> Lightening Lives supplies kits to laboratories, hospitals and screening programmes and does not test individuals directly. Please ask your clinician or laboratory about our screening kits.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <h2 class="visually-hidden">Site footer</h2>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#hero" aria-label="Lightening Lives, back to top">
+          <span class="ll-mark" aria-hidden="true"></span><span>Lightening Lives</span>
+        </a>
+        <p>Extraction-free genetic screening kits for laboratories, hospitals and public-health programmes.</p>
+        <ul class="social" aria-label="Social profiles">
+          <li><a href="https://www.linkedin.com/in/lightening-lives-llp-32a12b392/" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.youtube.com/@LighteningLivesLLP" rel="noopener">YouTube</a></li>
+          <li><a href="https://x.com/LivesLlp85686" rel="noopener">X</a></li>
+        </ul>
+      </div>
+      <nav aria-label="Products">
+        <h3>Products</h3>
+        <ul class="footer-links">
+          <li><a href="#products" data-href="/products/sickle-cell/">Sickle Cell Anaemia</a></li>
+          <li><a href="#products" data-href="/products/thalassaemia/">Thalassaemia</a></li>
+          <li><a href="#products" data-href="/products/sma/">Spinal Muscular Atrophy</a></li>
+          <li><a href="#products" data-href="/products/dmd/">Duchenne Muscular Dystrophy</a></li>
+          <li><a href="#products" data-href="/products/haemophilia/">Haemophilia</a></li>
+          <li><a href="#products" data-href="/products/pharmacogenomics/">Pharmacogenomics</a></li>
+          <li><a href="#products" data-href="/products/custom-panels/">Custom panels</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Solutions">
+        <h3>Solutions</h3>
+        <ul class="footer-links">
+          <li><a href="#audiences" data-href="/solutions/laboratories/">Laboratories</a></li>
+          <li><a href="#audiences" data-href="/solutions/public-health/">Public health</a></li>
+          <li><a href="#how" data-href="/how-it-works/">How it works</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Company">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="#description" data-href="/about/">About</a></li>
+          <li><a href="#team" data-href="/about/team/">Team</a></li>
+          <li><a href="#collaborations" data-href="/collaborations/">Collaborations</a></li>
+          <li><a href="#updates" data-href="/news/">News</a></li>
+          <li><a href="#contact" data-href="/contact/">Contact</a></li>
+          <li><a href="#contact" data-href="/privacy/">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-base">
+      <p>© 2026 Lightening Lives LLP · Extraction-free genetic screening kits · Hyderabad, India</p>
+      <p><a href="mailto:admin@lighteninglives.in">admin@lighteninglives.in</a> · <a href="tel:+919182588191">+91 91825 88191</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Enhancements only: every word and number above is already in the markup. */
+(function(){
+  var root=document.documentElement;root.classList.add('js');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* mobile menu */
+  var btn=document.querySelector('.menu-btn'),nav=document.getElementById('primary-nav');
+  function setMenu(open){btn.setAttribute('aria-expanded',open?'true':'false');nav.classList.toggle('is-open',open);}
+  if(btn&&nav){
+    btn.addEventListener('click',function(){setMenu(btn.getAttribute('aria-expanded')!=='true');});
+    nav.addEventListener('click',function(e){if(e.target.closest('a')){setMenu(false);}});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&btn.getAttribute('aria-expanded')==='true'){setMenu(false);btn.focus();}});
+  }
+
+  /* "On this page" scroll-spy */
+  var tabs=[].slice.call(document.querySelectorAll('.onpage__list a')),scroller=document.querySelector('.onpage__scroll'),byId={};
+  tabs.forEach(function(a){byId[a.getAttribute('href').slice(1)]=a;});
+  function activate(id){
+    tabs.forEach(function(a){if(a===byId[id]){a.setAttribute('aria-current','true');}else{a.removeAttribute('aria-current');}});
+    var a=byId[id];
+    if(!scroller||scroller.scrollWidth<=scroller.clientWidth)return;
+    /* Sections above the first tab (the hero, the description) have no tab of their own:
+       return the list to its start so the first item is never left half cut off. */
+    var target=a?a.offsetLeft-(scroller.clientWidth-a.offsetWidth)/2:0;
+    scroller.scrollTo({left:Math.max(0,target),behavior:reduce?'auto':'smooth'});
+  }
+  if('IntersectionObserver' in window){
+    var spy=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){if(en.isIntersecting){if(byId[en.target.id]){activate(en.target.id);}else{activate('');}}});
+    },{rootMargin:'-40% 0px -55% 0px'});
+    [].forEach.call(document.querySelectorAll('main section[id]'),function(s){spy.observe(s);});
+  }
+
+  /* reveals */
+  var items=[].slice.call(document.querySelectorAll('.reveal'));
+  if(reduce||!('IntersectionObserver' in window)){items.forEach(function(el){el.classList.add('is-in');});}
+  else{
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('is-in');io.unobserve(en.target);}});
+    },{rootMargin:'0px 0px -8% 0px'});
+    items.forEach(function(el){io.observe(el);});
+  }
+
+  /* enquiry form: inline errors plus a focusable error summary */
+  var form=document.getElementById('enquiry'),summary=document.getElementById('form-errors');
+  if(form&&summary){
+    form.setAttribute('novalidate','');
+    form.addEventListener('submit',function(e){
+      var bad=[];
+      [].forEach.call(form.querySelectorAll('[required]'),function(f){
+        var msg='',v=f.value.trim(),err=document.getElementById(f.id+'-error');
+        if(!v){msg='Enter '+f.getAttribute('data-label');}
+        else if(f.type==='email'&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){msg='Enter an email address in the correct format, like name@organisation.in';}
+        if(msg){bad.push([f,msg]);f.setAttribute('aria-invalid','true');err.textContent=msg;err.hidden=false;}
+        else{f.removeAttribute('aria-invalid');err.textContent='';err.hidden=true;}
+      });
+      if(bad.length){
+        e.preventDefault();
+        summary.textContent='';
+        var h=document.createElement('h4');h.textContent='There is a problem';summary.appendChild(h);
+        var ul=document.createElement('ul');
+        bad.forEach(function(p){var li=document.createElement('li'),a=document.createElement('a');a.href='#'+p[0].id;a.textContent=p[1];li.appendChild(a);ul.appendChild(li);});
+        summary.appendChild(ul);summary.hidden=false;summary.focus();
+      }else{summary.hidden=true;}
+    });
+  }
+})();
+</script>
+
+<script>
+/* Palette bridge — lets design-options/index.html apply any palette from palettes.json. Preview tooling only; remove for production. */
+(function(){
+  var KEYS=['--bg','--bg-alt','--ink','--muted','--primary','--primary-ink','--accent','--line'];
+  var HEXRE=/^#[0-9a-fA-F]{6}$/;
+  function apply(vars){var s=document.documentElement.style;KEYS.forEach(function(k){if(vars&&HEXRE.test(vars[k]||'')){s.setProperty(k,vars[k]);}else{s.removeProperty(k);}});}
+  window.addEventListener('message',function(e){var d=e.data;if(d&&d.type==='ll:palette'){apply(d.vars);}});
+  if(window.parent!==window){
+    try{window.parent.postMessage({type:'ll:ready'},'*');}catch(err){}
+    document.addEventListener('keydown',function(e){
+      if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)return;
+      if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
+      var t=e.target;if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))return;
+      try{window.parent.postMessage({type:'ll:key',key:e.key},'*');}catch(err){}
+    });
+  }
+})();
+</script>
+</body>
+</html>

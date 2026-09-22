@@ -1,0 +1,155 @@
+[
+  {
+    "id": "precision",
+    "name": "Precision",
+    "family": "Blue & navy",
+    "design": "01",
+    "rationale": "White and pale steel with a single diagnostic navy for every action and link. A signal vermilion appears only as a tick or marker (the wordmark drop, the active section bar, the flagship rule, the workflow start, the ICMR badge dot) and never carries text. Cool, exact and instrument-like: the colours of a datasheet.",
+    "vars": {
+      "--bg": "#FFFFFF",
+      "--bg-alt": "#F3F5F8",
+      "--ink": "#0E1A2B",
+      "--muted": "#55616F",
+      "--primary": "#143D73",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#D9482B",
+      "--line": "#D5DBE3"
+    }
+  },
+  {
+    "id": "daybreak",
+    "name": "Daybreak",
+    "family": "Warm",
+    "design": "02",
+    "rationale": "Warm ivory and a deeper oat for alternating bands, with a deep bronze-gold carrying every button and link so the warm scheme still passes AA. The amber-gold is strictly decorative: the sunrise glow, the arc, the half-sun arches and the drop. Light and optimistic without tipping into a wellness palette.",
+    "vars": {
+      "--bg": "#FFFDF8",
+      "--bg-alt": "#FBF3E2",
+      "--ink": "#2A2013",
+      "--muted": "#6B5E49",
+      "--primary": "#8A5A00",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#F2B33D",
+      "--line": "#EBDFC6"
+    }
+  },
+  {
+    "id": "molecular",
+    "name": "Molecular",
+    "family": "Violet",
+    "design": "03",
+    "rationale": "Indigo-violet on white, with a probe cyan reserved for markers — the drop, a node, the guides on Figure 2. The violet is dark enough to carry body-weight links and diagram strokes at AA, so the figures can be drawn in the primary rather than in grey, which is what makes them read as drafted rather than decorative.",
+    "vars": {
+      "--bg": "#FFFFFF",
+      "--bg-alt": "#F5F4FD",
+      "--ink": "#17143A",
+      "--muted": "#5B5878",
+      "--primary": "#4B3BC8",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#1FB6C9",
+      "--line": "#DEDCF2"
+    }
+  },
+  {
+    "id": "field-and-lab",
+    "name": "Field & Lab",
+    "family": "Neutral",
+    "design": "04",
+    "rationale": "Earthy off-white and sand grounds with a warm-charcoal primary, so the interface recedes and the photographs supply the colour. Terracotta is reserved for markers, rules and the drop. A documentary palette for a supplier whose evidence is its field and laboratory work.",
+    "vars": {
+      "--bg": "#FCFAF6",
+      "--bg-alt": "#F4EFE6",
+      "--ink": "#221E1A",
+      "--muted": "#665E54",
+      "--primary": "#3B342D",
+      "--primary-ink": "#FCFAF6",
+      "--accent": "#C8583C",
+      "--line": "#E2DACD"
+    }
+  },
+  {
+    "id": "assurance",
+    "name": "Assurance",
+    "family": "Teal",
+    "design": "05",
+    "rationale": "Medical teal on a mint ground with white cards, darkened from the database's #0891B2 so every action passes AA. Aqua is the light motif and stays decorative — check seals, rules, the drop. Calm and clinical: the register of a manufacturer whose claims can be checked.",
+    "vars": {
+      "--bg": "#F0FDFA",
+      "--bg-alt": "#FFFFFF",
+      "--ink": "#134E4A",
+      "--muted": "#475569",
+      "--primary": "#0F766E",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#22D3EE",
+      "--line": "#C5EDE7"
+    }
+  },
+  {
+    "id": "lumen",
+    "name": "Lumen",
+    "family": "Blue & navy",
+    "design": "06",
+    "rationale": "The database's Biotech / Life Sciences scheme — DNA blue and life green on an ice-white ground — with the sky blue darkened to AA for every action and the emerald kept as a decorative glow. Luminous rather than bright: daylight through a clean instrument window.",
+    "vars": {
+      "--bg": "#F0F9FF",
+      "--bg-alt": "#FFFFFF",
+      "--ink": "#0C4A6E",
+      "--muted": "#475569",
+      "--primary": "#0369A1",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#059669",
+      "--line": "#BAE6FD"
+    }
+  },
+  {
+    "id": "canopy",
+    "name": "Canopy",
+    "family": "Green",
+    "design": "07",
+    "rationale": "Deep nature green with a sparing sun-amber mark on leaf-white, the closest of the eight to the company's own green and amber. Ink and footer are deep green too, so the page reads as one material. The amber is used only for the drop, the sun disc and small markers.",
+    "vars": {
+      "--bg": "#F0FDF4",
+      "--bg-alt": "#FFFFFF",
+      "--ink": "#14532D",
+      "--muted": "#4B5F54",
+      "--primary": "#15803D",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#D97706",
+      "--line": "#CFE8D8"
+    }
+  },
+  {
+    "id": "civic",
+    "name": "Civic",
+    "family": "Neutral",
+    "design": "08",
+    "rationale": "Slate-black on white with a single blue for links and actions, the highest-contrast palette of the eight: every text pair clears 7:1. No colour carries meaning on its own — tags and states are marked with text and borders as well — so the page survives a bright phone screen outdoors.",
+    "vars": {
+      "--bg": "#FFFFFF",
+      "--bg-alt": "#F8FAFC",
+      "--ink": "#020617",
+      "--muted": "#475569",
+      "--primary": "#0F172A",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#0369A1",
+      "--line": "#CBD5E1"
+    }
+  },
+  {
+    "id": "brief-green",
+    "name": "Brief green",
+    "family": "Green",
+    "design": null,
+    "rationale": "Reference palette from website-info.md §5, not tied to a layout: white and warm off-white grounds, near-black text, deep brand green and an amber-gold 'light' motif, so every layout can be judged in the company's existing colours. The green is the brief's approximate #1E6B4E and should be re-sampled from the logo once the SVG arrives.",
+    "vars": {
+      "--bg": "#FFFFFF",
+      "--bg-alt": "#F7F8F6",
+      "--ink": "#141A1E",
+      "--muted": "#5B6670",
+      "--primary": "#1E6B4E",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#E8B04B",
+      "--line": "#DDE2DD"
+    }
+  }
+]

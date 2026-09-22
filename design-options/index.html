@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Lightening Lives — design options</title>
+<style>
+  :root{
+    --chrome:#FFFFFF; --chrome-alt:#F4F5F7; --chrome-ink:#14181D; --chrome-muted:#5A6470;
+    --chrome-line:#D9DDE3; --chrome-accent:#1F4FD8; --stage:#E6E8EC;
+    --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{display:flex;flex-direction:column;height:100dvh;font:14px/1.4 var(--font);color:var(--chrome-ink);background:var(--stage)}
+  button,select{font:inherit;color:inherit}
+  :focus-visible{outline:2px solid var(--chrome-accent);outline-offset:2px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+  .bar{flex:none;background:var(--chrome);border-bottom:1px solid var(--chrome-line);position:relative;z-index:2}
+  .row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:8px 14px}
+  .brand{font-weight:650;letter-spacing:-.01em;margin-right:4px;white-space:nowrap}
+  .brand span{color:var(--chrome-muted);font-weight:450}
+  .group{display:flex;align-items:center;gap:4px;min-width:0}
+  .group label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--chrome-muted);margin-right:4px}
+  select{height:34px;border:1px solid var(--chrome-line);border-radius:7px;background:var(--chrome);padding:0 28px 0 10px;min-width:0;max-width:100%;
+    appearance:none;-webkit-appearance:none;
+    background-image:linear-gradient(45deg,transparent 50%,var(--chrome-muted) 50%),linear-gradient(135deg,var(--chrome-muted) 50%,transparent 50%);
+    background-position:calc(100% - 15px) 14px,calc(100% - 10px) 14px;background-size:5px 5px;background-repeat:no-repeat}
+  #design{width:172px} #palette{width:188px}
+  .btn{height:34px;min-width:34px;display:inline-grid;place-items:center;border:1px solid var(--chrome-line);border-radius:7px;background:var(--chrome);cursor:pointer;padding:0 8px;text-decoration:none;color:inherit}
+  .btn:hover{background:var(--chrome-alt)}
+  .btn svg{width:14px;height:14px;display:block}
+  .seg{display:inline-flex;border:1px solid var(--chrome-line);border-radius:7px;overflow:hidden}
+  .seg button{height:32px;border:0;background:var(--chrome);padding:0 11px;cursor:pointer;font-variant-numeric:tabular-nums}
+  .seg button+button{border-left:1px solid var(--chrome-line)}
+  .seg button[aria-pressed="true"]{background:var(--chrome-ink);color:var(--chrome)}
+  .swatches{display:inline-flex;margin-left:6px;border:1px solid var(--chrome-line);border-radius:6px;overflow:hidden;height:22px}
+  .swatches i{display:block;width:16px;height:100%}
+  .spacer{flex:1 1 auto}
+  .links{display:flex;gap:6px}
+  .meta{border-top:1px solid var(--chrome-line);background:var(--chrome-alt);padding:7px 14px;display:flex;gap:10px;align-items:baseline;font-size:13px}
+  .tag{flex:none;font:600 11px/1 var(--mono);padding:4px 7px;border-radius:5px;border:1px solid var(--chrome-line);background:var(--chrome);color:var(--chrome-muted)}
+  .rationale{margin:0;color:var(--chrome-ink);min-width:0;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .rationale.open{display:block}
+  .rationale b{font-weight:650}
+  .more{flex:none;border:0;background:none;color:var(--chrome-accent);cursor:pointer;padding:0;font-size:13px;text-decoration:underline}
+  .hint{color:var(--chrome-muted);font-size:12px;white-space:nowrap;margin-left:auto;padding-left:12px}
+  kbd{font:600 11px/1 var(--mono);border:1px solid var(--chrome-line);border-bottom-width:2px;border-radius:4px;padding:2px 4px;background:var(--chrome)}
+
+  .stage{flex:1 1 auto;min-height:0;display:flex;justify-content:center;position:relative;overflow:hidden}
+  .stage[data-width="390"],.stage[data-width="820"]{padding:14px 0 0}
+  .frame{width:100%;height:100%;border:0;background:#FFFFFF;display:block}
+  .stage[data-width="390"] .frame{width:390px;max-width:100%;border:1px solid var(--chrome-line);border-bottom:0;border-radius:14px 14px 0 0;box-shadow:0 10px 40px rgba(20,24,29,.18)}
+  .stage[data-width="820"] .frame{width:820px;max-width:100%;border:1px solid var(--chrome-line);border-bottom:0;border-radius:12px 12px 0 0;box-shadow:0 10px 40px rgba(20,24,29,.18)}
+  .loading{position:absolute;left:0;top:0;height:2px;width:100%;background:linear-gradient(90deg,transparent,var(--chrome-accent),transparent);background-size:40% 100%;background-repeat:no-repeat;animation:slide 1s linear infinite;opacity:0;transition:opacity .15s}
+  .stage.is-loading .loading{opacity:1}
+  @keyframes slide{from{background-position:-40% 0}to{background-position:140% 0}}
+  .empty{margin:auto;max-width:46ch;text-align:center;color:var(--chrome-muted);padding:24px}
+  @media (max-width:1500px){.brand span{display:none}}
+  @media (max-width:1100px){.hint{display:none}}
+  @media (max-width:760px){
+    .row{gap:8px}
+    .brand{width:100%}
+    .group{flex:1 1 100%}
+    .group select{flex:1 1 auto;width:auto !important}
+    .hint{display:none}
+    .spacer{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){.loading{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="row">
+    <div class="brand">Lightening Lives <span>· design options</span></div>
+
+    <div class="group">
+      <label for="design">Design</label>
+      <button class="btn" id="prev" type="button" aria-label="Previous design (left arrow)" title="Previous design  ←">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>
+      </button>
+      <select id="design"></select>
+      <button class="btn" id="next" type="button" aria-label="Next design (right arrow)" title="Next design  →">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+      </button>
+    </div>
+
+    <div class="group">
+      <label for="palette">Palette</label>
+      <button class="btn" id="pprev" type="button" aria-label="Previous palette (up arrow)" title="Previous palette  ↑">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 5-5 5 5"/></svg>
+      </button>
+      <select id="palette"></select>
+      <button class="btn" id="pnext" type="button" aria-label="Next palette (down arrow)" title="Next palette  ↓">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 5 5 5-5"/></svg>
+      </button>
+      <span class="swatches" id="swatches" aria-hidden="true"></span>
+    </div>
+
+    <div class="group" role="group" aria-label="Preview width">
+      <label id="wlabel">Width</label>
+      <div class="seg">
+        <button type="button" data-width="390" aria-pressed="false">390</button>
+        <button type="button" data-width="820" aria-pressed="false">820</button>
+        <button type="button" data-width="full" aria-pressed="true">Full</button>
+      </div>
+    </div>
+
+    <span class="spacer"></span>
+    <div class="links">
+      <a class="btn" id="open" href="#" target="_blank" rel="noopener" title="Open this design on its own">Open ↗</a>
+      <a class="btn" href="palette-sheet.html" title="All palettes side by side">Palettes</a>
+    </div>
+  </div>
+  <div class="meta">
+    <span class="tag" id="skill"></span>
+    <p class="rationale" id="rationale"></p>
+    <button class="more" id="more" type="button" aria-expanded="false" aria-controls="rationale">More</button>
+    <span class="hint"><kbd>←</kbd> <kbd>→</kbd> design · <kbd>↑</kbd> <kbd>↓</kbd> palette · <kbd>1</kbd>–<kbd>8</kbd> jump</span>
+  </div>
+  <div class="sr-only" aria-live="polite" id="live"></div>
+</header>
+
+<main class="stage" id="stage" data-width="full">
+  <div class="loading" aria-hidden="true"></div>
+  <iframe class="frame" id="frame" title="Design preview"></iframe>
+</main>
+
+<!-- The two blocks below are copies of manifest.json and palettes.json, inlined by tools/sync.py so the page works
+     from file:// (browsers block fetch() of local JSON). Over http(s) the JSON files are fetched live and win. -->
+<!-- data:manifest:start -->
+<script type="application/json" id="ll-manifest">[
+ {
+  "id": "01",
+  "file": "designs/01-precision.html",
+  "name": "Precision",
+  "skill": "frontend-design",
+  "palette": "precision",
+  "rationale": "Precision treats the home page as a datasheet made beautiful: a strict 12-column Swiss grid, hairline rules, clause-numbered sections and a hero whose right half is a ruled specification table, set in IBM Plex Sans with every figure and field label in IBM Plex Mono. The palette is white and pale steel with a single diagnostic navy and a vermilion marker used only as a tick. A laboratory director reads specifications before slogans, so the page puts specimen, extraction, turnaround, capacity and certification where a datasheet would and lets exact alignment signal an exact assay."
+ },
+ {
+  "id": "02",
+  "file": "designs/02-daybreak.html",
+  "name": "Daybreak",
+  "skill": "frontend-design",
+  "palette": "daybreak",
+  "rationale": "Daybreak turns the company's name into the layout: a warm ivory ground, a soft amber sunrise resting on a horizon line, half-sun arches for every photograph, and one signature diagram in which 'One drop. One day.' is drawn as a dawn-to-dawn arc carrying the four workflow steps. Amber-gold stays strictly decorative while every button and link uses a deep bronze-gold that passes AA on ivory, so the page reads as light without giving up contrast. Editorial serif headlines over a plain sans, ruled fact strips and generous air give a laboratory director the calm of a well-set scientific paper rather than a campaign."
+ },
+ {
+  "id": "03",
+  "file": "designs/03-molecular.html",
+  "name": "Molecular",
+  "skill": "frontend-design",
+  "palette": "molecular",
+  "rationale": "Molecular treats the page as a methods paper: the argument is carried by drafted inline-SVG figures — an assay schematic in the hero, and a two-track figure in which the conventional workflow's lysis, binding, washing and elution stages are visibly absent from the extraction-free track. Indigo-violet on white with a probe cyan used only as a marker gives the geometric, research-grade register of a sequencing instrument's interface rather than a clinic. A laboratory director evaluates a method before a supplier, so the figures state the mechanism first and every label is set in Red Hat Mono like a figure caption."
+ },
+ {
+  "id": "04",
+  "file": "designs/04-field-and-lab.html",
+  "name": "Field & Lab",
+  "skill": "frontend-design",
+  "palette": "field-and-lab",
+  "rationale": "Field & Lab is a photo essay for a technical supplier: large captioned photograph areas (place, subject) carry the page, with Bricolage Grotesque headlines at human scale and documentary captions in Source Serif italic. The palette is earthy off-white and sand with a warm-charcoal primary and a terracotta accent kept to markers, so colour comes from the photographs rather than the interface. It suits a laboratory director because every claim sits beside evidence of real field and laboratory work, stated factually in a supplier's register."
+ },
+ {
+  "id": "05",
+  "file": "designs/05-assurance.html",
+  "name": "Assurance",
+  "skill": "ui-ux-pro-max",
+  "palette": "assurance",
+  "rationale": "Assurance follows the ui-ux-pro-max system for a medical device manufacturer: a Trust and Authority page in the Accessible and Ethical style with Soft UI depth — white cards on a mint ground, 10 to 12px radii, 3px focus rings, Figtree over Noto Sans. Credentials are the proof and sit first: contact details in a two-tier header, and ICMR, CCMB and capacity cards over the hero image. Medical teal (darkened from the database value to pass AA) with an aqua light accent is calm and clinical — the register a laboratory director expects from a manufacturer whose claims can be checked."
+ },
+ {
+  "id": "06",
+  "file": "designs/06-lumen.html",
+  "name": "Lumen",
+  "skill": "ui-ux-pro-max",
+  "palette": "lumen",
+  "rationale": "Lumen takes the company name literally: frosted-glass panels float over pale, blurred fields of DNA blue and life green, so the page feels like daylight passing through a clean instrument window, and the four-step workflow is told as a scroll-story that stays fully readable without motion. The palette is the ui-ux-pro-max Biotech / Life Sciences system — ice-white ground, a sky blue darkened to AA for every action, emerald kept as a decorative glow — set in Exo with Roboto Mono for labels and numerals. For a laboratory director it reads as a modern instrument brand: luminous but exact, every fact labelled like a readout, credentials visible before the first scroll."
+ },
+ {
+  "id": "07",
+  "file": "designs/07-canopy.html",
+  "name": "Canopy",
+  "skill": "ui-ux-pro-max",
+  "palette": "canopy",
+  "rationale": "Canopy applies the Organic Biophilic system from ui-ux-pro-max with restraint: the eight differentiators hang off a single central stem, photographs sit in soft asymmetric masks, and flowing dividers replace hard section breaks, while Lora headings and Raleway text stay disciplined and factual. The palette is deep nature green with a sparing sun-amber mark on leaf-white, the closest of the eight to the company's own green and amber, with deep-green ink and a deep-green footer. For a laboratory director it reads as a calm, legible supplier page where growth from one drop to programme scale is shown structurally, not claimed emotionally."
+ },
+ {
+  "id": "08",
+  "file": "designs/08-civic.html",
+  "name": "Civic",
+  "skill": "ui-ux-pro-max",
+  "palette": "civic",
+  "rationale": "Civic: one readable column in large Atkinson Hyperlegible, thick slate rules, lists instead of cards, and a Contents list under the hero as the section navigator — the ui-ux-pro-max Accessible & Ethical + Inclusive Design system on its Minimal Single Column pattern, returned for the public-health framing. Slate-black on white with a single blue accent keeps every line of text at 7:1 or better. A laboratory director or district health officer can read each fact on a phone, outdoors, on a slow connection: the page earns trust through clarity and exact spacing, not decoration."
+ }
+]</script>
+<!-- data:manifest:end -->
+<!-- data:palettes:start -->
+<script type="application/json" id="ll-palettes">[
+ {
+  "id": "precision",
+  "name": "Precision",
+  "family": "Blue & navy",
+  "design": "01",
+  "rationale": "White and pale steel with a single diagnostic navy for every action and link. A signal vermilion appears only as a tick or marker (the wordmark drop, the active section bar, the flagship rule, the workflow start, the ICMR badge dot) and never carries text. Cool, exact and instrument-like: the colours of a datasheet.",
+  "vars": {
+   "--bg": "#FFFFFF",
+   "--bg-alt": "#F3F5F8",
+   "--ink": "#0E1A2B",
+   "--muted": "#55616F",
+   "--primary": "#143D73",
+   "--primary-ink": "#FFFFFF",
+   "--accent": "#D9482B",
+   "--line": "#D5DBE3"
+  }
+ },
+ {
+  "id": "daybreak",
+  "name": "Daybreak",
+  "family": "Warm",
+  "design": "02",
+  "rationale": "Warm ivory and a deeper oat for alternating bands, with a deep bronze-gold carrying every button and link so the warm scheme still passes AA. The amber-gold is strictly decorative: the sunrise glow, the arc, the half-sun arches and the drop. Light and optimistic without tipping into a wellness palette.",
+  "vars": {
+   "--bg": "#FFFDF8",
+   "--bg-alt": "#FBF3E2",
+   "--ink": "#2A2013",
+   "--muted": "#6B5E49",
+   "--primary": "#8A5A00",
+   "--primary-ink": "#FFFFFF",
+   "--accent": "#F2B33D",
+   "--line": "#EBDFC6"
+  }
+ },
+ {
+  "id": "molecular",
+  "name": "Molecular",
+  "family": "Violet",
+  "design": "03",
+  "rationale": "Indigo-violet on white, with a probe cyan reserved for markers — the drop, a node, the guides on Figure 2. The violet is dark enough to carry body-weight links and diagram strokes at AA, so the figures can be drawn in the primary rather than in grey, which is what makes them read as drafted rather than decorative.",
+  "vars": {
+   "--bg": "#FFFFFF",
+   "--bg-alt": "#F5F4FD",
+   "--ink": "#17143A",
+   "--muted": "#5B5878",
+   "--primary": "#4B3BC8",
+   "--primary-ink": "#FFFFFF",
+   "--accent": "#1FB6C9",
+   "--line": "#DEDCF2"
+  }
+ },
+ {
+  "id": "field-and-lab",
+  "name": "Field & Lab",
+  "family": "Neutral",
+  "design": "04",
+  "rationale": "Earthy off-white and sand grounds with a warm-charcoal primary, so the interface recedes and the photographs supply the colour. Terracotta is reserved for markers, rules and the drop. A documentary palette for a supplier whose evidence is its field and laboratory work.",
+  "vars": {
+   "--bg": "#FCFAF6",
+   "--bg-alt": "#F4EFE6",
+   "--ink": "#221E1A",
+   "--muted": "#665E54",
+   "--primary": "#3B342D",
+   "--primary-ink": "#FCFAF6",
+   "--accent": "#C8583C",
+   "--line": "#E2DACD"
+  }
+ },
+ {
+  "id": "assurance",
+  "name": "Assurance",
+  "family": "Teal",
+  "design": "05",
+  "rationale": "Medical teal on a mint ground with white cards, darkened from the database's #0891B2 so every action passes AA. Aqua is the light motif and stays decorative — check seals, rules, the drop. Calm and clinical: the register of a manufacturer whose claims can be checked.",
+  "vars": {
+   "--bg": "#F0FDFA",
+   "--bg-alt": "#FFFFFF",
+   "--ink": "#134E4A",
+   "--muted": "#475569",
+   "--primary": "#0F766E",
+   "--primary-ink": "#FFFFFF",
+   "--accent": "#22D3EE",
+   "--line": "#C5EDE7"
+  }
+ },
+ {
+  "id": "lumen",
+  "name": "Lumen",
+  "family": "Blue & navy",
+  "design": "06",
+  "rationale": "The database's Biotech / Life Sciences scheme — DNA blue and life green on an ice-white ground — with the sky blue darkened to AA for every action and the emerald kept as a decorative glow. Luminous rather than bright: daylight through a clean instrument window.",
+  "vars": {
+   "--bg": "#F0F9FF",
+   "--bg-alt": "#FFFFFF",
+   "--ink": "#0C4A6E",
+   "--muted": "#475569",
+   "--primary": "#0369A1",
+   "--primary-ink": "#FFFFFF",
+   "--accent": "#059669",
+   "--line": "#BAE6FD"
+  }
+ },
+ {
+  "id": "canopy",
+  "name": "Canopy",
+  "family": "Green",
+  "design": "07",
+  "rationale": "Deep nature green with a sparing sun-amber mark on leaf-white, the closest of the eight to the company's own green and amber. Ink and footer are deep green too, so the page reads as one material. The amber is used only for the drop, the sun disc and small markers.",
+  "vars": {
+   "--bg": "#F0FDF4",
+   "--bg-alt": "#FFFFFF",
+   "--ink": "#14532D",
+   "--muted": "#4B5F54",
+   "--primary": "#15803D",
+   "--primary-ink": "#FFFFFF",
+   "--accent": "#D97706",
+   "--line": "#CFE8D8"
+  }
+ },
+ {
+  "id": "civic",
+  "name": "Civic",
+  "family": "Neutral",
+  "design": "08",
+  "rationale": "Slate-black on white with a single blue for links and actions, the highest-contrast palette of the eight: every text pair clears 7:1. No colour carries meaning on its own — tags and states are marked with text and borders as well — so the page survives a bright phone screen outdoors.",
+  "vars": {
+   "--bg": "#FFFFFF",
+   "--bg-alt": "#F8FAFC",
+   "--ink": "#020617",
+   "--muted": "#475569",
+   "--primary": "#0F172A",
+   "--primary-ink": "#FFFFFF",
+   "--accent": "#0369A1",
+   "--line": "#CBD5E1"
+  }
+ },
+ {
+  "id": "brief-green",
+  "name": "Brief green",
+  "family": "Green",
+  "design": null,
+  "rationale": "Reference palette from website-info.md §5, not tied to a layout: white and warm off-white grounds, near-black text, deep brand green and an amber-gold 'light' motif, so every layout can be judged in the company's existing colours. The green is the brief's approximate #1E6B4E and should be re-sampled from the logo once the SVG arrives.",
+  "vars": {
+   "--bg": "#FFFFFF",
+   "--bg-alt": "#F7F8F6",
+   "--ink": "#141A1E",
+   "--muted": "#5B6670",
+   "--primary": "#1E6B4E",
+   "--primary-ink": "#FFFFFF",
+   "--accent": "#E8B04B",
+   "--line": "#DDE2DD"
+  }
+ }
+]</script>
+<!-- data:palettes:end -->
+
+<script>
+(async function () {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const KEYS = ['--bg', '--bg-alt', '--ink', '--muted', '--primary', '--primary-ink', '--accent', '--line'];
+  const FAMILY_ORDER = ['Blue & navy', 'Teal', 'Green', 'Violet', 'Warm', 'Neutral'];
+
+  async function loadJSON(file, inlineId) {
+    if (/^https?:$/.test(location.protocol)) {
+      try { const r = await fetch(file, { cache: 'no-store' }); if (r.ok) return await r.json(); } catch (e) { /* fall through */ }
+    }
+    try { return JSON.parse($(inlineId).textContent); } catch (e) { return []; }
+  }
+  const manifest = await loadJSON('manifest.json', 'll-manifest');
+  const palettes = await loadJSON('palettes.json', 'll-palettes');
+
+  const stage = $('stage'), frame = $('frame'), designSel = $('design'), paletteSel = $('palette');
+  if (!manifest.length) {
+    stage.innerHTML = '<p class="empty">No designs listed yet. Add entries to <code>manifest.json</code>, then run <code>python3 tools/sync.py</code>.</p>';
+    return;
+  }
+
+  // ----- selects -------------------------------------------------------------------------------
+  manifest.forEach((d, i) => designSel.add(new Option(d.id + ' · ' + d.name, String(i))));
+  const families = [...new Set(palettes.map(p => p.family))]
+    .sort((a, b) => (FAMILY_ORDER.indexOf(a) + 99 * (FAMILY_ORDER.indexOf(a) < 0)) - (FAMILY_ORDER.indexOf(b) + 99 * (FAMILY_ORDER.indexOf(b) < 0)));
+  const ownOpt = new Option('Own palette', 'own'); paletteSel.add(ownOpt);
+  const order = ['own'];
+  families.forEach(f => {
+    const g = document.createElement('optgroup'); g.label = f;
+    palettes.filter(p => p.family === f).forEach(p => { g.appendChild(new Option(p.name, p.id)); order.push(p.id); });
+    paletteSel.appendChild(g);
+  });
+
+  // ----- state + deep link  (#03/daybreak or #03/daybreak/390) ------------------------------------
+  // Reloading the page gets a fresh token, so an edited design file is never served from the
+  // browser's cache; switching designs within one session reuses it.
+  const BUST = '?v=' + Date.now();
+  const state = { design: 0, palette: 'own', width: 'full' };
+  function readHash() {
+    const [d, p, w] = decodeURIComponent(location.hash.replace(/^#/, '')).split('/');
+    const di = manifest.findIndex(x => x.id === d || x.file.includes(d + '-'));
+    if (d && di > -1) state.design = di;
+    state.palette = (p && palettes.some(x => x.id === p)) ? p : 'own';
+    if (w && ['390', '820', 'full'].includes(w)) state.width = w;
+  }
+  function writeHash() {
+    const d = manifest[state.design];
+    let h = '#' + d.id; if (state.palette !== 'own' || state.width !== 'full') h += '/' + state.palette;   // "own" follows the design
+    if (state.width !== 'full') h += '/' + state.width;
+    if (location.hash !== h) history.replaceState(null, '', h);
+  }
+  const ownPaletteId = () => { const d = manifest[state.design]; const p = palettes.find(x => x.id === d.palette) || palettes.find(x => x.design === d.id); return p ? p.id : null; };
+  const activePalette = () => palettes.find(p => p.id === (state.palette === 'own' ? ownPaletteId() : state.palette)) || null;
+
+  // ----- render ---------------------------------------------------------------------------------
+  let loadedDesign = -1;
+  function sendPalette() {
+    if (!frame.contentWindow) return;
+    const vars = state.palette === 'own' ? null : (activePalette() || {}).vars || null;
+    frame.contentWindow.postMessage({ type: 'll:palette', vars }, '*');
+  }
+  function render() {
+    const d = manifest[state.design], p = activePalette();
+    designSel.value = String(state.design); paletteSel.value = state.palette;
+    const own = palettes.find(x => x.id === ownPaletteId());
+    ownOpt.textContent = 'Own palette' + (own ? ' — ' + own.name : '');
+    $('skill').textContent = d.skill;
+    $('rationale').innerHTML = '';
+    const b = document.createElement('b'); b.textContent = d.id + ' ' + d.name + '. ';
+    $('rationale').append(b, document.createTextNode(d.rationale + (state.palette !== 'own' && p ? '  ·  Shown in the “' + p.name + '” palette: ' + p.rationale : '')));
+    $('swatches').innerHTML = '';
+    if (p) KEYS.forEach(k => { const i = document.createElement('i'); i.style.background = p.vars[k]; i.title = k + ' ' + p.vars[k]; $('swatches').appendChild(i); });
+    document.querySelectorAll('.seg button').forEach(bn => bn.setAttribute('aria-pressed', String(bn.dataset.width === state.width)));
+    stage.dataset.width = state.width;
+    $('open').href = d.file + BUST;
+    frame.title = 'Design ' + d.id + ' ' + d.name;
+    document.title = d.id + ' ' + d.name + (state.palette !== 'own' && p ? ' × ' + p.name : '') + ' — Lightening Lives design options';
+    if (loadedDesign !== state.design) { loadedDesign = state.design; stage.classList.add('is-loading'); frame.src = d.file + BUST; }
+    else sendPalette();
+    $('live').textContent = 'Design ' + d.id + ' ' + d.name + ', ' + (state.palette === 'own' ? 'own palette' : 'palette ' + (p ? p.name : '')) + ', width ' + state.width;
+    writeHash();
+  }
+  frame.addEventListener('load', () => { stage.classList.remove('is-loading'); sendPalette(); });
+  window.addEventListener('message', e => {
+    if (e.source !== frame.contentWindow || !e.data) return;
+    if (e.data.type === 'll:ready') sendPalette();
+    if (e.data.type === 'll:key') stepDesign(e.data.key === 'ArrowRight' ? 1 : -1);
+  });
+
+  const stepDesign = n => { state.design = (state.design + n + manifest.length) % manifest.length; render(); };
+  const stepPalette = n => { const i = order.indexOf(state.palette); state.palette = order[(i + n + order.length) % order.length]; render(); };
+
+  designSel.addEventListener('change', () => { state.design = Number(designSel.value); render(); });
+  paletteSel.addEventListener('change', () => { state.palette = paletteSel.value; render(); });
+  $('prev').addEventListener('click', () => stepDesign(-1)); $('next').addEventListener('click', () => stepDesign(1));
+  $('pprev').addEventListener('click', () => stepPalette(-1)); $('pnext').addEventListener('click', () => stepPalette(1));
+  document.querySelectorAll('.seg button').forEach(bn => bn.addEventListener('click', () => { state.width = bn.dataset.width; render(); }));
+  $('more').addEventListener('click', () => { const o = $('rationale').classList.toggle('open'); $('more').setAttribute('aria-expanded', String(o)); $('more').textContent = o ? 'Less' : 'More'; });
+
+  window.addEventListener('keydown', e => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const map = { ArrowLeft: () => stepDesign(-1), ArrowRight: () => stepDesign(1), ArrowUp: () => stepPalette(-1), ArrowDown: () => stepPalette(1) };
+    if (map[e.key]) { e.preventDefault(); map[e.key](); return; }
+    if (/^[1-9]$/.test(e.key) && Number(e.key) <= manifest.length && !/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) { state.design = Number(e.key) - 1; render(); }
+  });
+  window.addEventListener('hashchange', () => { readHash(); render(); });
+
+  readHash(); render();
+})();
+</script>
+</body>
+</html>

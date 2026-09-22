@@ -1,0 +1,66 @@
+[
+  {
+    "id": "01",
+    "file": "designs/01-precision.html",
+    "name": "Precision",
+    "skill": "frontend-design",
+    "palette": "precision",
+    "rationale": "Precision treats the home page as a datasheet made beautiful: a strict 12-column Swiss grid, hairline rules, clause-numbered sections and a hero whose right half is a ruled specification table, set in IBM Plex Sans with every figure and field label in IBM Plex Mono. The palette is white and pale steel with a single diagnostic navy and a vermilion marker used only as a tick. A laboratory director reads specifications before slogans, so the page puts specimen, extraction, turnaround, capacity and certification where a datasheet would and lets exact alignment signal an exact assay."
+  },
+  {
+    "id": "02",
+    "file": "designs/02-daybreak.html",
+    "name": "Daybreak",
+    "skill": "frontend-design",
+    "palette": "daybreak",
+    "rationale": "Daybreak turns the company's name into the layout: a warm ivory ground, a soft amber sunrise resting on a horizon line, half-sun arches for every photograph, and one signature diagram in which 'One drop. One day.' is drawn as a dawn-to-dawn arc carrying the four workflow steps. Amber-gold stays strictly decorative while every button and link uses a deep bronze-gold that passes AA on ivory, so the page reads as light without giving up contrast. Editorial serif headlines over a plain sans, ruled fact strips and generous air give a laboratory director the calm of a well-set scientific paper rather than a campaign."
+  },
+  {
+    "id": "03",
+    "file": "designs/03-molecular.html",
+    "name": "Molecular",
+    "skill": "frontend-design",
+    "palette": "molecular",
+    "rationale": "Molecular treats the page as a methods paper: the argument is carried by drafted inline-SVG figures — an assay schematic in the hero, and a two-track figure in which the conventional workflow's lysis, binding, washing and elution stages are visibly absent from the extraction-free track. Indigo-violet on white with a probe cyan used only as a marker gives the geometric, research-grade register of a sequencing instrument's interface rather than a clinic. A laboratory director evaluates a method before a supplier, so the figures state the mechanism first and every label is set in Red Hat Mono like a figure caption."
+  },
+  {
+    "id": "04",
+    "file": "designs/04-field-and-lab.html",
+    "name": "Field & Lab",
+    "skill": "frontend-design",
+    "palette": "field-and-lab",
+    "rationale": "Field & Lab is a photo essay for a technical supplier: large captioned photograph areas (place, subject) carry the page, with Bricolage Grotesque headlines at human scale and documentary captions in Source Serif italic. The palette is earthy off-white and sand with a warm-charcoal primary and a terracotta accent kept to markers, so colour comes from the photographs rather than the interface. It suits a laboratory director because every claim sits beside evidence of real field and laboratory work, stated factually in a supplier's register."
+  },
+  {
+    "id": "05",
+    "file": "designs/05-assurance.html",
+    "name": "Assurance",
+    "skill": "ui-ux-pro-max",
+    "palette": "assurance",
+    "rationale": "Assurance follows the ui-ux-pro-max system for a medical device manufacturer: a Trust and Authority page in the Accessible and Ethical style with Soft UI depth — white cards on a mint ground, 10 to 12px radii, 3px focus rings, Figtree over Noto Sans. Credentials are the proof and sit first: contact details in a two-tier header, and ICMR, CCMB and capacity cards over the hero image. Medical teal (darkened from the database value to pass AA) with an aqua light accent is calm and clinical — the register a laboratory director expects from a manufacturer whose claims can be checked."
+  },
+  {
+    "id": "06",
+    "file": "designs/06-lumen.html",
+    "name": "Lumen",
+    "skill": "ui-ux-pro-max",
+    "palette": "lumen",
+    "rationale": "Lumen takes the company name literally: frosted-glass panels float over pale, blurred fields of DNA blue and life green, so the page feels like daylight passing through a clean instrument window, and the four-step workflow is told as a scroll-story that stays fully readable without motion. The palette is the ui-ux-pro-max Biotech / Life Sciences system — ice-white ground, a sky blue darkened to AA for every action, emerald kept as a decorative glow — set in Exo with Roboto Mono for labels and numerals. For a laboratory director it reads as a modern instrument brand: luminous but exact, every fact labelled like a readout, credentials visible before the first scroll."
+  },
+  {
+    "id": "07",
+    "file": "designs/07-canopy.html",
+    "name": "Canopy",
+    "skill": "ui-ux-pro-max",
+    "palette": "canopy",
+    "rationale": "Canopy applies the Organic Biophilic system from ui-ux-pro-max with restraint: the eight differentiators hang off a single central stem, photographs sit in soft asymmetric masks, and flowing dividers replace hard section breaks, while Lora headings and Raleway text stay disciplined and factual. The palette is deep nature green with a sparing sun-amber mark on leaf-white, the closest of the eight to the company's own green and amber, with deep-green ink and a deep-green footer. For a laboratory director it reads as a calm, legible supplier page where growth from one drop to programme scale is shown structurally, not claimed emotionally."
+  },
+  {
+    "id": "08",
+    "file": "designs/08-civic.html",
+    "name": "Civic",
+    "skill": "ui-ux-pro-max",
+    "palette": "civic",
+    "rationale": "Civic: one readable column in large Atkinson Hyperlegible, thick slate rules, lists instead of cards, and a Contents list under the hero as the section navigator — the ui-ux-pro-max Accessible & Ethical + Inclusive Design system on its Minimal Single Column pattern, returned for the public-health framing. Slate-black on white with a single blue accent keeps every line of text at 7:1 or better. A laboratory director or district health officer can read each fact on a phone, outdoors, on a slow connection: the page earns trust through clarity and exact spacing, not decoration."
+  }
+]
