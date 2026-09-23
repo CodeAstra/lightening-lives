@@ -197,6 +197,14 @@
   "skill": "ui-ux-pro-max",
   "palette": "civic",
   "rationale": "Civic: one readable column in large Atkinson Hyperlegible, thick slate rules, lists instead of cards, and a Contents list under the hero as the section navigator — the ui-ux-pro-max Accessible & Ethical + Inclusive Design system on its Minimal Single Column pattern, returned for the public-health framing. Slate-black on white with a single blue accent keeps every line of text at 7:1 or better. A laboratory director or district health officer can read each fact on a phone, outdoors, on a slow connection: the page earns trust through clarity and exact spacing, not decoration."
+ },
+ {
+  "id": "09",
+  "file": "designs/09-brand-classic.html",
+  "name": "Brand Classic",
+  "skill": "frontend-design",
+  "palette": "brand-classic",
+  "rationale": "Brand Classic carries the company's own logo onto the page without reinterpretation: the leaf green of the mark fills the header, the numbers band and every primary button, the real sun mark heads every section, the leaves become the bullets, and the sun's rays become the signature, a 24-ray dial around the mark that draws one day, so 'One drop. One day.' is the logo itself rather than a slogan. Archivo on its width axis, expanded for headlines and condensed for labels, over a strict left-aligned card grid gives a confident, corporate-diagnostic register. A laboratory director sees a supplier with an established identity and every fact in a predictable place."
  }
 ]</script>
 <!-- data:manifest:end -->
@@ -354,6 +362,23 @@
    "--accent": "#E8B04B",
    "--line": "#DDE2DD"
   }
+ },
+ {
+  "id": "brand-classic",
+  "name": "Brand Classic",
+  "family": "Brand",
+  "design": "09",
+  "rationale": "Taken strictly from the logo. Primary is the leaf green of the mark (#6B9D2A, 3.24:1 on white) moved one step down its own ramp to #527E15 so it passes AA; accent is the sun gold #FFC80C at its exact logo value, decorative only; ink is the logo's own figure colour #252820; the pale leaf tint, muted and line are the same green hue at very low chroma, so even the greys carry the brand.",
+  "vars": {
+   "--bg": "#FFFFFF",
+   "--bg-alt": "#F4FBEE",
+   "--ink": "#252820",
+   "--muted": "#61655D",
+   "--primary": "#527E15",
+   "--primary-ink": "#FFFFFF",
+   "--accent": "#FFC80C",
+   "--line": "#E1E4DE"
+  }
  }
 ]</script>
 <!-- data:palettes:end -->
@@ -462,7 +487,7 @@
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     const map = { ArrowLeft: () => stepDesign(-1), ArrowRight: () => stepDesign(1), ArrowUp: () => stepPalette(-1), ArrowDown: () => stepPalette(1) };
     if (map[e.key]) { e.preventDefault(); map[e.key](); return; }
-    if (/^[1-9]$/.test(e.key) && Number(e.key) <= manifest.length && !/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) { state.design = Number(e.key) - 1; render(); }
+    if (/^[0-9]$/.test(e.key) && (Number(e.key) || 10) <= manifest.length && !/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) { state.design = (Number(e.key) || 10) - 1; render(); }
   });
   window.addEventListener('hashchange', () => { readHash(); render(); });
 

@@ -151,5 +151,22 @@
       "--accent": "#E8B04B",
       "--line": "#DDE2DD"
     }
+  },
+  {
+    "id": "brand-classic",
+    "name": "Brand Classic",
+    "family": "Brand",
+    "design": "09",
+    "rationale": "Taken strictly from the logo. Primary is the leaf green of the mark (#6B9D2A, 3.24:1 on white) moved one step down its own ramp to #527E15 so it passes AA; accent is the sun gold #FFC80C at its exact logo value, decorative only; ink is the logo's own figure colour #252820; the pale leaf tint, muted and line are the same green hue at very low chroma, so even the greys carry the brand.",
+    "vars": {
+      "--bg": "#FFFFFF",
+      "--bg-alt": "#F4FBEE",
+      "--ink": "#252820",
+      "--muted": "#61655D",
+      "--primary": "#527E15",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#FFC80C",
+      "--line": "#E1E4DE"
+    }
   }
 ]

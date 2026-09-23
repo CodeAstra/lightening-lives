@@ -19,7 +19,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / 'tools'))
 from check import VARS, PAIRS, check_palette, md_table, ratio  # noqa: E402
 
-FAMILY_ORDER = ['Blue & navy', 'Teal', 'Green', 'Violet', 'Warm', 'Neutral']
+FAMILY_ORDER = ['Brand', 'Blue & navy', 'Teal', 'Green', 'Violet', 'Warm', 'Neutral']
 
 manifest = json.loads((ROOT / 'manifest.json').read_text())
 palettes = json.loads((ROOT / 'palettes.json').read_text())

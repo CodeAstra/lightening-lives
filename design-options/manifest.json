@@ -62,5 +62,13 @@
     "skill": "ui-ux-pro-max",
     "palette": "civic",
     "rationale": "Civic: one readable column in large Atkinson Hyperlegible, thick slate rules, lists instead of cards, and a Contents list under the hero as the section navigator — the ui-ux-pro-max Accessible & Ethical + Inclusive Design system on its Minimal Single Column pattern, returned for the public-health framing. Slate-black on white with a single blue accent keeps every line of text at 7:1 or better. A laboratory director or district health officer can read each fact on a phone, outdoors, on a slow connection: the page earns trust through clarity and exact spacing, not decoration."
+  },
+  {
+    "id": "09",
+    "file": "designs/09-brand-classic.html",
+    "name": "Brand Classic",
+    "skill": "frontend-design",
+    "palette": "brand-classic",
+    "rationale": "Brand Classic carries the company's own logo onto the page without reinterpretation: the leaf green of the mark fills the header, the numbers band and every primary button, the real sun mark heads every section, the leaves become the bullets, and the sun's rays become the signature, a 24-ray dial around the mark that draws one day, so 'One drop. One day.' is the logo itself rather than a slogan. Archivo on its width axis, expanded for headlines and condensed for labels, over a strict left-aligned card grid gives a confident, corporate-diagnostic register. A laboratory director sees a supplier with an established identity and every fact in a predictable place."
   }
 ]

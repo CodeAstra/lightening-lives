@@ -387,7 +387,9 @@ def main(argv):
         for k in ('id', 'name', 'family', 'rationale', 'vars'):
             if k not in p:
                 errs.append(f"{p.get('id', '?')}: missing key {k}")
-        if not errs and is_green(p['vars']['--primary']) and p.get('design'):
+        # The cap keeps the exploratory palettes varied. Brand palettes are green because the logo is,
+        # so they are exempt from it.
+        if not errs and is_green(p['vars']['--primary']) and p.get('design') and p.get('family') != 'Brand':
             greens.append(p['id'])
         print(f"  {'FAIL' if errs else 'ok  '} {p.get('id', '?'):<14} {fmt_rows(rows)}")
         for e in errs:
@@ -397,7 +399,7 @@ def main(argv):
         print(f'  FAIL more than two designs use a green primary: {greens}')
         failed = True
     elif palettes:
-        print(f'  ok   green primaries among design palettes: {greens or "none"} (max 2)')
+        print(f'  ok   green primaries among design palettes: {greens or "none"} (max 2; Brand family exempt)')
 
     for f in files:
         f = f if f.is_absolute() else (pathlib.Path.cwd() / f)
