@@ -168,5 +168,22 @@
       "--accent": "#FFC80C",
       "--line": "#E1E4DE"
     }
+  },
+  {
+    "id": "brand-light",
+    "name": "Brand Light",
+    "family": "Brand",
+    "design": "10",
+    "rationale": "The same two logo hues, pushed lighter and softer: a warm off-white made from the sun gold at near-zero chroma, the palest leaf tint for alternate bands, a softened green-grey ink, and the leaf green at its 700 step (#40640B, 6.67:1) reserved for calls to action and key figures. The accent is the sun gold lifted to its 300 tint for the hero glow and small markers only.",
+    "vars": {
+      "--bg": "#FEFBF3",
+      "--bg-alt": "#F4FBEE",
+      "--ink": "#353932",
+      "--muted": "#61655D",
+      "--primary": "#40640B",
+      "--primary-ink": "#FEFBF3",
+      "--accent": "#FED66E",
+      "--line": "#E7EBE3"
+    }
   }
 ]

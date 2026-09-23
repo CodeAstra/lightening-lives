@@ -1,7 +1,8 @@
 # Lightening Lives — home-page design options
 
-Eight complete home-page designs for the Lightening Lives redesign, plus a comparison page that can
-show any of the eight layouts in any of the nine palettes.
+Ten complete home-page designs for the Lightening Lives redesign, plus a comparison page that can
+show any of the ten layouts in any of the eleven palettes. Designs 09 and 10 are drawn strictly from the
+company's logo colours.
 
 Everything opens from `file://`. There is no build step and no server.
 
@@ -11,14 +12,14 @@ Everything opens from `file://`. There is no build step and no server.
 
 **Start here: open `index.html`.**
 
-- **Design** dropdown, or the arrows, or <kbd>←</kbd> / <kbd>→</kbd>, or the number keys <kbd>1</kbd>–<kbd>8</kbd> — switch layout.
+- **Design** dropdown, or the arrows, or <kbd>←</kbd> / <kbd>→</kbd>, or the number keys <kbd>1</kbd>–<kbd>9</kbd> and <kbd>0</kbd> (for 10) — switch layout.
 - **Palette** dropdown, or <kbd>↑</kbd> / <kbd>↓</kbd> — recolour the layout you are looking at. "Own palette"
   is the palette the design was drawn for; every other entry is applied live over it.
 - **Width** — 390 (phone), 820 (tablet), Full.
 - The bar shows the design's rationale, and the palette's rationale when one is applied.
 - Links are deep: `index.html#03/daybreak` opens design 03 in the Daybreak palette, and
   `index.html#03/daybreak/390` opens it at phone width. Copy the address bar to send a colleague an exact view.
-- **Palettes** (top right) opens `palette-sheet.html`: all nine palettes as labelled swatch rows, each with a
+- **Palettes** (top right) opens `palette-sheet.html`: all eleven palettes as labelled swatch rows, each with a
   component strip and its measured contrast results.
 
 To look at one design on its own, open `designs/NN-name.html` directly, or use **Open ↗**.
@@ -55,7 +56,8 @@ Two deliberate decisions worth confirming:
   the comparison page the sun stays exactly as it is while everything around it changes. This is correct
   behaviour, and it is also a useful test: the logo is warm — yellow, amber and green — so it sits most
   naturally in Daybreak, Canopy and Brief green, and reads as a deliberate accent against Precision,
-  Molecular and Civic. Worth judging with the client.
+  Molecular and Civic. Worth judging with the client. Designs 09 and 10 take the question away: their
+  palettes are built from the mark itself.
 
 Note that the full lockup also carries the tagline **"Every Life Matters"**. The brief's approved supporting
 tagline is **"One drop. One day."**, which is what the pages use. If the lockup is placed anywhere on the
@@ -63,10 +65,12 @@ site, the page will be showing two taglines — a decision for the client rather
 
 ---
 
-## The eight designs
+## The designs
 
 Designs 01–04 were built with the **frontend-design** skill, 05–08 with the **ui-ux-pro-max** skill,
 committing to the design systems its database returned for four different framings of this company.
+Designs 09 and 10 were built with **frontend-design** from palettes extracted from the logo (see
+*Brand palettes* below).
 
 | # | Name | Primary | Typefaces | The idea in one line |
 |---|---|---|---|---|
@@ -78,6 +82,8 @@ committing to the design systems its database returned for four different framin
 | 06 | Lumen | DNA blue `#0369A1` | Exo + Roboto Mono | Daylight through an instrument window |
 | 07 | Canopy | Nature green `#15803D` | Lora + Raleway | One drop, grown to programme scale |
 | 08 | Civic | Slate-black `#0F172A` | Atkinson Hyperlegible | One readable column, built for a phone |
+| 09 | Brand Classic | Leaf green `#527E15` | Archivo (width axis) | The logo's rays read as one day |
+| 10 | Brand Light | Leaf green `#40640B` | Manrope + Spline Sans Mono | The mark in its own light |
 
 ### 01 · Precision — *frontend-design*
 An austere Swiss grid: a four-column label rail against an eight-column body, separated by one continuous
@@ -145,11 +151,27 @@ by colour alone; there are no sticky elements, no reveals and no counters, becau
 anti-pattern for this system. Built for a district health officer on a phone, outdoors, on a slow
 connection. The plainest of the eight — and the one that will age best.
 
+### 09 · Brand Classic — *frontend-design, logo palette*
+The logo used with confidence. The leaf green of the mark fills the header, the "In numbers" band, the
+audience headers and every primary button; the real sun mark heads every section; the mark's leaves become
+the bullets and the section-index markers. The signature is the hero: the sun's rays redrawn as a 24-ray dial
+around the mark, with a green ring that draws once on load — "One drop. One day." as the logo itself. Archivo
+is used on its width axis: expanded for headlines, condensed caps for labels. Left-aligned, card-based and
+predictable: the most corporate of the ten, and the one closest to how the client already presents itself.
+
+### 10 · Brand Light — *frontend-design, logo palette*
+The same brand with a lighter touch. One centred axis from the hero down, a warm off-white made from the sun
+gold, bands of the palest leaf tint, hairlines instead of cards. Green is reserved for the calls to action and
+the key figures, which are set very large in thin Manrope; the gold appears only as the soft glow behind the
+mark in the hero and as a small rising-sun marker over each section heading. The section navigator is a
+"Sections" menu in the sticky header rather than a strip. For a client who loves the logo but wants the site
+quieter than it.
+
 ---
 
 ## Palettes
 
-Nine palettes: one per design, plus **Brief green**, the palette specified in `website-info.md` §5, so any
+Eleven palettes: one per design, plus **Brief green**, the palette specified in `website-info.md` §5, so any
 layout can be judged in the company's existing colours. Each is defined by exactly eight variables, and no
 design uses a colour value outside them — which is what lets any palette be applied to any layout.
 
@@ -164,9 +186,37 @@ design uses a colour value outside them — which is what lets any palette be ap
 | `--accent` | decorative only — markers, rules, the drop. Never text, never a text background |
 | `--line` | hairlines and card borders |
 
-Across the eight design palettes the primaries are spread deliberately: two blues (navy, DNA blue), a teal,
-an indigo, a green, a warm bronze-gold, a warm charcoal and a slate-black. Only one design palette uses a
-green primary, against a limit of two.
+Across the eight exploratory palettes (01–08) the primaries are spread deliberately: two blues (navy, DNA
+blue), a teal, an indigo, a green, a warm bronze-gold, a warm charcoal and a slate-black. Only one of them
+uses a green primary, against a limit of two. The two **Brand** palettes (09, 10) are green because the
+logo is, and `tools/check.py` exempts the Brand family from that limit.
+
+### Brand palettes — extracted from the logo
+
+No `brand/` folder with a logo file was supplied, so the colours were sampled from the official mark
+already embedded in every design (128×128 PNG, identical in all ten files). Opaque pixels only:
+
+| Hex | Name | Where in the logo | Share |
+|---|---|---|---|
+| `#F7EF06` | Sun yellow | Sun disc and inner rays: the light stop of the sun's gradient | ~46% |
+| `#FFC80C` | Sun gold | Outer rays and rim: the warm stop of the sun's gradient | ~46% |
+| `#6B9D2A` | Leaf green | The three leaves above the figure | 5.9% |
+| `#252820` | Figure ink | The human figure / trunk | 2.3% |
+
+- **Primary: leaf green.** The sun covers the most area, but yellow and gold cannot carry text at AA
+  without turning brown, and the brief already names green as the primary. **Secondary: sun gold**, with
+  sun yellow as its gradient stop. Both stay decorative.
+- **Ramps** were built in OKLCH with the hue held fixed and only lightness and chroma changing. Leaf green:
+  50 `#F4FBEE` · 100 `#E9F5DE` · 200 `#D3EBBE` · 300 `#B6DA95` · 400 `#95C266` · **500 `#6B9D2A` (logo)** ·
+  600 `#527E15` · 700 `#40640B` · 800 `#314C0B` · 900 `#20310B`. Sun gold: 50 `#FFFAED` · 100 `#FFF3D5` ·
+  200 `#FFE6A9` · 300 `#FED66E` · **400 `#FFC80C` (logo)** · 500 `#D2A403` · 600 `#A5810F` · 700 `#826505`.
+- **Neutrals** use the green's hue at OKLCH chroma ≤ 0.015 (muted `#61655D`, lines `#E1E4DE` /
+  `#E7EBE3`), so even the greys carry the brand. The logo's own figure colour `#252820` is effectively the
+  900 step of that neutral ramp, and it is Brand Classic's ink.
+- **The logo's exact green fails AA on white (3.24:1).** It is moved down its own ramp, not re-hued: Brand
+  Classic uses 600 `#527E15` (4.82:1), Brand Light uses 700 `#40640B` (6.67:1). The exact `#6B9D2A` still
+  appears wherever the real mark is shown.
+- No hue outside the logo is used in either palette.
 
 ### Contrast
 
@@ -177,6 +227,8 @@ every layout and never carries text, so it has no contrast requirement.
 <!-- palette-table:start -->
 | Palette | Family | Primary | ink / bg | ink / bg-alt | muted / bg | primary-ink / primary | primary / bg | muted / bg-alt * | primary / bg-alt * | AA |
 |---|---|---|---|---|---|---|---|---|---|---|
+| Brand Classic | Brand | `#527E15` | 14.97 | 14.17 | 5.95 | 4.82 | 4.82 | 5.64 | 4.57 | Pass |
+| Brand Light | Brand | `#40640B` | 11.39 | 11.15 | 5.76 | 6.67 | 6.67 | 5.64 | 6.53 | Pass |
 | Precision | Blue & navy | `#143D73` | 17.48 | 16.01 | 6.31 | 10.80 | 10.80 | 5.78 | 9.89 | Pass |
 | Lumen | Blue & navy | `#0369A1` | 8.87 | 9.46 | 7.11 | 5.93 | 5.57 | 7.58 | 5.93 | Pass |
 | Assurance | Teal | `#0F766E` | 9.09 | 9.48 | 7.27 | 5.47 | 5.25 | 7.58 | 5.47 | Pass |
@@ -210,7 +262,7 @@ verbatim; no banned words, pricing, charity or B2C language and no US spellings;
 self-contained apart from Google Fonts.
 
 `tools/shots.mjs` drives headless Chrome to capture full-page screenshots and report horizontal overflow
-at 360, 390, 820, 1280 and 1440px. All eight designs are clean at all five widths, with no console errors.
+at 360, 390, 820, 1280 and 1440px. All ten designs are clean at all five widths, with no console errors.
 
 `tools/sync.py` validates `manifest.json` and `palettes.json`, inlines them into `index.html` (browsers
 block `fetch()` of local JSON under `file://`), regenerates `palette-sheet.html`, and refreshes the
@@ -224,7 +276,7 @@ design file itself so they can never drift from what the page renders.
 ## Still needed from the client
 
 1. **Photographs** — field (Nandurbar, Kothagudem, Jharkhand), laboratory, kit and team portraits. Manisha is compiling.
-2. **The logo in SVG, and the exact brand green** — the mark is embedded from the supplied 256px PNG, which is ample at navigation size but should be replaced with a vector before launch. The Brief green palette uses the approximate `#1E6B4E` from the brief and should be re-sampled from the logo.
+2. **The logo in SVG, and the exact brand green** — the mark is embedded from the supplied 256px PNG, which is ample at navigation size but should be replaced with a vector before launch. The logo green has now been sampled from the embedded mark (`#6B9D2A`, used by the Brand palettes); the Brief green palette keeps the brief's approximate `#1E6B4E` for comparison. The full lockup is still needed to confirm the colour of the "LIGHTENING LIVES" lettering, which the embedded mark does not include.
 3. **Partner logos as vectors** — currently typeset names.
 4. **The two `[TBC]` figures** in "In numbers": samples processed, and districts and programmes.
 5. **Dates for the three news items**, currently `Date [TBC]`.

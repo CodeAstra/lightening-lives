@@ -70,5 +70,13 @@
     "skill": "frontend-design",
     "palette": "brand-classic",
     "rationale": "Brand Classic carries the company's own logo onto the page without reinterpretation: the leaf green of the mark fills the header, the numbers band and every primary button, the real sun mark heads every section, the leaves become the bullets, and the sun's rays become the signature, a 24-ray dial around the mark that draws one day, so 'One drop. One day.' is the logo itself rather than a slogan. Archivo on its width axis, expanded for headlines and condensed for labels, over a strict left-aligned card grid gives a confident, corporate-diagnostic register. A laboratory director sees a supplier with an established identity and every fact in a predictable place."
+  },
+  {
+    "id": "10",
+    "file": "designs/10-brand-light.html",
+    "name": "Brand Light",
+    "skill": "frontend-design",
+    "palette": "brand-light",
+    "rationale": "Brand Light keeps the logo's leaf green and sun gold but lets the page breathe: a warm off-white drawn from the sun, bands of the palest leaf tint, hairline rules instead of cards, and one centred axis from the hero down. The green is reserved for the calls to action and the key figures, which are set very large in a thin Manrope so capacity and turnaround carry the colour; the gold appears only as the soft glow behind the real mark and as a small rising-sun marker on each section. Spline Sans Mono labels keep it exact. For a client who loves the logo but wants the site quieter than it, and for a laboratory director who wants to find the fact without the page raising its voice."
   }
 ]
