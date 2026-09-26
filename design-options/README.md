@@ -1,7 +1,7 @@
 # Lightening Lives — home-page design options
 
-Ten complete home-page designs for the Lightening Lives redesign, plus a comparison page that can
-show any of the ten layouts in any of the eleven palettes. Designs 09 and 10 are drawn strictly from the
+Thirteen complete home-page designs for the Lightening Lives redesign, plus a comparison page that can
+show any of the thirteen layouts in any of the fourteen palettes. Designs 09 and 10 are drawn strictly from the
 company's logo colours.
 
 Everything opens from `file://`. There is no build step and no server.
@@ -84,6 +84,9 @@ Designs 09 and 10 were built with **frontend-design** from palettes extracted fr
 | 08 | Civic | Slate-black `#0F172A` | Atkinson Hyperlegible | One readable column, built for a phone |
 | 09 | Brand Classic | Leaf green `#527E15` | Archivo (width axis) | The logo's rays read as one day |
 | 10 | Brand Light | Leaf green `#40640B` | Manrope + Spline Sans Mono | The mark in its own light |
+| 11 | Evaluation File | Brief green `#1E6B4E` | Hanken Grotesk | The buyer's due-diligence questions, answered in order |
+| 12 | Drop to District | Oxblood `#8E2B22` | Schibsted Grotesk | One drop, one assay, one programme, in photographs |
+| 13 | Kit Explorer | Graphite `#202329` | Onest | An instrument maker's product page |
 
 ### 01 · Precision — *frontend-design*
 An austere Swiss grid: a four-column label rail against an eight-column body, separated by one continuous
@@ -169,6 +172,54 @@ quieter than it.
 
 ---
 
+## Designs 11-13: a second round of directions
+
+Written after a critique of 01-10. All ten share one skeleton: a locale eyebrow, a split hero with a
+drawn illustration on the right, the brief's eleven sections in the brief's exact order, the eight
+differentiators as a uniform card grid, and drawn placeholders instead of photographs. Designs 11-13
+change the structure rather than the skin, and follow stricter rules:
+
+- Real photographs (see *Photographs* below). No drawn SVG illustrations and no fake UI screenshots.
+- Hero headline in two lines or fewer, subtext under 20 words, both calls to action above the fold at 390px and 1280px.
+- One-line navigation bar, 64-72px tall. One light theme down to the footer.
+- Hyphens only: `tools/check.py` fails any design numbered 11 or later that contains an em or en dash.
+- No section-number eyebrows, locale strips, scroll cues or decorative status dots.
+- Bento grids fill every cell: 8 differentiators occupy exactly 8 cells at every breakpoint.
+- Motion stays subtle (hover states, a tab cross-fade, a photo fade-in in 12), and is off under `prefers-reduced-motion`.
+
+### 11 · Evaluation File
+For the laboratory director doing due diligence. The hero puts the claim next to a high-throughput
+laboratory photograph, then a four-cell specification sheet (specimen, extraction, turnaround, capacity)
+before the first scroll. After that the page is a file: a sticky index of the questions a buyer asks,
+and every H2 is one of those questions ("Which kits are available?", "Who has certified and partnered on
+the assay?") with a short plain answer first. That is also the brief's AI-visibility pattern. Kits are a
+real comparison table. On a phone the index becomes a sticky, horizontally scrolling chip strip.
+
+### 12 · Drop to District
+Photo-led and editorial, making the public-health scale visible. The hero is a very large two-line
+headline over a photographic triptych: blood spot on a card, microplate, landscape. The sections are
+reordered to tell the product at the scale it is used: how it works, who it is for, the three programme
+regions photographed as places, then the differentiators as a bento, figures, kits as large typographic
+rows, and partners as one flowing line of names. Oxide red comes from the specimen itself.
+
+### 13 · Kit Explorer
+Product-led and structured, like an instrument maker's product page. A centred hero with the three
+credentials on one quiet line, a wide photograph, and a sticky segmented section bar. The kits are an
+explorer: choose a kit, read its specification panel. The two audiences are a switch. Partners are a
+complete 7 x 2 grid (2 x 7 on a phone). The tabs are progressive: without JavaScript every panel is shown.
+
+### Photographs
+The brief's own field and laboratory photographs have not arrived, so 11-13 use **real, freely licensed
+stand-ins from Wikimedia Commons** in `assets/photos/` (WebP, 1600px max). Each is credited under the
+photograph, and `assets/photos/credits.json` records the author, licence and source page for every file.
+They are generic subjects: a lancet, a blood-spot card, microplates, pipettes, a thermal cycler, a
+Telangana health sub-centre, and landscapes in Maharashtra, Telangana and Jharkhand. None claims to show
+Lightening Lives, and the regional landscapes are captioned with their real locations. Replace them with
+the company's photographs before launch. CC BY-SA images require attribution wherever they are used.
+A Whatman-branded blood card photo was considered and rejected because it shows a third-party product.
+
+---
+
 ## Palettes
 
 Eleven palettes: one per design, plus **Brief green**, the palette specified in `website-info.md` §5, so any
@@ -234,10 +285,13 @@ every layout and never carries text, so it has no contrast requirement.
 | Assurance | Teal | `#0F766E` | 9.09 | 9.48 | 7.27 | 5.47 | 5.25 | 7.58 | 5.47 | Pass |
 | Canopy | Green | `#15803D` | 8.70 | 9.11 | 6.55 | 5.02 | 4.79 | 6.85 | 5.02 | Pass |
 | Brief green | Green | `#1E6B4E` | 17.55 | 16.48 | 5.87 | 6.43 | 6.43 | 5.51 | 6.03 | Pass |
+| Evaluation | Green | `#1E6B4E` | 17.99 | 16.74 | 6.45 | 6.43 | 6.43 | 6.00 | 5.98 | Pass |
 | Molecular | Violet | `#4B3BC8` | 17.54 | 16.07 | 6.75 | 7.61 | 7.61 | 6.18 | 6.97 | Pass |
 | Daybreak | Warm | `#8A5A00` | 15.72 | 14.47 | 6.22 | 5.93 | 5.83 | 5.72 | 5.37 | Pass |
+| Oxblood | Warm | `#8E2B22` | 16.59 | 15.23 | 6.71 | 8.34 | 7.99 | 6.16 | 7.33 | Pass |
 | Field & Lab | Neutral | `#3B342D` | 15.88 | 14.45 | 6.12 | 11.75 | 11.75 | 5.57 | 10.69 | Pass |
 | Civic | Neutral | `#0F172A` | 20.17 | 19.28 | 7.58 | 17.85 | 17.85 | 7.24 | 17.06 | Pass |
+| Graphite & Sun | Neutral | `#202329` | 17.61 | 15.98 | 6.34 | 15.74 | 15.74 | 5.75 | 14.29 | Pass |
 
 \* extra checks beyond the five required pairs. All ratios are WCAG 2.x contrast ratios; AA for body text is 4.5:1.
 <!-- palette-table:end -->
@@ -258,8 +312,8 @@ python3 tools/sync.py                       # after editing manifest.json or pal
 outside it (hex, `rgb()`, `hsl()`, named colours, SVG attributes, inline styles or script); light
 backgrounds; WCAG AA on all seven pairs; one `<h1>` and no skipped heading levels; `lang="en-IN"`; the
 skip link, `:focus-visible` and `prefers-reduced-motion`; all eleven section ids; the approved copy
-verbatim; no banned words, pricing, charity or B2C language and no US spellings; and that the file is
-self-contained apart from Google Fonts.
+verbatim; no banned words, pricing, charity or B2C language and no US spellings; that the file is
+self-contained apart from Google Fonts and photographs in `assets/`; and, from design 11 on, no em or en dashes.
 
 `tools/shots.mjs` drives headless Chrome to capture full-page screenshots and report horizontal overflow
 at 360, 390, 820, 1280 and 1440px. All ten designs are clean at all five widths, with no console errors.

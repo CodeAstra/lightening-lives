@@ -185,5 +185,56 @@
       "--accent": "#FED66E",
       "--line": "#E7EBE3"
     }
+  },
+  {
+    "id": "evaluation",
+    "name": "Evaluation",
+    "family": "Green",
+    "design": "11",
+    "rationale": "The brief's deep green carries every action and nothing else, on white and a barely-green off-white; amber appears once, as the rule beside the company description. Near-black ink with tabular figures keeps the page reading like a specification file rather than a campaign.",
+    "vars": {
+      "--bg": "#FFFFFF",
+      "--bg-alt": "#F6F7F5",
+      "--ink": "#121815",
+      "--muted": "#56615B",
+      "--primary": "#1E6B4E",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#E8B04B",
+      "--line": "#DDE3DF"
+    }
+  },
+  {
+    "id": "oxblood",
+    "name": "Oxblood",
+    "family": "Warm",
+    "design": "12",
+    "rationale": "A dried-blood oxide red for every action, taken from the specimen the product is built around, on warm paper and a deeper oat for alternating bands. Amber is decorative only. Warm enough to sit beside field photography, dark enough to pass AA comfortably on both grounds.",
+    "vars": {
+      "--bg": "#FBFAF7",
+      "--bg-alt": "#F3F0EA",
+      "--ink": "#1D1A17",
+      "--muted": "#5F5850",
+      "--primary": "#8E2B22",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#E8B04B",
+      "--line": "#E4DED4"
+    }
+  },
+  {
+    "id": "graphite-sun",
+    "name": "Graphite & Sun",
+    "family": "Neutral",
+    "design": "13",
+    "rationale": "Graphite and white with a warm-grey panel colour, so photographs and figures carry the page. The logo's sun gold is the only hue, used for small markers and rules and never behind text. The register of an instrument maker's product page.",
+    "vars": {
+      "--bg": "#FFFFFF",
+      "--bg-alt": "#F4F4F1",
+      "--ink": "#17191C",
+      "--muted": "#5B6067",
+      "--primary": "#202329",
+      "--primary-ink": "#FFFFFF",
+      "--accent": "#F2B705",
+      "--line": "#E3E3DE"
+    }
   }
 ]

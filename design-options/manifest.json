@@ -78,5 +78,29 @@
     "skill": "frontend-design",
     "palette": "brand-light",
     "rationale": "Brand Light keeps the logo's leaf green and sun gold but lets the page breathe: a warm off-white drawn from the sun, bands of the palest leaf tint, hairline rules instead of cards, and one centred axis from the hero down. The green is reserved for the calls to action and the key figures, which are set very large in a thin Manrope so capacity and turnaround carry the colour; the gold appears only as the soft glow behind the real mark and as a small rising-sun marker on each section. Spline Sans Mono labels keep it exact. For a client who loves the logo but wants the site quieter than it, and for a laboratory director who wants to find the fact without the page raising its voice."
+  },
+  {
+    "id": "11",
+    "file": "designs/11-evaluation-file.html",
+    "name": "Evaluation File",
+    "skill": "fresh direction",
+    "palette": "evaluation",
+    "rationale": "Evaluation File is written for the laboratory director doing due diligence. The hero states the claim and puts a real blood-collection card beside it, then a four-cell specification sheet answers specimen, extraction, turnaround and capacity before the first scroll. Below it the page becomes a file: a sticky index of the questions a buyer actually asks, and every section heading is one of those questions with a short plain answer first and detail after. Kits are a comparison table, not cards. Hanken Grotesk with tabular figures, the brief's deep green for actions only, amber reserved for a single rule, one light theme throughout."
+  },
+  {
+    "id": "12",
+    "file": "designs/12-drop-to-district.html",
+    "name": "Drop to District",
+    "skill": "fresh direction",
+    "palette": "oxblood",
+    "rationale": "Drop to District tells the product at the scale it is used: one drop, one assay, one programme. The hero is a headline and a real photographic triptych of blood spot, microplate and a health sub-centre, so the first screen shows the specimen, the laboratory and the field together. The page then reads like a well-edited newspaper feature in Schibsted Grotesk: a large statement paragraph, a bento of the eight differentiators, kits as big typographic rows, and a band of the three programme regions photographed as places. Colour is a dried-blood oxide red for actions, taken from the specimen itself, on warm paper with amber kept to a single rule. One light theme to the footer."
+  },
+  {
+    "id": "13",
+    "file": "designs/13-kit-explorer.html",
+    "name": "Kit Explorer",
+    "skill": "fresh direction",
+    "palette": "graphite-sun",
+    "rationale": "Kit Explorer presents Lightening Lives the way a modern instrument maker presents a product line. A centred two-line headline and both calls to action sit above a wide laboratory photograph, with the three credentials in one quiet line. A sticky segmented bar is the section navigator. The kits are an explorer: pick a kit on the left, read its specimen, workflow, turnaround and certification on the right, with every panel still readable without JavaScript. The two audiences are a switch rather than two stacked essays, the eight differentiators are a bento that fills its grid exactly, and partners are a complete grid of typeset names. Graphite and white in Onest, with the logo's sun gold kept to markers only."
   }
 ]

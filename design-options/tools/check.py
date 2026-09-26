@@ -322,8 +322,10 @@ def check_design(path):
         errs.append(f'external resource: <{tag} {k}="{v[:70]}">')
     for a in doc.imgs:
         s = a.get('src', '')
-        if not s.startswith('data:'):
-            errs.append(f'<img src="{s[:50]}"> is not inline')
+        # Photographs may live in design-options/assets/ (relative paths still open from file://).
+        local = s.startswith('../assets/') and (path.parent / s).resolve().is_file()
+        if not s.startswith('data:') and not local:
+            errs.append(f'<img src="{s[:50]}"> is neither inline nor a file in assets/')
         if 'alt' not in a:
             errs.append('<img> without alt')
     if re.search(r'@import', body):
@@ -343,6 +345,12 @@ def check_design(path):
         if hit:
             ctx = scrub[max(0, hit.start() - 30):hit.end() + 30]
             errs.append(f'{label}: "…{ctx}…"')
+    # From design 11 on: hyphens only, no em or en dashes anywhere in the file.
+    num = re.match(r'(\d+)-', path.name)
+    if num and int(num.group(1)) >= 11:
+        for ch, label in (('\u2014', 'em dash'), ('\u2013', 'en dash')):
+            if ch in src:
+                errs.append(f'{label} found ({src.count(ch)}x); use a hyphen')
     if 'TBC' not in text:
         warns.append('no [TBC] marker found — unconfirmed figures must be marked')
 
