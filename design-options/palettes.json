@@ -156,7 +156,7 @@
     "id": "brand-classic",
     "name": "Brand Classic",
     "family": "Brand",
-    "design": null,
+    "design": "12",
     "rationale": "Taken strictly from the logo. Primary is the leaf green of the mark (#6B9D2A, 3.24:1 on white) moved one step down its own ramp to #527E15 so it passes AA; accent is the sun gold #FFC80C at its exact logo value, decorative only; ink is the logo's own figure colour #252820; the pale leaf tint, muted and line are the same green hue at very low chroma, so even the greys carry the brand.",
     "vars": {
       "--bg": "#FFFFFF",
@@ -207,7 +207,7 @@
     "id": "oxblood",
     "name": "Oxblood",
     "family": "Warm",
-    "design": "12",
+    "design": null,
     "rationale": "A dried-blood oxide red for every action, taken from the specimen the product is built around, on warm paper and a deeper oat for alternating bands. Amber is decorative only. Warm enough to sit beside field photography, dark enough to pass AA comfortably on both grounds.",
     "vars": {
       "--bg": "#FBFAF7",

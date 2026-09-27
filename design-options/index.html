@@ -212,8 +212,8 @@
   "file": "designs/12-drop-to-district.html",
   "name": "Drop to District",
   "skill": "fresh direction",
-  "palette": "oxblood",
-  "rationale": "Drop to District tells the product at the scale it is used: one drop, one assay, one programme. The hero is a headline and a real photographic triptych of blood spot, microplate and a health sub-centre, so the first screen shows the specimen, the laboratory and the field together. The page then reads like a well-edited newspaper feature in Schibsted Grotesk: a large statement paragraph, a bento of the eight differentiators, kits as big typographic rows, and a band of the three programme regions photographed as places. Colour is a dried-blood oxide red for actions, taken from the specimen itself, on warm paper with amber kept to a single rule. One light theme to the footer."
+  "palette": "brand-classic",
+  "rationale": "Drop to District tells the product at the scale it is used: one drop, one assay, one programme. The hero is a large, light headline over a real photographic triptych of blood spot, microplate and landscape, so the first screen shows the specimen, the laboratory and the field together. The colour comes from the company's own logo: the leaf green of the mark carries every action, the figure's near-black sets the text, and the sun gold stays a small accent everywhere except one signature, the large tile in the Why grid, which is filled with a radial sun running from pale gold at its upper left to deep gold at its far edge. Headlines take the calm of Green Bands: Figtree throughout, display type set light in a leaf-tinted ink with balanced lines, so emphasis comes from size and space rather than weight. Around the sun tile the differentiators are plain text under hairline rules, kits are large typographic rows and partners one flowing line of names. One light theme to the footer."
  },
  {
   "id": "13",
@@ -400,7 +400,7 @@
   "id": "brand-classic",
   "name": "Brand Classic",
   "family": "Brand",
-  "design": null,
+  "design": "12",
   "rationale": "Taken strictly from the logo. Primary is the leaf green of the mark (#6B9D2A, 3.24:1 on white) moved one step down its own ramp to #527E15 so it passes AA; accent is the sun gold #FFC80C at its exact logo value, decorative only; ink is the logo's own figure colour #252820; the pale leaf tint, muted and line are the same green hue at very low chroma, so even the greys carry the brand.",
   "vars": {
    "--bg": "#FFFFFF",
@@ -451,7 +451,7 @@
   "id": "oxblood",
   "name": "Oxblood",
   "family": "Warm",
-  "design": "12",
+  "design": null,
   "rationale": "A dried-blood oxide red for every action, taken from the specimen the product is built around, on warm paper and a deeper oat for alternating bands. Amber is decorative only. Warm enough to sit beside field photography, dark enough to pass AA comfortably on both grounds.",
   "vars": {
    "--bg": "#FBFAF7",
@@ -497,7 +497,9 @@
     }
     try { return JSON.parse($(inlineId).textContent); } catch (e) { return []; }
   }
-  const manifest = await loadJSON('manifest.json', 'll-manifest');
+  // Designs kept in manifest.json but not offered for selection here. Remove an id to show it again.
+  const HIDDEN = ['11', '14', '15'];
+  const manifest = (await loadJSON('manifest.json', 'll-manifest')).filter(d => !HIDDEN.includes(d.id));
   const palettes = await loadJSON('palettes.json', 'll-palettes');
 
   const stage = $('stage'), frame = $('frame'), designSel = $('design'), paletteSel = $('palette');
@@ -507,7 +509,7 @@
   }
 
   // ----- selects -------------------------------------------------------------------------------
-  manifest.forEach((d, i) => designSel.add(new Option(d.id + ' · ' + d.name, String(i))));
+  manifest.forEach((d, i) => designSel.add(new Option(d.name, String(i))));
   const families = [...new Set(palettes.map(p => p.family))]
     .sort((a, b) => (FAMILY_ORDER.indexOf(a) + 99 * (FAMILY_ORDER.indexOf(a) < 0)) - (FAMILY_ORDER.indexOf(b) + 99 * (FAMILY_ORDER.indexOf(b) < 0)));
   const ownOpt = new Option('Own palette', 'own'); paletteSel.add(ownOpt);
