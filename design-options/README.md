@@ -1,8 +1,8 @@
 # Lightening Lives — home-page design options
 
-Thirteen complete home-page designs for the Lightening Lives redesign, plus a comparison page that can
-show any of the thirteen layouts in any of the fourteen palettes. Designs 09 and 10 are drawn strictly from the
-company's logo colours.
+Thirteen home-page designs for the Lightening Lives redesign, plus a comparison page that can show designs
+01–08 and 11–13 in any of the fourteen palettes. Designs 14 and 15 come from the `chores/design-system-v2`
+branch and keep their own colours. The two Brand palettes are drawn strictly from the company's logo colours.
 
 Everything opens from `file://`. There is no build step and no server.
 
@@ -12,9 +12,10 @@ Everything opens from `file://`. There is no build step and no server.
 
 **Start here: open `index.html`.**
 
-- **Design** dropdown, or the arrows, or <kbd>←</kbd> / <kbd>→</kbd>, or the number keys <kbd>1</kbd>–<kbd>9</kbd> and <kbd>0</kbd> (for 10) — switch layout.
+- **Design** dropdown, or the arrows, or <kbd>←</kbd> / <kbd>→</kbd>, or the number keys <kbd>1</kbd>–<kbd>8</kbd> (designs 01–08) — switch layout.
 - **Palette** dropdown, or <kbd>↑</kbd> / <kbd>↓</kbd> — recolour the layout you are looking at. "Own palette"
-  is the palette the design was drawn for; every other entry is applied live over it.
+  is the palette the design was drawn for; every other entry is applied live over it. The palette controls are
+  disabled on 14 and 15, which are not built on the eight palette variables.
 - **Width** — 390 (phone), 820 (tablet), Full.
 - The bar shows the design's rationale, and the palette's rationale when one is applied.
 - Links are deep: `index.html#03/daybreak` opens design 03 in the Daybreak palette, and
@@ -43,7 +44,8 @@ colour and tone. All eleven home-page sections from `website-info.md` are presen
 
 Every design carries the **company's own sun mark** in the header and the footer — the official
 lettering-stripped mark (`assets/brand/mark.png` in the company's asset set), embedded as an inline PNG
-data URI so each file stays self-contained and opens from `file://`.
+data URI so each file stays self-contained and opens from `file://`. Designs 14 and 15 load the same mark
+from `assets/brand/mark.png` instead.
 
 Two deliberate decisions worth confirming:
 
@@ -56,8 +58,8 @@ Two deliberate decisions worth confirming:
   the comparison page the sun stays exactly as it is while everything around it changes. This is correct
   behaviour, and it is also a useful test: the logo is warm — yellow, amber and green — so it sits most
   naturally in Daybreak, Canopy and Brief green, and reads as a deliberate accent against Precision,
-  Molecular and Civic. Worth judging with the client. Designs 09 and 10 take the question away: their
-  palettes are built from the mark itself.
+  Molecular and Civic. Worth judging with the client. The two Brand palettes take the question away: they
+  are built from the mark itself.
 
 Note that the full lockup also carries the tagline **"Every Life Matters"**. The brief's approved supporting
 tagline is **"One drop. One day."**, which is what the pages use. If the lockup is placed anywhere on the
@@ -69,8 +71,7 @@ site, the page will be showing two taglines — a decision for the client rather
 
 Designs 01–04 were built with the **frontend-design** skill, 05–08 with the **ui-ux-pro-max** skill,
 committing to the design systems its database returned for four different framings of this company.
-Designs 09 and 10 were built with **frontend-design** from palettes extracted from the logo (see
-*Brand palettes* below).
+Designs 14 and 15 come from the `chores/design-system-v2` branch (its Design 1 and Design 3).
 
 | # | Name | Primary | Typefaces | The idea in one line |
 |---|---|---|---|---|
@@ -82,11 +83,11 @@ Designs 09 and 10 were built with **frontend-design** from palettes extracted fr
 | 06 | Lumen | DNA blue `#0369A1` | Exo + Roboto Mono | Daylight through an instrument window |
 | 07 | Canopy | Nature green `#15803D` | Lora + Raleway | One drop, grown to programme scale |
 | 08 | Civic | Slate-black `#0F172A` | Atkinson Hyperlegible | One readable column, built for a phone |
-| 09 | Brand Classic | Leaf green `#527E15` | Archivo (width axis) | The logo's rays read as one day |
-| 10 | Brand Light | Leaf green `#40640B` | Manrope + Spline Sans Mono | The mark in its own light |
 | 11 | Evaluation File | Brief green `#1E6B4E` | Hanken Grotesk | The buyer's due-diligence questions, answered in order |
 | 12 | Drop to District | Oxblood `#8E2B22` | Schibsted Grotesk | One drop, one assay, one programme, in photographs |
 | 13 | Kit Explorer | Graphite `#202329` | Onest | An instrument maker's product page |
+| 14 | Green Bands | Deep green `#1C3A13` | Inter + IBM Plex Mono | A laboratory notebook in daylight, in green bands |
+| 15 | Lab Console | Ink navy `#111A4A` | Inter + JetBrains Mono | The company presented like laboratory software |
 
 ### 01 · Precision — *frontend-design*
 An austere Swiss grid: a four-column label rail against an eight-column body, separated by one continuous
@@ -154,22 +155,6 @@ by colour alone; there are no sticky elements, no reveals and no counters, becau
 anti-pattern for this system. Built for a district health officer on a phone, outdoors, on a slow
 connection. The plainest of the eight — and the one that will age best.
 
-### 09 · Brand Classic — *frontend-design, logo palette*
-The logo used with confidence. The leaf green of the mark fills the header, the "In numbers" band, the
-audience headers and every primary button; the real sun mark heads every section; the mark's leaves become
-the bullets and the section-index markers. The signature is the hero: the sun's rays redrawn as a 24-ray dial
-around the mark, with a green ring that draws once on load — "One drop. One day." as the logo itself. Archivo
-is used on its width axis: expanded for headlines, condensed caps for labels. Left-aligned, card-based and
-predictable: the most corporate of the ten, and the one closest to how the client already presents itself.
-
-### 10 · Brand Light — *frontend-design, logo palette*
-The same brand with a lighter touch. One centred axis from the hero down, a warm off-white made from the sun
-gold, bands of the palest leaf tint, hairlines instead of cards. Green is reserved for the calls to action and
-the key figures, which are set very large in thin Manrope; the gold appears only as the soft glow behind the
-mark in the hero and as a small rising-sun marker over each section heading. The section navigator is a
-"Sections" menu in the sticky header rather than a strip. For a client who loves the logo but wants the site
-quieter than it.
-
 ---
 
 ## Designs 11-13: a second round of directions
@@ -220,6 +205,31 @@ A Whatman-branded blood card photo was considered and rejected because it shows 
 
 ---
 
+## Designs 14-15: from the design-system-v2 round
+
+Design 1 and Design 3 from the `chores/design-system-v2` branch, added unchanged apart from the logo path
+and the page title. They were built to that branch's `design/design.md` rather than to the rules above, so:
+
+- They keep their own colours. They do not use the eight palette variables or carry the palette bridge, so
+  the comparison page disables its palette controls while either one is shown.
+- Most body copy is still placeholder text around the approved one-sentence description.
+- `tools/check.py` skips them on a full run. Name a file (`python3 tools/check.py designs/14-*.html`) to see
+  how far it is from the palette rules.
+
+### 14 · Green Bands
+A laboratory notebook in daylight. Warm paper with a deep-green ink, full-width deep-green bands with a lime
+highlight breaking up the page, light Inter headlines and every label, kit code and figure in IBM Plex Mono.
+The B2B and B2G audiences are split directly under the hero.
+
+### 15 · Lab Console
+The company presented like laboratory software. Next to the headline sits a screening-run console: a panel of
+blood-card specimens moving from queued to complete, with a kit lot card beneath it. A deep ink navy carries
+every action on a cool grey ground, with a clinical teal for status marks and a single orange kit-lot
+card; Inter with JetBrains Mono for
+specimen codes and run data.
+
+---
+
 ## Palettes
 
 Eleven palettes: one per design, plus **Brief green**, the palette specified in `website-info.md` §5, so any
@@ -239,7 +249,7 @@ design uses a colour value outside them — which is what lets any palette be ap
 
 Across the eight exploratory palettes (01–08) the primaries are spread deliberately: two blues (navy, DNA
 blue), a teal, an indigo, a green, a warm bronze-gold, a warm charcoal and a slate-black. Only one of them
-uses a green primary, against a limit of two. The two **Brand** palettes (09, 10) are green because the
+uses a green primary, against a limit of two. The two **Brand** palettes are green because the
 logo is, and `tools/check.py` exempts the Brand family from that limit.
 
 ### Brand palettes — extracted from the logo
@@ -314,6 +324,7 @@ backgrounds; WCAG AA on all seven pairs; one `<h1>` and no skipped heading level
 skip link, `:focus-visible` and `prefers-reduced-motion`; all eleven section ids; the approved copy
 verbatim; no banned words, pricing, charity or B2C language and no US spellings; that the file is
 self-contained apart from Google Fonts and photographs in `assets/`; and, from design 11 on, no em or en dashes.
+A full run skips designs listed in `manifest.json` without a palette (14 and 15).
 
 `tools/shots.mjs` drives headless Chrome to capture full-page screenshots and report horizontal overflow
 at 360, 390, 820, 1280 and 1440px. All ten designs are clean at all five widths, with no console errors.

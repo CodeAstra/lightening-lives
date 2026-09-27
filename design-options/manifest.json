@@ -64,22 +64,6 @@
     "rationale": "Civic: one readable column in large Atkinson Hyperlegible, thick slate rules, lists instead of cards, and a Contents list under the hero as the section navigator — the ui-ux-pro-max Accessible & Ethical + Inclusive Design system on its Minimal Single Column pattern, returned for the public-health framing. Slate-black on white with a single blue accent keeps every line of text at 7:1 or better. A laboratory director or district health officer can read each fact on a phone, outdoors, on a slow connection: the page earns trust through clarity and exact spacing, not decoration."
   },
   {
-    "id": "09",
-    "file": "designs/09-brand-classic.html",
-    "name": "Brand Classic",
-    "skill": "frontend-design",
-    "palette": "brand-classic",
-    "rationale": "Brand Classic carries the company's own logo onto the page without reinterpretation: the leaf green of the mark fills the header, the numbers band and every primary button, the real sun mark heads every section, the leaves become the bullets, and the sun's rays become the signature, a 24-ray dial around the mark that draws one day, so 'One drop. One day.' is the logo itself rather than a slogan. Archivo on its width axis, expanded for headlines and condensed for labels, over a strict left-aligned card grid gives a confident, corporate-diagnostic register. A laboratory director sees a supplier with an established identity and every fact in a predictable place."
-  },
-  {
-    "id": "10",
-    "file": "designs/10-brand-light.html",
-    "name": "Brand Light",
-    "skill": "frontend-design",
-    "palette": "brand-light",
-    "rationale": "Brand Light keeps the logo's leaf green and sun gold but lets the page breathe: a warm off-white drawn from the sun, bands of the palest leaf tint, hairline rules instead of cards, and one centred axis from the hero down. The green is reserved for the calls to action and the key figures, which are set very large in a thin Manrope so capacity and turnaround carry the colour; the gold appears only as the soft glow behind the real mark and as a small rising-sun marker on each section. Spline Sans Mono labels keep it exact. For a client who loves the logo but wants the site quieter than it, and for a laboratory director who wants to find the fact without the page raising its voice."
-  },
-  {
     "id": "11",
     "file": "designs/11-evaluation-file.html",
     "name": "Evaluation File",
@@ -102,5 +86,21 @@
     "skill": "fresh direction",
     "palette": "graphite-sun",
     "rationale": "Kit Explorer presents Lightening Lives the way a modern instrument maker presents a product line. A centred two-line headline and both calls to action sit above a wide laboratory photograph, with the three credentials in one quiet line. A sticky segmented bar is the section navigator. The kits are an explorer: pick a kit on the left, read its specimen, workflow, turnaround and certification on the right, with every panel still readable without JavaScript. The two audiences are a switch rather than two stacked essays, the eight differentiators are a bento that fills its grid exactly, and partners are a complete grid of typeset names. Graphite and white in Onest, with the logo's sun gold kept to markers only."
+  },
+  {
+    "id": "14",
+    "file": "designs/14-green-bands.html",
+    "name": "Green Bands",
+    "skill": "design-system-v2",
+    "palette": null,
+    "rationale": "Green Bands is Design 1 from the design-system-v2 round, built to its DESIGN.md: a laboratory notebook in daylight. Warm paper (#FCFCF7) with a deep green ink, full-width deep-green bands with a lime highlight breaking up the page, light Inter headlines with every label, kit code and figure in IBM Plex Mono, and the real sun mark in the header and footer. B2B and B2G audiences are split right under the hero. It is a layout comp: body copy is still placeholder text around the approved one-sentence description, and it keeps its own colours, so the palette switcher does not apply to it."
+  },
+  {
+    "id": "15",
+    "file": "designs/15-lab-console.html",
+    "name": "Lab Console",
+    "skill": "design-system-v2",
+    "palette": null,
+    "rationale": "Lab Console is Design 3 from the design-system-v2 round: the company presented like laboratory software. Next to the headline sits a screening-run console, a live-looking panel of blood-card specimens moving from queued to complete, with a kit lot card beneath it. A deep ink navy (#111A4A) carries every action on a cool grey ground, with a clinical teal for status marks and a single orange kit-lot card, set in Inter with JetBrains Mono for specimen codes and run data. It is a layout comp: body copy is still placeholder text around the approved one-sentence description, and it keeps its own colours, so the palette switcher does not apply to it."
   }
 ]

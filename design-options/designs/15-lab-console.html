@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lightening Lives — Design 15 · Lab Console</title>
+<meta name="description" content="Lightening Lives is a research-oriented and innovation-driven molecular diagnostics organisation, focused on rapid, affordable, scalable, extraction-free, highly accurate diagnostic solutions for various genetic disorders that reach even the most underserved communities.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#f6f6f8;color:#3b3e47;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+section{scroll-margin-top:62px}
+a{color:#111a4a}
+.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-feature-settings:normal}
+.tk{color:#44b48b}.ts{color:#94efb7}.tb{color:#88deeb}
+.nav-pill:hover{background:rgba(255,255,255,0.8)!important}
+.btn-primary:hover{background:#1b2663!important}
+.btn-secondary:hover{background:rgba(17,26,74,0.05)!important}
+.btn-invert:hover{background:rgba(255,255,255,0.08)!important}
+.text-link:hover{text-decoration-color:currentColor!important}
+.footer-link:hover{color:#111a4a!important}
+a:focus-visible,button:focus-visible,pre:focus-visible{outline:2px solid #111a4a;outline-offset:3px}
+.dark a:focus-visible,.dark pre:focus-visible{outline-color:#ffffff}
+@media (max-width:1024px){
+.hero-grid{grid-template-columns:minmax(0,1fr)!important;gap:56px!important}
+.hero-panel{max-width:656px}
+.nav-bar{gap:20px!important}
+}
+@media (max-width:900px){
+.nav-links{display:none!important}
+.split{grid-template-columns:minmax(0,1fr)!important;gap:48px!important}
+.grid-3{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.grid-2{grid-template-columns:minmax(0,1fr)!important}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:40px!important}
+.section-head{flex-direction:column;align-items:flex-start!important;gap:20px!important}
+.cta-card{grid-template-columns:minmax(0,1fr)!important;gap:32px!important}
+.footer-grid{grid-template-columns:minmax(0,1fr)!important;gap:48px!important}
+}
+@media (max-width:600px){
+.site-header,.hero,.strip,.section,.site-footer{padding-left:16px!important;padding-right:16px!important}
+.section{padding-top:72px!important;padding-bottom:72px!important}
+.hero-grid{padding-top:48px!important;padding-bottom:64px!important}
+.display{font-size:40px!important;letter-spacing:-1.2px!important}
+.h2{font-size:32px!important;letter-spacing:-0.64px!important}
+.grid-3{grid-template-columns:minmax(0,1fr)!important}
+.hero-panel{height:auto!important;display:flex;flex-direction:column;gap:16px}
+.hero-widget,.hero-accent{position:relative!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;width:100%!important}
+.halftone{top:-40px!important;right:-120px!important;left:-120px!important}
+.cta-card{padding:32px 24px!important}
+.footer-links{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.footer-bottom{flex-direction:column;align-items:flex-start!important;gap:12px!important}
+.nav-cta{padding:10px 14px!important}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="top" class="page" style="min-height: 100vh; background: #f6f6f8; color: #3b3e47; font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif; font-feature-settings: 'cv11' 1; font-size: 16px; line-height: 1.5">
+
+<header class="site-header" style="position: sticky; top: 0; z-index: 20; padding: 0 32px; background: rgba(246, 246, 248, 0.72); -webkit-backdrop-filter: saturate(180%) blur(12px); backdrop-filter: saturate(180%) blur(12px); border-bottom: 1px solid rgba(227, 228, 232, 0.8)">
+<div class="nav-bar" style="max-width: 1200px; height: 62px; margin: 0 auto; display: flex; align-items: center; gap: 32px">
+<a href="#top" aria-label="Lightening Lives home" style="display: inline-flex; align-items: center; gap: 10px; color: #111a4a; text-decoration: none; font-size: 16px; font-weight: 600; letter-spacing: -0.16px; white-space: nowrap">
+<img src="../assets/brand/mark.png" alt="" width="28" height="28" style="display: block; width: 28px; height: 28px" />
+<span>Lightening Lives</span>
+</a>
+<nav class="nav-links" aria-label="Primary" style="display: flex; align-items: center; gap: 6px">
+<a class="nav-pill" href="#kits" style="padding: 6px 12px; border: 1px solid #ffffff; border-radius: 8px; background: rgba(255, 255, 255, 0.25); color: #12161e; text-decoration: none; font-size: 14px; line-height: 20px">Kits</a>
+<a class="nav-pill" href="#assay" style="padding: 6px 12px; border: 1px solid #ffffff; border-radius: 8px; background: rgba(255, 255, 255, 0.25); color: #12161e; text-decoration: none; font-size: 14px; line-height: 20px">Technology</a>
+<a class="nav-pill" href="#programmes" style="padding: 6px 12px; border: 1px solid #ffffff; border-radius: 8px; background: rgba(255, 255, 255, 0.25); color: #12161e; text-decoration: none; font-size: 14px; line-height: 20px">Programmes</a>
+<a class="nav-pill" href="#research" style="padding: 6px 12px; border: 1px solid #ffffff; border-radius: 8px; background: rgba(255, 255, 255, 0.25); color: #12161e; text-decoration: none; font-size: 14px; line-height: 20px">Research</a>
+<a class="nav-pill" href="#about" style="padding: 6px 12px; border: 1px solid #ffffff; border-radius: 8px; background: rgba(255, 255, 255, 0.25); color: #12161e; text-decoration: none; font-size: 14px; line-height: 20px">About</a>
+</nav>
+<a class="btn-primary nav-cta" href="#contact" style="margin-left: auto; display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 8px; background: #111a4a; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500; line-height: 20px; white-space: nowrap; box-shadow: rgba(17, 26, 74, 0.1) 0 1px 3px 0, rgba(17, 26, 74, 0.05) 0 1px 0 0, rgba(255, 255, 255, 0.18) 0 1px 0 0 inset">
+Contact sales
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+</a>
+</div>
+</header>
+
+<main>
+
+<!-- Hero -->
+<section class="hero" style="position: relative; overflow: hidden; padding: 0 32px">
+<div class="hero-grid" style="max-width: 1200px; margin: 0 auto; padding: 88px 0 104px; display: grid; grid-template-columns: minmax(0, 480px) minmax(0, 1fr); gap: 64px; align-items: center">
+
+<div style="position: relative; z-index: 1">
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: #111a4a">
+<span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #44b48b"></span>
+Molecular diagnostics
+</p>
+<h1 class="display" style="margin: 20px 0 0; font-size: 60px; line-height: 1.02; font-weight: 600; letter-spacing: -1.8px; color: #111a4a">Extraction-free genetic screening on a blood card.</h1>
+<p style="margin: 24px 0 0; max-width: 460px; font-size: 18px; line-height: 1.5; color: #3b3e47">Lightening Lives is a research-oriented and innovation-driven molecular diagnostics organisation, focused on rapid, affordable, scalable, extraction-free, highly accurate diagnostic solutions for various genetic disorders that reach even the most underserved communities.</p>
+<div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px">
+<a class="btn-primary" href="#contact" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 8px; background: #111a4a; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500; line-height: 20px; box-shadow: rgba(17, 26, 74, 0.1) 0 1px 3px 0, rgba(17, 26, 74, 0.05) 0 1px 0 0, rgba(255, 255, 255, 0.18) 0 1px 0 0 inset">
+Contact sales
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+</a>
+<a class="btn-secondary" href="#kits" style="display: inline-flex; align-items: center; padding: 11px 32px; border: 1px solid #111a4a; border-radius: 8px; background: transparent; color: #111a4a; text-decoration: none; font-size: 14px; font-weight: 500; line-height: 20px">Explore the kits</a>
+</div>
+<div style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 8px">
+<span style="display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 9999px; background: rgba(255, 255, 255, 0.8); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: rgba(87, 90, 100, 0.12) 0 0 0 1px; font-size: 12px; line-height: 1.5; color: #12161e">Lightening Lives LLP · Hyderabad, India</span>
+<span style="display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 9999px; background: rgba(255, 255, 255, 0.8); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: rgba(87, 90, 100, 0.12) 0 0 0 1px; font-size: 12px; line-height: 1.5; color: #12161e">For labs, hospitals &amp; public-health programmes</span>
+</div>
+</div>
+
+<div class="hero-panel" style="position: relative; height: 540px">
+<!-- Halftone field: spectrum dots shaped as blood-card spots. Decorative only. -->
+<div class="halftone" aria-hidden="true" style="position: absolute; top: -96px; right: -200px; bottom: -80px; left: -80px; pointer-events: none; -webkit-mask-image: radial-gradient(circle 320px at 68% 35%, #000 0%, #000 45%, transparent 100%), radial-gradient(circle 170px at 14% 84%, #000 0%, #000 40%, transparent 100%), radial-gradient(circle 90px at 27% 13%, #000 0%, #000 35%, transparent 100%), radial-gradient(circle 130px at 92% 89%, #000 0%, #000 35%, transparent 100%); mask-image: radial-gradient(circle 320px at 68% 35%, #000 0%, #000 45%, transparent 100%), radial-gradient(circle 170px at 14% 84%, #000 0%, #000 40%, transparent 100%), radial-gradient(circle 90px at 27% 13%, #000 0%, #000 35%, transparent 100%), radial-gradient(circle 130px at 92% 89%, #000 0%, #000 35%, transparent 100%)">
+<div style="position: absolute; inset: 0; background: linear-gradient(120deg, #d65620 0%, #9f7aee 24%, #4575cd 44%, #71d2f0 64%, #44b48b 82%, #f4df69 100%); -webkit-mask-image: radial-gradient(circle at center, #000 1.3px, transparent 1.9px); -webkit-mask-size: 9px 9px; mask-image: radial-gradient(circle at center, #000 1.3px, transparent 1.9px); mask-size: 9px 9px"></div>
+</div>
+
+<!-- Screening run widget -->
+<div class="hero-widget" style="position: absolute; top: 24px; right: 0; z-index: 1; width: 440px; padding: 12px 0; background: #ffffff; border-radius: 8px; box-shadow: rgba(30, 30, 44, 0.15) 24px 48px 64px 0, rgb(255, 255, 255) 0 0 0 1px inset, rgba(17, 26, 74, 0.06) 0 0 0 1px">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 8px 20px 16px; border-bottom: 1px solid #e3e4e8">
+<div>
+<p style="margin: 0; font-size: 16px; line-height: 1.4; font-weight: 500; color: #111a4a">Screening run</p>
+<p class="mono" style="margin: 2px 0 0; font-size: 12px; line-height: 1.5; color: #7c7f88">RUN-0000 · Lorem ipsum lab</p>
+</div>
+<span style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 9999px; background: rgba(68, 180, 139, 0.12); color: #167e6c; font-size: 12px; font-weight: 500; line-height: 1.5; white-space: nowrap"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #44b48b"></span>In progress</span>
+</div>
+<ul style="list-style: none; margin: 0; padding: 0">
+<li style="display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 20px; border-bottom: 1px solid #f0f0f3">
+<span aria-hidden="true" style="display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 8px; background: #f6f6f8; color: #232730"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="8.5" cy="12" r="2"/><circle cx="15.5" cy="12" r="2"/></svg></span>
+<div style="min-width: 0"><p class="mono" style="margin: 0; font-size: 12px; line-height: 1.5; color: #232730">DBS-0000-A1</p><p style="margin: 0; font-size: 14px; line-height: 1.43; color: #3b3e47">Lorem ipsum panel</p></div>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: #167e6c"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>Complete</span>
+</li>
+<li style="display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 20px; border-bottom: 1px solid #f0f0f3">
+<span aria-hidden="true" style="display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 8px; background: #f6f6f8; color: #232730"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="8.5" cy="12" r="2"/><circle cx="15.5" cy="12" r="2"/></svg></span>
+<div style="min-width: 0"><p class="mono" style="margin: 0; font-size: 12px; line-height: 1.5; color: #232730">DBS-0000-A2</p><p style="margin: 0; font-size: 14px; line-height: 1.43; color: #3b3e47">Dolor sit panel</p></div>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: #167e6c"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>Complete</span>
+</li>
+<li style="display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 20px; border-bottom: 1px solid #f0f0f3">
+<span aria-hidden="true" style="display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 8px; background: #f6f6f8; color: #232730"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="8.5" cy="12" r="2"/><circle cx="15.5" cy="12" r="2"/></svg></span>
+<div style="min-width: 0"><p class="mono" style="margin: 0; font-size: 12px; line-height: 1.5; color: #232730">DBS-0000-B1</p><p style="margin: 0; font-size: 14px; line-height: 1.43; color: #3b3e47">Amet consectetur</p></div>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: #111a4a"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M8 2.5a5.5 5.5 0 1 1-5.5 5.5"/></svg>Running</span>
+</li>
+<li style="display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 20px">
+<span aria-hidden="true" style="display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 8px; background: #f6f6f8; color: #232730"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="8.5" cy="12" r="2"/><circle cx="15.5" cy="12" r="2"/></svg></span>
+<div style="min-width: 0"><p class="mono" style="margin: 0; font-size: 12px; line-height: 1.5; color: #232730">DBS-0000-B2</p><p style="margin: 0; font-size: 14px; line-height: 1.43; color: #3b3e47">Adipiscing panel</p></div>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: #7c7f88"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/></svg>Queued</span>
+</li>
+</ul>
+<div style="padding: 12px 20px 8px; border-top: 1px solid #e3e4e8">
+<div aria-hidden="true" style="height: 6px; border-radius: 9999px; background: #e3e4e8; overflow: hidden"><div style="width: 50%; height: 100%; border-radius: 9999px; background: #44b48b"></div></div>
+<div class="mono" style="margin-top: 8px; display: flex; justify-content: space-between; gap: 16px; font-size: 12px; line-height: 1.5; color: #7c7f88"><span>2 of 4 complete</span><span>Lorem ipsum</span></div>
+</div>
+</div>
+
+<!-- Featured kit card: the page's one Signal Orange surface -->
+<div class="hero-accent" style="position: absolute; left: 0; bottom: 24px; z-index: 2; width: 280px; padding: 20px; border-radius: 8px; background: #ec652b; color: #011821; box-shadow: rgba(30, 30, 44, 0.15) 24px 48px 64px 0, rgba(255, 255, 255, 0.25) 0 0 0 1px inset">
+<div class="mono" style="display: flex; justify-content: space-between; gap: 12px; font-size: 11px; line-height: 1.5; letter-spacing: 0.06em; text-transform: uppercase"><span>Blood-card kit</span><span>LL-KIT-00</span></div>
+<p style="margin: 20px 0 0; font-size: 28px; line-height: 1.1; font-weight: 500; letter-spacing: -0.28px; color: #ffffff">00,000</p>
+<p class="mono" style="margin: 4px 0 0; font-size: 12px; line-height: 1.5">Cards · lorem ipsum dolor</p>
+<svg viewBox="0 0 240 44" width="240" height="44" preserveAspectRatio="none" aria-hidden="true" style="display: block; width: 100%; height: 44px; margin-top: 16px"><polyline points="0,36 20,34 40,38 60,30 80,31 100,24 120,27 140,20 160,22 180,14 200,16 220,9 240,6" fill="none" stroke="#ffffff" stroke-opacity="0.6" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+<div class="mono" style="margin-top: 12px; display: flex; justify-content: space-between; gap: 12px; font-size: 12px; line-height: 1.5"><span>Lot 00000</span><span>Lorem ipsum</span></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- Who the kits are supplied to -->
+<section class="strip" aria-label="Who we supply" style="padding: 32px; background: #ffffff; border-top: 1px solid #e3e4e8; border-bottom: 1px solid #e3e4e8">
+<div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; column-gap: 48px; row-gap: 20px">
+<p class="mono" style="margin: 0; font-size: 12px; line-height: 1.5; letter-spacing: 0.06em; text-transform: uppercase; color: #7c7f88">Kits supplied to</p>
+<span style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 500; color: #3b3e47"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a9acb6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7 15h10"/></svg>Laboratories</span>
+<span style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 500; color: #3b3e47"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a9acb6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V6a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v15"/><path d="M3 21h18M12 9v6M9 12h6"/></svg>Hospitals</span>
+<span style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 500; color: #3b3e47"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a9acb6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v5a5 5 0 0 0 10 0V3"/><path d="M10 13v2a5 5 0 0 0 10 0v-1"/><circle cx="20" cy="12" r="2"/></svg>Clinicians</span>
+<span style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 500; color: #3b3e47"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a9acb6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M4 10h16M12 3 3.5 8h17z"/><path d="M6 10v8M10 10v8M14 10v8M18 10v8"/></svg>Health departments</span>
+<span style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 500; color: #3b3e47"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a9acb6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5a3 3 0 0 1 0 6M18 20a6 6 0 0 0-3-5.2"/></svg>NGOs &amp; CSR funds</span>
+</div>
+</section>
+
+<!-- Kits -->
+<section id="kits" class="section" style="padding: 96px 32px; background: #f6f6f8">
+<div style="max-width: 1200px; margin: 0 auto">
+<div class="section-head" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 48px">
+<div style="max-width: 640px">
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: #111a4a"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #44b48b"></span>Screening kits</p>
+<h2 class="h2" style="margin: 16px 0 0; font-size: 40px; line-height: 1.1; font-weight: 500; letter-spacing: -0.8px; color: #111a4a">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+</div>
+<p style="margin: 0; max-width: 380px; font-size: 16px; line-height: 1.5; color: #3b3e47">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+<div class="grid-3" style="margin-top: 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<article style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background: #ffffff; border-radius: 8px; box-shadow: rgba(18, 22, 30, 0.024) 0 1px 4px 0, rgba(18, 22, 30, 0.05) 0 1px 0 0, rgba(18, 22, 30, 0.024) 0 0 0 1px">
+<span aria-hidden="true" style="display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 8px; background: #f6f6f8; color: #232730"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2h4"/></svg></span>
+<h3 style="margin: 8px 0 0; font-size: 20px; line-height: 1.3; font-weight: 500; letter-spacing: -0.2px; color: #111a4a">Rapid</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #3b3e47">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+</article>
+<article style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background: #ffffff; border-radius: 8px; box-shadow: rgba(18, 22, 30, 0.024) 0 1px 4px 0, rgba(18, 22, 30, 0.05) 0 1px 0 0, rgba(18, 22, 30, 0.024) 0 0 0 1px">
+<span aria-hidden="true" style="display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 8px; background: #f6f6f8; color: #232730"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></span>
+<h3 style="margin: 8px 0 0; font-size: 20px; line-height: 1.3; font-weight: 500; letter-spacing: -0.2px; color: #111a4a">Affordable</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #3b3e47">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+</article>
+<article style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background: #ffffff; border-radius: 8px; box-shadow: rgba(18, 22, 30, 0.024) 0 1px 4px 0, rgba(18, 22, 30, 0.05) 0 1px 0 0, rgba(18, 22, 30, 0.024) 0 0 0 1px">
+<span aria-hidden="true" style="display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 8px; background: #f6f6f8; color: #232730"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg></span>
+<h3 style="margin: 8px 0 0; font-size: 20px; line-height: 1.3; font-weight: 500; letter-spacing: -0.2px; color: #111a4a">Scalable</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #3b3e47">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</p>
+</article>
+<article style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background: #ffffff; border-radius: 8px; box-shadow: rgba(18, 22, 30, 0.024) 0 1px 4px 0, rgba(18, 22, 30, 0.05) 0 1px 0 0, rgba(18, 22, 30, 0.024) 0 0 0 1px">
+<span aria-hidden="true" style="display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 8px; background: #f6f6f8; color: #232730"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="8.5" cy="12" r="2"/><circle cx="15.5" cy="12" r="2"/></svg></span>
+<h3 style="margin: 8px 0 0; font-size: 20px; line-height: 1.3; font-weight: 500; letter-spacing: -0.2px; color: #111a4a">Extraction-free</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #3b3e47">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+</article>
+<article style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background: #ffffff; border-radius: 8px; box-shadow: rgba(18, 22, 30, 0.024) 0 1px 4px 0, rgba(18, 22, 30, 0.05) 0 1px 0 0, rgba(18, 22, 30, 0.024) 0 0 0 1px">
+<span aria-hidden="true" style="display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 8px; background: #f6f6f8; color: #232730"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.75" fill="currentColor"/></svg></span>
+<h3 style="margin: 8px 0 0; font-size: 20px; line-height: 1.3; font-weight: 500; letter-spacing: -0.2px; color: #111a4a">Highly accurate</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #3b3e47">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.</p>
+</article>
+<article style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background: #ffffff; border-radius: 8px; box-shadow: rgba(18, 22, 30, 0.024) 0 1px 4px 0, rgba(18, 22, 30, 0.05) 0 1px 0 0, rgba(18, 22, 30, 0.024) 0 0 0 1px">
+<span aria-hidden="true" style="display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 8px; background: #f6f6f8; color: #232730"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+<h3 style="margin: 8px 0 0; font-size: 20px; line-height: 1.3; font-weight: 500; letter-spacing: -0.2px; color: #111a4a">Built for reach</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #3b3e47">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+</article>
+</div>
+</div>
+</section>
+
+<!-- Technology -->
+<section id="assay" class="section" style="padding: 96px 32px; background: #ffffff">
+<div class="split" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 80px; align-items: center">
+<div>
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: #111a4a"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #44b48b"></span>Technology</p>
+<h2 class="h2" style="margin: 16px 0 0; font-size: 40px; line-height: 1.1; font-weight: 500; letter-spacing: -0.8px; color: #111a4a">Lorem ipsum dolor sit amet, without the extraction step.</h2>
+<p style="margin: 20px 0 0; font-size: 16px; line-height: 1.5; color: #3b3e47">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+<ol style="list-style: none; margin: 32px 0 0; padding: 0; border-top: 1px solid #e3e4e8">
+<li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 8px; padding: 20px 0; border-bottom: 1px solid #e3e4e8">
+<span class="mono" style="font-size: 12px; line-height: 24px; color: #167e6c">01</span>
+<div><p style="margin: 0; font-size: 16px; line-height: 1.5; font-weight: 500; color: #111a4a">Blood card</p><p style="margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: #3b3e47">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p></div>
+</li>
+<li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 8px; padding: 20px 0; border-bottom: 1px solid #e3e4e8">
+<span class="mono" style="font-size: 12px; line-height: 24px; color: #167e6c">02</span>
+<div><p style="margin: 0; font-size: 16px; line-height: 1.5; font-weight: 500; color: #111a4a">Assay, run in your lab</p><p style="margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: #3b3e47">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p></div>
+</li>
+<li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 8px; padding: 20px 0; border-bottom: 1px solid #e3e4e8">
+<span class="mono" style="font-size: 12px; line-height: 24px; color: #167e6c">03</span>
+<div><p style="margin: 0; font-size: 16px; line-height: 1.5; font-weight: 500; color: #111a4a">Result</p><p style="margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: #3b3e47">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</p></div>
+</li>
+</ol>
+<a class="text-link" href="#research" style="margin-top: 24px; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; line-height: 20px; color: #111a4a; text-decoration: underline; text-decoration-color: rgba(17, 26, 74, 0.25); text-underline-offset: 4px">Lorem ipsum method
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+</div>
+
+<div style="padding: 24px; background: #ffffff; border-radius: 8px; box-shadow: rgba(18, 22, 30, 0.024) 0 1px 4px 0, rgba(18, 22, 30, 0.05) 0 1px 0 0, rgba(18, 22, 30, 0.024) 0 0 0 1px, rgba(87, 90, 100, 0.08) 0 0 0 1px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<p style="margin: 0; font-size: 14px; line-height: 1.43; font-weight: 500; color: #111a4a">Kit preview</p>
+<p class="mono" style="margin: 0; font-size: 12px; line-height: 1.5; color: #7c7f88">LL-KIT-00</p>
+</div>
+<div style="margin-top: 16px; padding: 48px 32px; border-radius: 8px; background: #f6f6f8; display: flex; justify-content: center">
+<!-- Illustrated blood card: placeholder fields only -->
+<div aria-hidden="true" style="width: 100%; max-width: 420px; padding: 20px; border-radius: 8px; background: #ffffff; box-shadow: rgba(0, 0, 0, 0.1) 0 1px 2px 0, rgba(87, 90, 100, 0.12) 0 0 0 1px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px">
+<div style="flex-grow: 1">
+<p class="mono" style="margin: 0; font-size: 10px; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: #7c7f88">Lorem ipsum</p>
+<div style="margin-top: 8px; width: 70%; height: 8px; border-radius: 2px; background: #e3e4e8"></div>
+<div style="margin-top: 6px; width: 45%; height: 8px; border-radius: 2px; background: #e3e4e8"></div>
+</div>
+<div style="width: 96px; height: 24px; background: repeating-linear-gradient(90deg, #232730 0 2px, transparent 2px 4px, #232730 4px 5px, transparent 5px 8px, #232730 8px 11px, transparent 11px 13px)"></div>
+</div>
+<div style="margin-top: 24px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<div style="aspect-ratio: 1; border-radius: 50%; border: 1.5px dashed #a9acb6; background: radial-gradient(circle at 45% 45%, #f2936b 0%, rgba(242, 147, 107, 0.55) 55%, rgba(242, 147, 107, 0.15) 72%, transparent 74%)"></div>
+<div style="aspect-ratio: 1; border-radius: 50%; border: 1.5px dashed #a9acb6; background: radial-gradient(circle at 52% 50%, #f2936b 0%, rgba(242, 147, 107, 0.55) 50%, rgba(242, 147, 107, 0.15) 66%, transparent 68%)"></div>
+<div style="aspect-ratio: 1; border-radius: 50%; border: 1.5px dashed #a9acb6; background: radial-gradient(circle at 50% 55%, #f2936b 0%, rgba(242, 147, 107, 0.55) 45%, rgba(242, 147, 107, 0.15) 60%, transparent 62%)"></div>
+<div style="aspect-ratio: 1; border-radius: 50%; border: 1.5px dashed #a9acb6"></div>
+</div>
+<div class="mono" style="margin-top: 20px; display: flex; justify-content: space-between; gap: 12px; font-size: 10px; line-height: 1.5; letter-spacing: 0.06em; text-transform: uppercase; color: #7c7f88"><span>Lot 00000</span><span>DBS-0000-A1</span></div>
+</div>
+</div>
+<dl style="margin: 24px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div><dt class="mono" style="font-size: 11px; line-height: 1.5; letter-spacing: 0.06em; text-transform: uppercase; color: #7c7f88">Sample</dt><dd style="margin: 4px 0 0; font-size: 14px; line-height: 1.43; font-weight: 500; color: #111a4a">Blood card</dd></div>
+<div><dt class="mono" style="font-size: 11px; line-height: 1.5; letter-spacing: 0.06em; text-transform: uppercase; color: #7c7f88">Extraction</dt><dd style="margin: 4px 0 0; font-size: 14px; line-height: 1.43; font-weight: 500; color: #111a4a">Not required</dd></div>
+<div><dt class="mono" style="font-size: 11px; line-height: 1.5; letter-spacing: 0.06em; text-transform: uppercase; color: #7c7f88">Panel</dt><dd style="margin: 4px 0 0; font-size: 14px; line-height: 1.43; font-weight: 500; color: #111a4a">Lorem ipsum</dd></div>
+</dl>
+</div>
+</div>
+</section>
+
+<!-- About + stats -->
+<section id="about" class="section" style="padding: 96px 32px; background: #f6f6f8">
+<div style="max-width: 1200px; margin: 0 auto">
+<div class="section-head" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 48px">
+<div style="max-width: 600px">
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: #111a4a"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #111a4a"></span>About</p>
+<h2 class="h2" style="margin: 16px 0 0; font-size: 40px; line-height: 1.1; font-weight: 500; letter-spacing: -0.8px; color: #111a4a">Lorem ipsum dolor sit amet, consectetur adipiscing.</h2>
+</div>
+<p style="margin: 0; max-width: 440px; font-size: 16px; line-height: 1.5; color: #3b3e47">Lightening Lives LLP is a molecular diagnostics company based in Hyderabad, India. It develops and sells extraction-free, blood-card-based genetic screening kits to laboratories, hospitals, clinicians and public-health programmes.</p>
+</div>
+<div class="stats" style="margin-top: 64px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 48px">
+<div><p style="margin: 0; font-size: 28px; line-height: 1.1; font-weight: 500; letter-spacing: -0.28px; color: #167e6c">00k+</p><p style="margin: 8px 0 0; font-size: 14px; line-height: 1.43; color: #7c7f88">Lorem ipsum dolor sit amet</p></div>
+<div><p style="margin: 0; font-size: 28px; line-height: 1.1; font-weight: 500; letter-spacing: -0.28px; color: #167e6c">00 hrs</p><p style="margin: 8px 0 0; font-size: 14px; line-height: 1.43; color: #7c7f88">Consectetur adipiscing elit</p></div>
+<div><p style="margin: 0; font-size: 28px; line-height: 1.1; font-weight: 500; letter-spacing: -0.28px; color: #167e6c">00.0%</p><p style="margin: 8px 0 0; font-size: 14px; line-height: 1.43; color: #7c7f88">Sed do eiusmod tempor</p></div>
+<div><p style="margin: 0; font-size: 28px; line-height: 1.1; font-weight: 500; letter-spacing: -0.28px; color: #167e6c">000+</p><p style="margin: 8px 0 0; font-size: 14px; line-height: 1.43; color: #7c7f88">Incididunt ut labore et dolore</p></div>
+</div>
+</div>
+</section>
+
+<!-- Who we work with -->
+<section id="programmes" class="section" style="padding: 96px 32px; background: #ffffff">
+<div style="max-width: 1200px; margin: 0 auto">
+<div style="max-width: 640px">
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: #111a4a"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #44b48b"></span>Who we work with</p>
+<h2 class="h2" style="margin: 16px 0 0; font-size: 40px; line-height: 1.1; font-weight: 500; letter-spacing: -0.8px; color: #111a4a">Lorem ipsum dolor sit amet, for labs and programmes.</h2>
+</div>
+<div class="grid-2" style="margin-top: 48px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<article style="display: flex; flex-direction: column; padding: 32px; background: #ffffff; border-radius: 8px; box-shadow: rgba(18, 22, 30, 0.024) 0 1px 4px 0, rgba(18, 22, 30, 0.05) 0 1px 0 0, rgba(18, 22, 30, 0.024) 0 0 0 1px, rgba(87, 90, 100, 0.08) 0 0 0 1px">
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: #111a4a"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #111a4a"></span>B2B</p>
+<h3 style="margin: 16px 0 0; font-size: 28px; line-height: 1.15; font-weight: 500; letter-spacing: -0.28px; color: #111a4a">Laboratories, hospitals &amp; clinicians</h3>
+<p style="margin: 12px 0 0; font-size: 16px; line-height: 1.5; color: #3b3e47">Buy kits and run the assay yourselves. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+<ul style="list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px">
+<li style="display: flex; gap: 10px; font-size: 14px; line-height: 1.43; color: #3b3e47"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#167e6c" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M3.5 8.5l3 3 6-7"/></svg>Ut enim ad minim veniam, quis nostrud</li>
+<li style="display: flex; gap: 10px; font-size: 14px; line-height: 1.43; color: #3b3e47"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#167e6c" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M3.5 8.5l3 3 6-7"/></svg>Duis aute irure dolor in reprehenderit</li>
+<li style="display: flex; gap: 10px; font-size: 14px; line-height: 1.43; color: #3b3e47"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#167e6c" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M3.5 8.5l3 3 6-7"/></svg>Excepteur sint occaecat cupidatat</li>
+</ul>
+<div style="margin-top: auto; padding-top: 32px">
+<a class="btn-primary" href="#contact" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 8px; background: #111a4a; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500; line-height: 20px; box-shadow: rgba(17, 26, 74, 0.1) 0 1px 3px 0, rgba(17, 26, 74, 0.05) 0 1px 0 0, rgba(255, 255, 255, 0.18) 0 1px 0 0 inset">
+Contact sales
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+</a>
+</div>
+</article>
+<article style="display: flex; flex-direction: column; padding: 32px; background: #ffffff; border-radius: 8px; box-shadow: rgba(18, 22, 30, 0.024) 0 1px 4px 0, rgba(18, 22, 30, 0.05) 0 1px 0 0, rgba(18, 22, 30, 0.024) 0 0 0 1px, rgba(87, 90, 100, 0.08) 0 0 0 1px">
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: #111a4a"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #44b48b"></span>Population programmes</p>
+<h3 style="margin: 16px 0 0; font-size: 28px; line-height: 1.15; font-weight: 500; letter-spacing: -0.28px; color: #111a4a">Health departments, NGOs &amp; CSR programmes</h3>
+<p style="margin: 12px 0 0; font-size: 16px; line-height: 1.5; color: #3b3e47">Bulk supply and programme support for large-scale screening. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<ul style="list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px">
+<li style="display: flex; gap: 10px; font-size: 14px; line-height: 1.43; color: #3b3e47"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#167e6c" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M3.5 8.5l3 3 6-7"/></svg>Sed ut perspiciatis unde omnis iste</li>
+<li style="display: flex; gap: 10px; font-size: 14px; line-height: 1.43; color: #3b3e47"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#167e6c" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M3.5 8.5l3 3 6-7"/></svg>Nemo enim ipsam voluptatem quia</li>
+<li style="display: flex; gap: 10px; font-size: 14px; line-height: 1.43; color: #3b3e47"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#167e6c" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M3.5 8.5l3 3 6-7"/></svg>Quis autem vel eum iure reprehenderit</li>
+</ul>
+<div style="margin-top: auto; padding-top: 32px">
+<a class="btn-secondary" href="#contact" style="display: inline-flex; align-items: center; padding: 11px 32px; border: 1px solid #111a4a; border-radius: 8px; background: transparent; color: #111a4a; text-decoration: none; font-size: 14px; font-weight: 500; line-height: 20px">Discuss a programme</a>
+</div>
+</article>
+</div>
+<p style="margin: 24px 0 0; display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.43; color: #3b3e47"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#7c7f88" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 2px"><circle cx="8" cy="8" r="6.25"/><path d="M8 7.25v3.75M8 5v.01"/></svg>We supply kits to institutions and programmes. Individuals can’t order a test from us.</p>
+</div>
+</section>
+
+<!-- Research: the one dark section -->
+<section id="research" class="section dark" style="padding: 96px 32px; background: #011821">
+<div class="split" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 80px; align-items: center">
+<div>
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 500; line-height: 1.5; letter-spacing: 0.08em; text-transform: uppercase; color: #ffffff"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #44b48b"></span>Research collaborations</p>
+<h2 class="h2" style="margin: 16px 0 0; font-size: 40px; line-height: 1.1; font-weight: 500; letter-spacing: -0.8px; color: #ffffff">Lorem ipsum dolor sit amet, with research partners.</h2>
+<p style="margin: 20px 0 0; font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, 0.72)">We run testing in-house only for research collaborations. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+<a class="btn-invert" href="#contact" style="margin-top: 32px; display: inline-flex; align-items: center; padding: 11px 32px; border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 8px; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500; line-height: 20px">Propose a collaboration</a>
+</div>
+<div style="border-radius: 8px; background: rgba(255, 255, 255, 0.03); box-shadow: rgba(255, 255, 255, 0.1) 0 0 0 1px inset">
+<div class="mono" style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font-size: 12px; line-height: 1.5; color: rgba(255, 255, 255, 0.6)"><span>sample-record.json</span><span>Illustrative</span></div>
+<pre class="mono code-pre" tabindex="0" aria-label="Illustrative sample record" style="margin: 0; padding: 24px; overflow-x: auto; font-size: 13px; line-height: 1.6; color: #a9acb6"><code>{
+  <span class="tk">"sample_id"</span>: <span class="ts">"DBS-0000-A1"</span>,
+  <span class="tk">"sample_type"</span>: <span class="ts">"blood_card"</span>,
+  <span class="tk">"extraction"</span>: <span class="tb">false</span>,
+  <span class="tk">"panel"</span>: <span class="ts">"lorem_ipsum"</span>,
+  <span class="tk">"run"</span>: {
+    <span class="tk">"id"</span>: <span class="ts">"RUN-0000"</span>,
+    <span class="tk">"status"</span>: <span class="ts">"complete"</span>
+  },
+  <span class="tk">"collaboration"</span>: <span class="ts">"dolor-sit-amet"</span>
+}</code></pre>
+</div>
+</div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section" style="padding: 96px 32px 0; background: #f6f6f8">
+<div class="cta-card" style="max-width: 1200px; margin: 0 auto; padding: 48px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: center; background: #ffffff; border-radius: 8px; box-shadow: rgba(18, 22, 30, 0.024) 0 1px 4px 0, rgba(18, 22, 30, 0.05) 0 1px 0 0, rgba(18, 22, 30, 0.024) 0 0 0 1px">
+<div>
+<h2 class="h2" style="margin: 0; max-width: 640px; font-size: 40px; line-height: 1.1; font-weight: 500; letter-spacing: -0.8px; color: #111a4a">Lorem ipsum dolor sit amet?</h2>
+<p style="margin: 16px 0 0; max-width: 560px; font-size: 16px; line-height: 1.5; color: #3b3e47">Kit orders, bulk supply and research collaborations. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a class="btn-primary" href="#contact" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 8px; background: #111a4a; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 500; line-height: 20px; box-shadow: rgba(17, 26, 74, 0.1) 0 1px 3px 0, rgba(17, 26, 74, 0.05) 0 1px 0 0, rgba(255, 255, 255, 0.18) 0 1px 0 0 inset">
+Contact sales
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+</a>
+<a class="btn-secondary" href="#programmes" style="display: inline-flex; align-items: center; padding: 11px 32px; border: 1px solid #111a4a; border-radius: 8px; background: transparent; color: #111a4a; text-decoration: none; font-size: 14px; font-weight: 500; line-height: 20px">Discuss a programme</a>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer class="site-footer" style="padding: 72px 32px 40px; background: #f6f6f8">
+<div style="max-width: 1200px; margin: 0 auto">
+<div class="footer-grid" style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px">
+<div>
+<a href="#top" style="display: inline-flex; align-items: center; gap: 10px; color: #111a4a; text-decoration: none; font-size: 16px; font-weight: 600; letter-spacing: -0.16px">
+<img src="../assets/brand/mark.png" alt="" width="28" height="28" style="display: block; width: 28px; height: 28px" />
+<span>Lightening Lives</span>
+</a>
+<p style="margin: 16px 0 0; max-width: 360px; font-size: 14px; line-height: 1.5; color: #3b3e47">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+<p class="mono" style="margin: 16px 0 0; font-size: 12px; line-height: 1.5; color: #7c7f88">Lightening Lives LLP · Hyderabad, India</p>
+</div>
+<div class="footer-links" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px">
+<div>
+<p class="mono" style="margin: 0; font-size: 12px; line-height: 1.5; letter-spacing: 0.06em; text-transform: uppercase; color: #7c7f88">Kits</p>
+<ul style="list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+<li><a class="footer-link" href="#kits" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">Screening kits</a></li>
+<li><a class="footer-link" href="#assay" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">Technology</a></li>
+<li><a class="footer-link" href="#kits" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">Lorem ipsum</a></li>
+</ul>
+</div>
+<div>
+<p class="mono" style="margin: 0; font-size: 12px; line-height: 1.5; letter-spacing: 0.06em; text-transform: uppercase; color: #7c7f88">Company</p>
+<ul style="list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+<li><a class="footer-link" href="#about" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">About</a></li>
+<li><a class="footer-link" href="#research" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">Research</a></li>
+<li><a class="footer-link" href="#about" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">Dolor sit</a></li>
+</ul>
+</div>
+<div>
+<p class="mono" style="margin: 0; font-size: 12px; line-height: 1.5; letter-spacing: 0.06em; text-transform: uppercase; color: #7c7f88">Contact</p>
+<ul style="list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+<li><a class="footer-link" href="#contact" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">Sales</a></li>
+<li><a class="footer-link" href="#programmes" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">Programmes</a></li>
+<li><a class="footer-link" href="#research" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">Research collaborations</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="footer-bottom" style="margin-top: 64px; padding-top: 24px; border-top: 1px solid #e3e4e8; display: flex; justify-content: space-between; align-items: center; gap: 24px">
+<p class="mono" style="margin: 0; font-size: 12px; line-height: 1.5; color: #7c7f88">© 2026 Lightening Lives LLP</p>
+<div style="display: flex; gap: 24px">
+<a class="footer-link" href="#top" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">Privacy</a>
+<a class="footer-link" href="#top" style="font-size: 14px; font-weight: 300; line-height: 1.43; color: #3b3e47; text-decoration: none">Terms</a>
+</div>
+</div>
+</div>
+</footer>
+
+</div>
+</body>
+</html>

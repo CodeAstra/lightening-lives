@@ -387,6 +387,14 @@ def main(argv):
     files = [pathlib.Path(a) for a in argv if not a.startswith('--')]
     if not files and '--palettes' not in argv:
         files = sorted((ROOT / 'designs').glob('*.html'))
+        # Designs listed in manifest.json with no palette (14 and 15, from the design-system-v2 round) keep their
+        # own colours and were not built to these rules, so the full run skips them. Name one to check it anyway.
+        man_path = ROOT / 'manifest.json'
+        fixed = {d['file'] for d in json.loads(man_path.read_text()) if not d.get('palette')} if man_path.exists() else set()
+        for f in files:
+            if f.relative_to(ROOT).as_posix() in fixed:
+                print(f'skip {f.name}: own colours, outside the palette system')
+        files = [f for f in files if f.relative_to(ROOT).as_posix() not in fixed]
 
     print('== palettes.json ==')
     greens = []

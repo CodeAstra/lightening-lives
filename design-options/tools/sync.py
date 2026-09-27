@@ -84,7 +84,7 @@ def row(p):
     d = design_by_id.get(p.get('design') or '')
     owner = (f'<a href="index.html#{d["id"]}">Design {d["id"]} · {e(d["name"])}</a>' if d else 'Reference palette')
     try_links = ' '.join(f'<a href="index.html#{x["id"]}/{p["id"]}" title="{e(x["name"])} in this palette">{x["id"]}</a>'
-                         for x in manifest)
+                         for x in manifest if x.get('palette'))   # 14 and 15 keep their own colours
     return f'''
 <section class="pal" id="{e(p['id'])}" style="{style}">
   <header class="pal-head">

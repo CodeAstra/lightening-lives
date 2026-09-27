@@ -156,7 +156,7 @@
     "id": "brand-classic",
     "name": "Brand Classic",
     "family": "Brand",
-    "design": "09",
+    "design": null,
     "rationale": "Taken strictly from the logo. Primary is the leaf green of the mark (#6B9D2A, 3.24:1 on white) moved one step down its own ramp to #527E15 so it passes AA; accent is the sun gold #FFC80C at its exact logo value, decorative only; ink is the logo's own figure colour #252820; the pale leaf tint, muted and line are the same green hue at very low chroma, so even the greys carry the brand.",
     "vars": {
       "--bg": "#FFFFFF",
@@ -173,7 +173,7 @@
     "id": "brand-light",
     "name": "Brand Light",
     "family": "Brand",
-    "design": "10",
+    "design": null,
     "rationale": "The same two logo hues, pushed lighter and softer: a warm off-white made from the sun gold at near-zero chroma, the palest leaf tint for alternate bands, a softened green-grey ink, and the leaf green at its 700 step (#40640B, 6.67:1) reserved for calls to action and key figures. The accent is the sun gold lifted to its 300 tint for the hero glow and small markers only.",
     "vars": {
       "--bg": "#FEFBF3",
