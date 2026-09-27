@@ -520,21 +520,24 @@
     paletteSel.appendChild(g);
   });
 
-  // ----- state + deep link  (#03/daybreak or #03/daybreak/390) ------------------------------------
+  // ----- state + deep link  (#drop-to-district/daybreak or #drop-to-district/daybreak/390) ---------
+  // A design is named in the URL by its file name without the number: designs/12-drop-to-district.html
+  // becomes #drop-to-district. Older links that use the number (#12/daybreak) still open the right design.
+  const slug = d => d.file.replace(/^.*\//, '').replace(/\.html$/, '').replace(/^\d+-/, '');
   // Reloading the page gets a fresh token, so an edited design file is never served from the
   // browser's cache; switching designs within one session reuses it.
   const BUST = '?v=' + Date.now();
   const state = { design: 0, palette: 'own', width: 'full' };
   function readHash() {
     const [d, p, w] = decodeURIComponent(location.hash.replace(/^#/, '')).split('/');
-    const di = manifest.findIndex(x => x.id === d || x.file.includes(d + '-'));
+    const di = manifest.findIndex(x => slug(x) === d || x.id === d);
     if (d && di > -1) state.design = di;
     state.palette = (p && palettes.some(x => x.id === p)) ? p : 'own';
     if (w && ['390', '820', 'full'].includes(w)) state.width = w;
   }
   function writeHash() {
     const d = manifest[state.design];
-    let h = '#' + d.id; if (pal() !== 'own' || state.width !== 'full') h += '/' + pal();   // "own" follows the design
+    let h = '#' + slug(d); if (pal() !== 'own' || state.width !== 'full') h += '/' + pal();   // "own" follows the design
     if (state.width !== 'full') h += '/' + state.width;
     if (location.hash !== h) history.replaceState(null, '', h);
   }
@@ -560,18 +563,18 @@
     ownOpt.textContent = themable() ? 'Own palette' + (own ? ' — ' + own.name : '') : 'Own colours (fixed)';
     $('skill').textContent = d.skill;
     $('rationale').innerHTML = '';
-    const b = document.createElement('b'); b.textContent = d.id + ' ' + d.name + '. ';
+    const b = document.createElement('b'); b.textContent = d.name + '. ';
     $('rationale').append(b, document.createTextNode(d.rationale + (pal() !== 'own' && p ? '  ·  Shown in the “' + p.name + '” palette: ' + p.rationale : '')));
     $('swatches').innerHTML = '';
     if (p) KEYS.forEach(k => { const i = document.createElement('i'); i.style.background = p.vars[k]; i.title = k + ' ' + p.vars[k]; $('swatches').appendChild(i); });
     document.querySelectorAll('.seg button').forEach(bn => bn.setAttribute('aria-pressed', String(bn.dataset.width === state.width)));
     stage.dataset.width = state.width;
     $('open').href = d.file + BUST;
-    frame.title = 'Design ' + d.id + ' ' + d.name;
-    document.title = d.id + ' ' + d.name + (pal() !== 'own' && p ? ' × ' + p.name : '') + ' — Lightening Lives design options';
+    frame.title = 'Design: ' + d.name;
+    document.title = d.name + (pal() !== 'own' && p ? ' × ' + p.name : '') + ' — Lightening Lives design options';
     if (loadedDesign !== state.design) { loadedDesign = state.design; stage.classList.add('is-loading'); frame.src = d.file + BUST; }
     else sendPalette();
-    $('live').textContent = 'Design ' + d.id + ' ' + d.name + ', ' + (pal() === 'own' ? (themable() ? 'own palette' : 'own colours') : 'palette ' + (p ? p.name : '')) + ', width ' + state.width;
+    $('live').textContent = 'Design: ' + d.name + ', ' + (pal() === 'own' ? (themable() ? 'own palette' : 'own colours') : 'palette ' + (p ? p.name : '')) + ', width ' + state.width;
     writeHash();
   }
   frame.addEventListener('load', () => { stage.classList.remove('is-loading'); sendPalette(); });
