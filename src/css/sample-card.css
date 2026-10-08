@@ -438,7 +438,7 @@
   .seq .ink { stroke: var(--green); fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
   .seq .ink-fine { stroke: var(--green); fill: none; stroke-width: 1.2; }
   .seq .paper { fill: var(--card); }
-  .seq .ring { stroke: var(--green); fill: none; stroke-width: 1.1; }
+  .seq .ring { stroke: var(--green); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 3.2 3.1; }
   .seq .drop { fill: var(--blood); }
   .seq .well { fill: var(--card); stroke: var(--green); stroke-width: 1.2; }
   .seq .well-on { fill: var(--blood); }
@@ -559,10 +559,6 @@
   .seq.is-running .seq-step:nth-child(3)::after { animation-name: sc-bar-3; }
 
   .seq.is-running .drop { animation: sc-drop var(--seq-time) cubic-bezier(.3, .7, .3, 1) both; transform-box: fill-box; transform-origin: center; }
-  .seq.is-running .drop:nth-of-type(2) { animation-name: sc-drop-2; }
-  .seq.is-running .drop:nth-of-type(3) { animation-name: sc-drop-3; }
-  .seq.is-running .drop:nth-of-type(4) { animation-name: sc-drop-4; }
-  .seq.is-running .drop:nth-of-type(5) { animation-name: sc-drop-5; }
 
   .seq.is-running .well-on { animation: sc-well var(--seq-time) linear both; }
   .seq.is-running .well-on.w2 { animation-name: sc-well-2; }
@@ -584,12 +580,8 @@
 @keyframes sc-bar-2 { 0%, 30% { transform: scaleX(0); } 60%, 92% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
 @keyframes sc-bar-3 { 0%, 60% { transform: scaleX(0); } 90%, 92% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
 
-/* Step 1: five spots soak into the card one after another */
-@keyframes sc-drop   { 0%, 2%  { transform: scale(0); opacity: 0; } 7%,  100% { transform: scale(1); opacity: 1; } }
-@keyframes sc-drop-2 { 0%, 7%  { transform: scale(0); opacity: 0; } 12%, 100% { transform: scale(1); opacity: 1; } }
-@keyframes sc-drop-3 { 0%, 12% { transform: scale(0); opacity: 0; } 17%, 100% { transform: scale(1); opacity: 1; } }
-@keyframes sc-drop-4 { 0%, 17% { transform: scale(0); opacity: 0; } 22%, 100% { transform: scale(1); opacity: 1; } }
-@keyframes sc-drop-5 { 0%, 22% { transform: scale(0); opacity: 0; } 27%, 100% { transform: scale(1); opacity: 1; } }
+/* Step 1: the blood spot soaks into the card's one collection circle */
+@keyframes sc-drop { 0%, 3% { transform: scale(0); opacity: 0; } 26%, 100% { transform: scale(1); opacity: 1; } }
 
 /* Step 2: samples load into the plate, a column at a time */
 @keyframes sc-well   { 0%, 33% { opacity: 0; } 37%, 100% { opacity: 1; } }

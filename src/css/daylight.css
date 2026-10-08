@@ -540,7 +540,7 @@
   .hero-copy > *, .proof-card { animation: rise-in .8s var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms + 60ms); }
   .menu-panel:not([hidden]), .mobile-panel:not([hidden]) { animation: pop-in .18s var(--ease) both; }
 
-  /* The five spots soak into the card one after another, once, when the card first scrolls into view.
+  /* The blood spot soaks into the card's collection circle, once, when the card first scrolls into view.
      The head script adds .motion to <html>; main.js adds .is-in to the card. */
   .motion .dbs .core, .motion .dbs .halo { transform-box: fill-box; transform-origin: center; opacity: 0; }
   .motion .dbs.is-in .core { animation: soak-core .52s var(--ease) calc(var(--i) * 170ms + 200ms) both; }

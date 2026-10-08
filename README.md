@@ -40,7 +40,7 @@ npm run build    # Tailwind CSS v4 + esbuild
 - `src/css/<design>.css`: design tokens (`:root`) and component styles for that design.
 - `src/js/sample-card/india-map.js`: the hero map (three.js). It is bundled separately and loaded after first paint; without WebGL the flat map in `assets/img/india-map-*.svg` stays in place.
 - `src/js/sample-card/india-data.js`: state outlines and the map's three layers. Edit the `SICKLE`, `THAL` and `PLACES` lists there if the programme data changes.
-- `src/js/scale/scene.js`: design 03's 3D scene (three.js, bundled separately as `scale-scene.js`). Camera stops, card proportions and timings are constants at the top of the file; every colour is read from the page's CSS custom properties.
+- `src/js/scale/scene.js`: design 03's 3D scene (three.js, bundled separately as `scale-scene.js`). Camera stops, card proportions and timings are constants at the top of the file; every colour is read from the page's CSS custom properties. The card is modelled on the company's own (cover flap with the logo, one collection circle, barcoded pocket) and drawn in code; the logo is inlined into the bundle so the scene also works from `file://`. Every card prints its own barcode and six-digit code (`SCM / 100001` on the card the camera follows, a generated one on each of the others); they are illustrative, not real sample codes.
 - `src/js/scale/india-cells.js`: India as a grid of cells, one card per cell, plus the four highlighted places.
 - `assets/img/scale-*.webp`: still images of design 03's camera stops. They replace the live scene for visitors without WebGL or who have asked for reduced motion. If the scene's look changes, capture them again.
 
@@ -62,7 +62,8 @@ All paths are relative, so the site works from a `/<repo>/` subpath. Publishing 
 
 ## Content still to settle
 
-- **Photos are representative.** They show the real places (Nandurbar, Kothagudem, Jharkhand), a dried blood spot card and a CSIR-CCMB bench, but none is Lightening Lives' own. Sources and licences are in `assets/img/CREDITS.md` and in each page's footer; swap in the client's field photos before launch.
+- **Photos are representative.** They show the real places (Nandurbar, Kothagudem, Jharkhand) and a CSIR-CCMB bench, but none is Lightening Lives' own. Sources and licences are in `assets/img/CREDITS.md` and in each page's footer; swap in the client's field photos before launch.
+- **The card is drawn, not photographed.** All three designs show the company's real card: a cover flap, one dashed collection circle with a single dried blood spot, and a barcoded pocket. Photos of the real card are kept for reference in `content/assets/kit-reference-*.jpg`. They are internal: they show a handwritten name and a real sample code, and are not part of the published site. The copy still says "a few drops of blood on a card" and "dried blood spot", because the brief rules out "one drop" and "single drop".
 - **Partner names are typeset, not logos.** The brief rules out using the ICMR or CSIR-CCMB logos without permission.
 - **News items are evergreen facts from the brief** (ICMR validation, the CSIR-CCMB MOU, the national mission), not dated news. Replace them as real coverage arrives. Design 03 has no news section; add one when there is news to show.
 - **Claims the brief asks to confirm before publishing**: LitLife™-SCA as ™ or ®; "tests" versus "kits"; what the thalassaemia, DMD and coagulation tests detect; and that "no large equipment or specialised laboratory" matches each test's instructions for use.

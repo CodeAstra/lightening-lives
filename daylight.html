@@ -200,15 +200,21 @@ if (window.matchMedia && matchMedia('(prefers-reduced-motion: no-preference)').m
         <div class="rays" aria-hidden="true"></div>
         <div class="dbs" aria-hidden="true" data-dbs>
           <div class="dbs-tilt">
-            <svg class="dbs-layer dbs-back" viewBox="0 0 440 430"><rect x="46" y="86" width="350" height="238" rx="26" class="fill-yellow" fill-opacity=".55" transform="rotate(-5 221 205)"/></svg>
-            <svg class="dbs-layer" viewBox="0 0 440 430"><rect x="34" y="72" width="350" height="238" rx="26" class="fill-bg stroke-ink" stroke-width="3.5" transform="rotate(-5 221 205)"/></svg>
+            <svg class="dbs-layer dbs-back" viewBox="0 0 440 430"><g transform="rotate(-17 220 215) translate(220 215) scale(.9) translate(-220 -215)" class="fill-yellow" fill-opacity=".55"><path d="M164 122 178 44q1-6 7-6h98q6 0 7 6l14 78Z"/><rect x="164" y="120" width="140" height="300" rx="10"/></g></svg>
+            <svg class="dbs-layer" viewBox="0 0 440 430">
+              <g transform="rotate(-17 220 215) translate(220 215) scale(.9) translate(-220 -215)" class="stroke-ink" stroke-width="3.5" stroke-linejoin="round">
+                <path class="fill-butter-soft" d="M150 110 164 32q1-6 7-6h98q6 0 7 6l14 78Z"/>
+                <rect class="fill-bg" x="150" y="108" width="140" height="300" rx="10"/>
+                <rect class="fill-surface" x="163" y="121" width="114" height="150" rx="4" stroke-width="2"/>
+                <circle cx="220" cy="190" r="45" fill="none" stroke-width="3" stroke-dasharray="10 8.85" stroke-linecap="round"/>
+                <path class="fill-bg" d="M150 252H290V398a10 10 0 0 1-10 10H160a10 10 0 0 1-10-10Z"/>
+                <g class="fill-ink" stroke="none"><rect x="172" y="286" width="4" height="58"/><rect x="179" y="286" width="2" height="58"/><rect x="184" y="286" width="6" height="58"/><rect x="193" y="286" width="2" height="58"/><rect x="198" y="286" width="4" height="58"/><rect x="205" y="286" width="2" height="58"/><rect x="210" y="286" width="7" height="58"/><rect x="220" y="286" width="3" height="58"/><rect x="226" y="286" width="2" height="58"/><rect x="231" y="286" width="5" height="58"/><rect x="239" y="286" width="2" height="58"/><rect x="244" y="286" width="4" height="58"/><rect x="251" y="286" width="7" height="58"/><rect x="261" y="286" width="3" height="58"/><rect x="266" y="286" width="2" height="58"/></g>
+                <text class="fill-ink" x="220" y="380" text-anchor="middle" stroke="none" style="font: 700 17px var(--stack-body); letter-spacing: .04em">SCM / 100001</text>
+              </g>
+            </svg>
             <svg class="dbs-layer dbs-spots" viewBox="0 0 440 430">
-              <g transform="rotate(-5 221 205)">
-                <g style="--i:0"><circle class="halo" cx="112" cy="146" r="30"/><circle class="core" cx="112" cy="146" r="20"/></g>
-                <g style="--i:1"><circle class="halo" cx="209" cy="140" r="33"/><circle class="core" cx="209" cy="140" r="22"/></g>
-                <g style="--i:2"><circle class="halo" cx="306" cy="148" r="29"/><circle class="core" cx="306" cy="148" r="19"/></g>
-                <g style="--i:3"><circle class="halo" cx="160" cy="238" r="31"/><circle class="core" cx="160" cy="238" r="21"/></g>
-                <g style="--i:4"><circle class="halo" cx="262" cy="240" r="32"/><circle class="core" cx="262" cy="240" r="21"/></g>
+              <g transform="rotate(-17 220 215) translate(220 215) scale(.9) translate(-220 -215)">
+                <g style="--i:0"><circle class="halo" cx="216" cy="192" r="33"/><circle class="core" cx="216" cy="192" r="24"/></g>
               </g>
             </svg>
           </div>
@@ -392,7 +398,7 @@ if (window.matchMedia && matchMedia('(prefers-reduced-motion: no-preference)').m
     </div>
     <div class="mt-10 grid gap-5 xl:grid-cols-3 xl:gap-6">
       <article class="card news-card">
-        <div class="news-img"><img class="photo" data-photo="dbs-card" style="object-position: 45% 50%" src="assets/img/dbs-card-640.webp" alt="Gloved hands holding a dried blood spot card with five filled blood spots, sealed in a clear sample bag." width="640" height="427" loading="lazy" decoding="async"></div>
+        <div class="news-img"><img class="photo" src="assets/img/card-daylight-640.webp" alt="An open dried blood spot card seen from above: a single dried blood spot inside one dashed collection circle." width="640" height="640" loading="lazy" decoding="async"></div>
         <span class="label">Validation</span>
         <h3 class="t-h3 text-[22px] leading-[1.2]">LitLife™-SCA is validated by ICMR</h3>
         <p>Our dried blood spot test for sickle cell anaemia, developed for the National Sickle Cell Anaemia Elimination Mission, is validated by the Indian Council of Medical Research.</p>
@@ -486,7 +492,6 @@ if (window.matchMedia && matchMedia('(prefers-reduced-motion: no-preference)').m
           <li>Toranmal, Nandurbar: <a href="https://commons.wikimedia.org/wiki/File:Toranmal-Nandurbar.jpg" rel="noopener">HongYu HenzaiSuru</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener license">CC BY-SA 4.0</a>.</li>
           <li>Kinnerasani reservoir, Kothagudem: <a href="https://commons.wikimedia.org/wiki/File:Kinnarsani_Dam_02.JPG" rel="noopener">Pranayraj1985</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener license">CC BY-SA 4.0</a> (cropped).</li>
           <li>Patratu Valley, Jharkhand: <a href="https://commons.wikimedia.org/wiki/File:Patratu_valley.jpg" rel="noopener">TribhuwanKumar</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener license">CC BY-SA 4.0</a> (cropped).</li>
-          <li>Dried blood spot card: <a href="https://www.flickr.com/photos/cdcglobal/51975519003/" rel="noopener">Ricardo Franco / CDC Global Health</a>, <a href="https://creativecommons.org/licenses/by/2.0/" rel="noopener license">CC BY 2.0</a> (handwritten details removed).</li>
           <li>Laboratory bench, CSIR-CCMB: <a href="https://commons.wikimedia.org/wiki/File:RMP2093.jpg" rel="noopener">Somdattakarak</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener license">CC BY-SA 4.0</a>.</li>
           <li>Sickle cells: <a href="https://phil.cdc.gov/Details.aspx?pid=11690" rel="noopener">Janice Haney Carr / CDC Public Health Image Library</a>, public domain (cropped).</li>
         </ul>

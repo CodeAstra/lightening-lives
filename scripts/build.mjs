@@ -53,6 +53,9 @@ const context = await esbuild.context({
   target: ['es2020'],
   legalComments: 'none',
   logLevel: 'info',
+  // Images imported by a script are inlined. The Scale scene draws the logo into a WebGL texture,
+  // and a canvas only stays usable for that if the image is same-origin, including under file://.
+  loader: { '.png': 'dataurl' },
 });
 
 await Promise.all(styles.map(tailwind));
