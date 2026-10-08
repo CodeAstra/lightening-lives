@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lightening Lives | Landing page designs</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<script>
+  // Comparison build: open the design that was viewed last (Sample Card on a first visit).
+  // At launch, the chosen design's file replaces this one.
+  (function () {
+    var target = 'sample-card.html';
+    try {
+      if (window.localStorage.getItem('ll-compare/last') === 'daylight') target = 'daylight.html';
+    } catch (error) { /* storage unavailable: keep the default */ }
+    window.location.replace(target);
+  })();
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=sample-card.html"></noscript>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-content: center; gap: 12px; padding: 24px; background: #FFFEFA; color: #1C241E; font: 17px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  h1 { margin: 0; font-size: 22px; }
+  ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+  a { color: #2E6B3F; font-weight: 600; }
+</style>
+</head>
+<body>
+  <h1>Lightening Lives: landing page designs</h1>
+  <ul>
+    <li><a href="sample-card.html">01 · Sample Card</a></li>
+    <li><a href="daylight.html">02 · Daylight</a></li>
+  </ul>
+</body>
+</html>
