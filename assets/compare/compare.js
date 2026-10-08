@@ -338,6 +338,55 @@
     ],
   };
 
+  // 08 · Film opens on a short film and lets it mark the headline in sun yellow. Its variations
+  // change the page and its type; the yellow stays, because it is what shows what is playing.
+  DESIGNS.film = {
+    label: '08 · Film (video)',
+    file: 'film.html',
+    controls: [
+      {
+        key: 'type',
+        label: 'Typography',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Atkinson Hyperlegible + Mono (as designed)' },
+          {
+            id: 'sample-card',
+            label: 'Familjen Grotesk (from Sample Card)',
+            fonts: FONTS_SAMPLE_CARD,
+            vars: { '--ff-display': '"Familjen Grotesk"', '--ff-body': '"Familjen Grotesk"', '--display-weight': '600' },
+          },
+          {
+            id: 'daylight',
+            label: 'Quicksand + Nunito (from Daylight)',
+            fonts: FONTS_DAYLIGHT,
+            vars: { '--ff-display': '"Quicksand"', '--ff-body': '"Nunito"', '--display-weight': '700', '--display-tracking': '-0.012em' },
+          },
+        ],
+      },
+      {
+        key: 'bg',
+        label: 'Background',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'White (as designed)', swatch: '#FFFFFF' },
+          { id: 'sun', label: 'Pale sun', swatch: '#FFFBEA', vars: { '--ground': '#FFFBEA', '--panel': '#FBF2CF' } },
+          { id: 'leaf', label: 'Pale leaf', swatch: '#F5F9F0', vars: { '--ground': '#F5F9F0', '--panel': '#E8F0E0' } },
+        ],
+      },
+      {
+        key: 'accent',
+        label: 'Ink',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Warm black (as designed)', swatch: '#1B1A17' },
+          { id: 'maroon', label: 'Maroon, from the logo', swatch: '#4A1410', vars: { '--ink': '#4A1410', '--soft': '#6E4A44' } },
+          { id: 'green', label: 'Deep green', swatch: '#17301F', vars: { '--ink': '#17301F', '--soft': '#48604F' } },
+        ],
+      },
+    ],
+  };
+
   var config = DESIGNS[designId];
   if (!config) return;
 

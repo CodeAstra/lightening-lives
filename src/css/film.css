@@ -1,0 +1,528 @@
+/* Design 08 · Film
+   One idea: the headline is the film's caption track. The hero is a sixteen-second film in three
+   parts, and the headline under it is one sentence in three lines, one line to a part. As each
+   part plays, sun yellow crosses its line the way a marker crosses a line of text; choosing a
+   line plays its part. The page that follows is the same sentence taken one line at a time.
+   Yellow is the only decoration and always means the same thing: this is what is playing, or
+   what you are pointing at.
+   Type: Atkinson Hyperlegible, drawn so that as many people as possible can read it, which is
+   the company's own aim for its tests. Its monospaced cut sets the timecodes and labels.
+   Palette: white, a warm black, the logo's sun yellow and leaf green. */
+
+@import "tailwindcss" source(none);
+@source "../../film.html";
+@source "../js/film";
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-soft: var(--soft);
+  --color-sun: var(--sun);
+  --color-leaf: var(--leaf);
+  --color-line: var(--line);
+  --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--ff-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+/* How far the yellow has travelled along a line (--p), and how far it has already left (--q).
+   Registered as numbers so that they can be animated. */
+@property --p { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --q { syntax: "<number>"; inherits: false; initial-value: 0; }
+
+@layer base {
+  /* Design tokens. The comparison toolbar overrides a few of these at runtime. */
+  :root {
+    --ground: #FFFFFF;   /* the page */
+    --panel: #F4F5F0;    /* the alternate section, and the film's frame before it loads */
+    --ink: #1B1A17;      /* warm black: text, rules and solid buttons */
+    --soft: #56524A;     /* secondary text */
+    --sun: #FFD938;      /* the logo's sun: what is playing, what is pointed at, and the closing section */
+    --leaf: #2A6A34;     /* the logo's tree: labels and links */
+    --line: rgba(27, 26, 23, 0.15);
+
+    --ff-display: "Atkinson Hyperlegible Next";
+    --ff-body: "Atkinson Hyperlegible Next";
+    --ff-mono: "Atkinson Hyperlegible Mono";
+    --display-weight: 700;
+    --display-tracking: -0.022em;
+
+    --pad: clamp(1.1rem, 4.6vw, 4.25rem);
+    --frame: 90rem;
+    --col-gap: clamp(1rem, 2.6vw, 2.5rem);
+    --header-h: 4.25rem;
+    --radius: 1.25rem;
+    --view-h: calc(100vh - var(--compare-h, 0px) - var(--header-h));
+  }
+  @supports (height: 100svh) {
+    :root { --view-h: calc(100svh - var(--compare-h, 0px) - var(--header-h)); }
+  }
+  @supports (color: color-mix(in srgb, red, red)) {
+    :root { --line: color-mix(in srgb, var(--ink) 15%, transparent); }
+  }
+
+  html {
+    /* On screens wider than a laptop's the whole page grows with the window, up to about a third larger. */
+    font-size: clamp(100%, 0.5vw + 0.55rem, 137.5%);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--compare-h, 0px) + var(--header-h) + 0.75rem);
+  }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: var(--display-weight);
+    letter-spacing: var(--display-tracking);
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  address { font-style: normal; }
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px var(--sun);
+    border-radius: 4px;
+  }
+  ::selection { background: var(--sun); color: var(--ink); }
+}
+
+@layer components {
+  .wrap { width: 100%; max-width: var(--frame); margin-inline: auto; padding-inline: var(--pad); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .measure { max-width: 40rem; }
+
+  .skip {
+    position: absolute;
+    left: 0.75rem;
+    top: -6rem;
+    z-index: 60;
+    padding: 0.7rem 1rem;
+    border-radius: 0.5rem;
+    background: var(--ink);
+    color: var(--ground);
+    font-weight: 600;
+  }
+  .skip:focus { top: calc(var(--compare-h, 0px) + 0.75rem); }
+
+  .h2 { font-size: clamp(1.95rem, 3.5vw, 3.1rem); line-height: 1.06; }
+  .h3 { font-size: clamp(1.35rem, 1.9vw, 1.65rem); line-height: 1.18; letter-spacing: -0.014em; }
+  .lead { font-size: clamp(1.1rem, 1.35vw, 1.25rem); line-height: 1.5; color: var(--soft); }
+
+  /* Labels and timecodes: the monospaced cut, in leaf green. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.35;
+    text-transform: uppercase;
+    color: var(--leaf);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0 1.4rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 0.6rem;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+  }
+  .btn-small { min-height: 2.75rem; padding: 0 1.05rem; font-size: 1rem; }
+  .btn-solid { background: var(--ink); color: var(--ground); }
+  .btn-solid:hover { background: var(--sun); color: var(--ink); }
+  .btn-line { color: var(--ink); }
+  .btn-line:hover { background: var(--sun); }
+
+  .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2.75rem;
+    font-weight: 600;
+    color: var(--leaf);
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+  }
+  .text-link svg { transition: translate 0.18s ease; }
+  .text-link:hover svg { translate: 4px 0; }
+
+  /* ---------- Header: stays with the page; yellow marks the part being read ---------- */
+  .site-header {
+    position: sticky;
+    top: var(--compare-h, 0px);
+    z-index: 30;
+    background: var(--ground);
+  }
+  @supports (backdrop-filter: blur(1px)) and (color: color-mix(in srgb, red, red)) {
+    .site-header { background: color-mix(in srgb, var(--ground) 86%, transparent); backdrop-filter: saturate(1.4) blur(14px); }
+  }
+  .header-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: var(--header-h); }
+  .brand { display: inline-flex; align-items: center; gap: 0.65rem; border-radius: 0.5rem; }
+  .brand img { width: 3.25rem; height: 3.25rem; }
+  .brand-name { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; letter-spacing: -0.012em; line-height: 1.1; }
+  .site-nav { display: none; align-items: center; gap: 0.2rem; }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 0.7rem;
+    border-radius: 0.4rem;
+    font-weight: 500;
+    font-size: 1rem;
+    background: linear-gradient(var(--sun), var(--sun)) no-repeat 0.45rem 62% / 0 46%;
+    transition: background-size 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .nav-link:hover,
+  .nav-link[aria-current="true"] { background-size: calc(100% - 0.9rem) 46%; }
+  .header-actions { display: flex; align-items: center; gap: 0.6rem; }
+  .header-actions > .btn { display: none; }
+
+  details.menu > summary { list-style: none; }
+  details.menu > summary::-webkit-details-marker { display: none; }
+  details.menu[open] .menu-open, details.menu:not([open]) .menu-close { display: none; }
+  .menu-panel {
+    position: absolute;
+    left: var(--pad);
+    right: var(--pad);
+    top: calc(100% + 0.25rem);
+    display: grid;
+    padding: 0.5rem;
+    background: var(--ground);
+    border: 1.5px solid var(--ink);
+    border-radius: 0.75rem;
+    box-shadow: 0 18px 40px rgba(27, 26, 23, 0.14);
+  }
+  .menu-panel .nav-link { min-height: 3rem; }
+  @media (min-width: 30rem) {
+    .header-actions > .btn { display: inline-flex; }
+  }
+  @media (min-width: 64rem) {
+    .site-nav { display: flex; }
+    details.menu { display: none; }
+  }
+
+  /* ---------- Hero: the film, its three marks, and the headline it plays ---------- */
+  .hero { padding-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+  .film {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  .film-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* The frame is wider than the film; keep the bench and the fields, lose some ceiling and sky. */
+    object-position: 50% 62%;
+  }
+  @media (min-width: 48rem) {
+    .film { aspect-ratio: auto; height: clamp(17rem, calc(var(--view-h) * 0.6), 37rem); }
+  }
+  .film-tag {
+    position: absolute;
+    left: 0.85rem;
+    bottom: 0.85rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    background: rgba(255, 255, 255, 0.86);
+    color: #1B1A17;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+  }
+  .film-video[controls] ~ .film-tag { bottom: auto; top: 0.85rem; } /* clear of the browser's own controls */
+
+  /* Play and pause: the logo's sun. Its rays turn while the film runs. */
+  .sun-toggle {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    transition: scale 0.18s ease;
+  }
+  .sun-toggle:hover { scale: 1.06; }
+  .sun-toggle svg { display: block; width: 100%; height: 100%; }
+  .sun-rays { stroke: #E0A100; transform-box: fill-box; transform-origin: center; }
+  .sun-disc { fill: #FFD938; }
+  .icon-pause, .icon-play { fill: #1B1A17; }
+  .icon-pause { display: none; }
+  .film.is-playing .icon-pause { display: inline; }
+  .film.is-playing .icon-play { display: none; }
+  .film.is-failed .sun-toggle { display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .film.is-playing .sun-rays { animation: turn 28s linear infinite; }
+  }
+  @keyframes turn { to { rotate: 360deg; } }
+
+  .marks, .headline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--col-gap); }
+  .marks { margin-top: 1rem; }
+  .mark {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 2.75rem;
+    border-top: 2px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--soft);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .mark::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-block: 0.3rem solid transparent;
+    border-left: 0.5rem solid currentColor;
+  }
+  .mark:hover, .mark[aria-current="true"] { border-top-color: var(--ink); color: var(--ink); }
+
+  .headline {
+    row-gap: 0.3rem;
+    font-size: clamp(1.7rem, 2.9vw, 2.65rem);
+    line-height: 1.16;
+  }
+  .line { display: block; }
+  .film-ready .line { cursor: pointer; }
+  /* The marker. A line that wraps is still one stretch of text, so the yellow runs along its first
+     row and then along its second, the way a hand would mark it. */
+  .line-text, .mark-text {
+    padding: 0.02em 0.14em;
+    margin-inline: -0.14em;
+    background-image: linear-gradient(90deg,
+      transparent calc(var(--q) * 100%),
+      var(--sun) calc(var(--q) * 100%),
+      var(--sun) calc(var(--p) * 100%),
+      transparent calc(var(--p) * 100%));
+    background-repeat: no-repeat;
+    background-size: 100% 80%;
+    background-position: 0 62%;
+  }
+  @media (max-width: 47.99rem) {
+    .headline { grid-template-columns: minmax(0, 1fr); font-size: clamp(1.7rem, 7.6vw, 2.4rem); line-height: 1.2; }
+  }
+
+  .hero-foot { display: grid; gap: 1.5rem; margin-top: clamp(1.5rem, 2.6vw, 2.25rem); }
+  .hero-foot .lead { max-width: 39rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+  .smallprint { flex-basis: 100%; font-size: 0.9375rem; color: var(--soft); }
+  @media (min-width: 60rem) {
+    .hero-foot { grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: var(--col-gap); }
+    .hero-actions { justify-content: flex-end; }
+    .smallprint { text-align: right; }
+  }
+
+  /* ---------- Proof ---------- */
+  .proof { border-block: 1.5px solid var(--ink); }
+  .proof-grid { display: grid; }
+  .proof-item { padding-block: 1.75rem; }
+  .proof-item + .proof-item { border-top: 1px solid var(--line); }
+  .proof-h { margin: 0.5rem 0 0.4rem; font-size: clamp(1.3rem, 1.8vw, 1.6rem); line-height: 1.15; letter-spacing: -0.014em; }
+  .proof-item > p:last-child { max-width: 30rem; color: var(--soft); }
+  @media (min-width: 56rem) {
+    .proof-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--col-gap); }
+    .proof-item { padding-block: 2.25rem; }
+    .proof-item + .proof-item { border-top: 0; border-left: 1px solid var(--line); padding-left: var(--col-gap); }
+  }
+
+  /* ---------- A part of the page: its frame from the film stays beside it while it is read ---------- */
+  .chapter { padding-block: clamp(4rem, 8vw, 7.5rem); }
+  .chapter-tint { background: var(--panel); }
+  .chapter-grid { display: grid; gap: 2rem var(--col-gap); }
+  .chapter-side { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); align-items: center; gap: 1rem; }
+  .chapter-still { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 62%; border-radius: 0.6rem; background: var(--panel); }
+  .chapter-phrase { font-family: var(--font-mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; line-height: 1.4; text-transform: uppercase; color: var(--leaf); }
+  .chapter-body > .lead { margin-top: 1.25rem; }
+  @media (min-width: 64rem) {
+    .chapter-grid { grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); column-gap: clamp(2.5rem, 5vw, 5.5rem); }
+    .chapter-side {
+      position: sticky;
+      top: calc(var(--compare-h, 0px) + var(--header-h) + 1.5rem);
+      align-self: start;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.9rem;
+    }
+    .chapter-still { border-radius: 0.9rem; }
+  }
+
+  /* A term and what it means, on a rule. */
+  .rows { margin-top: clamp(2rem, 4vw, 3.25rem); border-top: 1.5px solid var(--ink); }
+  .row { display: grid; gap: 0.3rem 2rem; padding-block: 1.15rem; border-bottom: 1px solid var(--line); }
+  .row dt { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.012em; }
+  .row dd { color: var(--soft); }
+  @media (min-width: 44rem) {
+    .row { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: baseline; }
+  }
+
+  .block, .reassured { margin-top: clamp(3rem, 6vw, 5rem); }
+  .block > p, .reassured > p { margin-top: 0.75rem; color: var(--soft); }
+  .block > .text-link { margin-top: 0.5rem; }
+
+  /* REASSURED: nine letters, nine criteria. */
+  .criteria { display: grid; gap: 0 var(--col-gap); margin-top: 1.75rem; border-top: 1.5px solid var(--ink); }
+  .criteria li { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: 0.75rem; padding-block: 1rem; border-bottom: 1px solid var(--line); }
+  .letter {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.5rem;
+    background: var(--sun);
+    color: #1B1A17;
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .criteria h4 { font-size: 1.0625rem; line-height: 1.25; letter-spacing: -0.008em; }
+  .criteria p { margin-top: 0.15rem; font-size: 0.9688rem; line-height: 1.45; color: var(--soft); }
+  @media (min-width: 40rem) { .criteria { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 80rem) { .criteria { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  /* ---------- The tests so far, and the place open for the next ---------- */
+  .tests { margin-top: clamp(2rem, 4vw, 3.25rem); border-top: 1.5px solid var(--ink); }
+  .test {
+    display: grid;
+    gap: 0.5rem 2rem;
+    padding-block: 1.4rem;
+    border-bottom: 1px solid var(--line);
+    --p: 0;
+  }
+  .test-name { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 2.1vw, 1.85rem); line-height: 1.16; letter-spacing: -0.02em; }
+  .test-sub { display: block; margin-top: 0.3rem; font-family: var(--font-mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; color: var(--leaf); }
+  .test-about { color: var(--soft); }
+  .tag {
+    display: inline-block;
+    margin-right: 0.6rem;
+    padding: 0.12rem 0.5rem;
+    border: 1.5px solid currentColor;
+    border-radius: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--leaf);
+    vertical-align: 0.1em;
+  }
+  .test-go { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 600; white-space: nowrap; }
+  .test-go svg { transition: translate 0.18s ease; }
+  .test:hover .test-go svg { translate: 5px 0; }
+  /* Pointing at a test marks its name, as the film marks the headline. */
+  .test .mark-text { --p: 0; transition: --p 0.42s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .test:hover .mark-text, .test:focus-visible .mark-text { --p: 1; }
+  .test-open .mark-text { --p: 1; }
+  .test-open { border-bottom: 1.5px solid var(--ink); }
+  @media (min-width: 52rem) {
+    .test { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) auto; align-items: baseline; }
+    .test-go { justify-self: end; min-width: 9.5rem; justify-content: flex-end; }
+  }
+
+  /* Tests are for institutions only. */
+  .notice {
+    max-width: 44rem;
+    margin-top: 2rem;
+    padding: 1rem 1.15rem;
+    border-left: 4px solid var(--sun);
+    border-radius: 0 0.6rem 0.6rem 0;
+    background: var(--panel);
+  }
+
+  /* ---------- In the field: three frames ---------- */
+  .places { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
+  .place-photo {
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border-radius: 0.9rem;
+    background: repeating-linear-gradient(135deg, var(--panel) 0 10px, var(--ground) 10px 20px);
+  }
+  .place-photo img { width: 100%; height: 100%; object-fit: cover; transition: scale 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .place:hover .place-photo img { scale: 1.035; }
+  .place-photo img.is-missing { visibility: hidden; }
+  .place figcaption { display: grid; margin-top: 0.7rem; }
+  .place figcaption b { font-family: var(--font-display); font-size: 1.125rem; letter-spacing: -0.01em; }
+  .place figcaption span { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--soft); }
+  @media (min-width: 44rem) { .places { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  /* ---------- Contact: the page ends in full sun ---------- */
+  .closing { padding-block: clamp(4.5rem, 9vw, 8rem); background: var(--sun); color: #1B1A17; }
+  .closing-grid { display: grid; gap: 2rem var(--col-gap); }
+  .closing-h { font-size: clamp(2.3rem, 5.2vw, 4.5rem); line-height: 1.02; letter-spacing: -0.03em; }
+  .closing .lead { color: #3A3324; max-width: 36rem; }
+  .closing-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+  .closing .btn { border-color: #1B1A17; }
+  .closing .btn-solid { background: #1B1A17; color: #FFFFFF; }
+  .closing .btn-solid:hover { background: #FFFFFF; color: #1B1A17; }
+  .closing .btn-line { color: #1B1A17; }
+  .closing .btn-line:hover { background: #FFFFFF; }
+  .closing :focus-visible { box-shadow: 0 0 0 6px #FFFFFF; }
+  .direct { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin-top: 1.5rem; font-weight: 500; }
+  .direct a { font-weight: 700; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+  @media (min-width: 64rem) {
+    .closing-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; }
+  }
+
+  /* ---------- Footer ---------- */
+  .site-footer { padding-block: clamp(3rem, 6vw, 5rem) 2rem; font-size: 1rem; }
+  .footer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem var(--col-gap); }
+  .footer-brand, .footer-grid > :last-child { grid-column: 1 / -1; }
+  .footer-logo { display: inline-block; border-radius: 50%; }
+  .footer-logo img { width: 7rem; height: 7rem; }
+  .footer-brand p { max-width: 20rem; margin-top: 0.75rem; color: var(--soft); }
+  .site-footer .label { margin-bottom: 0.6rem; }
+  .foot-link { display: flex; align-items: center; min-height: 2.25rem; width: fit-content; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: text-decoration-color 0.16s ease; }
+  .foot-link:hover { text-decoration-color: currentColor; }
+  .site-footer address p { margin-top: 0.75rem; max-width: 26rem; color: var(--soft); }
+  .site-footer address b { display: block; color: var(--ink); }
+  .social { display: flex; flex-wrap: wrap; gap: 0 1.5rem; margin-top: 0.75rem; }
+  @media (min-width: 60rem) {
+    .footer-grid { grid-template-columns: 1.15fr 0.85fr 0.95fr 1.5fr; }
+    .footer-brand, .footer-grid > :last-child { grid-column: auto; }
+  }
+  .foot-note { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid var(--ink); max-width: none; color: var(--soft); }
+  .credits { margin-top: 1rem; color: var(--soft); }
+  .credits > summary { display: inline-flex; align-items: center; min-height: 2.75rem; cursor: pointer; font-weight: 600; color: var(--ink); text-decoration: underline; text-underline-offset: 4px; list-style: none; }
+  .credits > summary::-webkit-details-marker { display: none; }
+  .credits-body { max-width: 52rem; padding-block: 0.5rem 1rem; font-size: 0.9375rem; }
+  .credits-body ul { margin-top: 0.5rem; display: grid; gap: 0.3rem; }
+  .credits-body a { text-decoration: underline; text-underline-offset: 3px; }
+  .legal { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1.75rem; margin-top: 1rem; color: var(--soft); }
+  .legal a { display: inline-flex; align-items: center; min-height: 2.75rem; text-decoration: underline; text-underline-offset: 4px; }
+  .tagline { font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--leaf); }
+  @media (min-width: 60rem) { .tagline { margin-left: auto; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+  }
+}

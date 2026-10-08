@@ -13,7 +13,7 @@
     var target = 'sample-card.html';
     try {
       var last = window.localStorage.getItem('ll-compare/last');
-      if (['daylight', 'scale', 'strand', 'tree', 'helix', 'sun-card'].indexOf(last) !== -1) target = last + '.html';
+      if (['daylight', 'scale', 'strand', 'tree', 'helix', 'sun-card', 'film'].indexOf(last) !== -1) target = last + '.html';
     } catch (error) { /* storage unavailable: keep the default */ }
     window.location.replace(target);
   })();
@@ -36,6 +36,7 @@
     <li><a href="tree.html">05 · Tree (3D)</a></li>
     <li><a href="helix.html">06 · Helix (3D)</a></li>
     <li><a href="sun-card.html">07 · Sun Card</a></li>
+    <li><a href="film.html">08 · Film (video)</a></li>
   </ul>
 </body>
 </html>

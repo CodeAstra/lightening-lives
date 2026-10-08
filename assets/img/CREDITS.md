@@ -2,6 +2,8 @@
 
 These are representative images. Replace them with Lightening Lives' own field and laboratory photos before launch.
 
+Design 08's film and its stills have their own list in `assets/video/CREDITS.md`.
+
 The pictures of the dried blood spot card (`card-sample-card-*.webp`, `card-daylight-640.webp`, and the `scale-*.webp` stills) are not photographs and need no credit: they are rendered from the 3D model of the company's own card in `src/js/scale/scene.js`.
 
 Each image is served at two widths: `{basename}-640.webp` and `{basename}-1280.webp`.
