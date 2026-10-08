@@ -13,7 +13,7 @@
     var target = 'sample-card.html';
     try {
       var last = window.localStorage.getItem('ll-compare/last');
-      if (last === 'daylight' || last === 'scale' || last === 'strand') target = last + '.html';
+      if (['daylight', 'scale', 'strand', 'tree', 'helix'].indexOf(last) !== -1) target = last + '.html';
     } catch (error) { /* storage unavailable: keep the default */ }
     window.location.replace(target);
   })();
@@ -33,6 +33,8 @@
     <li><a href="daylight.html">02 · Daylight</a></li>
     <li><a href="scale.html">03 · Scale (3D)</a></li>
     <li><a href="strand.html">04 · Strand (3D)</a></li>
+    <li><a href="tree.html">05 · Tree (3D)</a></li>
+    <li><a href="helix.html">06 · Helix (3D)</a></li>
   </ul>
 </body>
 </html>

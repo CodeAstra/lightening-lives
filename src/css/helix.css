@@ -1,0 +1,582 @@
+/* Design 06 · Helix
+   One idea: the company's own line, "Innovate, Diagnose, Transform Lives", told round a single
+   object. The page opens on a double helix built as a brass-and-glass model on a stand, walks
+   round it in 3D, and ends looking straight down its axis, where the model turns out to be the
+   sun in the company's logo.
+   Palette: a pearl-grey page, so glass can be seen against it, and graphite ink. Brass is the
+   model's metal and the colour of labels; sun yellow appears only where the model is lit.
+   The page is set like an instrument's plate: Futura-like capitals for labels, hairline rules,
+   square corners. */
+
+@import "tailwindcss" source(none);
+@source "../../helix.html";
+@source "../js/helix";
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-soft: var(--soft);
+  --color-brass: var(--brass);
+  --color-line: var(--line);
+  --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  /* Design tokens. The comparison toolbar overrides a few of these at runtime, and the 3D scene reads them. */
+  :root {
+    --ground: #EDEEE9;   /* pearl: the page, and what the model's glass is seen against */
+    --panel: #F8F8F5;    /* alternate sections and raised surfaces */
+    --warm: #F3EDDC;     /* the closing section, a breath of brass */
+    --ink: #1A201E;      /* graphite: text and solid buttons */
+    --soft: #515A56;     /* secondary text */
+    --brass: #76570F;    /* brass as ink: labels and the marks that carry meaning */
+    --rule: #B79A5C;     /* brass as a hairline */
+    --sun: #F9D71C;      /* the logo's sun: the disc in the model's base, and proof */
+    --line: rgba(26, 32, 30, 0.16);
+
+    /* The model. */
+    --metal: #CDAA66;    /* polished brass */
+    --ray: #C99A4E;      /* the ring of rays in the base: brass a shade redder */
+    --glass: #E9F4EF;    /* a rung, unlit */
+    --amber: #F2AE14;    /* a rung, lit */
+    --shadow: #252A27;   /* what the model casts on the floor */
+
+    --ff-display: "Jost";
+    --ff-body: "IBM Plex Sans";
+    --display-weight: 500;
+    --display-tracking: -0.024em;
+
+    --pad: clamp(1.25rem, 5vw, 4.5rem);
+    /* The page keeps to a centred column. --gutter is the distance from the window's edge to that
+       column's content, for the full-width parts (header, story) that have to line up with it. */
+    --frame: 82rem;
+    --text-w: min(36rem, 43vw); /* the story's text column, beside the model */
+    --gutter: max(var(--pad), calc((100% - var(--frame)) / 2 + var(--pad)));
+    --stage-h: calc(100vh - var(--compare-h, 0px));
+  }
+  @supports (height: 100svh) {
+    :root { --stage-h: calc(100svh - var(--compare-h, 0px)); }
+  }
+  @supports (color: color-mix(in srgb, red, red)) {
+    :root { --line: color-mix(in srgb, var(--ink) 16%, transparent); }
+  }
+
+  html {
+    /* On screens wider than a laptop's the whole page grows with the window, up to about a third
+       larger, so a big monitor gets a bigger page and not a small one in a wide margin. */
+    font-size: clamp(100%, 0.5vw + 0.55rem, 137.5%);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--compare-h, 0px);
+  }
+  body {
+    position: relative;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: var(--display-weight);
+    letter-spacing: var(--display-tracking);
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px var(--sun);
+    border-radius: 2px;
+  }
+  ::selection { background: var(--sun); color: var(--ink); }
+}
+
+@layer components {
+  .wrap { width: 100%; max-width: var(--frame); margin-inline: auto; padding-inline: var(--pad); }
+  .section { padding-block: clamp(4.5rem, 9vw, 8rem); }
+  .section-panel { background: var(--panel); }
+  .section-warm { background: var(--warm); }
+
+  .display { font-size: clamp(2.5rem, 4.6vw, 4.4rem); line-height: 1.03; }
+  .h2 { font-size: clamp(1.95rem, 3.4vw, 3.05rem); line-height: 1.07; }
+  .h3 { font-size: clamp(1.3rem, 1.7vw, 1.5rem); line-height: 1.2; letter-spacing: -0.012em; }
+  .lead { font-size: clamp(1.1rem, 1.4vw, 1.25rem); line-height: 1.5; color: var(--soft); }
+
+  /* Labels: spaced capitals, as engraved on an instrument's plate, in brass. */
+  .label {
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    line-height: 1.35;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* A section's heading: label, then the heading, then a lead beside it on wide screens, over a brass hairline. */
+  .head { display: grid; gap: 0.9rem 4rem; padding-bottom: 2.25rem; border-bottom: 1px solid var(--rule); }
+  .head .lead { max-width: 34rem; }
+  @media (min-width: 60rem) {
+    .head { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; }
+    .head > .label { grid-column: 1 / -1; }
+    .head > .h2:last-child { grid-column: 1 / -1; }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+  }
+  .btn-solid { background: var(--ink); color: var(--panel); }
+  .btn-solid:hover { background: var(--brass); border-color: var(--brass); }
+  .btn-line { color: var(--ink); }
+  .btn-line:hover { background: var(--panel); }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2.75rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+    transition: text-decoration-color 0.16s ease;
+  }
+  .link:hover { text-decoration-color: var(--ink); }
+  .link svg { flex: none; transition: translate 0.2s ease; }
+  .link:hover svg { translate: 4px 0; }
+  .plain-link { text-decoration: underline; text-decoration-color: var(--rule); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .plain-link:hover { text-decoration-color: var(--ink); }
+
+  .skip {
+    position: absolute;
+    left: 1rem;
+    top: -6rem;
+    z-index: 60;
+    padding: 0.75rem 1.1rem;
+    background: var(--ink);
+    color: var(--panel);
+    font-weight: 600;
+    border-radius: 2px;
+  }
+  .skip:focus { top: calc(var(--compare-h, 0px) + 0.75rem); }
+
+  /* ---------- Header: floats over the opening scene ---------- */
+  .site-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem var(--gutter) 0;
+  }
+  .site-nav { display: none; align-items: center; gap: 0.15rem; }
+  @media (min-width: 68rem) {
+    .site-nav { display: flex; }
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 0.75rem;
+    border-radius: 2px;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: background-color 0.16s ease;
+  }
+  .nav-link:hover { background: var(--panel); }
+
+  details.menu > summary { list-style: none; cursor: pointer; }
+  details.menu > summary::-webkit-details-marker { display: none; }
+  details.menu[open] .menu-open, details.menu:not([open]) .menu-close { display: none; }
+  .menu-panel {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    top: calc(100% + 0.5rem);
+    padding: 0.5rem;
+    background: var(--panel);
+    border: 1.5px solid var(--ink);
+    border-radius: 2px;
+  }
+  .menu-panel .nav-link { width: 100%; }
+  @media (min-width: 68rem) {
+    details.menu { display: none; }
+  }
+
+  /* ---------- The story: the model, then Innovate, Diagnose, Transform lives ---------- */
+  .story { position: relative; }
+
+  /* Baseline (no WebGL, reduced motion, or no JavaScript): each step is text beside a still image. */
+  .stage { display: none; }
+  .step {
+    display: grid;
+    align-items: center;
+    gap: 2rem 4rem;
+    padding: 3.5rem var(--gutter);
+  }
+  .step-hero { padding-top: 9rem; }
+  /* The stills are cut from a larger picture, on the page's own grey; let all four edges fade
+     out, so they sit as well on a background chosen from the toolbar. */
+  .step-art {
+    width: 100%;
+    max-width: 32rem;
+    height: auto;
+    justify-self: center;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 9%, #000 88%, transparent), linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(180deg, transparent, #000 9%, #000 88%, transparent), linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+    mask-composite: intersect;
+  }
+  @media (min-width: 56rem) {
+    .step { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
+  .step-text > .label:not(.cue) { display: block; margin-bottom: 1rem; }
+  .cue { display: none; }
+
+  /* Live: the scene is pinned and the steps scroll over it. */
+  html.story-live .stage {
+    display: block;
+    position: sticky;
+    top: var(--compare-h, 0px);
+    height: var(--stage-h);
+    overflow: clip;
+    cursor: grab;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  html.story-live .stage.is-turning { cursor: grabbing; }
+  html.story-live .steps {
+    position: relative;
+    z-index: 2;
+    margin-top: calc(var(--stage-h) * -1);
+    pointer-events: none;
+  }
+  html.story-live .step {
+    display: flex;
+    align-items: flex-end;
+    min-height: var(--stage-h);
+    padding: 0;
+  }
+  html.story-live .step-art { display: none; }
+  html.story-live .step-text {
+    position: relative;
+    width: 100%;
+    padding: 1.5rem var(--gutter) 2.5rem;
+    background: var(--ground);
+    pointer-events: auto;
+  }
+  /* On small screens the text rides up over the scene on a band of page colour with a soft top edge. */
+  html.story-live .step-text::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 5rem;
+    background: linear-gradient(to top, var(--ground), transparent);
+    pointer-events: none;
+  }
+  html.story-live .cue { display: inline-flex; }
+  /* Small screens open on the model itself: the hero block is taller than the stage, so the
+     headline and buttons sit at the foot of the first screen and the rest follows as you scroll.
+     The other steps are a little taller too, so what the camera has come to see is in view
+     before its text has all arrived. */
+  @media not ((min-width: 56.25rem) and (min-aspect-ratio: 21/20)) {
+    html.story-live .step-hero { min-height: calc(var(--stage-h) + 17rem); }
+    html.story-live .step-hero .step-text { display: flex; flex-direction: column; align-items: flex-start; }
+    html.story-live .step-hero .display { order: -2; }
+    html.story-live .step-hero .hero-actions { order: -1; margin-top: 1.5rem; }
+    html.story-live .step-hero .label { margin-top: 1.75rem; margin-bottom: 0; }
+    html.story-live #innovate { min-height: calc(var(--stage-h) + 9rem); }
+    html.story-live #diagnose { min-height: calc(var(--stage-h) + 7rem); }
+    html.story-live #transform { min-height: calc(var(--stage-h) + 6rem); }
+  }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    html.story-live .step { align-items: center; padding-inline: var(--gutter); }
+    html.story-live .step-hero { padding-top: 5rem; }
+    html.story-live .step-text { width: auto; max-width: var(--text-w); padding: 0; background: none; }
+    html.story-live .step-text > .lead { max-width: calc(var(--text-w) * 0.92); }
+    html.story-live .step-text::before { content: none; }
+  }
+
+  /* On a wide but short screen the opening block has to clear the header: set it a size down. */
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) and (max-height: 52rem) {
+    html.story-live .step-hero .display { font-size: clamp(2.1rem, 3.7vw, 3.3rem); }
+    html.story-live .step-hero .lead { margin-top: 1rem; font-size: 1.0625rem; }
+    html.story-live .step-hero .hero-actions { margin-top: 1.4rem; }
+    html.story-live .step-hero .note { display: none; }
+    html.story-live .step-hero { padding-top: 7rem; }
+  }
+
+  .stage-scene { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease; }
+  html.scene-ready .stage-scene { opacity: 1; }
+  .stage-scene canvas { display: block; width: 100%; height: 100%; }
+  /* Keeps the text column readable whatever the model is doing behind it. */
+  .stage-veil { position: absolute; inset: 0; pointer-events: none; }
+  /* Under the header the model comes out of clear page; the band lifts once the header has scrolled away. */
+  .stage-veil::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 10rem;
+    background: linear-gradient(180deg, var(--ground) 0, var(--ground) 5.5rem, transparent);
+    opacity: clamp(0, calc(1 - var(--p, 0) * 9), 1);
+  }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .stage-veil {
+      background: linear-gradient(90deg, var(--ground) 0, var(--ground) calc(var(--gutter) + var(--text-w) * 0.82), transparent calc(var(--gutter) + var(--text-w) + 3.5rem));
+    }
+  }
+  /* The column the rest of the page keeps to, marked out on the stage so the scene can place the model within it. */
+  .stage-frame { position: absolute; inset-block: 0; left: var(--gutter); right: var(--gutter); pointer-events: none; }
+
+  .note { max-width: 30rem; font-size: 1rem; line-height: 1.45; color: var(--soft); }
+  /* A remark about the picture, not the company: set apart on a brass rule. */
+  .aside { max-width: 27rem; padding-left: 0.9rem; border-left: 2px solid var(--rule); font-size: 1rem; line-height: 1.45; color: var(--soft); }
+
+  .cue { align-items: center; gap: 0.6rem; margin-top: 1.5rem; }
+  /* Wide screens show the stops down the left edge instead, which says the same thing. */
+  @media (min-width: 74rem) and (min-aspect-ratio: 21/20) { html.story-live .cue { display: none; } }
+  @media (min-width: 56.25rem) and (max-height: 54rem) { html.story-live .cue { display: none; } }
+  .cue svg { flex: none; }
+
+  /* What a test asks of the place it is used in, as four lines of a specification. */
+  .specs { max-width: 31rem; border-bottom: 1px solid var(--line); }
+  .specs > div { display: grid; grid-template-columns: 7.4rem minmax(0, 1fr); align-items: baseline; gap: 1rem; padding: 0.6rem 0 0.55rem; border-top: 1px solid var(--line); }
+  .specs > div:first-child { border-top-color: var(--rule); }
+  .specs dt { font-family: var(--font-display); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+  .specs dd { font-size: 1rem; line-height: 1.4; }
+
+  /* The five groups of conditions by name. Beside the model its own labels show them, so this
+     list is kept for screen readers only; below it, and without the live scene, it is what names them. */
+  .five { display: flex; flex-wrap: wrap; gap: 0.4rem 0.45rem; max-width: 33rem; margin-top: 1.25rem; }
+  .five li { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2rem; padding: 0 0.7rem 0 0.55rem; border: 1px solid var(--rule); border-radius: 2px; background: var(--panel); font-size: 0.9375rem; font-weight: 500; line-height: 1.25; }
+  .five li::before { content: ""; flex: none; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--amber); }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    html.story-live .five { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  }
+
+  /* Where in the story the view is. A line down the stage's left edge. */
+  .trail {
+    position: absolute;
+    z-index: 3;
+    display: none;
+  }
+  .trail a { position: relative; display: flex; align-items: center; min-width: 1.75rem; min-height: 1.75rem; }
+  .trail a::before {
+    content: "";
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-left: 0.25rem;
+    flex: none;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink);
+    background: var(--ground);
+    transition: background-color 0.2s ease, scale 0.2s ease;
+  }
+  .trail a[aria-current]::before { background: var(--ink); scale: 1.2; }
+  .trail span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .trail { display: grid; left: calc(var(--gutter) - 2.6rem); top: 50%; translate: 0 -50%; gap: 2.2rem; }
+    /* The line between the stops fills as the camera moves on. */
+    .trail::before {
+      content: "";
+      position: absolute;
+      left: calc(0.25rem + 0.3rem - 0.5px);
+      top: 0.875rem;
+      bottom: 0.875rem;
+      width: 1px;
+      background: linear-gradient(180deg, var(--ink) calc(var(--p, 0) * 100%), var(--rule) 0);
+    }
+    .trail a::before { position: relative; z-index: 1; }
+    .trail span {
+      left: 1.9rem;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip-path: none;
+      padding: 0.3rem 0.55rem 0.25rem;
+      border-radius: 2px;
+      background: var(--ink);
+      color: var(--panel);
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.16s ease;
+    }
+    .trail a:hover span, .trail a:focus-visible span { opacity: 1; }
+  }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) and (max-width: 74rem) { .trail { display: none; } }
+
+  /* Labels for the lit rungs, each on a leader long enough to clear the model (the scene sets --lead).
+     They are for wide screens; below the model, the list in the text names the five instead. */
+  .pins { position: absolute; inset: 0; z-index: 1; display: none; margin: 0; padding: 0; list-style: none; pointer-events: none; opacity: 0; --lead: 6rem; }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) { .pins { display: block; } }
+  .pins li { position: absolute; left: 0; top: 0; width: 0; height: 0; opacity: 0; }
+  .pins li::before { content: ""; position: absolute; left: 0; top: -0.5px; width: calc(var(--lead) + 1.5rem); height: 1px; background: var(--ink); }
+  .pins li::after { content: ""; position: absolute; left: -0.22rem; top: -0.22rem; width: 0.44rem; height: 0.44rem; border-radius: 50%; background: var(--ink); }
+  .pins b {
+    position: absolute;
+    left: calc(var(--lead) + 1.5rem);
+    top: 0;
+    translate: 0 -50%;
+    width: max-content;
+    max-width: 10.5rem;
+    padding: 0.28rem 0.6rem 0.24rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+  }
+
+  /* ---------- How it works: five words, and what stands behind each ---------- */
+  .words > div { display: grid; gap: 0.4rem 4rem; align-items: baseline; padding: 1.35rem 0 1.45rem; border-bottom: 1px solid var(--line); }
+  .words dt { font-family: var(--font-display); font-size: clamp(1.9rem, 3.2vw, 2.9rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.03em; }
+  .words dd { max-width: 38rem; color: var(--soft); }
+  @media (min-width: 56rem) {
+    .words > div { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  }
+
+  /* ---------- Tests: the range as a table ---------- */
+  .range-head { display: none; }
+  .range-row { display: grid; gap: 0.75rem 3rem; padding: 1.5rem 0 1.6rem; border-bottom: 1px solid var(--line); }
+  .range-row p { color: var(--soft); }
+  .range-row strong { font-weight: 600; color: var(--ink); }
+  .kind { margin-top: 0.3rem; font-size: 0.9375rem; }
+  .tags { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 0.4rem; }
+  .tag { display: inline-flex; align-items: center; min-height: 1.9rem; padding: 0 0.6rem; border: 1px solid var(--rule); border-radius: 2px; font-size: 0.875rem; font-weight: 500; line-height: 1.2; white-space: nowrap; }
+  .tag-proof { border-color: var(--ink); background: var(--sun); font-weight: 600; }
+  @media (min-width: 60rem) {
+    .range-head, .range-row { grid-template-columns: minmax(0, 4fr) minmax(0, 6fr) minmax(0, 2.4fr); }
+    .range-head { display: grid; gap: 0 3rem; padding: 0.9rem 0 0.8rem; border-bottom: 1px solid var(--line); }
+    .range-head span { font-family: var(--font-display); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+    .range-row { align-items: start; }
+    .tags { justify-content: flex-start; }
+  }
+  .range-more { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1rem; margin-top: 1.5rem; color: var(--soft); }
+
+  /* ---------- REASSURED: nine criteria on a three-by-three plate ---------- */
+  .plate { display: grid; border-left: 1px solid var(--line); }
+  .plate > li { padding: 1.5rem 1.5rem 1.7rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  @media (min-width: 44rem) { .plate { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 68rem) { .plate { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  /* Each letter sits in a brass ring, like the bead at the end of a rung. */
+  .dial {
+    display: grid;
+    place-items: center;
+    width: 3.1rem;
+    height: 3.1rem;
+    border: 1.5px solid var(--rule);
+    border-radius: 50%;
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .plate h3 { margin-top: 1.1rem; font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.012em; }
+  .plate p { margin-top: 0.4rem; color: var(--soft); font-size: 1rem; line-height: 1.45; }
+  .source { margin-top: 1.5rem; max-width: 48rem; font-size: 0.9375rem; color: var(--soft); }
+  .source .label { margin-right: 0.5rem; }
+
+  /* ---------- Evidence: four plates ---------- */
+  .plates { display: grid; gap: 1px; margin-top: 2.25rem; background: var(--line); border: 1px solid var(--line); }
+  .plates > li { padding: 1.5rem 1.5rem 1.75rem; background: var(--panel); }
+  .plates .h3 { margin-top: 0.7rem; font-size: clamp(1.5rem, 2.1vw, 1.9rem); letter-spacing: -0.02em; }
+  .plates p:not(.label) { margin-top: 0.6rem; color: var(--soft); font-size: 1rem; line-height: 1.45; }
+  @media (min-width: 44rem) { .plates { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 72rem) { .plates { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  #proof .head { border-bottom: 0; padding-bottom: 0; }
+
+  .field { margin-top: 3rem; }
+  .field-says { max-width: 44rem; color: var(--soft); }
+  .field-says .label { margin-right: 0.6rem; }
+  .fieldwork { display: grid; gap: 1.25rem; margin-top: 1.25rem; }
+  .fieldwork img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 2px; background: var(--ground); }
+  .fieldwork figcaption { margin-top: 0.6rem; }
+  @media (min-width: 48rem) { .fieldwork { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  /* ---------- Who we work with ---------- */
+  .audiences { display: grid; gap: 0; }
+  .audiences > li { padding: 1.5rem 0 1.6rem; border-bottom: 1px solid var(--line); }
+  .audiences p { margin-top: 0.5rem; color: var(--soft); max-width: 24rem; }
+  @media (min-width: 56rem) {
+    .audiences { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .audiences > li { padding: 1.75rem 2rem 2rem 0; }
+    .audiences > li + li { padding-left: 2rem; border-left: 1px solid var(--line); }
+  }
+  .beside { display: grid; gap: 2rem 4rem; align-items: start; margin-top: 2.5rem; }
+  .beside p:not(.label) { margin-top: 0.6rem; color: var(--soft); max-width: 38rem; }
+  @media (min-width: 56rem) { .beside { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+  .notice { padding: 1.25rem 1.4rem 1.4rem; background: var(--panel); border-left: 3px solid var(--rule); }
+  .notice p:not(.label) { color: var(--ink); }
+
+  /* ---------- Contact ---------- */
+  .contact { display: grid; gap: 2.5rem 5rem; }
+  .contact .head { display: block; padding-bottom: 0; border-bottom: 0; }
+  .contact .head .h2 { margin-top: 0.9rem; }
+  .contact .head .lead { margin-top: 1.1rem; }
+  .direct { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.4rem; margin-top: 1.75rem; }
+  @media (min-width: 64rem) { .contact { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } }
+  .asks { border-top: 1px solid var(--ink); }
+  .asks a {
+    position: relative;
+    display: grid;
+    gap: 0.2rem;
+    padding: 1.15rem 3.5rem 1.2rem 0;
+    border-bottom: 1px solid var(--line);
+    transition: padding-left 0.2s ease, background-color 0.16s ease;
+  }
+  .asks a:hover { padding-left: 0.9rem; background: var(--panel); }
+  .ask-what { font-family: var(--font-display); font-size: clamp(1.3rem, 1.9vw, 1.6rem); font-weight: 500; line-height: 1.2; letter-spacing: -0.016em; }
+  .ask-why { color: var(--soft); font-size: 1rem; line-height: 1.4; }
+  .asks svg { position: absolute; right: 0.9rem; top: 50%; translate: 0 -50%; transition: translate 0.2s ease; }
+  .asks a:hover svg { translate: 5px -50%; }
+  .order-note { margin-top: 1.25rem; max-width: 38rem; font-size: 0.9375rem; color: var(--soft); }
+
+  /* ---------- Footer ---------- */
+  .site-footer { background: var(--panel); border-top: 1px solid var(--rule); }
+  .foot-link { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 500; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+  .foot-link:hover { text-decoration-color: var(--ink); }
+  .credits > summary { cursor: pointer; list-style: none; }
+  .credits > summary::-webkit-details-marker { display: none; }
+  .credits a { text-decoration: underline; text-underline-offset: 3px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .rise { animation: hx-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 90ms + 80ms); }
+}
+@keyframes hx-rise { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: none; } }

@@ -1,6 +1,6 @@
 # Lightening Lives: landing page
 
-Four design options for the Lightening Lives homepage, each built as a production page, with a comparison toolbar so the client can switch between them and try variations before choosing.
+Six design options for the Lightening Lives homepage, each built as a production page, with a comparison toolbar so the client can switch between them and try variations before choosing.
 
 | File | What it is |
 | --- | --- |
@@ -8,6 +8,8 @@ Four design options for the Lightening Lives homepage, each built as a productio
 | `daylight.html` | Design 02 · Daylight. The logo's sun at scale. |
 | `scale.html` | Design 03 · Scale. A 3D page: the camera follows one dried blood spot card out to a map of India made of cards. Green and yellow, with its own copy. |
 | `strand.html` | Design 04 · Strand. A 3D page: a strand of DNA built from lettered card tiles. The camera travels along it to five tiles lit in sun yellow, one for each group of inherited conditions the company tests for. White, with the logo's four colours for the four letters of DNA, and its own copy. |
+| `tree.html` | Design 05 · Tree. A 3D page: the company's emblem (sun, figure, five leaves) built as a paper sculpture. The camera goes from the whole emblem to its five leaves, one for each group of conditions, then to the figure at its centre. White, maroon ink from the logo's lettering, and its own copy. |
+| `helix.html` | Design 06 · Helix. A 3D page: a classic double helix as a glass-and-brass model on a stand. Its story follows the company's own tagline, Innovate • Diagnose • Transform Lives, and ends looking straight down on the model, where it reads as the sun in the logo. Pearl grey, graphite ink, and its own copy. |
 | `index.html` | Opens whichever design was viewed last (Sample Card on a first visit). |
 
 ## View it
@@ -23,8 +25,8 @@ npm run dev      # http://localhost:4173
 
 The dark bar above each page comes from `assets/compare/compare.js`. It offers:
 
-- **Design**: switch between the four pages. A design chosen here always opens as designed, with its own typography, background and ink selected in the controls; variations tried on one design are not carried to another.
-- **Typography, Background, Accent**: the first option is always the design as drawn. For designs 01 and 02 the others are the other direction's typefaces and colours, plus two tones taken from the logo and the Daylight palette. Design 03 offers a regular-width cut of its typeface, a pale yellow or green-white background, and a lighter green ink. Design 04 offers sans-serif headings, a pale sun or pale leaf background, and maroon ink; the colours of the four DNA letters stay as they are, because they carry meaning.
+- **Design**: switch between the six pages. A design chosen here always opens as designed, with its own typography, background and ink selected in the controls; variations tried on one design are not carried to another.
+- **Typography, Background, Accent**: the first option is always the design as drawn. For designs 01 and 02 the others are the other direction's typefaces and colours, plus two tones taken from the logo and the Daylight palette. Design 03 offers a regular-width cut of its typeface, a pale yellow or green-white background, and a lighter green ink. Design 04 offers sans-serif headings, a pale sun or pale leaf background, and maroon ink; the colours of the four DNA letters stay as they are, because they carry meaning. Design 05 offers Mukta or Familjen Grotesk headings, a pale sun or pale leaf background, and deep green ink; the emblem keeps the logo's own colours. Design 06 offers IBM Plex Sans or Familjen Grotesk headings, a white or pale brass background, and deep green ink; the model's metal, glass and sun colours are not varied.
 - **Copy link**: every choice is mirrored in the URL, so a link reproduces exactly what is on screen and a reload keeps it. Variations are not remembered between visits: opening a design without them in the link shows it as designed.
 - **Reset** and **Hide**.
 
@@ -47,7 +49,11 @@ npm run build    # Tailwind CSS v4 + esbuild
 - `src/js/strand/scene.js`: design 04's 3D scene (three.js, bundled separately as `strand-scene.js`). The strand's proportions, which tiles are marked (`MARKS`), the camera stops for wide and narrow screens, and the load animation are constants at the top of the file; colours and the typeface on the tiles are read from the page's CSS custom properties. The tiles are drawn as textured card with pressed letters, lit as a small model in a studio would be, and seen through a shallow depth of field; on a machine that cannot keep up, the depth-of-field pass switches itself off before anything else is reduced. The letters on the strand are illustrative, generated from a fixed seed; they are not a real sequence.
 - `src/js/strand/main.js`: the page's own behaviour (the mobile menu, and loading the scene). The names on the five marked tiles are the `[data-pin]` items in `strand.html`; change them there if the range changes.
 - `assets/img/strand-*.webp`: still images of design 04's three camera stops, used the same way as design 03's.
-- In designs 03 and 04 the story's text and its 3D subject keep to the same centred column as the rest of the page (`--frame` and `--gutter` in each stylesheet), and on monitors wider than a laptop's the whole page scales up with the window (`html { font-size }`).
+- `src/js/tree/scene.js`: design 05's 3D scene (three.js, bundled separately as `tree-scene.js`). The emblem's proportions (`SUN`, `LEAVES`, the figure's outline), the camera stops for wide and narrow screens, and the arrival sequence are constants at the top of the file; every colour is read from the page's CSS custom properties. The parts are drawn as textured card at different depths in front of the page, and the key light follows the pointer, so the shadows move with it. The names on the five leaves are the `[data-pin]` items in `tree.html`.
+- `assets/img/tree-*.webp`: still images of design 05's three camera stops, used the same way as design 03's.
+- `src/js/helix/scene.js`: design 06's 3D scene (three.js, bundled separately as `helix-scene.js`). The model (`RUNGS`, `RISE`, `TWIST`, `BASE`), the five lit rungs (`MARKS`), the lights, the lens and the four camera stops for wide and narrow screens are constants at the top of the file; every colour is read from the page's CSS custom properties. On a machine that cannot keep up it gives up depth of field first, then the glass's refraction, then pixels. The names on the five lit rungs are the `[data-pin]` items and the `.five` list in `helix.html`.
+- `assets/img/helix-*.webp`: still images of design 06's four camera stops, used the same way as design 03's. They are baked on the design's pearl grey, so with another background chosen from the toolbar the fallback shows a faint grey edge round them.
+- In designs 03 to 06 the story's text and its 3D subject keep to the same centred column as the rest of the page (`--frame` and `--gutter` in each stylesheet), and on monitors wider than a laptop's the whole page scales up with the window (`html { font-size }`).
 
 ## Publish to GitHub Pages
 
@@ -70,6 +76,8 @@ All paths are relative, so the site works from a `/<repo>/` subpath. Publishing 
 - **Photos are representative.** They show the real places (Nandurbar, Kothagudem, Jharkhand) and a CSIR-CCMB bench, but none is Lightening Lives' own. Sources and licences are in `assets/img/CREDITS.md` and in each page's footer; swap in the client's field photos before launch.
 - **The card is drawn, not photographed.** All three designs show the company's real card: a cover flap, one dashed collection circle with a single dried blood spot, and a barcoded pocket. Photos of the real card are kept for reference in `content/assets/kit-reference-*.jpg`. They are internal: they show a handwritten name and a real sample code, and are not part of the published site. The copy still says "a few drops of blood on a card" and "dried blood spot", because the brief rules out "one drop" and "single drop".
 - **Partner names are typeset, not logos.** The brief rules out using the ICMR or CSIR-CCMB logos without permission.
-- **News items are evergreen facts from the brief** (ICMR validation, the CSIR-CCMB MOU, the national mission), not dated news. Replace them as real coverage arrives. Designs 03 and 04 have no news section; add one when there is news to show.
+- **News items are evergreen facts from the brief** (ICMR validation, the CSIR-CCMB MOU, the national mission), not dated news. Replace them as real coverage arrives. Designs 03 to 06 have no news section; add one when there is news to show.
 - **Design 04 says little that is not in the brief.** Its story is the company's own description: REASSURED genetic tests, five groups of inherited conditions so far, ICMR validation of LitLife™-SCA. Two plain-language lines are added: that inherited disorders are "written in DNA" and that each of the five is "a change somewhere in a person's DNA". The five yellow tiles are a picture of the range, not real positions in the genome. Have the scientific team check that wording before launch.
+- **Design 05 adds nothing to the brief.** Its headline is the company's mission statement, and its story (five groups of conditions, institutions only) is the brief's. The five leaves match the five leaves of the logo; if the range grows, the picture no longer counts the tests, so the step's heading ("five groups… so far") would need rewording.
+- **Design 06 adds nothing to the brief either.** Its three steps are the campaign tagline, and "faster, simpler, affordable, accessible, scalable" is the client's own summary. The model is not a real sequence, and the five amber rungs are a picture of the range, not positions in a genome.
 - **Claims the brief asks to confirm before publishing**: LitLife™-SCA as ™ or ®; "tests" versus "kits"; what the thalassaemia, DMD and coagulation tests detect; and that "no large equipment or specialised laboratory" matches each test's instructions for use.

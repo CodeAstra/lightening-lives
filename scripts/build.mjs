@@ -19,7 +19,7 @@ const only = process.argv.slice(2).filter((arg) => !arg.startsWith('--'));
 const wanted = (design) => only.length === 0 || only.includes(design);
 
 // One stylesheet per design, so each page ships only its own CSS.
-const styles = ['sample-card', 'daylight', 'scale', 'strand'].filter((name) => wanted(name) && existsSync(at(`src/css/${name}.css`)));
+const styles = ['sample-card', 'daylight', 'scale', 'strand', 'tree', 'helix'].filter((name) => wanted(name) && existsSync(at(`src/css/${name}.css`)));
 
 // india-map and the two -scene bundles are split out because they carry three.js; their pages load them separately.
 const scripts = [
@@ -30,6 +30,10 @@ const scripts = [
   { name: 'scale-scene', design: 'scale', file: 'src/js/scale/scene.js' },
   { name: 'strand', design: 'strand', file: 'src/js/strand/main.js' },
   { name: 'strand-scene', design: 'strand', file: 'src/js/strand/scene.js' },
+  { name: 'tree', design: 'tree', file: 'src/js/tree/main.js' },
+  { name: 'tree-scene', design: 'tree', file: 'src/js/tree/scene.js' },
+  { name: 'helix', design: 'helix', file: 'src/js/helix/main.js' },
+  { name: 'helix-scene', design: 'helix', file: 'src/js/helix/scene.js' },
 ];
 const entryPoints = Object.fromEntries(
   scripts.filter((s) => wanted(s.design) && existsSync(at(s.file))).map((s) => [s.name, at(s.file)]),
@@ -79,7 +83,7 @@ if (pages) {
   const dist = at('dist');
   rmSync(dist, { recursive: true, force: true });
   mkdirSync(dist);
-  for (const entry of ['index.html', 'sample-card.html', 'daylight.html', 'scale.html', 'strand.html', 'assets', '.nojekyll']) {
+  for (const entry of ['index.html', 'sample-card.html', 'daylight.html', 'scale.html', 'strand.html', 'tree.html', 'helix.html', 'assets', '.nojekyll']) {
     cpSync(at(entry), path.join(dist, entry), { recursive: true });
   }
   console.log('\n  Site copied to dist/\n');

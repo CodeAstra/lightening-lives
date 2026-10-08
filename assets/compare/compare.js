@@ -199,6 +199,96 @@
     ],
   };
 
+  // 05 · Tree builds the logo itself in paper, so the logo's own colours (sun, leaf, figure) stay
+  // as they are and its variations change the page around it.
+  // ---- DESIGNS.tree: begin ----
+  DESIGNS.tree = {
+    label: '05 · Tree (3D)',
+    file: 'tree.html',
+    controls: [
+      {
+        key: 'type',
+        label: 'Typography',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Bricolage Grotesque + Mukta (as designed)' },
+          { id: 'sans', label: 'Mukta throughout', vars: { '--ff-display': '"Mukta"', '--display-weight': '700', '--display-tracking': '-0.018em' } },
+          {
+            id: 'sample-card',
+            label: 'Familjen Grotesk (from Sample Card)',
+            fonts: FONTS_SAMPLE_CARD,
+            vars: { '--ff-display': '"Familjen Grotesk"', '--ff-body': '"Familjen Grotesk"', '--display-weight': '600', '--display-tracking': '-0.022em' },
+          },
+        ],
+      },
+      {
+        key: 'bg',
+        label: 'Background',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'White (as designed)', swatch: '#FFFFFF' },
+          { id: 'sun', label: 'Pale sun', swatch: '#FFFBE8', vars: { '--ground': '#FFFBE8', '--wash': '#FBF3CF', '--sunwash': '#FFEFA8', '--paper': '#FFFEF6' } },
+          { id: 'leaf', label: 'Pale leaf', swatch: '#F5F9EC', vars: { '--ground': '#F5F9EC', '--wash': '#E9F1DA', '--paper': '#FCFEF7' } },
+        ],
+      },
+      {
+        key: 'accent',
+        label: 'Ink',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Maroon, from the logo (as designed)', swatch: '#4A1410' },
+          { id: 'green', label: 'Deep green', swatch: '#1B2A21', vars: { '--ink': '#1B2A21', '--soft': '#4A5A4F' } },
+        ],
+      },
+    ],
+  };
+  // ---- DESIGNS.tree: end ----
+
+  // ---- DESIGNS.helix: begin ----
+  // 06 · Helix is a brass-and-glass model on a pearl-grey page. Its variations change the page
+  // round the model; the model's own metal, glass and sun stay as they are.
+  DESIGNS.helix = {
+    label: '06 · Helix (3D)',
+    file: 'helix.html',
+    controls: [
+      {
+        key: 'type',
+        label: 'Typography',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Jost + IBM Plex Sans (as designed)' },
+          { id: 'sans', label: 'IBM Plex Sans throughout', vars: { '--ff-display': '"IBM Plex Sans"', '--display-weight': '500', '--display-tracking': '-0.026em' } },
+          {
+            id: 'sample-card',
+            label: 'Familjen Grotesk (from Sample Card)',
+            fonts: FONTS_SAMPLE_CARD,
+            vars: { '--ff-display': '"Familjen Grotesk"', '--ff-body': '"Familjen Grotesk"', '--display-weight': '600', '--display-tracking': '-0.022em' },
+          },
+        ],
+      },
+      {
+        key: 'bg',
+        label: 'Background',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Pearl grey (as designed)', swatch: '#EDEEE9' },
+          { id: 'white', label: 'White', swatch: '#FFFFFF', vars: { '--ground': '#FFFFFF', '--panel': '#F4F5F1' } },
+          { id: 'brass', label: 'Pale brass', swatch: '#F5F0E1', vars: { '--ground': '#F5F0E1', '--panel': '#FCFAF2', '--warm': '#EDE3C8' } },
+        ],
+      },
+      {
+        key: 'accent',
+        label: 'Ink',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Graphite (as designed)', swatch: '#1A201E' },
+          { id: 'green', label: 'Deep green', swatch: '#17301F', vars: { '--ink': '#17301F', '--soft': '#48604F' } },
+        ],
+      },
+    ],
+  };
+  // ---- DESIGNS.helix: end ----
+
   var config = DESIGNS[designId];
   if (!config) return;
 
