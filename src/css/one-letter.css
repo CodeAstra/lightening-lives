@@ -1,0 +1,636 @@
+/* Design 04 · One Letter
+   One idea: a genetic test reads DNA, and an inherited disorder can turn on a single letter of it.
+   The page opens on a strand of DNA built from lettered paper tiles and travels along it, in 3D,
+   to the one letter that differs in sickle cell disease.
+   Palette: a white page and dark green ink. The four letters of DNA take the four colours of the
+   logo (leaf green, rust, charcoal, amber) and nothing else does. Sun yellow means "found" or "act". */
+
+@import "tailwindcss" source(none);
+@source "../../one-letter.html";
+@source "../js/one-letter";
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-wash: var(--wash);
+  --color-sunwash: var(--sunwash);
+  --color-ink: var(--ink);
+  --color-soft: var(--soft);
+  --color-sun: var(--sun);
+  --color-line: var(--line);
+  --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--ff-display), Georgia, ui-serif, serif;
+}
+
+@layer base {
+  /* Design tokens. The comparison toolbar overrides a few of these at runtime, and the 3D scene reads them. */
+  :root {
+    --ground: #FFFFFF;   /* page, and the distance the strand fades into */
+    --wash: #F4F6EE;     /* alternate sections */
+    --sunwash: #FFF6CC;  /* the closing section */
+    --ink: #1B2A21;      /* text */
+    --soft: #4A5A4F;     /* secondary text */
+    --sun: #F9D71C;      /* the letter that is found, and the main action */
+    --sun-deep: #EDBE08;
+    --ray: #F7B41A;      /* the rays round the logo's sun, behind that letter */
+    --rail: #C9D1C4;     /* the strand's two rails */
+    --line: rgba(27, 42, 33, 0.16);
+
+    /* The four letters of DNA: ink colour, then the tile it is printed on. */
+    --a: #46851B;  --a-tile: #DCEDC9;  /* leaf green */
+    --t: #A84818;  --t-tile: #F6DBCA;  /* rust */
+    --g: #2B3832;  --g-tile: #DBE1DB;  /* charcoal */
+    --c: #AE7700;  --c-tile: #FAE8B2;  /* amber */
+
+    --ff-display: "Literata";
+    --ff-body: "Hind";
+    --display-weight: 600;
+    --display-tracking: -0.018em;
+
+    --pad: clamp(1.25rem, 5vw, 4.5rem);
+    /* The page keeps to a centred column. --gutter is the distance from the window's edge to that
+       column's content, for the full-width parts (header, story) that have to line up with it. */
+    --frame: 82rem;
+    --text-w: min(37rem, 43vw); /* the story's text column, beside the strand */
+    --gutter: max(var(--pad), calc((100% - var(--frame)) / 2 + var(--pad)));
+    --stage-h: calc(100vh - var(--compare-h, 0px));
+  }
+  @supports (height: 100svh) {
+    :root { --stage-h: calc(100svh - var(--compare-h, 0px)); }
+  }
+  @supports (color: color-mix(in srgb, red, red)) {
+    :root { --line: color-mix(in srgb, var(--ink) 16%, transparent); }
+  }
+
+  html {
+    /* On screens wider than a laptop's the whole page grows with the window, up to about a third
+       larger, so a big monitor gets a bigger page and not a small one in a wide margin. */
+    font-size: clamp(100%, 0.5vw + 0.55rem, 137.5%);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--compare-h, 0px);
+  }
+  body {
+    position: relative;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: var(--display-weight);
+    letter-spacing: var(--display-tracking);
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px var(--sun);
+    border-radius: 3px;
+  }
+  ::selection { background: var(--sun); color: var(--ink); }
+}
+
+@layer components {
+  .wrap { width: 100%; max-width: var(--frame); margin-inline: auto; padding-inline: var(--pad); }
+  .section { padding-block: clamp(4.5rem, 9vw, 8rem); }
+
+  .display { font-size: clamp(2.5rem, 4.7vw, 4.5rem); line-height: 1.04; }
+  .h2 { font-size: clamp(1.95rem, 3.5vw, 3.15rem); line-height: 1.08; }
+  .h3 { font-size: clamp(1.35rem, 1.8vw, 1.6rem); line-height: 1.18; letter-spacing: -0.01em; }
+  .lead { font-size: clamp(1.15rem, 1.45vw, 1.3rem); line-height: 1.5; color: var(--soft); }
+
+  /* Small capitals for labels. */
+  .label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    line-height: 1.35;
+    text-transform: uppercase;
+    color: var(--soft);
+  }
+  /* Gene names are set in italics, as they are in print. */
+  .gene, .pins i { font-family: var(--font-display); font-style: italic; font-weight: 500; }
+  .label .gene { font-size: 1.12em; letter-spacing: 0.02em; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* A tile: one letter of DNA, as the strand is built from them. Its colour is its letter's. */
+  .tile {
+    --tile: var(--g-tile);
+    --base: var(--g);
+    display: inline-grid;
+    place-items: center;
+    width: var(--tile-size, 2rem);
+    height: calc(var(--tile-size, 2rem) * 1.14);
+    padding-top: 0.06em;
+    border-radius: 2px;
+    background: var(--tile);
+    color: var(--base);
+    font-family: var(--font-display);
+    font-size: calc(var(--tile-size, 2rem) * 0.66);
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0;
+    /* the tile's thickness */
+    box-shadow: 0 calc(var(--tile-size, 2rem) * 0.07) 0 rgba(27, 42, 33, 0.14);
+  }
+  .tile[data-base="A"] { --tile: var(--a-tile); --base: var(--a); }
+  .tile[data-base="T"] { --tile: var(--t-tile); --base: var(--t); }
+  .tile[data-base="G"] { --tile: var(--g-tile); --base: var(--g); }
+  .tile[data-base="C"] { --tile: var(--c-tile); --base: var(--c); }
+  .tile.found { --tile: var(--sun); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0.1rem 1.5rem 0;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+  }
+  .btn-sun { background: var(--sun); color: var(--ink); }
+  .btn-sun:hover { background: var(--sun-deep); }
+  .btn-line { color: var(--ink); }
+  .btn-line:hover { background: var(--wash); }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--sun-deep);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 5px;
+    transition: text-decoration-thickness 0.16s ease;
+  }
+  .link:hover { text-decoration-thickness: 5px; }
+  .link svg { flex: none; transition: translate 0.2s ease; }
+  .link:hover svg { translate: 4px 0; }
+  .plain-link { text-decoration: underline; text-decoration-color: var(--sun-deep); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .plain-link:hover { color: var(--ink); text-decoration-thickness: 3px; }
+
+  .skip {
+    position: absolute;
+    left: 1rem;
+    top: -6rem;
+    z-index: 60;
+    padding: 0.75rem 1.1rem;
+    background: var(--ink);
+    color: var(--ground);
+    font-weight: 600;
+    border-radius: 4px;
+  }
+  .skip:focus { top: calc(var(--compare-h, 0px) + 0.75rem); }
+
+  /* ---------- Header: floats over the opening scene ---------- */
+  .site-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem var(--gutter) 0;
+  }
+  .site-nav { display: none; align-items: center; gap: 0.15rem; }
+  @media (min-width: 68rem) {
+    .site-nav { display: flex; }
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0.1rem 0.75rem 0;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 1.0625rem;
+    transition: background-color 0.16s ease;
+  }
+  .nav-link:hover { background: var(--wash); }
+
+  details.menu > summary { list-style: none; cursor: pointer; }
+  details.menu > summary::-webkit-details-marker { display: none; }
+  details.menu[open] .menu-open, details.menu:not([open]) .menu-close { display: none; }
+  .menu-panel {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    top: calc(100% + 0.5rem);
+    padding: 0.5rem;
+    background: var(--ground);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+  }
+  .menu-panel .nav-link { width: 100%; }
+  @media (min-width: 68rem) {
+    details.menu { display: none; }
+  }
+
+  /* ---------- The story: the strand, one gene, one letter ---------- */
+  .story { position: relative; }
+
+  /* Baseline (no WebGL, reduced motion, or no JavaScript): each step is text beside a still image. */
+  .stage { display: none; }
+  .step {
+    display: grid;
+    align-items: center;
+    gap: 2rem 4rem;
+    padding: 3.5rem var(--gutter);
+  }
+  .step-hero { padding-top: 9rem; }
+  /* The stills are cut from a strand that runs on past their edges; let it fade out, not stop. */
+  .step-art {
+    width: 100%;
+    max-width: 34rem;
+    height: auto;
+    justify-self: center;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 78%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 14%, #000 78%, transparent);
+  }
+  @media (min-width: 56rem) {
+    .step { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
+  .step-text > span.label { display: block; margin-bottom: 0.9rem; }
+  .cue { display: none; }
+
+  /* Live: the scene is pinned and the steps scroll over it. */
+  html.story-live .stage {
+    display: block;
+    position: sticky;
+    top: var(--compare-h, 0px);
+    height: var(--stage-h);
+    overflow: clip;
+    cursor: grab;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  html.story-live .stage.is-turning { cursor: grabbing; }
+  html.story-live .steps {
+    position: relative;
+    z-index: 2;
+    margin-top: calc(var(--stage-h) * -1);
+    pointer-events: none;
+  }
+  html.story-live .step {
+    display: flex;
+    align-items: flex-end;
+    min-height: var(--stage-h);
+    padding: 0;
+  }
+  html.story-live .step-art { display: none; }
+  html.story-live .step-text {
+    position: relative;
+    width: 100%;
+    padding: 1.5rem var(--gutter) 2.5rem;
+    background: var(--ground);
+    pointer-events: auto;
+  }
+  /* On small screens the text rides up over the scene on a band of page colour with a soft top edge. */
+  html.story-live .step-text::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 5rem;
+    background: linear-gradient(to top, var(--ground), transparent);
+    pointer-events: none;
+  }
+  html.story-live .cue { display: inline-flex; }
+  /* Small screens open on the strand itself: the hero block is taller than the stage, so the
+     headline and buttons sit at the foot of the first screen and the rest follows as you scroll. */
+  @media not ((min-width: 56.25rem) and (min-aspect-ratio: 21/20)) {
+    html.story-live .step-hero { min-height: calc(var(--stage-h) + 20rem); }
+    html.story-live .step-hero .step-text { display: flex; flex-direction: column; align-items: flex-start; }
+    html.story-live .step-hero .hero-actions { order: -1; margin-top: 1.5rem; }
+    html.story-live .step-hero .display { order: -2; }
+    /* The letter step does the same: heading and readout first, so the tile stays in view above
+       them while the switch is used, and the rest of the text follows. */
+    html.story-live #gene { min-height: calc(var(--stage-h) + 11.5rem); }
+    html.story-live #letter { min-height: calc(var(--stage-h) + 17rem); }
+    html.story-live #letter .step-text { display: flex; flex-direction: column; }
+    html.story-live #letter .lead { order: 1; margin-top: 1.5rem; }
+    html.story-live #letter .after-readout { order: 2; }
+    html.story-live #letter .readout { margin-top: 1.1rem; }
+  }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    html.story-live .step { align-items: center; padding-inline: var(--gutter); }
+    html.story-live .step-hero { padding-top: 5rem; }
+    html.story-live .step-text { width: auto; max-width: var(--text-w); padding: 0; background: none; }
+    html.story-live .step-text > .lead { max-width: calc(var(--text-w) * 0.9); }
+    html.story-live .step-text::before { content: none; }
+  }
+
+  .stage-scene { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease; }
+  html.scene-ready .stage-scene { opacity: 1; }
+  .stage-scene canvas { display: block; width: 100%; height: 100%; }
+  /* Keeps the text column readable whatever the strand is doing behind it. */
+  .stage-veil { position: absolute; inset: 0; pointer-events: none; }
+  /* Under the header the strand comes out of clear page; the band lifts once the header has scrolled away. */
+  .stage-veil::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 11rem;
+    background: linear-gradient(180deg, var(--ground) 0, var(--ground) 5.5rem, transparent);
+    opacity: clamp(0, calc(1 - var(--p, 0) * 7), 1);
+  }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .stage-veil {
+      background: linear-gradient(90deg, var(--ground) 0, var(--ground) calc(var(--gutter) + var(--text-w) * 0.8), transparent calc(var(--gutter) + var(--text-w) + 4rem));
+    }
+  }
+  /* The column the rest of the page keeps to, marked out on the stage so the scene can place the strand within it. */
+  .stage-frame { position: absolute; inset-block: 0; left: var(--gutter); right: var(--gutter); pointer-events: none; }
+
+  /* The four letters, as a key to the strand. */
+  .key { display: flex; align-items: center; gap: 0.9rem; max-width: 30rem; font-size: 1rem; line-height: 1.4; color: var(--soft); }
+  .key-tiles { display: inline-flex; flex: none; gap: 0.3rem; --tile-size: 1.75rem; }
+
+  .cue { align-items: center; gap: 0.6rem; margin-top: 1.5rem; }
+  /* Wide screens show the three stops down the left edge instead, which says the same thing. */
+  @media (min-width: 74rem) and (min-aspect-ratio: 21/20) { html.story-live .cue { display: none; } }
+  @media (min-width: 56.25rem) and (max-height: 54rem) { html.story-live .cue { display: none; } }
+  .cue svg { flex: none; }
+
+  /* How close the view is: the strand, one gene, one letter. A line down the stage's left edge. */
+  .trail {
+    position: absolute;
+    z-index: 3;
+    display: none;
+  }
+  .trail a { position: relative; display: flex; align-items: center; min-width: 1.75rem; min-height: 1.75rem; }
+  .trail a::before {
+    content: "";
+    width: 0.7rem;
+    height: 0.7rem;
+    margin-left: 0.2rem;
+    flex: none;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    background: var(--ground);
+    transition: background-color 0.2s ease, scale 0.2s ease;
+  }
+  .trail a[aria-current]::before { background: var(--sun); scale: 1.25; }
+  .trail span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .trail { display: grid; left: calc(var(--gutter) - 2.6rem); top: 50%; translate: 0 -50%; gap: 2.6rem; }
+    /* The line between the stops fills as the camera closes in. */
+    .trail::before {
+      content: "";
+      position: absolute;
+      left: calc(0.2rem + 0.35rem - 1px);
+      top: 0.875rem;
+      bottom: 0.875rem;
+      width: 2px;
+      background: linear-gradient(180deg, var(--ink) calc(var(--p, 0) * 100%), var(--line) 0);
+    }
+    .trail a::before { position: relative; z-index: 1; }
+    .trail span {
+      left: 1.9rem;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip-path: none;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      background: var(--ink);
+      color: var(--ground);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.16s ease;
+    }
+    .trail a:hover span, .trail a:focus-visible span { opacity: 1; }
+  }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) and (max-width: 74rem) { .trail { display: none; } }
+
+  /* Labels pinned to points on the strand, each on a short leader. */
+  .pins { position: absolute; inset: 0; z-index: 1; margin: 0; padding: 0; list-style: none; pointer-events: none; --lead: 2.4rem; }
+  .pins li { position: absolute; left: 0; top: 0; width: 0; height: 0; opacity: 0; }
+  .pins li::before { content: ""; position: absolute; right: 0; top: -1px; width: var(--lead); height: 2px; background: var(--ink); }
+  .pins li::after { content: ""; position: absolute; left: -0.3rem; top: -0.3rem; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--sun); border: 2px solid var(--ink); }
+  .pins b {
+    position: absolute;
+    right: var(--lead);
+    top: -0.95rem;
+    padding: 0.28rem 0.6rem 0.2rem;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ink);
+    background: var(--ground);
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+  }
+  /* With room to the strand's right, the labels sit there, clear of the text column. */
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .pins { --lead: 4.5rem; }
+    .pins li::before { right: auto; left: 0; }
+    .pins b { right: auto; left: var(--lead); font-size: 0.9375rem; }
+  }
+
+  /* Narrowing down: how many letters are in view at each step from all of our DNA to one. */
+  .narrowing { max-width: 31rem; border-bottom: 1px solid var(--line); }
+  .narrowing > div { display: grid; grid-template-columns: 8.4rem minmax(0, 1fr); align-items: baseline; gap: 1rem; padding: 0.55rem 0 0.5rem; border-top: 1px solid var(--line); }
+  .narrowing > div:first-child { border-top: 2px solid var(--ink); }
+  .narrowing dt { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.012em; white-space: nowrap; }
+  .narrowing dd { font-size: 1.0625rem; line-height: 1.35; color: var(--soft); }
+  /* The last row is the story's one tile. */
+  .narrowing .tile { --tile: var(--sun); --base: var(--ink); --tile-size: 1.7rem; }
+  .narrowing .is-one dd { color: var(--ink); font-weight: 500; }
+
+  /* The readout: five three-letter words of the gene, and what the cell makes of the middle one. */
+  .readout {
+    container-type: inline-size;
+    max-width: 33rem;
+    padding: 1rem 1.1rem 1.05rem;
+    background: var(--ground);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+  }
+  .readout-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem 1rem; }
+  .switch { display: inline-flex; margin: 0; padding: 0; border: 2px solid var(--ink); border-radius: 4px; overflow: hidden; }
+  .switch label { position: relative; display: block; cursor: pointer; }
+  .switch label + label { border-left: 2px solid var(--ink); }
+  .switch input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+  .switch span { display: flex; align-items: center; min-height: 2.5rem; padding: 0.1rem 0.8rem 0; font-size: 0.9375rem; font-weight: 600; line-height: 1.15; transition: background-color 0.16s ease; }
+  .switch label:hover span { background: var(--wash); }
+  .switch input:checked + span { background: var(--sun); }
+  .switch input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: -5px; }
+
+  .codons {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    --tile-size: clamp(1.05rem, 4.6vw, 1.7rem);
+  }
+  /* Fifteen tiles have to fit the readout's own width, whatever the window's. */
+  @supports (width: 1cqi) {
+    .codons { --tile-size: min(1.7rem, calc((100cqi - 3.8rem) / 15)); }
+  }
+  .codons li { display: grid; grid-template-columns: repeat(3, var(--tile-size)); gap: 0.16rem; padding: 0.3rem; margin: -0.3rem; border-radius: 4px; }
+  .codons em { grid-column: 1 / -1; margin-top: 0.3rem; font-size: 0.875rem; font-style: normal; font-weight: 500; text-align: center; color: var(--soft); }
+  /* The word the story is about is ringed, and its middle letter turns over with the switch. */
+  .codons .is-site { box-shadow: 0 0 0 2px var(--ink); }
+  .codons .is-site em { font-weight: 600; color: var(--ink); }
+  .turn { position: relative; display: block; width: var(--tile-size); height: calc(var(--tile-size) * 1.14); perspective: 12rem; }
+  .turn .tile { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: rotate 0.55s cubic-bezier(0.3, 0.7, 0.2, 1); }
+  .turn .tile.found { rotate: y 180deg; }
+  .readout[data-variant="sickle"] .turn .tile { rotate: y -180deg; }
+  .readout[data-variant="sickle"] .turn .tile.found { rotate: y 0deg; }
+  .readout-says { margin-top: 0.9rem; font-size: 1rem; line-height: 1.4; color: var(--ink); }
+  .after-readout { max-width: 33rem; margin-top: 1.25rem; font-size: 1rem; line-height: 1.5; color: var(--soft); }
+  /* On a wide, short screen the letter step holds a lot; set its type a size down so it all fits. */
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) and (max-height: 56rem) {
+    html.story-live #letter .h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); }
+    html.story-live #letter .lead { font-size: 1.125rem; margin-top: 0.75rem; }
+    html.story-live #letter .readout { margin-top: 1.1rem; }
+    html.story-live #letter .after-readout { margin-top: 0.9rem; }
+  }
+
+  /* ---------- How the tests work: three verbs ---------- */
+  .verbs { display: grid; gap: 2.25rem 0; }
+  .verbs > li { padding-top: 1.1rem; border-top: 2px solid var(--ink); }
+  .verbs h3 {
+    font-size: clamp(2.6rem, 5.6vw, 4.6rem);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+  .verbs h3::after { content: "."; color: var(--sun-deep); }
+  .verbs p { margin-top: 1rem; max-width: 24rem; color: var(--soft); }
+  @media (min-width: 56rem) {
+    .verbs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .verbs > li { padding-right: 2.5rem; }
+  }
+  .outcome { max-width: 44rem; font-family: var(--font-display); font-size: clamp(1.25rem, 1.9vw, 1.6rem); font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; }
+
+  /* ---------- Tests: the flagship, then the rest of the range ---------- */
+  .range { display: grid; gap: 2.5rem 4rem; }
+  @media (min-width: 64rem) { .range { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } }
+  .flagship { padding: clamp(1.5rem, 3vw, 2.5rem); background: var(--sun); border-radius: 6px; }
+  @media (min-width: 64rem) { .flagship { position: sticky; top: calc(var(--compare-h, 0px) + 1.5rem); } }
+  .flagship .label { color: var(--ink); }
+  .flagship-name { margin-top: 0.9rem; font-size: clamp(2.4rem, 4.2vw, 3.6rem); font-weight: 700; line-height: 1; letter-spacing: -0.025em; }
+  .flagship-what { margin-top: 1.1rem; font-size: 1.1875rem; line-height: 1.45; }
+  .marks { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+  .marks li { display: inline-flex; align-items: center; min-height: 2rem; padding: 0.1rem 0.7rem 0; border: 2px solid var(--ink); border-radius: 3px; font-size: 0.9375rem; font-weight: 600; line-height: 1.2; }
+  .marks li:first-child { background: var(--ink); color: var(--sun); }
+  .flagship-about { margin-top: 1.4rem; padding-top: 1.1rem; border-top: 2px solid var(--ink); font-size: 1rem; line-height: 1.5; }
+
+  .others > li { padding: 1.4rem 0 1.6rem; border-top: 1px solid var(--line); }
+  .others > li:first-child { padding-top: 0; border-top: 0; }
+  .others p { margin-top: 0.5rem; max-width: 38rem; color: var(--soft); }
+  .others .link { margin-top: 0.25rem; }
+  @media (min-width: 64rem) { .others > li:first-child { padding-top: 0.25rem; } }
+
+  /* ---------- REASSURED, as an acrostic: each criterion begins with its own tile ---------- */
+  .nine { border-bottom: 1px solid var(--line); }
+  .nine > li { display: grid; gap: 0.5rem 3rem; align-items: center; padding: 0.7rem 0 0.85rem; border-top: 1px solid var(--line); }
+  .nine > li:first-child { border-top: 2px solid var(--ink); }
+  .nine h3 { display: flex; align-items: baseline; font-size: clamp(1.5rem, 2.5vw, 2.1rem); font-weight: 500; line-height: 1.15; letter-spacing: -0.015em; text-wrap: wrap; }
+  .nine h3 > span[aria-hidden] { display: block; }
+  .nine .tile {
+    --tile: var(--sun);
+    --base: var(--ink);
+    --tile-size: 1.5em;
+    margin-right: 0.09em;
+    vertical-align: baseline;
+  }
+  .nine p { color: var(--soft); max-width: 34rem; }
+  @media (min-width: 56rem) {
+    .nine > li { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); }
+  }
+
+  /* ---------- Evidence: each claim beside what stands behind it ---------- */
+  .ledger { border-bottom: 1px solid var(--line); }
+  .ledger > div { display: grid; gap: 0.5rem 3rem; padding: 1.5rem 0 1.6rem; border-top: 1px solid var(--line); }
+  .ledger > .ledger-heads { display: none; padding: 0 0 0.6rem; border-top: 0; }
+  .ledger > .ledger-heads + div { border-top: 2px solid var(--ink); }
+  .ledger dt { font-family: var(--font-display); font-size: clamp(1.3rem, 1.9vw, 1.6rem); font-weight: 500; line-height: 1.22; letter-spacing: -0.012em; max-width: 30rem; }
+  .ledger dd { max-width: 34rem; color: var(--soft); }
+  .ledger strong { font-weight: 600; color: var(--ink); background: linear-gradient(var(--sun), var(--sun)) 0 88% / 100% 0.42em no-repeat; }
+  @media (min-width: 56rem) {
+    .ledger > div { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: baseline; }
+    .ledger > .ledger-heads { display: grid; }
+  }
+
+  .fieldwork { display: grid; gap: 1.25rem; }
+  .fieldwork img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 4px; background: var(--wash); }
+  .fieldwork figcaption { margin-top: 0.6rem; }
+  @media (min-width: 48rem) { .fieldwork { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  /* ---------- Who we work with ---------- */
+  .audiences { display: grid; gap: 2rem 0; }
+  .audiences > li { padding-top: 1.3rem; border-top: 2px solid var(--ink); }
+  .audiences p { margin-top: 0.6rem; color: var(--soft); max-width: 24rem; }
+  @media (min-width: 56rem) {
+    .audiences { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .audiences > li { padding-right: 2.5rem; }
+  }
+  .beside { display: grid; gap: 2rem 4rem; align-items: start; }
+  @media (min-width: 56rem) { .beside { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+  .notice { display: grid; gap: 0.4rem; padding: 1.3rem 1.5rem; background: var(--wash); border-radius: 6px; }
+
+  /* ---------- Contact ---------- */
+  .asks { display: grid; gap: 0.75rem; }
+  @media (min-width: 48rem) { .asks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .asks a {
+    position: relative;
+    display: grid;
+    gap: 0.3rem;
+    height: 100%;
+    padding: 1.3rem 4rem 1.35rem 1.4rem;
+    background: var(--ground);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    transition: background-color 0.16s ease;
+  }
+  .asks a:hover { background: var(--sun); }
+  .ask-what { font-family: var(--font-display); font-size: clamp(1.3rem, 1.9vw, 1.6rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.012em; }
+  .ask-why { color: var(--soft); font-size: 1.0625rem; line-height: 1.4; }
+  .asks a:hover .ask-why { color: var(--ink); }
+  .asks svg { position: absolute; right: 1.4rem; top: 1.65rem; transition: translate 0.2s ease; }
+  .asks a:hover svg { translate: 5px 0; }
+
+  /* ---------- Footer ---------- */
+  .site-footer { border-top: 2px solid var(--ink); }
+  .foot-link { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 500; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .foot-link:hover { text-decoration-color: var(--sun-deep); }
+  .credits > summary { cursor: pointer; list-style: none; }
+  .credits > summary::-webkit-details-marker { display: none; }
+  .credits a { text-decoration: underline; text-underline-offset: 3px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .rise { animation: ol-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 90ms + 80ms); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .turn .tile { transition: none; }
+}
+@keyframes ol-rise { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: none; } }

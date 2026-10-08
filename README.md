@@ -1,12 +1,13 @@
 # Lightening Lives: landing page
 
-Three design options for the Lightening Lives homepage, each built as a production page, with a comparison toolbar so the client can switch between them and try variations before choosing.
+Four design options for the Lightening Lives homepage, each built as a production page, with a comparison toolbar so the client can switch between them and try variations before choosing.
 
 | File | What it is |
 | --- | --- |
 | `sample-card.html` | Design 01 · Sample Card. Printed like a dried blood spot collection card, with a 3D map of India in the hero. |
 | `daylight.html` | Design 02 · Daylight. The logo's sun at scale. |
 | `scale.html` | Design 03 · Scale. A 3D page: the camera follows one dried blood spot card out to a map of India made of cards. Green and yellow, with its own copy. |
+| `one-letter.html` | Design 04 · One Letter. A 3D page: a strand of DNA built from lettered paper tiles, followed to the one letter that differs in sickle cell disease. White, with the logo's four colours for the four letters of DNA, and its own copy. |
 | `index.html` | Opens whichever design was viewed last (Sample Card on a first visit). |
 
 ## View it
@@ -22,8 +23,8 @@ npm run dev      # http://localhost:4173
 
 The dark bar above each page comes from `assets/compare/compare.js`. It offers:
 
-- **Design**: switch between the three pages.
-- **Typography, Background, Accent**: the first option is always the design as drawn. For designs 01 and 02 the others are the other direction's typefaces and colours, plus two tones taken from the logo and the Daylight palette. Design 03 offers a regular-width cut of its typeface, a pale yellow or green-white background, and a lighter green ink.
+- **Design**: switch between the four pages.
+- **Typography, Background, Accent**: the first option is always the design as drawn. For designs 01 and 02 the others are the other direction's typefaces and colours, plus two tones taken from the logo and the Daylight palette. Design 03 offers a regular-width cut of its typeface, a pale yellow or green-white background, and a lighter green ink. Design 04 offers sans-serif headings, a pale sun or pale leaf background, and maroon ink; the colours of the four DNA letters stay as they are, because they carry meaning.
 - **Copy link**: every choice is mirrored in the URL, so a link reproduces exactly what is on screen.
 - **Reset** and **Hide**.
 
@@ -43,6 +44,9 @@ npm run build    # Tailwind CSS v4 + esbuild
 - `src/js/scale/scene.js`: design 03's 3D scene (three.js, bundled separately as `scale-scene.js`). Camera stops, card proportions and timings are constants at the top of the file; every colour is read from the page's CSS custom properties. The card is modelled on the company's own (cover flap with the logo, one collection circle, barcoded pocket) and drawn in code; the logo is inlined into the bundle so the scene also works from `file://`. Every card prints its own barcode and six-digit code (`SCM / 100001` on the card the camera follows, a generated one on each of the others); they are illustrative, not real sample codes.
 - `src/js/scale/india-cells.js`: India as a grid of cells, one card per cell, plus the four highlighted places.
 - `assets/img/scale-*.webp`: still images of design 03's camera stops. They replace the live scene for visitors without WebGL or who have asked for reduced motion. If the scene's look changes, capture them again.
+- `src/js/one-letter/scene.js`: design 04's 3D scene (three.js, bundled separately as `one-letter-scene.js`). The strand's proportions, the camera stops, the load animation and where the strand sits across the page's column are constants at the top of the file; colours and the typeface on the tiles are read from the page's CSS custom properties. Text and strand keep to the same centred column as the rest of the page, and on monitors wider than a laptop's the whole page scales up with the window (`html { font-size }` in `src/css/one-letter.css`).
+- `src/js/one-letter/sequence.js`: the letters on the strand. The stretch the camera stops at is the published reference transcript of the *HBB* gene (NCBI Reference Sequence NM_000518.5); the letters before and after it are filler from a fixed seed.
+- `assets/img/one-letter-*.webp`: still images of design 04's camera stops, used the same way as design 03's. The last stop has two, one for each position of the page's "Usually / In sickle cell disease" switch.
 
 ## Publish to GitHub Pages
 
@@ -65,5 +69,6 @@ All paths are relative, so the site works from a `/<repo>/` subpath. Publishing 
 - **Photos are representative.** They show the real places (Nandurbar, Kothagudem, Jharkhand) and a CSIR-CCMB bench, but none is Lightening Lives' own. Sources and licences are in `assets/img/CREDITS.md` and in each page's footer; swap in the client's field photos before launch.
 - **The card is drawn, not photographed.** All three designs show the company's real card: a cover flap, one dashed collection circle with a single dried blood spot, and a barcoded pocket. Photos of the real card are kept for reference in `content/assets/kit-reference-*.jpg`. They are internal: they show a handwritten name and a real sample code, and are not part of the published site. The copy still says "a few drops of blood on a card" and "dried blood spot", because the brief rules out "one drop" and "single drop".
 - **Partner names are typeset, not logos.** The brief rules out using the ICMR or CSIR-CCMB logos without permission.
-- **News items are evergreen facts from the brief** (ICMR validation, the CSIR-CCMB MOU, the national mission), not dated news. Replace them as real coverage arrives. Design 03 has no news section; add one when there is news to show.
+- **News items are evergreen facts from the brief** (ICMR validation, the CSIR-CCMB MOU, the national mission), not dated news. Replace them as real coverage arrives. Designs 03 and 04 have no news section; add one when there is news to show.
+- **Design 04's science is textbook background, not from the brief.** It says that human DNA runs to about three billion letters, that *HBB* is the gene for the beta chain of haemoglobin, and that in sickle cell disease one A in it is a T, so the codon GAG (glutamic acid) reads GTG (valine). It uses "read" as plain language for what a genetic test does, and does not say how LitLife™-SCA works or whether it tells carriers from disease. Have the scientific team check this wording before launch.
 - **Claims the brief asks to confirm before publishing**: LitLife™-SCA as ™ or ®; "tests" versus "kits"; what the thalassaemia, DMD and coagulation tests detect; and that "no large equipment or specialised laboratory" matches each test's instructions for use.

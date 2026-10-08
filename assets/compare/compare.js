@@ -3,7 +3,7 @@
  * Each design page loads this with one <script> tag in its <head>. At launch, delete that
  * tag from the chosen design and remove this folder; nothing else depends on it.
  *
- * The bar lets a reviewer switch between the two designs and try a small set of type and
+ * The bar lets a reviewer switch between the designs and try a small set of type and
  * colour variations. Every variation works by overriding the design's own CSS custom
  * properties on <html>. "As designed" sets nothing at all.
  *
@@ -149,6 +149,49 @@
         options: [
           { id: 'designed', label: 'Deep green (as designed)', swatch: '#13301D' },
           { id: 'leaf', label: 'Leaf green', swatch: '#1F5E2E', vars: { '--canopy': '#1F5E2E', '--moss': '#3F6A48' } },
+        ],
+      },
+    ],
+  };
+
+  // 04 · One Letter gives the four letters of DNA the logo's four colours, so its variations change
+  // the page around the strand and leave that colour code alone.
+  DESIGNS['one-letter'] = {
+    label: '04 · One Letter (3D)',
+    file: 'one-letter.html',
+    controls: [
+      {
+        key: 'type',
+        label: 'Typography',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Literata + Hind (as designed)' },
+          { id: 'sans', label: 'Hind throughout', vars: { '--ff-display': '"Hind"', '--display-weight': '600', '--display-tracking': '-0.022em' } },
+          {
+            id: 'sample-card',
+            label: 'Familjen Grotesk (from Sample Card)',
+            fonts: FONTS_SAMPLE_CARD,
+            vars: { '--ff-display': '"Familjen Grotesk"', '--ff-body': '"Familjen Grotesk"', '--display-weight': '600', '--display-tracking': '-0.022em' },
+          },
+        ],
+      },
+      {
+        key: 'bg',
+        label: 'Background',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'White (as designed)', swatch: '#FFFFFF' },
+          { id: 'sun', label: 'Pale sun', swatch: '#FFFBE8', vars: { '--ground': '#FFFBE8', '--wash': '#FBF3CF', '--sunwash': '#FFEFA8', '--rail': '#D8CFA6' } },
+          { id: 'leaf', label: 'Pale leaf', swatch: '#F5F9EC', vars: { '--ground': '#F5F9EC', '--wash': '#E9F1DA', '--rail': '#BFCDB0' } },
+        ],
+      },
+      {
+        key: 'accent',
+        label: 'Ink',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Deep green (as designed)', swatch: '#1B2A21' },
+          { id: 'maroon', label: 'Maroon, from the logo', swatch: '#5C0F14', vars: { '--ink': '#5C0F14', '--soft': '#6E4A43' } },
         ],
       },
     ],

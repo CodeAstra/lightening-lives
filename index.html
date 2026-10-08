@@ -13,7 +13,7 @@
     var target = 'sample-card.html';
     try {
       var last = window.localStorage.getItem('ll-compare/last');
-      if (last === 'daylight' || last === 'scale') target = last + '.html';
+      if (last === 'daylight' || last === 'scale' || last === 'one-letter') target = last + '.html';
     } catch (error) { /* storage unavailable: keep the default */ }
     window.location.replace(target);
   })();
@@ -32,6 +32,7 @@
     <li><a href="sample-card.html">01 · Sample Card</a></li>
     <li><a href="daylight.html">02 · Daylight</a></li>
     <li><a href="scale.html">03 · Scale (3D)</a></li>
+    <li><a href="one-letter.html">04 · One Letter (3D)</a></li>
   </ul>
 </body>
 </html>
