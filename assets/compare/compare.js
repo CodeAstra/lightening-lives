@@ -7,7 +7,9 @@
  * colour variations. Every variation works by overriding the design's own CSS custom
  * properties on <html>. "As designed" sets nothing at all.
  *
- * Choices are remembered per design (localStorage) and mirrored in the URL so a link can be shared.
+ * Choosing a design from the switch always opens it as designed. Variations made after that are
+ * mirrored in the URL, so a reload keeps them and a link can be shared, but they are not carried
+ * to another design or remembered for the next visit.
  */
 (function () {
   'use strict';
@@ -200,16 +202,14 @@
   var config = DESIGNS[designId];
   if (!config) return;
 
-  // ---- State: defaults <- saved choices <- URL ----------------------------------------
+  // ---- State: the design's own defaults, unless the URL asks for a variation ----------
   var STORE = 'll-compare/';
   var storage = {
-    get: function (key) { try { return window.localStorage.getItem(STORE + key); } catch (error) { return null; } },
     set: function (key, value) { try { window.localStorage.setItem(STORE + key, value); } catch (error) { /* private mode or file:// */ } },
+    remove: function (key) { try { window.localStorage.removeItem(STORE + key); } catch (error) { /* private mode or file:// */ } },
   };
 
   var state = {};
-  var saved = {};
-  try { saved = JSON.parse(storage.get(designId) || '{}') || {}; } catch (error) { saved = {}; }
   var params = new URLSearchParams(window.location.search);
 
   function findOption(control, id) {
@@ -217,11 +217,12 @@
     return null;
   }
   config.controls.forEach(function (control) {
-    var fromUrl = findOption(control, params.get(control.key));
-    var fromStore = findOption(control, saved[control.key]);
-    state[control.key] = (fromUrl || fromStore || control.options[0]).id;
+    state[control.key] = (findOption(control, params.get(control.key)) || control.options[0]).id;
   });
+  // The index page reopens whichever design was viewed last.
   storage.set('last', designId);
+  // Earlier builds remembered each design's variations here; clear what they left behind.
+  Object.keys(DESIGNS).forEach(storage.remove);
 
   // ---- Applying a set of choices ------------------------------------------------------
   var applied = [];
@@ -255,7 +256,6 @@
   }
 
   function persist() {
-    storage.set(designId, JSON.stringify(state));
     var next = new URLSearchParams();
     config.controls.forEach(function (control) {
       if (state[control.key] !== control.options[0].id) next.set(control.key, state[control.key]);
@@ -266,7 +266,7 @@
     } catch (error) { /* file:// in some browsers */ }
   }
 
-  // Apply before first paint so a saved variation never flashes the default.
+  // Apply before first paint so a variation asked for in the URL never flashes the default.
   apply();
 
   // ---- The bar ------------------------------------------------------------------------
@@ -345,6 +345,7 @@
       if (id === designId) option.selected = true;
       designSelect.appendChild(option);
     });
+    // No variations are passed along: the chosen design opens with its own type and colours.
     designSelect.addEventListener('change', function () {
       window.location.href = DESIGNS[designSelect.value].file;
     });
@@ -445,6 +446,14 @@
       apply();
       persist();
     }
+
+    // The Back button can bring this page back exactly as it was left, with the design switch
+    // still showing the design that was chosen from it. Set the controls to what the page shows.
+    window.addEventListener('pageshow', function () {
+      designSelect.value = designId;
+      Object.keys(inputs).forEach(function (key) { inputs[key](); });
+      storage.set('last', designId);
+    });
 
     document.body.insertBefore(host, document.body.firstChild);
     var startHidden = false;

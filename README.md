@@ -23,9 +23,9 @@ npm run dev      # http://localhost:4173
 
 The dark bar above each page comes from `assets/compare/compare.js`. It offers:
 
-- **Design**: switch between the four pages.
+- **Design**: switch between the four pages. A design chosen here always opens as designed, with its own typography, background and ink selected in the controls; variations tried on one design are not carried to another.
 - **Typography, Background, Accent**: the first option is always the design as drawn. For designs 01 and 02 the others are the other direction's typefaces and colours, plus two tones taken from the logo and the Daylight palette. Design 03 offers a regular-width cut of its typeface, a pale yellow or green-white background, and a lighter green ink. Design 04 offers sans-serif headings, a pale sun or pale leaf background, and maroon ink; the colours of the four DNA letters stay as they are, because they carry meaning.
-- **Copy link**: every choice is mirrored in the URL, so a link reproduces exactly what is on screen.
+- **Copy link**: every choice is mirrored in the URL, so a link reproduces exactly what is on screen and a reload keeps it. Variations are not remembered between visits: opening a design without them in the link shows it as designed.
 - **Reset** and **Hide**.
 
 Variations only override the page's CSS custom properties; "as designed" sets nothing.
