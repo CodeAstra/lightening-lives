@@ -6,9 +6,10 @@
 // off the disc on brass pins. Each part throws its shadow on the ones behind it and on the wall.
 //
 // On arrival the parts lie flat against the wall and lift forward one after another, and the
-// leaves unfold. As the reader scrolls, the camera closes on the five leaves, one for each group
-// of conditions the company tests for, and then on the figure at the centre. The light follows
-// the pointer, so the shadows move with it.
+// leaves unfold. As the reader scrolls, the camera closes on the five leaves, one for each test
+// the company has developed so far, and a sixth, new leaf opens beside them: the place for the
+// next condition a programme needs. Then the camera closes on the figure at the centre. The light
+// follows the pointer, so the shadows move with it.
 //
 // Every colour is read from the page's CSS custom properties, so the comparison toolbar's
 // variations reach the scene too.
@@ -40,6 +41,10 @@ const LEAVES = [
   { base: [0.33, 0.46], angle: 36, length: 0.97, width: 0.52, at: 0.4, lean: 11 },
   { base: [0.72, 0.22], angle: 54, length: 0.98, width: 0.56, at: 0.28, lean: 8 },
 ];
+// The new leaf: smaller, paler, only part unfolded. It is not part
+// of the logo, so it is not there on arrival; it grows from the right arm when the camera comes to
+// the leaves.
+const BUD = { base: [0.5, -0.03], angle: 101, length: 0.78, width: 0.44, at: 0.38, lean: 13, fold: 32 };
 // A leaf is folded along its midrib. The angle is how far each half is turned up from flat.
 const FOLD = { closed: 84, rest: 21, shown: 13 };
 const PIN = 0.012; // radius of the brass pins the leaves are mounted on
@@ -311,10 +316,12 @@ function init(root) {
   const raysCanvas = canvasOf(FACE);
   const figureCanvas = canvasOf(FACE);
   const leafCanvas = canvasOf(FACE);
+  const budCanvas = canvasOf(FACE);
   const discFace = card({ map: texture(discCanvas), bumpMap: tooth });
   const raysFace = card({ map: texture(raysCanvas), bumpMap: tooth });
   const figureFace = card({ map: texture(figureCanvas), bumpMap: tooth });
   const leafFace = card({ map: texture(leafCanvas), bumpMap: veins, side: DoubleSide });
+  const budFace = card({ map: texture(budCanvas), bumpMap: veins, side: DoubleSide });
   const core = card({ color: CORE });
   const brass = new MeshStandardMaterial({ metalness: 1, roughness: 0.3 });
 
@@ -381,6 +388,26 @@ function init(root) {
     parts.push({ object: holder, at: spec.at / TREE.scale, flat: (WALL + 0.012 + CARD * 3 + k * 0.004) / TREE.scale, from: INTRO.leaves + k * INTRO.apart, leaf });
     return leaf;
   });
+
+  // The new leaf, made the same way.
+  const bud = (() => {
+    const holder = new Group();
+    holder.rotation.order = 'ZXY';
+    holder.rotation.z = -BUD.angle * DEG;
+    holder.position.set(BUD.base[0], BUD.base[1], BUD.at / TREE.scale);
+    const halves = [-1, 1].map((side) => {
+      const half = new Mesh(leafHalf(side, BUD.length, BUD.width), budFace);
+      half.castShadow = true;
+      holder.add(half);
+      return half;
+    });
+    const tip = new Object3D();
+    tip.position.set(0, BUD.length + 0.04, 0);
+    holder.add(tip);
+    holder.visible = false;
+    tree.add(holder);
+    return { holder, halves, tip };
+  })();
 
   // --- The wall: it shows nothing but the shadows that fall on it ---
   const wall = new Mesh(new PlaneGeometry(60, 40), new ShadowMaterial({ opacity: 0.13 }));
@@ -480,7 +507,8 @@ function init(root) {
     drawRays(raysCanvas, read('--ray'), read('--sun'), outline);
     cardStock(figureCanvas.getContext('2d'), read('--figure'), 41, 0.3); // dark card shows its fibres less
     drawLeaf(leafCanvas, read('--leaf'), read('--vein'), 23);
-    [discFace, raysFace, figureFace, leafFace].forEach((material) => { material.map.needsUpdate = true; });
+    drawLeaf(budCanvas, read('--bud'), read('--leaf'), 67);
+    [discFace, raysFace, figureFace, leafFace, budFace].forEach((material) => { material.map.needsUpdate = true; });
     brass.color.set(read('--wire'));
     wall.material.color.set(read('--shadow'));
   }
@@ -529,6 +557,15 @@ function init(root) {
       leaf.pin.position.z = back + length / 2;
       leaf.pin.visible = lifted > 0.3;
     });
+    // The new leaf grows when the camera comes to the leaves, and stays.
+    const grown = smoother(clamp((progress - 0.55) / 0.4, 0, 1)) * smoother(clamp((built - INTRO.leaves) / INTRO.lift, 0, 1));
+    bud.holder.visible = grown > 0.01;
+    bud.holder.scale.setScalar(Math.max(0.001, grown));
+    const quiver = Math.sin(clock * 0.9 + 4);
+    const budFold = (lerp(FOLD.closed, BUD.fold, grown) + quiver * 2) * DEG;
+    bud.halves[0].rotation.y = budFold;
+    bud.halves[1].rotation.y = -budFold;
+    bud.holder.rotation.x = (BUD.lean + quiver) * DEG;
     emblem.rotation.y = twist;
   }
 
@@ -584,7 +621,7 @@ function init(root) {
     camera.updateMatrixWorld();
     pins.forEach((pin) => {
       pin.el.style.opacity = String(naming);
-      const leaf = leaves[pin.leaf];
+      const leaf = pin.el.dataset.pin === 'bud' ? bud : leaves[pin.leaf];
       if (naming < 0.01 || !leaf) return;
       leaf.tip.getWorldPosition(point).project(camera);
       pin.el.style.transform = `translate(${((point.x * 0.5 + 0.5) * view.width).toFixed(1)}px, ${((-point.y * 0.5 + 0.5) * view.height).toFixed(1)}px)`;

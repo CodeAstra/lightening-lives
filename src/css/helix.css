@@ -377,6 +377,9 @@
   .five { display: flex; flex-wrap: wrap; gap: 0.4rem 0.45rem; max-width: 33rem; margin-top: 1.25rem; }
   .five li { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2rem; padding: 0 0.7rem 0 0.55rem; border: 1px solid var(--rule); border-radius: 2px; background: var(--panel); font-size: 0.9375rem; font-weight: 500; line-height: 1.25; }
   .five li::before { content: ""; flex: none; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--amber); }
+  /* The open place: a dashed outline, and the sun's yellow where the others are amber. */
+  .five li.open { border-style: dashed; border-color: var(--ink); background: none; }
+  .five li.open::before { background: var(--sun); box-shadow: 0 0 0 1px var(--ink); }
   @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
     html.story-live .five { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   }
@@ -460,6 +463,8 @@
     border: 1px solid var(--ink);
     border-radius: 2px;
   }
+  .pins .pin-open::after { background: var(--sun); box-shadow: 0 0 0 1px var(--ink); }
+  .pins .pin-open b { border-style: dashed; background: var(--ground); }
 
   /* ---------- How it works: five words, and what stands behind each ---------- */
   .words > div { display: grid; gap: 0.4rem 4rem; align-items: baseline; padding: 1.35rem 0 1.45rem; border-bottom: 1px solid var(--line); }
@@ -485,7 +490,9 @@
     .range-row { align-items: start; }
     .tags { justify-content: flex-start; }
   }
-  .range-more { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 1rem; margin-top: 1.5rem; color: var(--soft); }
+  /* The place for the next test: an outlined row under the table. */
+  .range-open { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2.5rem; margin-top: 1.75rem; padding: 1.4rem 1.6rem; border: 1px dashed var(--ink); border-radius: 2px; }
+  .range-open p { margin-top: 0.4rem; max-width: 40rem; color: var(--soft); }
 
   /* ---------- REASSURED: nine criteria on a three-by-three plate ---------- */
   .plate { display: grid; border-left: 1px solid var(--line); }

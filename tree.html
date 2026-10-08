@@ -106,7 +106,7 @@
 <main id="main">
 
   <!-- The story: the emblem, its five leaves, the person at its centre -->
-  <section class="story" data-story aria-label="What Lightening Lives stands for: genetic tests for five groups of inherited conditions, reaching people through institutions">
+  <section class="story" data-story aria-label="What Lightening Lives stands for: genetic tests for any inherited condition a programme needs, reaching people through institutions">
     <div class="stage" data-stage>
       <div class="stage-scene" data-scene></div>
       <div class="stage-veil"></div>
@@ -117,10 +117,11 @@
         <li data-pin="2"><b>Spinal muscular atrophy</b></li>
         <li data-pin="3"><b>Duchenne muscular dystrophy</b></li>
         <li data-pin="4"><b>Blood coagulation disorders</b></li>
+        <li data-pin="bud" class="pin-open"><b>Any other, on request</b></li>
       </ol>
       <nav class="trail" data-trail aria-label="Which part of the emblem is in view">
         <a href="#top" aria-current="step"><span>The emblem</span></a>
-        <a href="#leaves"><span>Five leaves</span></a>
+        <a href="#leaves"><span>The leaves</span></a>
         <a href="#person"><span>At the centre</span></a>
       </nav>
     </div>
@@ -145,21 +146,22 @@
 
       <div class="step" data-step id="leaves">
         <div class="step-text">
-          <span class="label">Five leaves</span>
-          <h2 class="h2">Tests for five groups of inherited conditions, so far.</h2>
-          <p class="lead mt-5">Each was developed for use in national health programmes. This is our current range, not its limit: we can develop tests for other genetic conditions too.</p>
+          <span class="label">The leaves</span>
+          <h2 class="h2">A genetic test for any inherited condition you need to screen for.</h2>
+          <p class="lead mt-5">Each of our tests began with a programme that needed one. There are five so far, and the next can be yours.</p>
           <ul class="five">
             <li><svg class="leaf-ic" aria-hidden="true"><use href="#leaf"/></svg>Sickle cell anaemia</li>
             <li><svg class="leaf-ic" aria-hidden="true"><use href="#leaf"/></svg>Thalassaemia</li>
             <li><svg class="leaf-ic" aria-hidden="true"><use href="#leaf"/></svg>Spinal muscular atrophy</li>
             <li><svg class="leaf-ic" aria-hidden="true"><use href="#leaf"/></svg>Duchenne muscular dystrophy</li>
             <li><svg class="leaf-ic" aria-hidden="true"><use href="#leaf"/></svg>Blood coagulation disorders</li>
+            <li class="open"><svg class="leaf-ic" aria-hidden="true"><use href="#leaf"/></svg>Any other, on request</li>
           </ul>
-          <a class="link mt-3" href="#tests">See the tests
+          <a class="link mt-3" href="#tests">See the tests so far
             <svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>
           </a>
         </div>
-        <img class="step-art" src="assets/img/tree-leaves.webp" width="1000" height="1000" alt="A closer view of the five folded paper leaves above the figure's raised arms, one for each group of conditions." loading="lazy" decoding="async">
+        <img class="step-art" src="assets/img/tree-leaves.webp" width="1000" height="1000" alt="A closer view of the five folded paper leaves above the figure's raised arms, one for each test developed so far, with a small new leaf opening beside them for the next." loading="lazy" decoding="async">
       </div>
 
       <div class="step" data-step id="person">
@@ -205,8 +207,8 @@
   <section id="tests" class="section bg-wash" aria-labelledby="tests-h">
     <div class="wrap">
       <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
-        <h2 id="tests-h" class="h2 lg:col-span-7">The tests we have developed so far.</h2>
-        <p class="lead lg:col-span-5">Five groups of inherited conditions, each developed for use in national health programmes.</p>
+        <h2 id="tests-h" class="h2 lg:col-span-7">We develop the test your programme needs.</h2>
+        <p class="lead lg:col-span-5">For any inherited condition. These five are the tests we have developed so far, each for a programme that asked for one.</p>
       </div>
 
       <ul class="grove mt-12">
@@ -242,11 +244,10 @@
           <p>In bleeding disorders such as haemophilia, genetic testing confirms the diagnosis, identifies carriers and supports family counselling and care planning.</p>
         </li>
         <li class="next">
-          <h3 class="h3">Another condition?</h3>
-          <p>We can develop tests for other genetic conditions too.</p>
-          <a class="link" href="#contact">Tell us what your programme needs
-            <svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>
-          </a>
+          <svg class="leaf-ic" aria-hidden="true"><use href="#leaf"/></svg>
+          <h3 class="h3">The condition you need next</h3>
+          <p>Tell us what your programme needs to screen for. We develop the test, to the same REASSURED standard as these five.</p>
+          <a class="btn btn-act" href="#contact">Tell us what you need</a>
         </li>
       </ul>
     </div>

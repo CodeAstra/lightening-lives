@@ -5,8 +5,9 @@
 // of a spiral stair, two to a step, between two wire rails.
 // The page opens looking along the strand as it writes itself into the distance. As the reader
 // scrolls, the camera travels forward to a stretch where five tiles turn over to sun yellow, one
-// for each group of inherited conditions the company tests for, each with the logo's sun rising
-// behind it; then it closes on the first of them.
+// for each test the company has developed so far, each with the logo's sun rising behind it. The
+// nearest tile of all turns over blank, with only the outline of a sun: the place kept open for
+// the next condition a programme needs. Then the camera closes on the first of the five.
 //
 // The four letters take the four colours of the company's logo, and sun yellow is kept for the
 // tiles a test has found. Every colour and the typeface are read from the page's CSS custom
@@ -49,9 +50,11 @@ const STRAND = (() => {
   }
   return letters;
 })();
-// The tiles the story lights up, one for each group of conditions the company tests for. They are
-// two full turns of the strand apart, so all five face the same way and can be seen together.
-const MARKS = [300, 321, 342, 363, 384];
+// The tiles the story lights up, one for each test developed so far, and before them, nearest the
+// camera, the one kept open for the next. They are two full turns of the strand apart, so all six
+// face the same way and can be seen together.
+const OPEN = 300;
+const MARKS = [321, 342, 363, 384, 405];
 // Set by hand: how far a tile may sit off true, in radians of pitch and lean and in length along the strand.
 const LOOSE = { pitch: 0.085, lean: 0.06, slip: 0.018 };
 
@@ -72,19 +75,20 @@ const SHADOW = { half: 14, ahead: 7, size: 2048 }; // the lit volume travels wit
 // read away into the distance. `at` is the letter looked at, `along` the angle between the line of
 // sight and the strand, and `around` where the camera sits round it: 90 is directly above, more
 // leans the far end of the strand to the left. `fog` is how far beyond the subject tiles start to
-// fade into the page, and where they are gone.
+// fade into the page, and where they are gone. A stop may bring its own lens (`fov`): the second
+// uses a longer one from further back, which keeps the six marked tiles evenly spaced up the view.
 // On a narrow screen the strand sits above the text, not beside it, so each stop has its own
 // framing there: `across` and `lift` are where the letter looked at sits, as shares of the view's
 // width from the left and of its height above centre.
 const STOPS = [
   { at: 58, dist: 10.6, along: 34, around: 113, fog: [8, 42], narrow: { dist: 15.5, across: 0.5, lift: 0.25 } },
-  { at: MARKS[0] + 12, dist: 13.5, along: 20, around: 100, fog: [18, 80], narrow: { at: MARKS[0] + 26, dist: 34, across: 0.3, lift: 0.215 } },
+  { at: OPEN + 20, dist: 26, along: 22, around: 100, fog: [26, 100], lift: -0.13, fov: 20, narrow: { at: OPEN + 34, dist: 40, across: 0.3, lift: 0.2, fov: FOV } },
   { at: MARKS[0], dist: 6.6, along: 46, around: 95, fog: [5, 30], narrow: { dist: 9, across: 0.46, lift: 0.21 } },
 ];
 // When, in the story's progress from stop to stop, the strand settles with the marked tiles on top
 // and the tiles turn over: the first at `from`, each of the others `apart` later.
 const LOCK = { from: 0.4, over: 0.45 };
-const TURN = { from: 0.62, apart: 0.075 };
+const TURN = { from: 0.6, apart: 0.065 };
 // Page load: how far past the first stop the strand is written out, and how long that takes.
 const INTRO = { reach: 47, seconds: 1.9, wait: 0.55 };
 // Where the subject sits beside the text: a share of the way across the page's own column, not
@@ -251,11 +255,11 @@ function texture(canvas, colour = true) {
   return map;
 }
 
-function sunShape() {
+function sunShape(scale = 1) {
   const shape = new Shape();
   for (let i = 0; i < SUN.rays * 2; i += 1) {
     const angle = (i / (SUN.rays * 2)) * Math.PI * 2;
-    const reach = i % 2 === 0 ? SUN.outer : SUN.inner;
+    const reach = (i % 2 === 0 ? SUN.outer : SUN.inner) * scale;
     if (i === 0) shape.moveTo(Math.cos(angle) * reach, Math.sin(angle) * reach);
     else shape.lineTo(Math.cos(angle) * reach, Math.sin(angle) * reach);
   }
@@ -317,7 +321,7 @@ function init(root) {
   const laid = { A: [], T: [], G: [], C: [] };
   for (let index = 0; index < STRAND.length; index += 1) {
     // The marked tiles are built separately, so they can turn over.
-    if (!MARKS.includes(index)) laid[STRAND[index]].push({ index, turn: 0 });
+    if (index !== OPEN && !MARKS.includes(index)) laid[STRAND[index]].push({ index, turn: 0 });
     laid[PAIR[STRAND[index]]].push({ index, turn: Math.PI });
   }
   const rand = random(404);
@@ -375,20 +379,26 @@ function init(root) {
   const sunCanvas = canvasOf(FACE.w, FACE.w);
   const sunMaterial = card({ map: texture(sunCanvas) });
   const sunGeometry = new ExtrudeGeometry(sunShape(), { depth: SUN.thick, bevelEnabled: false }).rotateY(Math.PI / 2);
+  // The open place has the sun's outline only: the same cut-out with its middle taken away.
+  const outlineShape = sunShape();
+  outlineShape.holes.push(sunShape(0.8));
+  const outlineGeometry = new ExtrudeGeometry(outlineShape, { depth: SUN.thick, bevelEnabled: false }).rotateY(Math.PI / 2);
   const letterHeight = LENGTH / 2 - LENGTH * LETTER_AT;
-  const sites = MARKS.map((index) => {
+  // The five turn over first, in order, and the open place last.
+  const sites = [...MARKS, OPEN].map((index, order) => {
+    const open = index === OPEN;
     const letter = STRAND[index];
     const holder = new Group();
     place(holder, index, 0);
     const foundCanvas = canvasOf(FACE.w, FACE.h);
     const edgeCanvas = canvasOf(32, 4);
-    const found = card({ map: texture(foundCanvas), bumpMap: base[letter].relief });
+    const found = card({ map: texture(foundCanvas), bumpMap: open ? null : base[letter].relief });
     const shown = card({ map: base[letter].map, bumpMap: base[letter].relief });
     const side = card({ map: texture(edgeCanvas) });
     const tile = new Mesh(tileGeometry, faces(found, shown, side));
     tile.castShadow = true;
     tile.receiveShadow = true;
-    const sun = new Mesh(sunGeometry, sunMaterial);
+    const sun = new Mesh(open ? outlineGeometry : sunGeometry, sunMaterial);
     sun.position.set(TILE.thick * 0.5 + 0.012 + SUN.thick, letterHeight, 0);
     sun.castShadow = true;
     sun.receiveShadow = true;
@@ -397,7 +407,7 @@ function init(root) {
     anchor.position.set(0, letterHeight, 0);
     holder.add(tile, sun, anchor);
     marked.add(holder);
-    return { letter, holder, tile, sun, anchor, foundCanvas, edgeCanvas, found, side, turned: 0, speed: 0 };
+    return { key: open ? 'open' : String(order), open, order, letter, holder, tile, sun, anchor, foundCanvas, edgeCanvas, found, side, turned: 0, speed: 0 };
   });
 
   // --- Light ---
@@ -518,9 +528,11 @@ function init(root) {
       tile.edge.needsUpdate = true;
     });
     // The tiles that turn over are faced with sun-yellow card on their other side.
+    // The open place is plain white card on its other side: nothing printed on it yet.
     sites.forEach((site, k) => {
-      drawFace(site.foundCanvas, site.letter, theme.sun, base[site.letter].ink, theme.family, 211 + k);
-      drawEdge(site.edgeCanvas, base[site.letter].fill, theme.sun);
+      if (site.open) cardStock(site.foundCanvas.getContext('2d'), '#FFFFFF', 233);
+      else drawFace(site.foundCanvas, site.letter, theme.sun, base[site.letter].ink, theme.family, 211 + k);
+      drawEdge(site.edgeCanvas, base[site.letter].fill, site.open ? '#FFFFFF' : theme.sun);
       site.found.map.needsUpdate = true;
       site.side.map.needsUpdate = true;
     });
@@ -580,10 +592,11 @@ function init(root) {
     );
     camera.position.copy(eye);
     camera.lookAt(focus);
+    camera.fov = lerp(from.fov ?? FOV, to.fov ?? FOV, t);
     camera.near = clamp(distance * 0.1, 0.1, 5);
     camera.far = distance + 140;
     const shiftX = narrow ? lerp(from.across, to.across, t) - 0.5 : view.shiftX;
-    const lift = narrow ? lerp(from.lift, to.lift, t) : WIDE.lift;
+    const lift = lerp(from.lift ?? WIDE.lift, to.lift ?? WIDE.lift, t);
     camera.setViewOffset(view.width, view.height, -shiftX * view.width, lift * view.height, view.width, view.height);
 
     scene.fog.near = distance + lerp(from.fog[0], to.fog[0], t);
@@ -623,10 +636,10 @@ function init(root) {
       // Each marked tile is named once it has turned over. Closing on the first, the others' names go.
       camera.updateMatrixWorld();
       const closing = 1 - smooth(clamp((progress - 1.2) / 0.3, 0, 1));
-      sites.forEach((site, k) => {
-        const label = pins.get(String(k));
+      sites.forEach((site) => {
+        const label = pins.get(site.key);
         if (!label) return;
-        const shown = smooth(clamp(site.turned * 2 - 1, 0, 1)) * (k === 0 ? 1 : closing);
+        const shown = smooth(clamp(site.turned * 2 - 1, 0, 1)) * (site.order === 0 ? 1 : closing);
         label.style.opacity = String(shown);
         if (shown < 0.01) return;
         site.anchor.getWorldPosition(point);
@@ -686,8 +699,8 @@ function init(root) {
     // The marked tiles turn over one after another as the camera arrives, each on a spring of its
     // own, and turn back if the reader scrolls back up.
     const turnStiffness = 40;
-    sites.forEach((site, k) => {
-      const want = progress > TURN.from + k * TURN.apart ? 1 : 0;
+    sites.forEach((site) => {
+      const want = progress > TURN.from + site.order * TURN.apart ? 1 : 0;
       site.speed += (turnStiffness * (want - site.turned) - 2 * Math.sqrt(turnStiffness) * site.speed) * dt;
       site.turned += site.speed * dt;
       if (Math.abs(want - site.turned) < 0.0005 && Math.abs(site.speed) < 0.003) {
@@ -845,7 +858,7 @@ function init(root) {
   readScroll();
   progress = target;
   // Arriving part-way down the story: the tiles up to there have already turned.
-  sites.forEach((site, k) => { site.turned = progress > TURN.from + k * TURN.apart ? 1 : 0; });
+  sites.forEach((site) => { site.turned = progress > TURN.from + site.order * TURN.apart ? 1 : 0; });
   live = true;
   introStart = performance.now() + INTRO.wait * 1000;
   // Arriving part-way down the story (a reload, a shared link): the strand is already written.

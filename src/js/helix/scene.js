@@ -43,8 +43,11 @@ const BASE = {
   plinth: { radius: 1.36, height: 0.2 },
   disc: { radius: 1.28, height: 0.045 }, // the sun: yellow enamel set into the plinth
 };
-// The rungs that light up at the third stop, one for each group of conditions, bottom to top.
+// The rungs that light up at the third stop, one for each test developed so far, bottom to top.
 const MARKS = [3, 7, 11, 15, 19];
+// And the rung above them that is kept open for the next condition a programme needs. It waits in
+// the sun's own yellow, not amber, and its light rises and falls a little.
+const OPEN = 23;
 
 // Light, as for an instrument in a display case: a key light from the front right and above, the
 // room's own soft light, and a cool light from behind for the edges of the glass. At the last
@@ -358,6 +361,7 @@ function init(root) {
   // --- Theme: every colour comes from the page's CSS custom properties ---
   const clear = new Color();
   const amber = new Color();
+  const waitingTint = new Color();
   function applyTheme() {
     const style = getComputedStyle(document.documentElement);
     const read = (name) => style.getPropertyValue(name).trim();
@@ -368,6 +372,7 @@ function init(root) {
     enamel.color.set(read('--sun')).multiplyScalar(0.62); // enamel in full light comes out at about the page's own yellow
     clear.set(read('--glass'));
     amber.set(read('--amber'));
+    waitingTint.set(read('--sun'));
     floor.material.color.set(read('--shadow'));
     lit.fill(-1); // the glass is tinted again on the next frame
   }
@@ -378,6 +383,7 @@ function init(root) {
   const drag = { on: false, id: 0, x: 0, speed: 0 };
   const lit = new Float32Array(RUNGS).fill(-1); // how far each rung's glass has turned amber, as last drawn
   const glow = new Float32Array(RUNGS); // and as it is now
+  let open = 0; // how far the open rung has come on
   const tint = new Color();
   setGlass(fine);
   let live = false; // is the stage on screen
@@ -437,14 +443,18 @@ function init(root) {
     let tinted = false;
     for (let i = 0; i < RUNGS; i += 1) {
       const order = MARKS.indexOf(i);
-      const marked = order < 0 ? 0 : smooth(clamp((progress - 1.5 - order * 0.07) / 0.22, 0, 1));
+      const marked = order < 0 ? 0 : smooth(clamp((progress - 1.5 - order * 0.055) / 0.22, 0, 1));
       const all = smooth(clamp((progress - 2.3 - (i / RUNGS) * 0.42) / 0.2, 0, 1));
       glow[i] = Math.max(marked, all);
-      if (Math.abs(glow[i] - lit[i]) < 0.002) continue;
+      // The open rung comes on after the five, and gives way when all the rungs light.
+      const waiting = i === OPEN ? smooth(clamp((progress - 1.5 - MARKS.length * 0.055) / 0.22, 0, 1)) * (1 - all) : 0;
+      if (i === OPEN) open = waiting;
+      const breath = waiting * (0.66 + 0.26 * Math.sin(performance.now() * 0.0024));
+      if (Math.abs(glow[i] - lit[i]) < 0.002 && waiting < 0.002 && i !== OPEN) continue;
       lit[i] = glow[i];
       // Without refraction a pale rod would only be a white veil, so unlit glass is drawn smoky
       // and takes its look from the room's reflections.
-      tint.copy(clear).multiplyScalar(refracts ? 1 : 0.5).lerp(amber, glow[i]);
+      tint.copy(clear).multiplyScalar(refracts ? 1 : 0.5).lerp(waitingTint, breath).lerp(amber, glow[i]);
       glassPieces.setColorAt(i * 2, tint);
       glassPieces.setColorAt(i * 2 + 1, tint);
       tinted = true;
@@ -474,9 +484,10 @@ function init(root) {
         const centre = point.set(0, focus.y, 0).project(camera).x;
         pinList.style.setProperty('--lead', `${(((edge - centre) * 0.5) * view.width).toFixed(1)}px`);
         pins.forEach((pin, k) => {
-          point.set(0, FOOT + MARKS[k] * RISE, 0).project(camera);
+          const rung = k < MARKS.length ? MARKS[k] : OPEN;
+          point.set(0, FOOT + rung * RISE, 0).project(camera);
           pin.style.transform = `translate(${((point.x * 0.5 + 0.5) * view.width).toFixed(1)}px, ${((-point.y * 0.5 + 0.5) * view.height).toFixed(1)}px)`;
-          pin.style.opacity = String(glow[MARKS[k]]);
+          pin.style.opacity = String(rung === OPEN ? open : glow[rung]);
         });
       }
     }
