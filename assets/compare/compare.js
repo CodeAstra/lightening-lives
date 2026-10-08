@@ -112,6 +112,48 @@
     },
   };
 
+  // 03 · Scale has its own palette and typeface, so its variations stay within green and yellow.
+  DESIGNS.scale = {
+    label: '03 · Scale (3D)',
+    file: 'scale.html',
+    controls: [
+      {
+        key: 'type',
+        label: 'Typography',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Anek Latin, wide (as designed)' },
+          { id: 'regular', label: 'Anek Latin, regular width', vars: { '--display-stretch': '100%', '--display-weight': '620' } },
+          {
+            id: 'sample-card',
+            label: 'Familjen Grotesk (from Sample Card)',
+            fonts: FONTS_SAMPLE_CARD,
+            vars: { '--ff-display': '"Familjen Grotesk"', '--ff-body': '"Familjen Grotesk"', '--display-stretch': '100%', '--display-weight': '600' },
+          },
+        ],
+      },
+      {
+        key: 'bg',
+        label: 'Background',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Pale green (as designed)', swatch: '#F1F6DD' },
+          { id: 'yellow', label: 'Pale yellow', swatch: '#FBF6D2', vars: { '--mist': '#FBF6D2', '--paper': '#FFFDF2', '--sprout': '#F1E7A6', '--meadow': '#C3D37C' } },
+          { id: 'white', label: 'Green-white', swatch: '#F8FAF0', vars: { '--mist': '#F8FAF0', '--paper': '#FFFFFF', '--sprout': '#E3EDC4' } },
+        ],
+      },
+      {
+        key: 'accent',
+        label: 'Ink',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Deep green (as designed)', swatch: '#13301D' },
+          { id: 'leaf', label: 'Leaf green', swatch: '#1F5E2E', vars: { '--canopy': '#1F5E2E', '--moss': '#3F6A48' } },
+        ],
+      },
+    ],
+  };
+
   var config = DESIGNS[designId];
   if (!config) return;
 

@@ -19,13 +19,15 @@ const only = process.argv.slice(2).filter((arg) => !arg.startsWith('--'));
 const wanted = (design) => only.length === 0 || only.includes(design);
 
 // One stylesheet per design, so each page ships only its own CSS.
-const styles = ['sample-card', 'daylight'].filter((name) => wanted(name) && existsSync(at(`src/css/${name}.css`)));
+const styles = ['sample-card', 'daylight', 'scale'].filter((name) => wanted(name) && existsSync(at(`src/css/${name}.css`)));
 
-// india-map is split out because it carries three.js; the page loads it after first paint.
+// india-map and scale-scene are split out because they carry three.js; their pages load them separately.
 const scripts = [
   { name: 'sample-card', design: 'sample-card', file: 'src/js/sample-card/main.js' },
   { name: 'india-map', design: 'sample-card', file: 'src/js/sample-card/india-map.js' },
   { name: 'daylight', design: 'daylight', file: 'src/js/daylight/main.js' },
+  { name: 'scale', design: 'scale', file: 'src/js/scale/main.js' },
+  { name: 'scale-scene', design: 'scale', file: 'src/js/scale/scene.js' },
 ];
 const entryPoints = Object.fromEntries(
   scripts.filter((s) => wanted(s.design) && existsSync(at(s.file))).map((s) => [s.name, at(s.file)]),
@@ -72,7 +74,7 @@ if (pages) {
   const dist = at('dist');
   rmSync(dist, { recursive: true, force: true });
   mkdirSync(dist);
-  for (const entry of ['index.html', 'sample-card.html', 'daylight.html', 'assets', '.nojekyll']) {
+  for (const entry of ['index.html', 'sample-card.html', 'daylight.html', 'scale.html', 'assets', '.nojekyll']) {
     cpSync(at(entry), path.join(dist, entry), { recursive: true });
   }
   console.log('\n  Site copied to dist/\n');

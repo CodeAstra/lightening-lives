@@ -12,7 +12,8 @@
   (function () {
     var target = 'sample-card.html';
     try {
-      if (window.localStorage.getItem('ll-compare/last') === 'daylight') target = 'daylight.html';
+      var last = window.localStorage.getItem('ll-compare/last');
+      if (last === 'daylight' || last === 'scale') target = last + '.html';
     } catch (error) { /* storage unavailable: keep the default */ }
     window.location.replace(target);
   })();
@@ -30,6 +31,7 @@
   <ul>
     <li><a href="sample-card.html">01 · Sample Card</a></li>
     <li><a href="daylight.html">02 · Daylight</a></li>
+    <li><a href="scale.html">03 · Scale (3D)</a></li>
   </ul>
 </body>
 </html>

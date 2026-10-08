@@ -261,7 +261,7 @@ function init(stage) {
 
   function frame(time) {
     frameId = requestAnimationFrame(frame);
-    const dt = Math.min(0.05, (time - lastTime) / 1000 || 0.016);
+    const dt = Math.min(0.05, Math.max(0.001, (time - lastTime) / 1000));
     lastTime = time;
     if (step(dt)) {
       idleFrames = 0;
