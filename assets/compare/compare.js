@@ -156,11 +156,11 @@
     ],
   };
 
-  // 04 · One Letter gives the four letters of DNA the logo's four colours, so its variations change
+  // 04 · Strand gives the four letters of DNA the logo's four colours, so its variations change
   // the page around the strand and leave that colour code alone.
-  DESIGNS['one-letter'] = {
-    label: '04 · One Letter (3D)',
-    file: 'one-letter.html',
+  DESIGNS.strand = {
+    label: '04 · Strand (3D)',
+    file: 'strand.html',
     controls: [
       {
         key: 'type',
