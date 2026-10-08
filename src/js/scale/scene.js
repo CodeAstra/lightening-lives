@@ -55,10 +55,13 @@ const OPEN = 106 * DEG; // how far the cover stands back when open
 const KEY = { from: new Vector3(-1.5, 2.7, 1.9), intensity: 1.75 };
 const SKY = Math.PI - KEY.intensity * (KEY.from.y / KEY.from.length());
 
-// Where the subject sits in the stage, as shares of its width and height.
-const WIDE = { across: 0.6, up: 0.84, shiftX: 0.145, shiftY: 0 }; // text on the left, scene centre-right
-const NARROW = { across: 0.86, up: 0.46, shiftX: 0, shiftY: 0.2 }; // scene in the upper half, text below
-const PANEL = { across: 0.84, up: 0.86, shiftX: 0, shiftY: 0 }; // the contact section's own frame
+// Where the subject sits in the stage. `across` and `up` are the shares of the available width and
+// height it may fill, and `at` is how far across that width its centre sits. Beside the text, the
+// available width is the page's own centred column, not the window, so text and subject stay
+// together however wide the window is.
+const WIDE = { across: 0.8, at: 0.74, up: 0.84, shiftY: 0 }; // text on the left, scene centre-right
+const NARROW = { across: 0.86, at: 0.5, up: 0.46, shiftY: 0.2 }; // scene in the upper half, text below
+const PANEL = { across: 0.84, at: 0.5, up: 0.86, shiftY: 0 }; // the contact section's own frame
 
 // Camera stops. `span` and `tall` are how much of the world must fit across and up the subject's
 // share of the view. `fog` and `haze` are multiples of the camera's distance to its subject: cards
@@ -285,6 +288,7 @@ function init(root) {
   const steps = [...root.querySelectorAll('[data-step]')];
   const stageMount = root.querySelector('[data-scene]');
   const blankMount = root.querySelector('[data-scene-blank]');
+  const pageColumn = root.querySelector('[data-frame]');
   const railLinks = [...root.querySelectorAll('[data-rail] a')];
   const rail = root.querySelector('[data-rail]');
   const placeList = root.querySelector('[data-places]');
@@ -648,7 +652,7 @@ function init(root) {
   }
 
   // --- State ---
-  const view = { width: 0, height: 0, aspect: 1, layout: WIDE, ratio: Math.min(window.devicePixelRatio || 1, 2) };
+  const view = { width: 0, height: 0, aspect: 1, layout: WIDE, across: WIDE.across, shiftX: 0, ratio: Math.min(window.devicePixelRatio || 1, 2) };
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   let mode = null; // 'story' | 'blank' | null (nothing on screen)
   let target = 0; // scroll position within the story, 0..3
@@ -668,7 +672,7 @@ function init(root) {
 
   function distanceFor(stop) {
     const tan = Math.tan((FOV * DEG) / 2);
-    const across = (view.layout === NARROW ? stop.narrow : stop.span) / (2 * tan * view.aspect * view.layout.across);
+    const across = (view.layout === NARROW ? stop.narrow : stop.span) / (2 * tan * view.aspect * view.across);
     const up = stop.tall / (2 * tan * view.layout.up);
     return Math.max(across, up);
   }
@@ -706,7 +710,7 @@ function init(root) {
     camera.lookAt(focus);
     camera.near = clamp(distance * 0.12, 0.05, 30);
     camera.far = distance * 3 + 80;
-    camera.setViewOffset(view.width, view.height, -view.layout.shiftX * view.width, view.layout.shiftY * view.height, view.width, view.height);
+    camera.setViewOffset(view.width, view.height, -view.shiftX * view.width, view.layout.shiftY * view.height, view.width, view.height);
 
     scene.fog.near = distance * lerp(from.fog[0], to.fog[0], t);
     scene.fog.far = distance * lerp(from.fog[1], to.fog[1], t);
@@ -829,6 +833,10 @@ function init(root) {
     view.height = height;
     view.aspect = width / height;
     view.layout = mode === 'blank' ? PANEL : width >= 900 && view.aspect > 1.05 ? WIDE : NARROW;
+    const whole = mount.getBoundingClientRect();
+    const room = view.layout === WIDE && pageColumn ? pageColumn.getBoundingClientRect() : whole;
+    view.across = (room.width * view.layout.across) / width;
+    view.shiftX = (room.left - whole.left + room.width * view.layout.at) / width - 0.5;
     renderer.setPixelRatio(view.ratio);
     renderer.setSize(width, height, false);
     camera.aspect = view.aspect;

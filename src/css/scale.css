@@ -41,6 +41,11 @@
     --display-tracking: -0.022em;
 
     --pad: clamp(1.25rem, 5vw, 4.5rem);
+    /* The page keeps to a centred column. --gutter is the distance from the window's edge to that
+       column's content, for the full-width parts (header, story) that have to line up with it. */
+    --frame: 82rem;
+    --gutter: max(var(--pad), calc((100% - var(--frame)) / 2 + var(--pad)));
+    --text-w: min(38rem, 44vw); /* the story's text column, beside the scene */
     --stage-h: calc(100vh - var(--compare-h, 0px));
   }
   @supports (height: 100svh) {
@@ -51,6 +56,9 @@
   }
 
   html {
+    /* On screens wider than a laptop's the whole page grows with the window, up to about a third
+       larger, so a big monitor gets a bigger page and not a small one in a wide margin. */
+    font-size: clamp(100%, 0.5vw + 0.55rem, 137.5%);
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: var(--compare-h, 0px);
   }
@@ -82,7 +90,7 @@
 }
 
 @layer components {
-  .wrap { width: 100%; max-width: 82rem; margin-inline: auto; padding-inline: var(--pad); }
+  .wrap { width: 100%; max-width: var(--frame); margin-inline: auto; padding-inline: var(--pad); }
   .section { padding-block: clamp(4.5rem, 9vw, 8rem); }
 
   .display { font-size: clamp(2.75rem, 5.25vw, 5rem); line-height: 0.96; }
@@ -172,7 +180,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 0.75rem var(--pad) 0;
+    padding: 0.75rem var(--gutter) 0;
   }
   .site-nav { display: none; align-items: center; gap: 0.25rem; }
   @media (min-width: 64rem) {
@@ -195,8 +203,8 @@
   details.menu[open] .menu-open, details.menu:not([open]) .menu-close { display: none; }
   .menu-panel {
     position: absolute;
-    left: var(--pad);
-    right: var(--pad);
+    left: var(--gutter);
+    right: var(--gutter);
     top: calc(100% + 0.5rem);
     padding: 0.5rem;
     background: var(--paper);
@@ -217,7 +225,7 @@
     display: grid;
     align-items: center;
     gap: 2rem 4rem;
-    padding: 3.5rem var(--pad);
+    padding: 3.5rem var(--gutter);
   }
   .step-hero { padding-top: 9.5rem; }
   .step-art { width: 100%; max-width: 34rem; height: auto; border-radius: 8px; justify-self: center; }
@@ -252,7 +260,7 @@
   html.story-live .step-text {
     position: relative;
     width: 100%;
-    padding: 1.5rem var(--pad) 2.5rem;
+    padding: 1.5rem var(--gutter) 2.5rem;
     background: var(--mist);
     pointer-events: auto;
   }
@@ -277,10 +285,10 @@
     html.story-live .step-hero .display { order: -2; }
   }
   @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
-    html.story-live .step { align-items: center; padding-inline: var(--pad); }
+    html.story-live .step { align-items: center; padding-inline: var(--gutter); }
     html.story-live .step-hero { padding-top: 5rem; }
-    html.story-live .step-text { width: auto; max-width: min(38rem, 44vw); padding: 0; background: none; }
-    html.story-live .step-text > :not(.display) { max-width: min(30rem, 33vw); }
+    html.story-live .step-text { width: auto; max-width: var(--text-w); padding: 0; background: none; }
+    html.story-live .step-text > :not(.display) { max-width: calc(var(--text-w) * 0.79); }
     html.story-live .step-text::before { content: none; }
   }
 
@@ -290,18 +298,23 @@
   /* Keeps the text column readable whatever the scene is doing behind it. */
   .stage-veil { position: absolute; inset: 0; pointer-events: none; display: none; }
   @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    /* The veil ends where the text column does, wherever in the window that is. */
     .stage-veil {
       display: block;
-      background: linear-gradient(90deg, var(--mist) 0%, var(--mist) 34%, transparent 48%);
+      --veil-from: calc(var(--gutter) + var(--text-w) * 0.82);
+      --veil-to: calc(var(--gutter) + var(--text-w) + 2.5rem);
+      background: linear-gradient(90deg, var(--mist) 0, var(--mist) var(--veil-from), transparent var(--veil-to));
     }
     @supports (color: color-mix(in srgb, red, red)) {
       .stage-veil {
         background:
           linear-gradient(180deg, color-mix(in srgb, var(--mist) 92%, transparent) 0, transparent 9.5rem),
-          linear-gradient(90deg, var(--mist) 0%, color-mix(in srgb, var(--mist) 97%, transparent) 36%, transparent 48%);
+          linear-gradient(90deg, var(--mist) 0, color-mix(in srgb, var(--mist) 97%, transparent) var(--veil-from), transparent var(--veil-to));
       }
     }
   }
+  /* The column the rest of the page keeps to, marked out on the stage so the scene can place its subject within it. */
+  .stage-frame { position: absolute; inset-block: 0; left: var(--gutter); right: var(--gutter); pointer-events: none; }
 
   .cue { align-items: center; gap: 0.6rem; margin-top: 1.75rem; color: var(--moss); }
   /* On short, wide screens the scroll cue would sit on top of the scale rail, which says the same thing. */
@@ -340,7 +353,7 @@
   .rail span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
     .rail {
-      left: var(--pad);
+      left: var(--gutter);
       right: auto;
       top: auto;
       bottom: 2.1rem;
