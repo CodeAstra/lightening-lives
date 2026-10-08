@@ -1,7 +1,7 @@
 /* Design 07 · Sun Card
    Design 01's layout, with the sun of the logo as its pattern language. Where the Sample Card had
    collection rings, perforations and a registration grid, this page has suns: every one with the
-   logo's sixteen rays, in three textures (solid, engraved lines, dots) and in shades from dawn to
+   logo's eighteen rays, in three textures (solid, engraved lines, dots) and in shades from dawn to
    noon. Leaf-green ink and rules are kept from Design 01; true sun yellow is saved for noon: the
    flagship test, the ticks, and the contact panel. */
 
@@ -47,7 +47,7 @@
     --wedge: rgba(242, 205, 98, 0.2); /* the rays that fan out behind the hero and contact cards */
 
     /* Shapes used as masks: the sun's outline, and one ray pointing down or across. */
-    --sun-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Cpolygon points='0.0 -48.0 5.3 -26.5 18.4 -44.3 15.0 -22.4 33.9 -33.9 22.4 -15.0 44.3 -18.4 26.5 -5.3 48.0 0.0 26.5 5.3 44.3 18.4 22.4 15.0 33.9 33.9 15.0 22.4 18.4 44.3 5.3 26.5 0.0 48.0 -5.3 26.5 -18.4 44.3 -15.0 22.4 -33.9 33.9 -22.4 15.0 -44.3 18.4 -26.5 5.3 -48.0 0.0 -26.5 -5.3 -44.3 -18.4 -22.4 -15.0 -33.9 -33.9 -15.0 -22.4 -18.4 -44.3 -5.3 -26.5'/%3E%3C/svg%3E");
+    --sun-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Cpolygon points='0.0 -48.0 4.7 -26.6 16.4 -45.1 13.5 -23.4 30.9 -36.8 20.7 -17.4 41.6 -24.0 25.4 -9.2 47.3 -8.3 27.0 -0.0 47.3 8.3 25.4 9.2 41.6 24.0 20.7 17.4 30.9 36.8 13.5 23.4 16.4 45.1 4.7 26.6 0.0 48.0 -4.7 26.6 -16.4 45.1 -13.5 23.4 -30.9 36.8 -20.7 17.4 -41.6 24.0 -25.4 9.2 -47.3 8.3 -27.0 0.0 -47.3 -8.3 -25.4 -9.2 -41.6 -24.0 -20.7 -17.4 -30.9 -36.8 -13.5 -23.4 -16.4 -45.1 -4.7 -26.6'/%3E%3C/svg%3E");
     --ray-row: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 11'%3E%3Cpath d='M0 0h22L11 11z'/%3E%3C/svg%3E");
     --ray-col: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 22'%3E%3Cpath d='M0 0v22l11-11z'/%3E%3C/svg%3E");
 
@@ -154,7 +154,7 @@
     overflow: visible;
     transform: rotate(calc(var(--day, 0) * 1deg));
   }
-  .suncard:hover .sunmark, .suncard:focus-within .sunmark { transform: rotate(calc(var(--day, 0) * 1deg + 22.5deg)) scale(1.12); }
+  .suncard:hover .sunmark, .suncard:focus-within .sunmark { transform: rotate(calc(var(--day, 0) * 1deg + 20deg)) scale(1.12); }
 
   /* A tick on a noon sun: checked, in the proof strip. */
   .suntick { position: relative; width: 40px; height: 40px; flex: none; margin: -5px -4px 0 -6px; color: var(--green-deep); }
@@ -173,7 +173,7 @@
     height: 190px;
     transform: rotate(calc(var(--day, 0) * 1deg));
   }
-  .testcard:hover > .corner-sun, .testcard:focus-within > .corner-sun { transform: rotate(calc(var(--day, 0) * 1deg + 22.5deg)) scale(1.08); }
+  .testcard:hover > .corner-sun, .testcard:focus-within > .corner-sun { transform: rotate(calc(var(--day, 0) * 1deg + 20deg)) scale(1.08); }
   /* The flagship's is the one true noon sun; the place for the next test has only an outline. */
   .testcard-open { background: var(--shade); }
 
@@ -192,7 +192,7 @@
   .backdrop-sun .sl { stroke-width: 0.45; }
   @media (max-width: 1023px) { .backdrop-sun { right: -430px; opacity: 0.4; } }
 
-  /* The big sun: behind the map in the hero, and beside the contact panel. A disc, sixteen rays,
+  /* The big sun: behind the map in the hero, and beside the contact panel. A disc, eighteen rays,
      a halo of dots, and the dashed rim that Design 01's collection ring had. */
   .big-sun { position: absolute; overflow: visible; pointer-events: none; }
   .bs-disc { fill: var(--disc); transition: fill 500ms ease; }
@@ -209,10 +209,10 @@
   .cta-stage { position: relative; width: 190px; height: 190px; --disc: var(--noon); --ray: var(--noon-ray); }
   .cta-sun { inset: -30%; width: 160%; height: 160%; }
 
-  /* Rays fan out behind the hero and contact cards, sixteen to the circle, from where the sun sits. */
+  /* Rays fan out behind the hero and contact cards, eighteen to the circle, from where the sun sits. */
   .sunfield {
     background-color: var(--shade);
-    background-image: repeating-conic-gradient(from -5.625deg at var(--sun-x, 72%) var(--sun-y, 56%), var(--wedge) 0 11.25deg, transparent 11.25deg 22.5deg);
+    background-image: repeating-conic-gradient(from -5deg at var(--sun-x, 72%) var(--sun-y, 56%), var(--wedge) 0 10deg, transparent 10deg 20deg);
   }
   .sunfield-cta { --sun-x: 80%; --sun-y: 50%; }
   @media (max-width: 1023px) { .sunfield { --sun-x: 50%; --sun-y: 62%; } }

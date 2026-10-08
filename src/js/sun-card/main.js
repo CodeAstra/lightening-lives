@@ -141,7 +141,7 @@ function initSuns() {
     const box = stage.getBoundingClientRect();
     const angle = Math.atan2(event.clientY - (box.top + box.height / 2), event.clientX - (box.left + box.width / 2));
     // Lean toward the pointer by up to half a ray either way.
-    stage.style.setProperty('--lean', (Math.sin(angle) * 11.25).toFixed(2));
+    stage.style.setProperty('--lean', (Math.sin(angle) * 10).toFixed(2));
   }, { passive: true });
   field.addEventListener('pointerleave', () => stage.style.setProperty('--lean', '0'));
 }

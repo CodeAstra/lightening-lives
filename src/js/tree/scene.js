@@ -29,7 +29,7 @@ const FOV = 30;
 // Depths are distances in front of the plane the figure's back sits on; the wall is behind all of it.
 const CARD = 0.045; // thickness of the card everything is cut from
 const WALL = -1.05;
-const SUN = { disc: 2, rays: 16, outer: 3.05, inner: 2.36, raysAt: -0.5, discAt: -0.24 };
+const SUN = { disc: 2, rays: 18, outer: 3.05, inner: 2.36, raysAt: -0.5, discAt: -0.24 };
 const TREE = { scale: 1.1, y: -0.05, at: 0.1 }; // the figure and its leaves, as a group
 const HEAD = { y: 0.14, radius: 0.2 };
 // The five leaves, left to right: where each springs from, the way it points (degrees clockwise
