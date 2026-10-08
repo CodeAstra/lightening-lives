@@ -10,7 +10,7 @@ import {
 import { LineSegments2 } from 'three/addons/lines/LineSegments2.js';
 import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
-import { PLACES, SICKLE, STATES, THAL } from './india-data.js';
+import { PLACES, SICKLE, SICKLE_BELT, STATES, THAL } from './india-data.js';
 
 const FLAT_VIEW = 106; // map units across the flat print's box (the static SVG's viewBox height)
 const FLAT_INSET = 0.74; // the flat print sits in the middle 74% of the ring
@@ -19,16 +19,23 @@ const VIEW = FLAT_VIEW / FLAT_INSET; // map units across the whole stage
 const DEG = Math.PI / 180;
 // Tilting foreshortens the map, so the camera closes in as it lifts to keep the ring full.
 const REST = { tilt: 41 * DEG, yaw: -9 * DEG, zoom: 1.3 };
-const HEIGHT = { flat: 0.02, base: 0.9, raised: 4.6, hover: 1.7, pin: 7.5 };
-const TINT = { raised: 0.23, hover: 0.62 };
+const HEIGHT = { flat: 0.02, base: 0.9, low: 1.7, raised: 4.6, hover: 1.7, pin: 7.5 };
+const TINT = { low: 0.09, raised: 0.23, hover: 0.62 };
 
 const WORK_NOTES = {
   TS: 'Laboratory in Hyderabad. Field work in Kothagudem.',
   MH: 'Field work in Nandurbar.',
   JH: 'Field work.',
 };
+// A layer raises some states fully (`raised`) and may raise others a little, with a lighter tint
+// (`low`). Sickle cell is most common in a belt across central India, so the states that belt runs
+// through stand tall and the other focus states of the national mission only just lift.
+const sickleNote = (id) => {
+  if (SICKLE_BELT.includes(id)) return 'In the central belt, where sickle cell is most common. Mission focus state.';
+  return SICKLE.includes(id) ? 'Mission focus state.' : '';
+};
 const LAYERS = {
-  sickle: { raised: new Set(SICKLE), wash: 0, note: (id) => (SICKLE.includes(id) ? 'Mission focus state.' : '') },
+  sickle: { raised: new Set(SICKLE_BELT), low: new Set(SICKLE.filter((id) => !SICKLE_BELT.includes(id))), wash: 0, note: sickleNote },
   thal: { raised: new Set(THAL), wash: 0.09, note: (id) => (THAL.includes(id) ? 'Higher carrier frequency reported in parts.' : '') },
   work: { raised: new Set(Object.keys(WORK_NOTES)), wash: 0, note: (id) => WORK_NOTES[id] || '' },
 };
@@ -157,10 +164,12 @@ function init(stage) {
   function capTarget(state) {
     if (state === hovered) return mix(theme.card, theme.sun, TINT.hover);
     const active = LAYERS[layer];
-    return mix(theme.card, theme.green, active.raised.has(state.id) ? TINT.raised : active.wash);
+    if (active.raised.has(state.id)) return mix(theme.card, theme.green, TINT.raised);
+    return mix(theme.card, theme.green, active.low && active.low.has(state.id) ? TINT.low : active.wash);
   }
   function heightTarget(state) {
-    const lift = LAYERS[layer].raised.has(state.id) ? HEIGHT.raised : HEIGHT.base;
+    const active = LAYERS[layer];
+    const lift = active.raised.has(state.id) ? HEIGHT.raised : active.low && active.low.has(state.id) ? HEIGHT.low : HEIGHT.base;
     return lift + (state === hovered ? HEIGHT.hover : 0);
   }
 

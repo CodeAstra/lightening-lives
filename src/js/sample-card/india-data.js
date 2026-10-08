@@ -4,6 +4,10 @@
 // Generated file; edit the layer lists here if the programme data changes.
 export const WIDTH = 88.23;
 export const HEIGHT = 100;
+// Sickle cell: the states the central belt of highest frequency runs through (Hockham et al., Scientific
+// Reports, 2018: "a belt stretching across central India, extending from southeastern Gujarat to
+// southwestern Odisha"), then all 17 focus states of the National Sickle Cell Anaemia Elimination Mission.
+export const SICKLE_BELT = ["GJ","MP","MH","CG","OD"];
 export const SICKLE = ["GJ","MH","RJ","MP","JH","CG","WB","OD","TN","TS","AP","KA","AS","UP","KL","BR","UK"];
 export const THAL = ["GJ","MH","PB","WB"];
 export const PLACES = [{"id":"hyd","n":"Hyderabad","d":"Laboratory and corporate office","s":"TS","at":[-12.87,-17.25]},{"id":"ndb","n":"Nandurbar","d":"Maharashtra","s":"MH","at":[-25.67,-4.52]},{"id":"kgm","n":"Kothagudem","d":"Telangana","s":"TS","at":[-6.44,-16.73]},{"id":"jh","n":"Jharkhand","d":"Field work across the state","s":"JH","at":[8.45,2.97]}];

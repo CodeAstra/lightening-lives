@@ -289,6 +289,55 @@
   };
   // ---- DESIGNS.helix: end ----
 
+  // 07 · Sun Card is Design 01's layout with the logo's sun as its pattern. The suns keep their
+  // own shades; its variations change the page they sit on and the ink of its rules and type.
+  DESIGNS['sun-card'] = {
+    label: '07 · Sun Card',
+    file: 'sun-card.html',
+    controls: [
+      {
+        key: 'type',
+        label: 'Typography',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Kumbh Sans + DM Mono (as designed)' },
+          {
+            id: 'sample-card',
+            label: 'Familjen Grotesk (from Sample Card)',
+            fonts: FONTS_SAMPLE_CARD,
+            vars: { '--ff-display': '"Familjen Grotesk"', '--ff-sans': '"Familjen Grotesk"', '--display-weight': '600' },
+          },
+          {
+            id: 'daylight',
+            label: 'Quicksand + Nunito (from Daylight)',
+            fonts: FONTS_DAYLIGHT,
+            vars: { '--ff-display': '"Quicksand"', '--ff-sans': '"Nunito"', '--display-weight': '700' },
+          },
+        ],
+      },
+      {
+        key: 'bg',
+        label: 'Background',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Warm paper (as designed)', swatch: '#FFFDF8' },
+          { id: 'white', label: 'White', swatch: '#FFFFFF', vars: { '--card': '#FFFFFF', '--shade': '#F7F3E8' } },
+          { id: 'butter', label: 'Butter', swatch: '#FFF8DC', vars: { '--card': '#FFF8DC', '--shade': '#FDEFC0' } },
+        ],
+      },
+      {
+        key: 'accent',
+        label: 'Ink',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Leaf green (as designed)', swatch: '#2E6B3F' },
+          { id: 'maroon', label: 'Maroon, from the logo', swatch: '#7A1E26', vars: { '--green': '#7A1E26', '--green-deep': '#5E171D' } },
+          { id: 'rust', label: 'Rust', swatch: '#A8480F', vars: { '--green': '#A8480F', '--green-deep': '#863A0C' } },
+        ],
+      },
+    ],
+  };
+
   var config = DESIGNS[designId];
   if (!config) return;
 

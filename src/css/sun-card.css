@@ -1,0 +1,632 @@
+/* Design 07 · Sun Card
+   Design 01's layout, with the sun of the logo as its pattern language. Where the Sample Card had
+   collection rings, perforations and a registration grid, this page has suns: every one with the
+   logo's sixteen rays, in three textures (solid, engraved lines, dots) and in shades from dawn to
+   noon. Leaf-green ink and rules are kept from Design 01; true sun yellow is saved for noon: the
+   flagship test, the ticks, and the contact panel. */
+
+@import "tailwindcss" source(none);
+@source "../../sun-card.html";
+@source "../js/sun-card";
+
+@theme inline {
+  --color-card: var(--card);
+  --color-shade: var(--shade);
+  --color-green: var(--green);
+  --color-green-deep: var(--green-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-sun: var(--sun);
+  --color-rule: var(--rule);
+  --color-blood: var(--blood);
+  --font-sans: var(--ff-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--ff-mono), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@layer base {
+  /* Design tokens. The comparison toolbar overrides a few of these at runtime. */
+  :root {
+    --card: #FFFDF8;
+    --shade: #FBF3E2;
+    --green: #2E6B3F;
+    --green-deep: #24552F;
+    --ink: #1C241E;
+    --ink-soft: #3B463E;
+    --sun: #F6C514;
+    --blood: #8C2A2B; /* diagram only: the dried blood spot itself */
+    --rule: rgba(46, 107, 63, 0.38);
+    --hatch: rgba(46, 107, 63, 0.07);
+
+    /* The sun's shades, dawn to noon: disc, then the deeper shade of its rays. */
+    --butter: #FBE7A6;   --butter-ray: #F2CD62;
+    --apricot: #F9D3A8;  --apricot-ray: #EEAD6A;
+    --blush: #F6CCBC;    --blush-ray: #E7A089;
+    --sage: #D6E5C0;     --sage-ray: #A8C583;
+    --noon: #F9D71C;     --noon-ray: #F2A51B;
+    --wedge: rgba(242, 205, 98, 0.2); /* the rays that fan out behind the hero and contact cards */
+
+    /* Shapes used as masks: the sun's outline, and one ray pointing down or across. */
+    --sun-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Cpolygon points='0.0 -48.0 5.3 -26.5 18.4 -44.3 15.0 -22.4 33.9 -33.9 22.4 -15.0 44.3 -18.4 26.5 -5.3 48.0 0.0 26.5 5.3 44.3 18.4 22.4 15.0 33.9 33.9 15.0 22.4 18.4 44.3 5.3 26.5 0.0 48.0 -5.3 26.5 -18.4 44.3 -15.0 22.4 -33.9 33.9 -22.4 15.0 -44.3 18.4 -26.5 5.3 -48.0 0.0 -26.5 -5.3 -44.3 -18.4 -22.4 -15.0 -33.9 -33.9 -15.0 -22.4 -18.4 -44.3 -5.3 -26.5'/%3E%3C/svg%3E");
+    --ray-row: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 11'%3E%3Cpath d='M0 0h22L11 11z'/%3E%3C/svg%3E");
+    --ray-col: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 22'%3E%3Cpath d='M0 0v22l11-11z'/%3E%3C/svg%3E");
+
+    --ff-sans: "Kumbh Sans";
+    --ff-display: "Kumbh Sans";
+    --ff-mono: "DM Mono";
+    --display-weight: 700;
+  }
+  @supports (color: color-mix(in srgb, red, red)) {
+    :root {
+      --rule: color-mix(in srgb, var(--green) 38%, transparent);
+      --hatch: color-mix(in srgb, var(--green) 7%, transparent);
+      --wedge: color-mix(in srgb, var(--butter-ray) 20%, transparent);
+    }
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--compare-h, 0px) + 20px);
+  }
+  body {
+    background: var(--card);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: var(--display-weight);
+  }
+  :focus-visible {
+    outline: 3px solid var(--sun);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 7px var(--green);
+    border-radius: 2px;
+  }
+  ::selection { background: var(--sun); color: var(--ink); }
+}
+
+@layer components {
+  .mono { font-family: var(--font-mono); letter-spacing: 0; }
+
+  /* Printed field label: the small mono caption every section carries */
+  .field-label {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--green);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  /* Every label is led by a small sun, in the yellow of the logo's rays. */
+  .field-label::before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    flex: none;
+    background: var(--noon-ray);
+    -webkit-mask: var(--sun-glyph) center / contain no-repeat;
+    mask: var(--sun-glyph) center / contain no-repeat;
+  }
+
+  /* A row of rays: the ring of the sun, unrolled. It marks where one section ends and the next begins. */
+  .rays {
+    height: 11px;
+    background: var(--butter-ray);
+    -webkit-mask: var(--ray-row) left top / 22px 11px repeat-x;
+    mask: var(--ray-row) left top / 22px 11px repeat-x;
+  }
+  .rays-v {
+    width: 11px;
+    background: var(--butter-ray);
+    -webkit-mask: var(--ray-col) left top / 11px 22px repeat-y;
+    mask: var(--ray-col) left top / 11px 22px repeat-y;
+  }
+
+  /* ------------------------------------------------------------------
+     Suns. Each is drawn once as an SVG symbol and coloured where it is used:
+     --disc for its face, --ray for its rays, lines or dots.
+     ------------------------------------------------------------------ */
+  .sd { fill: var(--disc); }
+  .sr { fill: var(--ray); }
+  .sl { fill: none; stroke: var(--ray); stroke-width: 1.5; stroke-linecap: round; }
+  .so { fill: none; stroke: var(--ray); stroke-width: 1.3; stroke-dasharray: 2.6 2.4; stroke-linejoin: round; }
+
+  [data-tone="butter"] { --disc: var(--butter); --ray: var(--butter-ray); }
+  [data-tone="apricot"] { --disc: var(--apricot); --ray: var(--apricot-ray); }
+  [data-tone="blush"] { --disc: var(--blush); --ray: var(--blush-ray); }
+  [data-tone="sage"] { --disc: var(--sage); --ray: var(--sage-ray); }
+  [data-tone="noon"] { --disc: var(--noon); --ray: var(--noon-ray); }
+  [data-tone="open"] { --disc: transparent; --ray: var(--green); }
+
+  /* A small sun, beside a point or at the head of a card. It turns with the page (--day), and a
+     little further when its card is pointed at. */
+  .sunmark {
+    width: 46px;
+    height: 46px;
+    flex: none;
+    overflow: visible;
+    transform: rotate(calc(var(--day, 0) * 1deg));
+  }
+  .suncard:hover .sunmark, .suncard:focus-within .sunmark { transform: rotate(calc(var(--day, 0) * 1deg + 22.5deg)) scale(1.12); }
+
+  /* A tick on a noon sun: checked, in the proof strip. */
+  .suntick { position: relative; width: 40px; height: 40px; flex: none; margin: -5px -4px 0 -6px; color: var(--green-deep); }
+  .suntick-sun { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(calc(var(--day, 0) * 1deg)); }
+  .suntick-mark { position: absolute; left: 50%; top: 50%; width: 13px; height: 13px; margin: -6.5px 0 0 -6.5px; }
+
+  /* The sun in the corner of a test's card: large, and half out of the frame. */
+  .testcard { position: relative; overflow: hidden; background: var(--card); }
+  .testcard > * { position: relative; }
+  .testcard .toprow { display: flex; align-items: flex-start; min-height: 86px; padding-right: 108px; }
+  .testcard > .corner-sun {
+    position: absolute;
+    top: -52px;
+    right: -52px;
+    width: 190px;
+    height: 190px;
+    transform: rotate(calc(var(--day, 0) * 1deg));
+  }
+  .testcard:hover > .corner-sun, .testcard:focus-within > .corner-sun { transform: rotate(calc(var(--day, 0) * 1deg + 22.5deg)) scale(1.08); }
+  /* The flagship's is the one true noon sun; the place for the next test has only an outline. */
+  .testcard-open { background: var(--shade); }
+
+  /* A very large engraved sun, behind a section's heading. */
+  .backdrop-sun {
+    position: absolute;
+    right: -330px;
+    top: 50%;
+    width: 620px;
+    height: 620px;
+    margin-top: -310px;
+    opacity: 0.5;
+    pointer-events: none;
+    transform: rotate(calc(var(--day, 0) * 0.5deg));
+  }
+  .backdrop-sun .sl { stroke-width: 0.45; }
+  @media (max-width: 1023px) { .backdrop-sun { right: -430px; opacity: 0.4; } }
+
+  /* The big sun: behind the map in the hero, and beside the contact panel. A disc, sixteen rays,
+     a halo of dots, and the dashed rim that Design 01's collection ring had. */
+  .big-sun { position: absolute; overflow: visible; pointer-events: none; }
+  .bs-disc { fill: var(--disc); transition: fill 500ms ease; }
+  .bs-rays { fill: var(--ray); transition: fill 500ms ease; }
+  .bs-dot { fill: var(--ray); opacity: 0.55; transition: fill 500ms ease; }
+  .bs-rim { fill: none; stroke: var(--green); stroke-width: 1.2; stroke-dasharray: 4 4; opacity: 0.75; }
+  .bs-lean { transform: rotate(calc(var(--lean, 0) * 1deg + var(--day, 0) * 0.25deg)); }
+
+  .sunstage { isolation: isolate; --disc: var(--butter); --ray: var(--butter-ray); }
+  .sunstage[data-layer="thal"] { --disc: var(--blush); --ray: var(--blush-ray); }
+  .sunstage[data-layer="work"] { --disc: var(--noon); --ray: var(--noon-ray); }
+  .hero-sun { inset: -30%; width: 160%; height: 160%; z-index: -1; }
+
+  .cta-stage { position: relative; width: 190px; height: 190px; --disc: var(--noon); --ray: var(--noon-ray); }
+  .cta-sun { inset: -30%; width: 160%; height: 160%; }
+
+  /* Rays fan out behind the hero and contact cards, sixteen to the circle, from where the sun sits. */
+  .sunfield {
+    background-color: var(--shade);
+    background-image: repeating-conic-gradient(from -5.625deg at var(--sun-x, 72%) var(--sun-y, 56%), var(--wedge) 0 11.25deg, transparent 11.25deg 22.5deg);
+  }
+  .sunfield-cta { --sun-x: 80%; --sun-y: 50%; }
+  @media (max-width: 1023px) { .sunfield { --sun-x: 50%; --sun-y: 62%; } }
+
+  /* Photo frame. The hatch shows while the image loads. */
+  .photo {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--shade);
+    background-image: repeating-linear-gradient(135deg, var(--hatch) 0 1px, transparent 1px 12px);
+    border: 1.5px solid var(--rule);
+  }
+  .photo > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Typeset credential, used where a partner logo would need permission */
+  .credential {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    min-height: 96px;
+    padding: 12px 18px;
+    background: var(--card);
+    border: 1.5px solid var(--rule);
+  }
+
+  /* Buttons and links */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 26px;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.2;
+    border: 2px solid var(--green);
+    border-radius: 999px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--green); color: var(--card); }
+  .btn-primary:hover { background: var(--green-deep); border-color: var(--green-deep); box-shadow: inset 0 -4px 0 var(--sun); }
+  .btn-ghost { background: transparent; color: var(--green); }
+  .btn-ghost:hover { background: var(--shade); box-shadow: inset 0 -4px 0 var(--sun); }
+
+  .tlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    color: var(--green);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+    text-decoration-color: var(--rule);
+    cursor: pointer;
+  }
+  .tlink:hover { text-decoration-color: var(--sun); text-decoration-thickness: 4px; }
+
+  .navlink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 2px;
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+  }
+  .navlink:hover { border-bottom-color: var(--sun); color: var(--green); }
+
+  .skip {
+    position: absolute;
+    left: 16px;
+    top: -100px;
+    z-index: 50;
+    background: var(--green);
+    color: var(--card);
+    padding: 12px 18px;
+    font-weight: 600;
+  }
+  .skip:focus { top: calc(var(--compare-h, 0px) + 12px); }
+
+  details.menu > summary { list-style: none; cursor: pointer; }
+  details.menu > summary::-webkit-details-marker { display: none; }
+  details.menu[open] .menu-open { display: none; }
+  details.menu:not([open]) .menu-close { display: none; }
+
+  /* ------------------------------------------------------------------
+     Hero map: India on the face of the sun
+     ------------------------------------------------------------------ */
+  .map {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+  }
+  /* The flat print. Sits in the inner 74% of the ring; the 3D map starts from this exact pose. */
+  .map-flat {
+    position: absolute;
+    inset: 13%;
+    width: 74%;
+    height: 74%;
+    object-fit: contain;
+    transition: opacity 240ms linear;
+  }
+  .map canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: grab;
+    touch-action: pan-y;
+    outline: none;
+  }
+  .map.is-dragging canvas { cursor: grabbing; }
+  .map.is-live canvas { opacity: 1; }
+  .map.is-live .map-flat { opacity: 0; }
+
+  .map-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .map-pin {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+  }
+  .map-pin i {
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: var(--sun);
+    border: 1.5px solid var(--ink);
+    transition: transform 320ms cubic-bezier(.2, .7, .2, 1);
+  }
+  .map-pin b {
+    position: absolute;
+    top: -11px;
+    left: 12px;
+    padding: 3px 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.3;
+    white-space: nowrap;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--green);
+    opacity: 0;
+    transition: opacity 240ms linear;
+  }
+  .map-pin[data-side="left"] b { left: auto; right: 12px; }
+  .map[data-layer="work"] .map-pin i { transform: scale(1.5); }
+  .map[data-layer="work"] .map-pin b { opacity: 1; }
+
+  .map-tip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: 220px;
+    padding: 5px 8px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    line-height: 1.4;
+    color: var(--card);
+    background: var(--green-deep);
+    opacity: 0;
+    transition: opacity 120ms linear;
+    z-index: 2;
+  }
+  .map-tip.is-on { opacity: 1; }
+  .map-tip strong { display: block; font-weight: 600; }
+
+  /* Layer switch: three printed boxes, one ticked */
+  .seg {
+    display: grid;
+    gap: 2px;
+    background: var(--green);
+    border: 2px solid var(--green);
+    border-radius: 22px;
+    overflow: hidden;
+  }
+  @media (min-width: 440px) {
+    .seg { display: inline-grid; grid-auto-flow: column; border-radius: 999px; }
+  }
+  .seg label { position: relative; display: flex; }
+  .seg input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .seg span {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--green);
+    background: var(--card);
+  }
+  .seg label:hover span { background: var(--shade); }
+  .seg input:checked + span { background: var(--green); color: var(--card); }
+  .seg input:focus-visible + span { outline: 3px solid var(--sun); outline-offset: -5px; }
+
+  /* ------------------------------------------------------------------
+     Sample to result: the three-step sequence
+     ------------------------------------------------------------------ */
+  .seq {
+    --seq-time: 6.5s;
+    display: grid;
+    background-color: var(--shade);
+    background-image: repeating-linear-gradient(135deg, var(--hatch) 0 1px, transparent 1px 12px);
+    border: 1.5px solid var(--rule);
+  }
+  .seq-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+  }
+  .seq-step + .seq-step { border-top: 1.5px dashed var(--rule); }
+  .seq-step svg { width: 84px; height: 66px; overflow: visible; }
+  @media (min-width: 640px) {
+    .seq { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .seq-step { grid-template-columns: 1fr; justify-items: start; align-content: start; gap: 12px; padding: 20px 18px 22px; }
+    .seq-step + .seq-step { border-top: 0; border-left: 1.5px dashed var(--rule); }
+    .seq-step svg { width: 112px; height: 88px; }
+  }
+  .seq-step .seq-no {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--green);
+  }
+  .seq .ink { stroke: var(--green); fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .seq .ink-fine { stroke: var(--green); fill: none; stroke-width: 1.2; }
+  .seq .paper { fill: var(--card); }
+  .seq .ring { stroke: var(--green); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 3.2 3.1; }
+  .seq .drop { fill: var(--blood); }
+  .seq .well { fill: var(--card); stroke: var(--green); stroke-width: 1.2; }
+  .seq .well-on { fill: var(--blood); }
+  .seq .mark { stroke: var(--green); fill: none; stroke-width: 2.6; stroke-linecap: square; }
+  .seq .sunline { stroke: var(--sun); fill: none; stroke-width: 3; stroke-linecap: round; }
+
+  /* A sun-coloured bar along the bottom edge marks the step in progress while the sequence plays */
+  .seq-step::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1.5px;
+    height: 3px;
+    width: 100%;
+    background: var(--sun);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  /* ------------------------------------------------------------------
+     REASSURED: nine letters; the reader picks one
+     ------------------------------------------------------------------ */
+  .rsd { display: grid; gap: 8px; flex: none; width: min(100%, 306px); }
+  .rsd-letters {
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    gap: 2px;
+    background: var(--green);
+    border: 2px solid var(--green);
+  }
+  .rsd-letters button {
+    min-height: 44px;
+    padding: 0;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--green);
+    background: var(--card);
+    cursor: pointer;
+  }
+  .rsd-letters button:hover { background: var(--butter); }
+  /* The chosen letter stands in full sun. */
+  .rsd-letters button[aria-pressed="true"] { background: var(--noon); color: var(--green-deep); }
+  .rsd-letters button:focus-visible { outline: 3px solid var(--sun); outline-offset: -5px; box-shadow: none; }
+  .rsd-now {
+    min-height: 1.4em;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .rsd-list { display: grid; }
+  .rsd-list > div {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    column-gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--rule);
+  }
+  @media (min-width: 640px) {
+    .rsd-list > div { grid-template-columns: 28px minmax(0, 5fr) minmax(0, 7fr); }
+  }
+  .rsd-list dt { display: contents; }
+  .rsd-list dt b { font-family: var(--font-mono); font-size: 15px; font-weight: 600; color: var(--green); }
+  .rsd-list dt span { font-weight: 600; }
+  .rsd-list dd { grid-column: 2; color: var(--ink-soft); font-size: 16px; }
+  @media (min-width: 640px) {
+    .rsd-list dd { grid-column: 3; }
+  }
+
+  /* A label whose parts are separated by mid-dots. The dots are drawn before each part and the row is
+     pulled left by one dot's width, so the dot that would begin a wrapped line falls outside and is clipped. */
+  .dotline { overflow: hidden; }
+  .dotline > span { display: flex; flex-wrap: wrap; margin-left: -3ch; }
+  .dotline > span > span { position: relative; padding-left: 3ch; }
+  .dotline > span > span::before { content: "\00B7"; position: absolute; left: 0; width: 3ch; text-align: center; }
+
+  /* Photo credits disclosure in the footer */
+  .credits > summary { cursor: pointer; }
+  .credits > summary::-webkit-details-marker { display: none; }
+  .credits > summary { list-style: none; }
+}
+
+/* Motion. Everything here is decorative; the page is complete without it. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+
+  .rise { animation: sn-rise 700ms cubic-bezier(.2, .7, .2, 1) both; }
+  .d1 { animation-delay: 80ms; }
+  .d2 { animation-delay: 180ms; }
+  .d3 { animation-delay: 280ms; }
+  .d4 { animation-delay: 380ms; }
+  .d5 { animation-delay: 480ms; }
+  /* Sunrise: on arrival the hero's disc comes up, then its rays open out. After that the rays
+     turn very slowly, and lean a few degrees toward the pointer. */
+  .hero-sun .bs-disc, .hero-sun .bs-rim { animation: sn-disc 900ms cubic-bezier(.2, .7, .2, 1) 150ms both; }
+  .hero-sun .bs-rays { animation: sn-open 1100ms cubic-bezier(.2, .7, .2, 1) 450ms both; }
+  .hero-sun .bs-halo { animation: sn-open 1100ms cubic-bezier(.2, .7, .2, 1) 700ms both; }
+  .bs-turn { animation: sn-turn 240s linear infinite; }
+  .bs-lean { transition: transform 600ms cubic-bezier(.2, .7, .2, 1); }
+  .sunmark, .corner-sun, .suntick-sun { transition: transform 500ms cubic-bezier(.2, .7, .2, 1); }
+  .btn, .tlink, .navlink, .seg span, .rsd-letters button {
+    transition: background-color 160ms ease, box-shadow 160ms ease, text-decoration-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  }
+
+  /* Sample to result: plays once when it scrolls into view, then rests complete.
+     .is-armed (set by main.js) holds the moving parts back until then, so it never shows finished first. */
+  .seq.is-armed .drop,
+  .seq.is-armed .well-on { opacity: 0; }
+  .seq.is-armed .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+
+  .seq.is-running .seq-step::after { animation: sn-bar var(--seq-time) linear both; }
+  .seq.is-running .seq-step:nth-child(2)::after { animation-name: sn-bar-2; }
+  .seq.is-running .seq-step:nth-child(3)::after { animation-name: sn-bar-3; }
+
+  .seq.is-running .drop { animation: sn-drop var(--seq-time) cubic-bezier(.3, .7, .3, 1) both; transform-box: fill-box; transform-origin: center; }
+
+  .seq.is-running .well-on { animation: sn-well var(--seq-time) linear both; }
+  .seq.is-running .well-on.w2 { animation-name: sn-well-2; }
+  .seq.is-running .well-on.w3 { animation-name: sn-well-3; }
+  .seq.is-running .well-on.w4 { animation-name: sn-well-4; }
+
+  .seq.is-running .draw { stroke-dasharray: 1; animation: sn-draw var(--seq-time) cubic-bezier(.3, .7, .3, 1) both; }
+  .seq.is-running .draw.l2 { animation-name: sn-draw-2; }
+  .seq.is-running .draw.l3 { animation-name: sn-draw-3; }
+  .seq.is-running .draw.l4 { animation-name: sn-draw-4; }
+}
+
+@keyframes sn-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes sn-disc { from { opacity: 0; transform: translateY(26px) scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes sn-open { from { opacity: 0; transform: scale(.72) rotate(-18deg); } to { opacity: 1; transform: none; } }
+@keyframes sn-turn { to { transform: rotate(360deg); } }
+
+/* Step bars: each fills during its third of the run, then all clear together */
+@keyframes sn-bar   { 0% { transform: scaleX(0); } 30%, 92% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes sn-bar-2 { 0%, 30% { transform: scaleX(0); } 60%, 92% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes sn-bar-3 { 0%, 60% { transform: scaleX(0); } 90%, 92% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+
+/* Step 1: the blood spot soaks into the card's one collection circle */
+@keyframes sn-drop { 0%, 3% { transform: scale(0); opacity: 0; } 26%, 100% { transform: scale(1); opacity: 1; } }
+
+/* Step 2: samples load into the plate, a column at a time */
+@keyframes sn-well   { 0%, 33% { opacity: 0; } 37%, 100% { opacity: 1; } }
+@keyframes sn-well-2 { 0%, 39% { opacity: 0; } 43%, 100% { opacity: 1; } }
+@keyframes sn-well-3 { 0%, 45% { opacity: 0; } 49%, 100% { opacity: 1; } }
+@keyframes sn-well-4 { 0%, 51% { opacity: 0; } 55%, 100% { opacity: 1; } }
+
+/* Step 3: the result prints line by line, then the box is ticked */
+@keyframes sn-draw   { 0%, 62% { stroke-dashoffset: 1; } 68%, 100% { stroke-dashoffset: 0; } }
+@keyframes sn-draw-2 { 0%, 67% { stroke-dashoffset: 1; } 73%, 100% { stroke-dashoffset: 0; } }
+@keyframes sn-draw-3 { 0%, 72% { stroke-dashoffset: 1; } 78%, 100% { stroke-dashoffset: 0; } }
+@keyframes sn-draw-4 { 0%, 80% { stroke-dashoffset: 1; } 87%, 100% { stroke-dashoffset: 0; } }
