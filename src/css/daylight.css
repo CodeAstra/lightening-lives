@@ -77,14 +77,14 @@
     --pad-footer: clamp(1.25rem, calc(7.619vw - 9.71px), 6.25rem);
     --pad-header: clamp(1.25rem, calc(3.429vw + 6.63px), 3.5rem);
     --sec: clamp(3.5rem, calc(48.57px + 1.905vw), 4.75rem);
-    --logo: 76px;
+    --logo: 56px;
     --header-h: calc(var(--logo) + 18px);
     --sun: clamp(1100px, 138.9vw, 2000px);
     --sun-y: clamp(340px, calc(299px + 10.476vw), 450px);
     --ease: cubic-bezier(.2, .7, .2, 1);
   }
   @media (min-width: 64rem) {
-    :root { --logo: 104px; }
+    :root { --logo: 60px; }
   }
 
   html { -webkit-text-size-adjust: 100%; }
@@ -223,6 +223,27 @@
     padding: 18px var(--pad-header) 0;
   }
   .logo { display: block; width: var(--logo); height: var(--logo); }
+
+  /* The header's mark. At header size the full logo's lettering is too small to read, so the emblem
+     stands alone and the name and the logo's own line are set in this page's type. The whole logo is
+     shown once, in the footer, large enough to read. */
+  .brand { display: inline-flex; align-items: center; gap: 12px; flex: none; border-radius: 999px; }
+  .brand-text { display: grid; gap: 5px; }
+  .brand-name { font: var(--display-weight) 22px/1 var(--stack-display); letter-spacing: calc(var(--display-tracking) * .3); color: var(--ink); white-space: nowrap; }
+  .brand-line { font: 700 12.5px/1 var(--stack-body); letter-spacing: .03em; color: var(--rust); white-space: nowrap; }
+  /* From the width where the menu is laid out in the header there is no room beside it for the name:
+     the emblem stands alone, larger. The name is in the sentence under the headline. */
+  @media (min-width: 80rem) {
+    :root { --logo: 72px; }
+    .brand-text { display: none; }
+  }
+  @media (max-width: 26rem) {
+    :root { --logo: 46px; }
+    .brand { gap: 9px; }
+    .brand-name { font-size: clamp(15px, 4.6vw, 22px); }
+    .brand-line { font-size: clamp(10px, 2.7vw, 12.5px); }
+  }
+  @media (max-width: 21.99rem) { .brand-text { display: none; } }
   .nav-pill {
     align-items: center; gap: 4px; padding: 6px;
     background: color-mix(in srgb, var(--surface) 82%, transparent);

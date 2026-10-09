@@ -11,7 +11,8 @@ The logo redrawn as clean artwork, so it stays sharp at any size, in three versi
 
 - **SVG** is the master: use it wherever it is accepted (web, print, slides). It scales to any size.
 - **PNG** files have a transparent ground; the number is the width in pixels. The `-white` files have a solid white ground, for places that do not keep transparency.
-- The full logo sits in the same square frame as the original file, so it replaces it like for like. `assets/logo.png`, which every page of the site loads, is now this artwork at 768 px.
+- The full logo sits in the same square frame as the original file, so it replaces it like for like. `assets/logo.png` is this artwork at 768 px; the 3D card in Design 03 is printed from it.
+- On the site: headers show the emblem with the name set in type beside it, footers show the full logo at 176 px, and browser tabs use the icons. Below about 160 px wide the full logo's lettering is too small to read; use the emblem there.
 - The original 256 px file is kept unchanged as `logo.png` at the top of the repository and in `content/assets/`.
 
 ## Colours, measured from the original

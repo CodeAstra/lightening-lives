@@ -78,6 +78,30 @@
 @layer components {
   .mono { font-family: var(--font-mono); letter-spacing: 0; }
 
+  /* The header's mark. At header size the full logo's lettering is too small to read, so the emblem
+     stands alone and the name and the logo's own line are set in this page's type. The whole logo is
+     shown once, in the footer, large enough to read. */
+  .brand { display: inline-flex; align-items: center; gap: 12px; flex: none; }
+  .brand-mark { flex: none; width: 56px; height: 56px; }
+  .brand-text { display: grid; gap: 6px; }
+  .brand-name { font-family: var(--font-display); font-weight: 700; font-size: 22px; line-height: 1; letter-spacing: -0.012em; color: var(--green); white-space: nowrap; }
+  .brand-line { font-family: var(--font-mono); font-size: 12px; line-height: 1; color: var(--ink-soft); white-space: nowrap; }
+  @media (min-width: 1200px) {
+    .brand { gap: 14px; }
+    .brand-mark { width: 72px; height: 72px; }
+    .brand-name { font-size: 27px; }
+    .brand-line { font-size: 13px; }
+  }
+  /* Between the menu appearing and the header having room for both, the emblem stands alone. */
+  @media (min-width: 1024px) and (max-width: 1199px) { .brand-text { display: none; } }
+  @media (max-width: 416px) {
+    .brand { gap: 9px; }
+    .brand-mark { width: 46px; height: 46px; }
+    .brand-name { font-size: clamp(16px, 5vw, 22px); }
+    .brand-line { font-size: clamp(10px, 2.9vw, 12px); }
+  }
+  @media (max-width: 351px) { .brand-text { display: none; } }
+
   /* Printed field label: the small mono caption every section carries */
   .field-label {
     font-family: var(--font-mono);

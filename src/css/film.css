@@ -175,9 +175,14 @@
     .site-header { background: color-mix(in srgb, var(--ground) 86%, transparent); backdrop-filter: saturate(1.4) blur(14px); }
   }
   .header-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: var(--header-h); }
-  .brand { display: inline-flex; align-items: center; gap: 0.65rem; border-radius: 0.5rem; }
-  .brand img { width: 3.25rem; height: 3.25rem; }
-  .brand-name { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; letter-spacing: -0.012em; line-height: 1.1; }
+  /* The header's mark. At header size the full logo's lettering is too small to read, so the emblem
+     stands alone and the name and the logo's own line are set in this page's type. The whole logo is
+     shown once, in the footer, large enough to read. */
+  .brand { display: inline-flex; align-items: center; gap: 0.65rem; flex: none; border-radius: 0.5rem; }
+  .brand-mark { flex: none; width: 3.25rem; height: 3.25rem; }
+  .brand-text { display: grid; gap: 0.3rem; }
+  .brand-name { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; letter-spacing: -0.012em; line-height: 1; white-space: nowrap; }
+  .brand-line { font-family: var(--font-mono); font-weight: 500; font-size: 0.6875rem; letter-spacing: 0.04em; line-height: 1; text-transform: uppercase; color: var(--leaf); white-space: nowrap; }
   .site-nav { display: none; align-items: center; gap: 0.2rem; }
   .nav-link {
     display: inline-flex;
@@ -498,7 +503,7 @@
   .footer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem var(--col-gap); }
   .footer-brand, .footer-grid > :last-child { grid-column: 1 / -1; }
   .footer-logo { display: inline-block; border-radius: 50%; }
-  .footer-logo img { width: 7rem; height: 7rem; }
+  .footer-logo img { width: 11rem; height: 11rem; }
   .footer-brand p { max-width: 20rem; margin-top: 0.75rem; color: var(--soft); }
   .site-footer .label { margin-bottom: 0.6rem; }
   .foot-link { display: flex; align-items: center; min-height: 2.25rem; width: fit-content; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: text-decoration-color 0.16s ease; }
