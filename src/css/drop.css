@@ -1,0 +1,783 @@
+/* Design 09 · Drop
+   Design 03's story (one sample, one batch, one programme) with three things changed. The sample
+   arrives the way it does in life: a drop falls from above into the card's circle. The map the
+   cards make is seen from straight above, north up, and the reader chooses what it shows: where a
+   condition is most common, or where the company has worked. And the page is set in Quicksand and
+   Nunito, with leaf green as its ink, so it reads warmer and rounder than Design 03.
+   Palette: pale yellow-green paper, leaf green ink, sun yellow for what is being pointed out, and
+   blood red for the sample and nothing else. */
+
+@import "tailwindcss" source(none);
+@source "../../drop.html";
+@source "../js/drop";
+
+@theme inline {
+  --color-mist: var(--mist);
+  --color-paper: var(--paper);
+  --color-sprout: var(--sprout);
+  --color-leaf: var(--leaf);
+  --color-canopy: var(--canopy);
+  --color-moss: var(--moss);
+  --color-sun: var(--sun);
+  --color-line: var(--line);
+  --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  /* Design tokens. The comparison toolbar overrides a few of these at runtime, and the 3D scene reads them. */
+  :root {
+    --mist: #F1F6DD;    /* page, and the haze the cards fade into */
+    --paper: #FDFEF8;   /* cards and raised surfaces */
+    --sprout: #DDEBB0;  /* hover and quiet fills */
+    --meadow: #BCD982;  /* the field of cards, seen from far enough to be a map */
+    --leaf: #2B7A3D;    /* labels, links, the print on the cards */
+    --canopy: #1F5E2E;  /* text: leaf green */
+    --moss: #3F6A48;    /* secondary text */
+    --sun: #F7D61E;     /* highlight: named proof, and the places we have worked */
+    --blood: #6A2A20;   /* the sample once it has dried into the paper */
+    --drop: #8E1B17;    /* and while it is still a falling drop */
+    --line: rgba(19, 48, 29, 0.18);
+
+    --ff-display: "Quicksand";
+    --ff-body: "Nunito";
+    --display-stretch: 100%;
+    --display-weight: 700;
+    --display-tracking: -0.02em;
+    --round: 999px;     /* buttons, chips and labels are pills, to go with the rounded type */
+
+    --pad: clamp(1.25rem, 5vw, 4.5rem);
+    /* The page keeps to a centred column. --gutter is the distance from the window's edge to that
+       column's content, for the full-width parts (header, story) that have to line up with it. */
+    --frame: 82rem;
+    --gutter: max(var(--pad), calc((100% - var(--frame)) / 2 + var(--pad)));
+    --text-w: min(38rem, 44vw); /* the story's text column, beside the scene */
+    --stage-h: calc(100vh - var(--compare-h, 0px));
+  }
+  @supports (height: 100svh) {
+    :root { --stage-h: calc(100svh - var(--compare-h, 0px)); }
+  }
+  @supports (color: color-mix(in srgb, red, red)) {
+    :root { --line: color-mix(in srgb, var(--canopy) 18%, transparent); }
+  }
+
+  html {
+    /* On screens wider than a laptop's the whole page grows with the window, up to about a third
+       larger, so a big monitor gets a bigger page and not a small one in a wide margin. */
+    font-size: clamp(100%, 0.5vw + 0.55rem, 137.5%);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--compare-h, 0px);
+  }
+  body {
+    position: relative;
+    background: var(--mist);
+    color: var(--canopy);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: var(--display-weight);
+    font-stretch: var(--display-stretch);
+    letter-spacing: var(--display-tracking);
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 3px solid var(--canopy);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px var(--sun);
+    border-radius: 3px;
+  }
+  ::selection { background: var(--sun); color: var(--canopy); }
+}
+
+@layer components {
+  .wrap { width: 100%; max-width: var(--frame); margin-inline: auto; padding-inline: var(--pad); }
+  .section { padding-block: clamp(4.5rem, 9vw, 8rem); }
+
+  .display { font-size: clamp(2.6rem, 5vw, 4.75rem); line-height: 1; }
+  .h2 { font-size: clamp(2rem, 3.7vw, 3.3rem); line-height: 1.06; }
+  .h3 { font-size: clamp(1.4rem, 1.9vw, 1.7rem); line-height: 1.12; font-stretch: 106%; letter-spacing: -0.012em; }
+  .lead { font-size: clamp(1.15rem, 1.5vw, 1.35rem); line-height: 1.5; color: var(--moss); }
+
+  /* The small capital voice used for labels and data. */
+  .label {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--leaf);
+  }
+
+  /* Highlighter. Reserved for named proof, so yellow always means "you can check this". */
+  .hl {
+    background: var(--sun);
+    padding: 0.02em 0.18em;
+    margin: 0 -0.06em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    border: 2px solid var(--canopy);
+    border-radius: var(--round);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+  }
+  .btn-solid { background: var(--canopy); color: var(--paper); }
+  .btn-solid:hover { background: var(--leaf); border-color: var(--leaf); }
+  .btn-line { color: var(--canopy); }
+  .btn-line:hover { background: var(--sprout); }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    font-weight: 600;
+    color: var(--canopy);
+    text-decoration: underline;
+    text-decoration-color: var(--leaf);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+    transition: text-decoration-color 0.16s ease, color 0.16s ease;
+  }
+  .link:hover { color: var(--leaf); text-decoration-thickness: 3px; }
+  .link svg { flex: none; transition: translate 0.2s ease; }
+  .link:hover svg { translate: 4px 0; }
+
+  .skip {
+    position: absolute;
+    left: 1rem;
+    top: -6rem;
+    z-index: 60;
+    padding: 0.75rem 1.1rem;
+    background: var(--canopy);
+    color: var(--paper);
+    font-weight: 700;
+    border-radius: var(--round);
+  }
+  .skip:focus { top: calc(var(--compare-h, 0px) + 0.75rem); }
+
+  /* ---------- Header: floats over the opening scene ---------- */
+  .site-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem var(--gutter) 0;
+  }
+  /* The header's mark. At header size the full logo's lettering is too small to read, so the emblem
+     stands alone and the name and the logo's own line are set in this page's type. The whole logo is
+     shown once, in the footer, large enough to read. */
+  .brand { display: inline-flex; align-items: center; gap: 0.7rem; flex: none; border-radius: 0.5rem; }
+  .brand-mark { flex: none; width: 3.25rem; height: 3.25rem; }
+  .brand-text { display: grid; gap: 0.32rem; }
+  .brand-name { font-family: var(--font-display); font-weight: 700; font-stretch: var(--display-stretch); font-size: 1.4rem; letter-spacing: var(--display-tracking); color: var(--canopy); line-height: 1; white-space: nowrap; }
+  .brand-line { font-family: var(--font-sans); font-weight: 800; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--leaf); line-height: 1; white-space: nowrap; }
+  @media (min-width: 75rem) {
+    .brand { gap: 0.8rem; }
+    .brand-mark { width: 3.75rem; height: 3.75rem; }
+  }
+  /* Between the menu appearing and the header having room for both, the emblem stands alone. */
+  @media (min-width: 64rem) and (max-width: 72.99rem) { .brand-text { display: none; } }
+  @media (max-width: 26rem) {
+    .brand { gap: 0.55rem; }
+    .brand-mark { width: 2.875rem; height: 2.875rem; }
+    .brand-name { font-size: clamp(1rem, 4.7vw, 1.4rem); }
+    .brand-line { font-size: clamp(0.58rem, 2.8vw, 0.75rem); }
+  }
+  @media (max-width: 21.99rem) { .brand-text { display: none; } }
+  .site-nav { display: none; align-items: center; gap: 0.25rem; }
+  @media (min-width: 64rem) {
+    .site-nav { display: flex; }
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 0.9rem;
+    border-radius: var(--round);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    transition: background-color 0.16s ease;
+  }
+  .nav-link:hover { background: var(--sprout); }
+
+  details.menu > summary { list-style: none; cursor: pointer; }
+  details.menu > summary::-webkit-details-marker { display: none; }
+  details.menu[open] .menu-open, details.menu:not([open]) .menu-close { display: none; }
+  .menu-panel {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    top: calc(100% + 0.5rem);
+    padding: 0.5rem;
+    background: var(--paper);
+    border: 2px solid var(--canopy);
+    border-radius: 1.25rem;
+  }
+  .menu-panel .nav-link { width: 100%; }
+  @media (min-width: 64rem) {
+    details.menu { display: none; }
+  }
+
+  /* ---------- The story: one sample, one batch, one programme, and what the map shows ---------- */
+  .story { position: relative; }
+
+  /* Baseline (no WebGL, reduced motion, or no JavaScript): each step is text beside a still image. */
+  .stage { display: none; }
+  .step {
+    display: grid;
+    align-items: center;
+    gap: 2rem 4rem;
+    padding: 3.5rem var(--gutter);
+  }
+  .step-hero { padding-top: 9.5rem; }
+  .step-art { width: 100%; max-width: 34rem; height: auto; border-radius: 1.25rem; justify-self: center; }
+  @media (min-width: 56rem) {
+    .step { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
+  .step-text > span.label { display: block; margin-bottom: 0.9rem; }
+  .step-text .h2 { font-size: clamp(1.9rem, 3.3vw, 2.9rem); }
+  .cue { display: none; }
+
+  /* Live: the scene is pinned and the steps scroll over it. */
+  html.story-live .stage {
+    display: block;
+    position: sticky;
+    top: var(--compare-h, 0px);
+    height: var(--stage-h);
+    overflow: clip;
+  }
+  html.story-live .steps {
+    position: relative;
+    z-index: 2;
+    margin-top: calc(var(--stage-h) * -1);
+    pointer-events: none;
+  }
+  html.story-live .step {
+    display: flex;
+    align-items: flex-end;
+    min-height: var(--stage-h);
+    padding: 0;
+  }
+  html.story-live .step-art { display: none; }
+  html.story-live .step-text {
+    position: relative;
+    width: 100%;
+    padding: 1.5rem var(--gutter) 2.5rem;
+    background: var(--mist);
+    pointer-events: auto;
+  }
+  /* On small screens the text rides up over the scene on a band of page colour with a soft top edge. */
+  html.story-live .step-text::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 5rem;
+    background: linear-gradient(to top, var(--mist), transparent);
+    pointer-events: none;
+  }
+  html.story-live .cue { display: inline-flex; }
+  /* Small screens open on the card itself: the hero block is taller than the stage, so only the
+     headline and buttons sit at the foot of the first screen and the rest follows as you scroll. */
+  @media not ((min-width: 56.25rem) and (min-aspect-ratio: 21/20)) {
+    html.story-live .step-hero { min-height: calc(var(--stage-h) + 19rem); }
+    html.story-live .step-hero .step-text { display: flex; flex-direction: column; align-items: flex-start; }
+    html.story-live .step-hero .hero-actions { order: -1; margin-top: 1.5rem; }
+    html.story-live .step-hero .display { order: -2; }
+  }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    html.story-live .step { align-items: center; padding-inline: var(--gutter); }
+    html.story-live .step-hero { padding-top: 5rem; }
+    html.story-live .step-text { width: auto; max-width: var(--text-w); padding: 0; background: none; }
+    html.story-live .step-text > :not(.display) { max-width: calc(var(--text-w) * 0.79); }
+    html.story-live .step-text::before { content: none; }
+  }
+
+  .stage-scene { position: absolute; inset: 0; opacity: 0; transition: opacity 0.7s ease; }
+  html.scene-ready .stage-scene { opacity: 1; }
+  .stage-scene canvas, .blank-card canvas { display: block; width: 100%; height: 100%; }
+  /* Keeps the text column readable whatever the scene is doing behind it. */
+  .stage-veil { position: absolute; inset: 0; pointer-events: none; display: none; }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    /* The veil ends where the text column does, wherever in the window that is. */
+    .stage-veil {
+      display: block;
+      --veil-from: calc(var(--gutter) + var(--text-w) * 0.82);
+      --veil-to: calc(var(--gutter) + var(--text-w) + 2.5rem);
+      background: linear-gradient(90deg, var(--mist) 0, var(--mist) var(--veil-from), transparent var(--veil-to));
+    }
+    @supports (color: color-mix(in srgb, red, red)) {
+      .stage-veil {
+        background:
+          linear-gradient(180deg, color-mix(in srgb, var(--mist) 92%, transparent) 0, transparent 9.5rem),
+          linear-gradient(90deg, var(--mist) 0, color-mix(in srgb, var(--mist) 97%, transparent) var(--veil-from), transparent var(--veil-to));
+      }
+    }
+  }
+  /* The column the rest of the page keeps to, marked out on the stage so the scene can place its subject within it. */
+  .stage-frame { position: absolute; inset-block: 0; left: var(--gutter); right: var(--gutter); pointer-events: none; }
+
+  .cue { align-items: center; gap: 0.6rem; margin-top: 1.75rem; color: var(--moss); }
+  /* On short, wide screens the scroll cue would sit on top of the scale rail, which says the same thing. */
+  @media (min-width: 56.25rem) and (max-height: 52rem) { html.story-live .cue { display: none; } }
+  .cue svg { flex: none; }
+
+  /* Scale rail: which of the three scales the camera is at. */
+  .rail {
+    position: absolute;
+    right: 0.75rem;
+    top: 18%;
+    z-index: 3;
+    display: grid;
+    gap: 1.1rem;
+  }
+  .rail a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+  }
+  .rail a::after {
+    content: "";
+    width: 0.7rem;
+    height: 0.7rem;
+    flex: none;
+    border-radius: 50%;
+    border: 2px solid var(--canopy);
+    background: var(--mist);
+    transition: background-color 0.2s ease, scale 0.2s ease;
+  }
+  .rail a[aria-current]::after { background: var(--sun); scale: 1.25; }
+  .rail span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .rail {
+      left: var(--gutter);
+      right: auto;
+      top: auto;
+      bottom: 2.1rem;
+      grid-auto-flow: column;
+      gap: 0;
+    }
+    .rail a { flex-direction: row-reverse; justify-content: flex-start; gap: 0.6rem; padding-right: 3.4rem; min-height: 2.75rem; }
+    .rail a:last-child { padding-right: 0; }
+    .rail span { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
+    /* The line to the next stop fills as the camera travels. */
+    .rail a:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      right: 0.6rem;
+      top: 50%;
+      width: 2.2rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--canopy) calc(var(--fill, 0) * 100%), var(--line) 0);
+    }
+    .rail a:nth-child(1) { --fill: clamp(0, calc(var(--p, 0) * 2), 1); }
+    .rail a:nth-child(2) { --fill: clamp(0, calc(var(--p, 0) * 2 - 1), 1); }
+  }
+
+  /* The places we have worked, each pinned where it is: a dot on the place itself, a short leader,
+     and a chip that names it and says what is there. */
+  .places { position: absolute; inset: 0; z-index: 2; margin: 0; padding: 0; list-style: none; opacity: 0; pointer-events: none; --lead: 1.1rem; }
+  .places li { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+  .places li::before { content: ""; position: absolute; left: 0; top: -1px; width: var(--lead); height: 2px; background: var(--canopy); }
+  .places li::after { content: ""; position: absolute; left: -0.3rem; top: -0.3rem; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--sun); border: 2px solid var(--canopy); }
+  .places b {
+    position: absolute;
+    left: var(--lead);
+    top: 0;
+    translate: 0 -50%;
+    padding: 0.14rem 0.5rem;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--canopy);
+    background: var(--paper);
+    border: 1.5px solid var(--canopy);
+    border-radius: var(--round);
+  }
+  .places small { display: none; font-size: 0.75rem; font-weight: 600; color: var(--moss); }
+  .places li[data-side="left"]::before { left: auto; right: 0; }
+  .places li[data-side="left"] b { left: auto; right: var(--lead); }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .places { --lead: 1.9rem; }
+    .places b { padding: 0.3rem 0.7rem 0.36rem; font-size: 0.875rem; border-radius: 0.85rem; }
+    .places small { display: block; }
+  }
+
+  /* Names of the card's parts, each on a short leader to the part itself, shown over the sample. */
+  .parts { position: absolute; inset: 0; z-index: 1; margin: 0; padding: 0; list-style: none; opacity: 0; pointer-events: none; --lead: 2.6rem; }
+  .parts li { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+  .parts li::before { content: ""; position: absolute; right: 0; top: -1px; width: var(--lead); height: 2px; background: var(--canopy); }
+  .parts li::after { content: ""; position: absolute; left: -0.3rem; top: -0.3rem; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--sun); border: 2px solid var(--canopy); }
+  .parts b {
+    position: absolute;
+    right: var(--lead);
+    top: -0.9rem;
+    padding: 0.22rem 0.55rem;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    color: var(--canopy);
+    background: var(--paper);
+    border: 1.5px solid var(--canopy);
+    border-radius: var(--round);
+  }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .parts { --lead: 5.5rem; }
+    .parts b { font-size: 0.875rem; }
+  }
+
+  /* What we do, beside the map that shows where: a short list, one kind of work to a row. */
+  .does { display: grid; font-size: 1rem; line-height: 1.45; border-top: 2px solid var(--canopy); }
+  .does > div { display: grid; grid-template-columns: 6.4rem minmax(0, 1fr); gap: 0.9rem; align-items: baseline; padding: 0.6rem 0; border-bottom: 1px solid var(--line); }
+  .does dt { font-weight: 800; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--leaf); }
+  .does dd { color: var(--moss); }
+  /* A short, wide window: the list closes up so it stays clear of the scale rail under it. */
+  @media (min-width: 56.25rem) and (max-height: 44rem) {
+    .does > div { padding: 0.42rem 0; }
+    html.story-live #programme .link { margin-top: 0.5rem; }
+  }
+  @media not ((min-width: 56.25rem) and (min-aspect-ratio: 21/20)) {
+    /* On a small screen the map has the top of the stage, so this step's text is kept short too. */
+    html.story-live #programme .step-text { padding-top: 0.75rem; padding-bottom: 1.5rem; }
+    html.story-live #programme .step-text::before { height: 2rem; }
+    html.story-live #programme .h2 { font-size: 1.55rem; }
+    html.story-live #programme .does { margin-top: 0.9rem; }
+    /* On a short screen the list would cover the map it is about. So, like the hero, this step is
+       taller than the stage: the map arrives with the heading under it, and the rest follows. */
+    @media (max-height: 46rem) {
+      html.story-live #programme { min-height: calc(var(--stage-h) + 9.5rem); }
+    }
+    .does { font-size: 0.9375rem; line-height: 1.4; }
+    .does > div { display: block; padding: 0.4rem 0; }
+    .does dt { display: inline; margin-right: 0.4rem; }
+    .does dd { display: inline; }
+  }
+
+  /* ---------- The map: choosing what it shows, and naming a state ---------- */
+  .seg { display: inline-grid; grid-auto-flow: column; gap: 0.2rem; padding: 0.25rem; background: var(--paper); border: 2px solid var(--canopy); border-radius: var(--round); }
+  .seg label { position: relative; display: block; }
+  .seg input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+  .seg span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: 0 1.05rem;
+    border-radius: var(--round);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.15;
+    white-space: nowrap;
+    transition: background-color 0.16s ease, color 0.16s ease;
+  }
+  .seg label:hover span { background: var(--sprout); }
+  .seg input:checked + span { background: var(--canopy); color: var(--paper); }
+  .seg input:focus-visible + span { outline: 3px solid var(--canopy); outline-offset: 3px; box-shadow: 0 0 0 3px var(--sun); }
+  @media (max-width: 30rem) {
+    .seg { display: grid; grid-template-columns: 1fr 1.2fr 0.9fr; width: 100%; }
+    .seg span { padding: 0 0.3rem; font-size: 0.9375rem; }
+  }
+  /* What the map says: a sentence and a key for the whole country, or the facts for one state. The
+     space is held for either, so pointing at a state does not make the page jump. */
+  .map-info { min-height: 10.5rem; margin-top: 1.1rem; }
+  .map-readout { color: var(--moss); font-size: 1.0625rem; line-height: 1.5; }
+  .map-key { display: grid; gap: 0.35rem; margin-top: 0.8rem; font-size: 0.9375rem; line-height: 1.35; }
+  .map-key li { display: grid; grid-template-columns: 1.1rem minmax(0, 1fr); align-items: start; gap: 0.6rem; }
+  .key { width: 1.1rem; height: 1.1rem; margin-top: 0.08rem; border: 1.5px solid var(--canopy); border-radius: 0.3rem; background: var(--meadow); }
+  .key-strong { background: var(--sun); }
+  .key-pale { background: var(--sun); }
+  .key-faint { background: var(--meadow); }
+  @supports (color: color-mix(in srgb, red, red)) {
+    .key-strong { background: color-mix(in srgb, var(--sun) 90%, var(--meadow)); }
+    .key-pale { background: color-mix(in srgb, var(--sun) 38%, var(--meadow)); }
+    .key-faint { background: color-mix(in srgb, var(--sun) 9%, var(--meadow)); }
+  }
+  .state-title { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; line-height: 1.15; letter-spacing: var(--display-tracking); }
+  .state-facts { display: grid; gap: 0.45rem; margin-top: 0.6rem; font-size: 0.9375rem; line-height: 1.4; }
+  .state-facts > div { display: grid; grid-template-columns: 6.6rem minmax(0, 1fr); gap: 0.75rem; align-items: baseline; }
+  .state-facts dt { font-weight: 800; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--leaf); }
+  .state-facts dd { color: var(--moss); }
+  .state-facts .is-showing dd { color: var(--canopy); font-weight: 600; }
+
+  /* Only the live map can be pointed at, so only then is the reader told that it can. */
+  .map-hint { display: none; margin-top: 0.5rem; font-size: 0.9375rem; line-height: 1.4; color: var(--moss); }
+  html.story-live .map-hint { display: block; }
+  .hint-tap { display: none; }
+  @media (hover: none) {
+    .hint-point { display: none; }
+    .hint-tap { display: inline; }
+  }
+  .map-sources { margin-top: 0.3rem; }
+  .map-sources > summary { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; cursor: pointer; list-style: none; }
+  .map-sources > summary::-webkit-details-marker { display: none; }
+  .map-sources > summary::before {
+    content: "";
+    width: 0.6rem;
+    height: 0.6rem;
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+  }
+  .map-sources[open] > summary::before { background-size: 100% 2px, 0 0; }
+  .map-sources > p { max-width: 34rem; padding-bottom: 0.5rem; font-size: 0.9375rem; line-height: 1.5; color: var(--moss); }
+  .map-sources a { text-decoration: underline; text-decoration-color: var(--leaf); text-underline-offset: 3px; }
+  /* On a small screen the map has the top of the stage and these controls the rest, so they are kept
+     short: no label over the heading, a smaller heading, and each fact about a state run on after
+     its heading. */
+  @media not ((min-width: 56.25rem) and (min-aspect-ratio: 21/20)) {
+    html.story-live #map .step-text { padding-top: 0.75rem; padding-bottom: 1.5rem; }
+    html.story-live #map .step-text::before { height: 2rem; }
+    html.story-live #map .step-text > .label { display: none; }
+    html.story-live #map .h2 { font-size: 1.55rem; }
+    html.story-live #map fieldset { margin-top: 0.9rem; }
+    .map-info { min-height: 10.6rem; margin-top: 0.9rem; }
+    .map-readout { font-size: 1rem; line-height: 1.45; }
+    .map-key { margin-top: 0.6rem; }
+    .state-title { font-size: 1.3rem; }
+    .state-facts { gap: 0.3rem; margin-top: 0.4rem; }
+    .state-facts > div { display: block; }
+    .state-facts dt { display: inline; margin-right: 0.4rem; }
+    .state-facts dd { display: inline; }
+    .map-hint { margin-top: 0.3rem; font-size: 0.875rem; }
+    .map-sources { margin-top: 0; }
+  }
+
+  /* The states' borders, drawn over the cards while the reader chooses what the map shows. Each
+     outline also takes the pointer, so a state is picked out by its own shape. */
+  .map-lines { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; overflow: visible; opacity: 0; pointer-events: none; }
+  .map-lines path { fill: transparent; stroke: var(--canopy); stroke-width: 1; stroke-opacity: 0.38; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: none; transition: stroke-opacity 0.15s ease, stroke-width 0.15s ease; }
+  .map-lines.is-live path { pointer-events: all; cursor: pointer; }
+  .map-lines path.is-on { stroke-width: 2.5; stroke-opacity: 1; }
+
+  /* The states' names, each at the middle of its state. Shown for the states a layer marks fully,
+     and, in a chip, for the state that is picked out. */
+  .state-names { position: absolute; inset: 0; z-index: 2; margin: 0; padding: 0; list-style: none; opacity: 0; pointer-events: none; }
+  .state-names li { position: absolute; left: 0; top: 0; width: 0; height: 0; opacity: 0; }
+  .state-names b {
+    position: absolute;
+    left: 0;
+    top: 0;
+    translate: -50% -50%;
+    padding: 0.12rem 0.5rem;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--canopy);
+    border: 1.5px solid transparent;
+    border-radius: var(--round);
+    text-shadow: 0 0 3px var(--paper), 0 0 3px var(--paper), 0 0 6px var(--paper);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+  .state-names li.is-on { z-index: 1; }
+  .state-names li.is-on b { background: var(--paper); border-color: var(--canopy); text-shadow: none; }
+  @media not ((min-width: 56.25rem) and (min-aspect-ratio: 21/20)) {
+    /* On a small screen the map is small, so its names are too. */
+    .state-names b { padding: 0.06rem 0.35rem; font-size: 0.6875rem; line-height: 1.2; }
+  }
+  html.story-live .stage { cursor: default; }
+
+  /* ---------- Evidence ---------- */
+  .proof { display: grid; border-top: 2px solid var(--canopy); }
+  .proof > li { padding: 1.5rem 0 1.75rem; border-bottom: 1px solid var(--line); }
+  .proof .h3 { margin-bottom: 0.6rem; }
+  .proof p { color: var(--moss); max-width: 28rem; }
+  @media (min-width: 48rem) {
+    .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3rem; }
+  }
+  @media (min-width: 75rem) {
+    .proof { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 0; }
+    .proof > li { padding: 1.6rem 1.75rem 0.5rem 0; border-bottom: 0; }
+    .proof > li + li { padding-left: 1.75rem; border-left: 1px solid var(--line); }
+  }
+
+  /* ---------- Tests ---------- */
+  .tests { border-bottom: 1px solid var(--line); }
+  .test { display: grid; gap: 0.75rem 3rem; padding: 1.9rem 0; border-top: 1px solid var(--line); }
+  .test:first-child { border-top: 2px solid var(--canopy); }
+  .test-what { color: var(--moss); }
+  .test-what strong { color: var(--canopy); font-weight: 600; }
+  @media (min-width: 56rem) {
+    .test { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+    .test > .about { grid-column: 2; }
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.75rem;
+    padding: 0 0.6rem;
+    border: 1.5px solid var(--canopy);
+    border-radius: var(--round);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--canopy);
+  }
+  .tag-proof { background: var(--sun); }
+  .about > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--leaf);
+  }
+  .about > summary::-webkit-details-marker { display: none; }
+  .about > summary::before {
+    content: "";
+    width: 0.7rem;
+    height: 0.7rem;
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+    transition: rotate 0.2s ease;
+  }
+  .about[open] > summary::before { background-size: 100% 2px, 0 0; }
+  .about > summary:hover { color: var(--canopy); }
+  .about > p { max-width: 44rem; padding: 0.25rem 0 0.5rem; color: var(--moss); font-size: 1.0625rem; }
+
+  /* ---------- REASSURED ---------- */
+  .word { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); margin-inline: -0.4vw; }
+  .word button {
+    padding: 0.08em 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 9.8vw, 9rem);
+    font-weight: 700;
+    line-height: 0.92;
+    border-radius: 0.12em;
+    letter-spacing: -0.03em;
+    text-align: center;
+    color: var(--canopy);
+    cursor: pointer;
+    transition: background-color 0.14s ease;
+  }
+  .word button:hover, .word button.is-on { background: var(--sun); }
+  .word button:focus-visible { outline-offset: -3px; box-shadow: none; }
+
+  .criteria { display: grid; gap: 0 3rem; counter-reset: none; }
+  @media (min-width: 44rem) { .criteria { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 72rem) { .criteria { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .criteria > li {
+    display: grid;
+    grid-template-columns: 2.1rem minmax(0, 1fr);
+    padding: 1.15rem 0 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  .criteria .crit-letter {
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--leaf);
+  }
+  .criteria h3 { font-size: 1.3rem; line-height: 1.2; font-stretch: 104%; letter-spacing: -0.008em; }
+  .criteria h3 span { transition: background-color 0.14s ease; }
+  .criteria li.is-on h3 span { background: var(--sun); box-shadow: 0.2em 0 0 var(--sun), -0.2em 0 0 var(--sun); }
+  .criteria p { margin-top: 0.3rem; color: var(--moss); font-size: 1.0625rem; line-height: 1.45; }
+
+  /* ---------- Who we work with ---------- */
+  .audiences { display: grid; gap: 2rem 0; }
+  .audiences > li { padding-top: 1.4rem; border-top: 2px solid var(--canopy); }
+  .audiences p { margin-top: 0.6rem; color: var(--moss); max-width: 24rem; }
+  @media (min-width: 56rem) {
+    .audiences { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .audiences > li { padding-right: 2.5rem; }
+  }
+  .notice {
+    display: grid;
+    gap: 0.4rem 1.5rem;
+    padding: 1.4rem 1.6rem;
+    background: var(--paper);
+    border: 2px solid var(--canopy);
+    border-radius: 1.25rem;
+  }
+  @media (min-width: 48rem) { .notice { grid-template-columns: auto minmax(0, 1fr); align-items: baseline; } }
+
+  /* ---------- Programmes ---------- */
+  .fieldwork { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
+  .fieldwork img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 1rem; background: var(--sprout); }
+  .fieldwork figcaption { margin-top: 0.6rem; }
+  @media (min-width: 40rem) {
+    .fieldwork { gap: 1.25rem; }
+    .fieldwork img { aspect-ratio: 5 / 6; }
+  }
+
+  /* ---------- Contact ---------- */
+  .actions { border-bottom: 1px solid var(--line); }
+  .actions a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4rem;
+    padding: 0.6rem 0.75rem 0.6rem 0;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-weight: 600;
+    font-stretch: 106%;
+    letter-spacing: -0.012em;
+    line-height: 1.15;
+    transition: background-color 0.16s ease, padding-left 0.2s ease;
+  }
+  .actions li:first-child a { border-top: 2px solid var(--canopy); }
+  .actions a:hover { background: var(--sprout); padding-left: 0.75rem; }
+  .actions svg { flex: none; }
+  .blank-card { position: relative; width: 100%; max-width: 26rem; margin-inline: auto; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 1.25rem; }
+  .blank-card img { width: 100%; height: 100%; object-fit: cover; }
+  html.story-live .blank-card img { display: none; }
+
+  /* ---------- Footer ---------- */
+  .site-footer { background: var(--paper); border-top: 2px solid var(--canopy); }
+  .foot-link { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 500; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .foot-link:hover { color: var(--leaf); text-decoration-color: var(--leaf); }
+  .credits > summary { cursor: pointer; list-style: none; }
+  .credits > summary::-webkit-details-marker { display: none; }
+  .credits a { text-decoration: underline; text-underline-offset: 3px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .rise { animation: sl-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 90ms + 80ms); }
+}
+@keyframes sl-rise { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: none; } }

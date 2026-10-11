@@ -387,6 +387,54 @@
     ],
   };
 
+  // 09 · Drop is Design 03 with the sample falling from above, a flat map that the reader can
+  // question, rounded type and leaf green ink. Its variations offer Design 03's own type and ink back.
+  DESIGNS.drop = {
+    label: '09 · Drop (3D)',
+    file: 'drop.html',
+    controls: [
+      {
+        key: 'type',
+        label: 'Typography',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Quicksand + Nunito (as designed)' },
+          {
+            id: 'scale',
+            label: 'Anek Latin, wide (from Scale)',
+            fonts: 'family=Anek+Latin:wdth,wght@75..125,100..800',
+            vars: { '--ff-display': '"Anek Latin"', '--ff-body': '"Anek Latin"', '--display-stretch': '112%', '--display-weight': '640', '--display-tracking': '-0.022em' },
+          },
+          {
+            id: 'sample-card',
+            label: 'Familjen Grotesk (from Sample Card)',
+            fonts: FONTS_SAMPLE_CARD,
+            vars: { '--ff-display': '"Familjen Grotesk"', '--ff-body': '"Familjen Grotesk"', '--display-weight': '600' },
+          },
+        ],
+      },
+      {
+        key: 'bg',
+        label: 'Background',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Pale green (as designed)', swatch: '#F1F6DD' },
+          { id: 'yellow', label: 'Pale yellow', swatch: '#FBF6D2', vars: { '--mist': '#FBF6D2', '--paper': '#FFFDF2', '--sprout': '#F1E7A6', '--meadow': '#C3D37C' } },
+          { id: 'white', label: 'Green-white', swatch: '#F8FAF0', vars: { '--mist': '#F8FAF0', '--paper': '#FFFFFF', '--sprout': '#E3EDC4' } },
+        ],
+      },
+      {
+        key: 'accent',
+        label: 'Ink',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Leaf green (as designed)', swatch: '#1F5E2E' },
+          { id: 'deep', label: 'Deep green (from Scale)', swatch: '#13301D', vars: { '--canopy': '#13301D', '--moss': '#44604A' } },
+        ],
+      },
+    ],
+  };
+
   var config = DESIGNS[designId];
   if (!config) return;
 

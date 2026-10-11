@@ -36,7 +36,7 @@ const sickleNote = (id) => {
 };
 const LAYERS = {
   sickle: { raised: new Set(SICKLE_BELT), low: new Set(SICKLE.filter((id) => !SICKLE_BELT.includes(id))), wash: 0, note: sickleNote },
-  thal: { raised: new Set(THAL), wash: 0.09, note: (id) => (THAL.includes(id) ? 'Higher carrier frequency reported in parts.' : '') },
+  thal: { raised: new Set(THAL), wash: 0.09, note: (id) => (THAL.includes(id) ? 'Higher carrier frequencies reported.' : '') },
   work: { raised: new Set(Object.keys(WORK_NOTES)), wash: 0, note: (id) => WORK_NOTES[id] || '' },
 };
 
