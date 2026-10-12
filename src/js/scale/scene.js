@@ -864,7 +864,20 @@ function init(root) {
       if (scrolled >= tops[k]) value = k + clamp((scrolled - tops[k]) / Math.max(1, tops[k + 1] - tops[k]), 0, 1);
     }
     target = clamp(value, 0, STOPS.length - 1);
+    setFloor();
     wake();
+  }
+
+  // On a wide screen the scale rail lies under the text column, and each step's text scrolls past
+  // it. So the text has a floor just above the rail: every step is told where that line is, measured
+  // from the top of its own text, and the stylesheet fades the text out below it.
+  const stepTexts = steps.map((step) => step.querySelector('.step-text')).filter(Boolean);
+  function setFloor() {
+    const floor = rail && view.layout === WIDE ? rail.getBoundingClientRect().top - 8 : null;
+    stepTexts.forEach((text) => {
+      if (floor === null) text.style.removeProperty('--floor');
+      else text.style.setProperty('--floor', `${Math.round(floor - text.getBoundingClientRect().top)}px`);
+    });
   }
 
   const visible = { story: false, blank: false };

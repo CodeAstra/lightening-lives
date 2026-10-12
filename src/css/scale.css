@@ -306,9 +306,23 @@
     html.story-live .step-hero .display { order: -2; }
   }
   @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
-    html.story-live .step { align-items: center; padding-inline: var(--gutter); }
+    /* The scale rail lies at the foot of this column, and the steps scroll past it. So the text has
+       a floor just above the rail: a step at rest stands clear of it, and text below it fades out
+       and cannot be clicked. The scene sets --floor, measured from the top of each step's text. The
+       half-rem of padding keeps focus rings inside what the fade leaves visible. */
+    html.story-live .step { align-items: center; padding-inline: var(--gutter); padding-bottom: 5.5rem; }
     html.story-live .step-hero { padding-top: 5rem; }
-    html.story-live .step-text { width: auto; max-width: var(--text-w); padding: 0; background: none; }
+    html.story-live .step-text {
+      width: auto;
+      max-width: calc(var(--text-w) + 1rem);
+      margin: -0.5rem;
+      padding: 0.5rem;
+      background: none;
+      --fade: linear-gradient(to bottom, #000 calc(var(--floor, 100000px) - 2rem), transparent var(--floor, 100000px));
+      -webkit-mask-image: var(--fade);
+      mask-image: var(--fade);
+      clip-path: inset(0 0 calc(100% - var(--floor, 100000px)) 0);
+    }
     html.story-live .step-text > :not(.display) { max-width: calc(var(--text-w) * 0.79); }
     html.story-live .step-text::before { content: none; }
   }
@@ -340,6 +354,11 @@
   .cue { align-items: center; gap: 0.6rem; margin-top: 1.75rem; color: var(--moss); }
   /* On short, wide screens the scroll cue would sit on top of the scale rail, which says the same thing. */
   @media (min-width: 56.25rem) and (max-height: 52rem) { html.story-live .cue { display: none; } }
+  /* In a short, wide window the opening block has to fit between the header and the scale rail. */
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) and (max-height: 46rem) {
+    html.story-live .step-hero .display { font-size: clamp(2.4rem, min(5vw, 7.4vh), 4.75rem); }
+    html.story-live .step-hero .hero-lead { font-size: 1.0625rem; }
+  }
   .cue svg { flex: none; }
 
   /* Scale rail: which of the three scales the camera is at. */

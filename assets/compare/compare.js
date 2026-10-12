@@ -435,6 +435,67 @@
     ],
   };
 
+  // 10 · Reel is Design 09 without its scroll-driven story: the same card, type and colours, opening
+  // on a film that plays by itself, then an ordinary page. It offers the same variations as Design 09,
+  // and a choice of how quickly the film runs.
+  DESIGNS.reel = {
+    label: '10 · Reel (3D film)',
+    file: 'reel.html',
+    controls: [
+      {
+        key: 'type',
+        label: 'Typography',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Quicksand + Nunito (as designed)' },
+          {
+            id: 'scale',
+            label: 'Anek Latin, wide (from Scale)',
+            fonts: 'family=Anek+Latin:wdth,wght@75..125,100..800',
+            vars: { '--ff-display': '"Anek Latin"', '--ff-body': '"Anek Latin"', '--display-stretch': '112%', '--display-weight': '640', '--display-tracking': '-0.022em' },
+          },
+          {
+            id: 'sample-card',
+            label: 'Familjen Grotesk (from Sample Card)',
+            fonts: FONTS_SAMPLE_CARD,
+            vars: { '--ff-display': '"Familjen Grotesk"', '--ff-body': '"Familjen Grotesk"', '--display-weight': '600' },
+          },
+        ],
+      },
+      {
+        key: 'bg',
+        label: 'Background',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Pale green (as designed)', swatch: '#F1F6DD' },
+          { id: 'yellow', label: 'Pale yellow', swatch: '#FBF6D2', vars: { '--mist': '#FBF6D2', '--paper': '#FFFDF2', '--sprout': '#F1E7A6', '--meadow': '#C3D37C' } },
+          { id: 'white', label: 'Green-white', swatch: '#F8FAF0', vars: { '--mist': '#F8FAF0', '--paper': '#FFFFFF', '--sprout': '#E3EDC4' } },
+        ],
+      },
+      {
+        key: 'accent',
+        label: 'Ink',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Leaf green (as designed)', swatch: '#1F5E2E' },
+          { id: 'deep', label: 'Deep green (from Scale)', swatch: '#13301D', vars: { '--canopy': '#13301D', '--moss': '#44604A' } },
+        ],
+      },
+      // How long the opening film takes. --film-pace is the share of its designed length; choosing one replays the film.
+      // (A link saved with the earlier ids, pace=quick or pace=slow, shows the film as designed: quick is what became the design.)
+      {
+        key: 'pace',
+        label: 'Film',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'One take, 6.5 s (as designed)' },
+          { id: 'quicker', label: 'Quicker, 5.5 s', vars: { '--film-pace': '0.85' } },
+          { id: 'unhurried', label: 'Unhurried, 8 s', vars: { '--film-pace': '1.25' } },
+        ],
+      },
+    ],
+  };
+
   var config = DESIGNS[designId];
   if (!config) return;
 
