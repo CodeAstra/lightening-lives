@@ -141,24 +141,13 @@ Lightening Lives runs awareness and counselling programmes, mostly on behalf of 
 - **Media coverage:** newspaper articles and media mentions, with images and links.
 - **Guidance for clinicians:** the client is considering content on interpreting test results, possibly as a separate interactive "playground". Not yet decided.
 
-## Brand
-
-The client's only visual preference is lightness; palette, typography, layout and imagery style are the designer's choice.
-
-- **Logo (file provided separately):** a yellow sun with orange rays, a green tree with a human figure at its centre, "LIGHTENING LIVES" curved beneath in brown, and "Every Life Matters" below in maroon.
-- **Taglines in use:** "Every Life Matters" (with the logo) and "Innovate • Diagnose • Transform Lives" (on campaign materials).
-- **Colour preference:** light and approachable, in keeping with the name. Pastel shades or colours drawn from the logo both suit. The current website's blue background should go.
-- **Tone:** a confident, professional healthcare technology company: clear, evidence-led and warm. The current website reads like a charity, which the client wants to move away from.
-- **Imagery:** real field photos will be supplied. People in them must not be identifiable.
-- **Reference material:** the SMA campaign poster (provided) shows existing messaging and icon style. Don't reuse its "single drop of blood" lines (see Content guardrails).
-
 ## Content guardrails
 
 These are rules about what the website says, not how it looks; they protect the company's credibility with clinicians, programme officers and regulators.
 
 ### Do
 
-- Describe Lightening Lives as a healthcare technology company that develops tests, not as a charity, NGO, diagnostics lab or "diagnostic tool".
+- Describe Lightening Lives as a healthcare technology company that innovates, diagnoses and transforms lives. It is not as a charity, NGO, diagnostics lab or "diagnostic tool".
 - Name the sample precisely: "dried blood spot" or "a few drops of blood on a card".
 - Put proof beside claims: ICMR validation, the CSIR-CCMB collaboration, national programmes.
 - Make clear that tests are for institutions only.
@@ -171,38 +160,6 @@ These are rules about what the website says, not how it looks; they protect the 
 - Use "single drop" or "one drop of blood", or hype such as "endless possibilities" or "revolutionary". This framing echoes Theranos, which claimed hundreds of tests from a few drops of blood on an unproven device; precise, proven language keeps clear of that association.
 - Call sample collection "painless"; a finger prick isn't. Use "minimally invasive".
 - Use the ICMR logo or partner logos without permission.
+- Do not push the kit narrative; focus on innovations and diagnostic capabilities without needing to emphasize the kit itself.
+- It shouldn't sound like a kit selling company in the landing page.
 
-### Claims to confirm before publishing
-
-- **Tests or kits:** the client says it sells tests, not kits, but also mentions "request a kit" and calls LitLife™-SCA a kit.
-- **LitLife™-SCA:** ™ or ®; whether it detects disease, carrier status or both; exact wording of the ICMR validation.
-- **Test scope:** what the thalassaemia, DMD and coagulation tests detect, and whether all use dried blood spots.
-- **Usability claims:** "no specialised training, equipment or laboratory" must match each test's instructions for use and regulatory status.
-
-## Content still to come
-
-Use placeholders (lorem ipsum text, placeholder images and logos) for anything not yet available; the client will swap in the real content later.
-
-| Content | Status | Placeholder guidance |
-| --- | --- | --- |
-| Logo | Available | Use the provided file |
-| Contact details and addresses | Available | Use the details above; keep them easy to edit |
-| Field photos (Nandurbar, Kothagudem, Jharkhand) | To come | Placeholder images; final photos will have no identifiable faces |
-| News, events and media coverage | To come | Lorem ipsum items with placeholder images, dates and links |
-| Dr. Chandak's profile, team, patrons and advisors | To come | Placeholder names, roles and photos |
-| Partner and collaborator logos | To come | Placeholder logos; CSIR-CCMB is a confirmed collaborator |
-| Awareness and counselling programme details | To come | Placeholder text |
-| Research publications | To come | Placeholder titles and links |
-| Manufacturing partner's certification | To come | Placeholder text |
-| Testimonials | Under discussion | If used, quotes from institutional partners and clinicians rather than patients; easy to remove |
-| Result-interpretation content for clinicians | Under discussion | To come from the scientific team if the client goes ahead |
-
-## Sources
-
-Background facts in this brief that did not come from Lightening Lives:
-
-- REASSURED criteria and definitions: Land et al., *Nature Microbiology* (2019), [Table 3](https://pmc.ncbi.nlm.nih.gov/articles/PMC7097043/table/Tab3)
-- ASSURED origin (WHO/TDR, 2003) and the REASSURED update: [REASSURED Multiplex Diagnostics review, *Biosensors* (2022)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8869588/)
-- National Sickle Cell Anaemia Elimination Mission, aims and 2047 goal: [PIB document, June 2024](https://static.pib.gov.in/WriteReadData/specificdocs/documents/2024/jun/doc2024618342601.pdf)
-- Mission launch on 1 July 2023 in Shahdol, Madhya Pradesh: [BioSpectrum India](https://www.biospectrumindia.com/article/pdf/23273)
-- Why telling sickle cell disease from trait matters in screening: [*Casting light on the national mission to eliminate sickle cell disease in India*](https://pmc.ncbi.nlm.nih.gov/articles/PMC11489857/)

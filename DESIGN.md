@@ -1,0 +1,573 @@
+---
+version: alpha
+name: Lightening Lives
+description: The design of the Lightening Lives website, taken from the approved landing page (Design 10, Reel). Leaf green ink on pale green, Quicksand and Nunito, and one opening film in which a drop of blood becomes a map of India.
+colors:
+  # Each name is the CSS custom property of the same name in src/css/reel.css (--canopy, --mist, ...).
+  primary: "#1F5E2E" # canopy, under the role name that design tools look for
+  canopy: "#1F5E2E"
+  leaf: "#2B7A3D"
+  moss: "#3F6A48"
+  mist: "#F1F6DD"
+  paper: "#FDFEF8"
+  sprout: "#DDEBB0"
+  meadow: "#BCD982"
+  sun: "#F7D61E"
+  drop: "#A61B18"
+  blood: "#6A2A20"
+  line: "#1F5E2E2E" # canopy at 18%
+typography:
+  # Sizes are the largest each level reaches. Most are fluid: the Typography section gives the full range.
+  display:
+    fontFamily: Quicksand
+    fontSize: 4.75rem
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: -0.02em
+  h2:
+    fontFamily: Quicksand
+    fontSize: 3.3rem
+    fontWeight: 700
+    lineHeight: 1.06
+    letterSpacing: -0.02em
+  h3:
+    fontFamily: Quicksand
+    fontSize: 1.7rem
+    fontWeight: 700
+    lineHeight: 1.12
+    letterSpacing: -0.012em
+  row-title:
+    fontFamily: Quicksand
+    fontSize: 1.3rem
+    fontWeight: 700
+    lineHeight: 1.2
+    letterSpacing: -0.008em
+  vision-line:
+    fontFamily: Quicksand
+    fontSize: 3rem
+    fontWeight: 700
+    lineHeight: 1.12
+    letterSpacing: -0.02em
+  film-line:
+    fontFamily: Quicksand
+    fontSize: 1.55rem
+    fontWeight: 700
+    lineHeight: 1.15
+    letterSpacing: -0.02em
+  action:
+    fontFamily: Quicksand
+    fontSize: 1.6rem
+    fontWeight: 600
+    lineHeight: 1.15
+    letterSpacing: -0.012em
+  word:
+    fontFamily: Quicksand
+    fontSize: 9rem
+    fontWeight: 700
+    lineHeight: 0.92
+    letterSpacing: -0.03em
+  lead:
+    fontFamily: Nunito
+    fontSize: 1.35rem
+    fontWeight: 400
+    lineHeight: 1.5
+  body:
+    fontFamily: Nunito
+    fontSize: 1.125rem
+    fontWeight: 400
+    lineHeight: 1.55
+  body-sm:
+    fontFamily: Nunito
+    fontSize: 1.0625rem
+    fontWeight: 400
+    lineHeight: 1.45
+  small:
+    fontFamily: Nunito
+    fontSize: 1rem
+    fontWeight: 400
+    lineHeight: 1.55
+  fine:
+    fontFamily: Nunito
+    fontSize: 0.9375rem
+    fontWeight: 400
+    lineHeight: 1.4
+  label:
+    fontFamily: Nunito
+    fontSize: 0.8125rem
+    fontWeight: 800
+    lineHeight: 1.3
+    letterSpacing: 0.08em
+  button:
+    fontFamily: Nunito
+    fontSize: 1.0625rem
+    fontWeight: 700
+    lineHeight: 1.2
+  tag:
+    fontFamily: Nunito
+    fontSize: 0.8125rem
+    fontWeight: 700
+    letterSpacing: 0.01em
+rounded:
+  xs: 0.3rem
+  sm: 0.85rem
+  md: 1rem
+  lg: 1.25rem
+  full: 999px
+spacing:
+  frame: 82rem # the centred column's greatest width
+  gutter: 4.5rem # side padding: clamp(1.25rem, 5vw, 4.5rem)
+  section: 8rem # a section's top and bottom padding: clamp(4.5rem, 9vw, 8rem)
+  xs: 0.5rem
+  sm: 0.75rem
+  base: 1rem
+  md: 1.5rem
+  lg: 3rem
+  xl: 4rem
+components:
+  page:
+    backgroundColor: "{colors.mist}"
+    textColor: "{colors.primary}"
+    typography: "{typography.body}"
+  secondary-text:
+    backgroundColor: "{colors.mist}"
+    textColor: "{colors.moss}"
+  label:
+    backgroundColor: "{colors.mist}"
+    textColor: "{colors.leaf}"
+    typography: "{typography.label}"
+  button-solid:
+    backgroundColor: "{colors.canopy}"
+    textColor: "{colors.paper}"
+    typography: "{typography.button}"
+    rounded: "{rounded.full}"
+    height: 3.25rem
+    padding: 1.5rem
+  button-solid-hover:
+    backgroundColor: "{colors.leaf}"
+    textColor: "{colors.paper}"
+  button-line:
+    backgroundColor: "{colors.mist}"
+    textColor: "{colors.canopy}"
+    typography: "{typography.button}"
+    rounded: "{rounded.full}"
+    height: 3.25rem
+    padding: 1.5rem
+  button-line-hover:
+    backgroundColor: "{colors.sprout}"
+    textColor: "{colors.canopy}"
+  nav-link:
+    backgroundColor: "{colors.mist}"
+    textColor: "{colors.canopy}"
+    rounded: "{rounded.full}"
+    height: 2.75rem
+    padding: 0.9rem
+  nav-link-hover:
+    backgroundColor: "{colors.sprout}"
+    textColor: "{colors.canopy}"
+  highlight:
+    backgroundColor: "{colors.sun}"
+    textColor: "{colors.canopy}"
+  tag:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.canopy}"
+    typography: "{typography.tag}"
+    rounded: "{rounded.full}"
+    height: 1.75rem
+    padding: 0.6rem
+  tag-proof:
+    backgroundColor: "{colors.sun}"
+    textColor: "{colors.canopy}"
+  segmented-control:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.canopy}"
+    rounded: "{rounded.full}"
+    padding: 0.25rem
+  segmented-control-selected:
+    backgroundColor: "{colors.canopy}"
+    textColor: "{colors.paper}"
+    rounded: "{rounded.full}"
+    height: 2.5rem
+  kind-card:
+    backgroundColor: "{colors.mist}"
+    textColor: "{colors.canopy}"
+    rounded: "{rounded.lg}"
+    padding: 1.5rem
+  notice:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.canopy}"
+    rounded: "{rounded.lg}"
+    padding: 1.4rem
+  vision-band:
+    backgroundColor: "{colors.sprout}"
+    textColor: "{colors.canopy}"
+    typography: "{typography.vision-line}"
+  film-toggle:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.canopy}"
+    rounded: "{rounded.full}"
+    size: 2.75rem
+  place-chip:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.canopy}"
+    rounded: "{rounded.sm}"
+  map-state:
+    backgroundColor: "{colors.meadow}"
+    textColor: "{colors.canopy}"
+  map-state-marked:
+    backgroundColor: "{colors.sun}"
+    textColor: "{colors.canopy}"
+  map-key-swatch:
+    backgroundColor: "{colors.meadow}"
+    rounded: "{rounded.xs}"
+    size: 1.1rem
+  rule:
+    backgroundColor: "{colors.line}"
+    height: 1px
+  sample-drop:
+    backgroundColor: "{colors.drop}"
+  sample-spot:
+    backgroundColor: "{colors.blood}"
+---
+
+# Lightening Lives: design
+
+This file describes the design the client approved for production on 12 October 2026: Design 10, "Reel" (`reel.html`). It is the reference for building the live site and any page added to it. The values in the front matter were read from `src/css/reel.css` and `src/js/reel/scene.js`; change them there and here together.
+
+## Overview
+
+Lightening Lives is a molecular diagnostics company in Hyderabad. It develops genetic tests that work from a dried blood spot on a card, and supplies them in bulk to hospitals, laboratories and public health programmes. The people reading the site are clinicians, laboratory heads, district health officers, programme officers, NGOs and CSR funders. It is not for individuals looking for a test, and it says so.
+
+The site should feel light, clear and sure of itself: a healthcare technology company with evidence behind it, not a charity. The client's one visual wish was lightness.
+
+The whole design rests on one picture: a single drop of blood falls onto a card, the card joins a batch, and the batch becomes a map of India made of cards. That is the opening film, and it is the only showpiece on the site. Everything after it is an ordinary, quiet page: pale green paper, green ink, rounded type, thin rules and no decoration.
+
+Four things were chosen by the client and stay as they are unless the client asks:
+
+- **Type:** Quicksand for headings, Nunito for text.
+- **Colour:** leaf green ink on pale green.
+- **The film:** it plays by itself, in one continuous take of about six and a half seconds. It does not follow the scroll.
+- **The wording** "a single drop of blood".
+
+Layout can change where a page needs it.
+
+## Colors
+
+One family of greens does nearly all the work. Yellow and red each have a single job.
+
+| Token | Value | Role |
+| --- | --- | --- |
+| `canopy` | `#1F5E2E` | The ink: all text, borders of controls, solid buttons. `primary` is the same colour. |
+| `leaf` | `#2B7A3D` | Labels, link underlines, the hover state of a solid button. |
+| `moss` | `#3F6A48` | Secondary text: lead paragraphs, descriptions, notes. |
+| `mist` | `#F1F6DD` | The page, and the haze the film's cards fade into. Also the browser's `theme-color`. |
+| `paper` | `#FDFEF8` | The second surface: alternate sections, raised controls, the footer, the card stock in the film. |
+| `sprout` | `#DDEBB0` | Hover fills, and the one tinted band behind the vision statement. |
+| `meadow` | `#BCD982` | The map: a state that is not marked, and the field of cards seen from far away. |
+| `sun` | `#F7D61E` | What is being pointed out. See below. |
+| `drop` | `#A61B18` | The blood while it is a falling drop. |
+| `blood` | `#6A2A20` | The blood once it has dried into the paper. |
+| `line` | `canopy` at 18% | Hairlines between rows. |
+
+**Sun yellow means "this is being pointed out".** It marks named proof (the highlighter behind "ICMR" and "CSIR-CCMB", the "Validated by ICMR" tag), the states and places the map marks, the REASSURED letter and criterion the reader is on, keyboard focus and selected text. It is never a section background, never a button colour and never text.
+
+**Red is the sample and nothing else.** `drop` and `blood` appear only in the film and in the stills taken from it. Nothing in the interface is red.
+
+There are no gradients, except the ones that fade the film into the page (see Opening film), and no drop shadows.
+
+### Contrast
+
+Measured against WCAG 2 (4.5:1 is the minimum for text of this size).
+
+| Text | on `mist` | on `paper` | on `sprout` | Other |
+| --- | --- | --- | --- | --- |
+| `canopy` | 7.03 | 7.67 | 6.15 | 5.41 on `sun`, 4.96 on `meadow` |
+| `moss` | 5.63 | 6.15 | 4.93 | |
+| `leaf` | 4.80 | 5.24 | 4.19 (too low) | |
+| `paper` | | | | 7.67 on `canopy`, 5.24 on `leaf` |
+
+So: `leaf` is for labels on `mist` and `paper` only. On `sprout`, set a label in `canopy`. `sun` is 1.3:1 on `mist` and can never carry meaning as text or as a thin line by itself: it is always a fill with `canopy` text or a `canopy` border on it.
+
+### Colours in the film
+
+The film is drawn in WebGL but takes its colours from the same custom properties: `--mist` for its background and fog, `--paper` for the card stock, `--canopy` for the card's print, `--meadow` and `--sun` for the map, `--drop` and `--blood` for the sample. Its lighting is set so that a matte surface facing up shows exactly its own colour, which is why the cards match the page. Change a token and the film follows; do not hard-code a colour in the scene.
+
+## Typography
+
+Two rounded sans-serifs from Google Fonts. **Quicksand** (600, 700) is the display face: headings, the film's captions, the big REASSURED letters, the contact actions. **Nunito** (400, 600, 700, 800) is everything else. Load only those weights.
+
+| Level | Face and weight | Size | Line height | Tracking | Used for |
+| --- | --- | --- | --- | --- | --- |
+| `display` | Quicksand 700 | `clamp(2.6rem, 5vw, 4.75rem)`; under 30rem wide, `clamp(1.95rem, 9.4vw, 2.6rem)` | 1 | -0.02em | The page's one `h1` |
+| `h2` | Quicksand 700 | `clamp(2rem, 3.7vw, 3.3rem)` | 1.06 | -0.02em | Section headings |
+| `h3` | Quicksand 700 | `clamp(1.4rem, 1.9vw, 1.7rem)` | 1.12 | -0.012em | Headings inside a section |
+| `row-title` | Quicksand 700 | 1.3rem | 1.2 | -0.008em | Titles in dense lists ("Why", REASSURED criteria) |
+| `vision-line` | Quicksand 700 | `clamp(1.7rem, 3.4vw, 3rem)` | 1.12 | -0.02em | The vision statement |
+| `film-line` | Quicksand 700 | `clamp(1.2rem, 1.75vw, 1.55rem)` | 1.15 | -0.02em | The caption under the film |
+| `action` | Quicksand 600 | `clamp(1.25rem, 2vw, 1.6rem)` | 1.15 | -0.012em | The contact section's rows |
+| `word` | Quicksand 700 | `clamp(2.5rem, 9.8vw, 9rem)` | 0.92 | -0.03em | The nine letters of REASSURED |
+| `lead` | Nunito 400 | `clamp(1.15rem, 1.5vw, 1.35rem)` | 1.5 | | The paragraph beside a section heading, in `moss` |
+| `body` | Nunito 400 | 1.125rem | 1.55 | | Running text |
+| `body-sm` | Nunito 400 | 1.0625rem | 1.45 | | Descriptions under a `row-title`, the map's sentence |
+| `small` | Nunito 400 | 1rem | 1.55 | | Notes, footnotes, the footer's small print |
+| `fine` | Nunito 400 | 0.9375rem | 1.4 | | The map's key, sources and credits |
+| `label` | Nunito 800 | 0.8125rem | 1.3 | 0.08em, uppercase | Labels and data, in `leaf` |
+| `button` | Nunito 700 | 1.0625rem | 1.2 | | Buttons. Nav links are the same size at 600; text links are `body` at 600. |
+| `tag` | Nunito 700 | 0.8125rem | | 0.01em | Tags |
+
+- Headings use `text-wrap: balance`; paragraphs use `text-wrap: pretty`.
+- Headings are sentence case. Only `label` is uppercase.
+- Emphasis inside a paragraph is weight 600 in `canopy`, not italics.
+- **The whole page scales on large monitors.** `html { font-size: clamp(100%, 0.5vw + 0.55rem, 137.5%) }` keeps 16px up to a 1440px window and grows to 22px at 2640px. Every size, radius and breakpoint is in `rem` so that it scales together: do not introduce `px` sizes.
+- The stylesheet sets `font-stretch` on some headings. Quicksand has no width axis, so it does nothing here; it is there for the comparison toolbar's other typefaces.
+
+## Layout
+
+**One centred column.** `.wrap` is 82rem at its widest (`--frame`) with side padding of `clamp(1.25rem, 5vw, 4.5rem)` (`--pad`). `--gutter` is the distance from the window's edge to the column's content; the header and the film, which span the window, use it to line up with the column.
+
+**Sections** have `clamp(4.5rem, 9vw, 8rem)` of padding above and below, and alternate between the two surfaces so that each reads as its own sheet:
+
+| Order | Section | Surface |
+| --- | --- | --- |
+| 1 | Opening film (hero) | `mist` |
+| 2 | How it works | `paper` |
+| 3 | Why | `mist` |
+| 4 | Tests (portfolio) | `paper` |
+| 5 | Evidence | `mist` |
+| 6 | Map | `paper` |
+| 7 | REASSURED | `mist` |
+| 8 | Who we work with | `paper` |
+| 9 | Programmes | `mist` |
+| 10 | Vision | `sprout` band |
+| 11 | Contact | `paper` |
+| 12 | Footer | `paper`, under a 2px `canopy` rule |
+
+**A section's opening** is a twelve-column row on wide screens: the `h2` takes seven columns and a `lead` paragraph takes five, aligned to the heading's last line, with a 1.5rem gap. On small screens they stack. The section's content starts 3rem below.
+
+**Splits** inside sections are 5/7 or 7/5 of twelve columns, with a 3rem gap growing to 4rem.
+
+**Spacing** steps: 0.5rem, 0.75rem, 1rem, 1.5rem, 3rem, 4rem. Rows in lists have 1.2rem to 1.9rem of padding above and below.
+
+**Breakpoints** are in `rem` and are chosen per component, where its content needs them, not from a global set. The ones that matter:
+
+- 64rem: the header's links replace the "Menu" button.
+- 56.25rem wide and a window at least 21:20: the film fills the whole opening with the text over its left side. Narrower or taller than that, the film has a frame of its own under the heading.
+- 40rem, 56rem, 60rem, 72rem and 75rem: lists go from one column to two, three or four.
+
+**Touch.** Every control is at least 2.75rem (44px) tall. Buttons are 3.25rem.
+
+**Other pages.** The film belongs to the landing page. Pages still to be built (privacy policy, terms) have no approved layout yet: build them from the same header, column, type scale and footer, on `mist`, without the film.
+
+## Elevation & Depth
+
+The page is flat. Nothing casts a shadow. Things are set apart in three ways:
+
+- **Surface.** `mist` and `paper` alternate; `sprout` appears once, behind the vision.
+- **Rules.** A 1px `line` hairline separates rows. A 2px `canopy` rule opens a list or table (the first test, the evidence row, each audience, the first contact action) and tops the footer.
+- **Outlines.** Controls have a 2px `canopy` border (buttons, the segmented control, the notice, the menu panel, the film's button). Small chips have 1.5px (tags, place chips, the map's key).
+
+The film is the only place with real depth: soft shadow under the card's open cover, and cards fading into `mist` with distance. That contrast is deliberate; do not add depth to the page to match it.
+
+**Focus** is a 3px `canopy` outline, offset 3px, with a 3px `sun` ring inside it, so it shows on every surface.
+
+## Shapes
+
+- **Pills** (`rounded.full`): buttons, nav links, tags, the segmented control, the skip link. They go with the rounded type.
+- **1.25rem** (`rounded.lg`): pictures, the tinted cards, the notice, the menu panel.
+- **1rem** (`rounded.md`): the three field photos. **0.85rem** (`rounded.sm`): labels on the map. **0.3rem** (`rounded.xs`): the map key's swatches.
+- **The dashed circle.** The card's collection circle is the design's one motif. It appears as a small dashed `leaf` ring between the five words under "Why". Use it sparingly, and only as a separator.
+- **Icons** are drawn inline as SVG with a 2px to 2.2px stroke in `currentColor`: a right arrow on links and contact rows, and play, pause and replay on the film. There is no icon set. The plus and minus on disclosures are drawn in CSS.
+- **Pictures** are square (the film's stills), 4:5 (the blank card) or 5:6 (field photos; 4:5 on phones).
+
+## Components
+
+### Header
+
+Lies over the top of the film and scrolls away with it (`position: absolute`, not sticky). Left: the emblem (3.25rem, 3.75rem from 75rem wide) with "Lightening Lives" beside it in Quicksand 700 at 1.4rem and "Every Life Matters" under it as a 0.7rem label. Right: five nav links and a solid "Partner with us" button. Below 64rem the links become a "Menu" line button that opens a `paper` panel with a 2px border; it is a `<details>` element, so it works without script, and closes on choosing a link or pressing Escape. Where there is no room for the name (64rem to 73rem, and under 22rem) the emblem stands alone.
+
+### Buttons and links
+
+- **Solid button:** `canopy` fill, `paper` text; `leaf` on hover. For the main action ("Partner with us").
+- **Line button:** 2px `canopy` border, no fill; `sprout` on hover. For the second action beside it.
+- **Nav link:** a 2.75rem pill with no border; `sprout` on hover.
+- **Text link** (`.link`): weight 600, underlined 2px in `leaf` with a 5px offset; on hover the underline thickens to 3px and its arrow moves 4px right.
+- Colour changes take 0.16s.
+
+### Label, highlight, tags
+
+- **Label:** the small uppercase voice, in `leaf`. Names a thing ("One drop", "Inherited blood disorder", "Sources"); never a sentence.
+- **Highlight** (`.hl`): `sun` behind a name inside a heading. Only for proof a reader can check.
+- **Tag:** a 1.75rem pill with a 1.5px border. **Proof tag:** the same, filled `sun`.
+
+### Steps (How it works)
+
+Three items: a square still from the film, a label, an `h3` and a paragraph in `moss`. One column on phones, picture beside text from 40rem, three columns from 60rem. The three `h3` lines are the film's three captions, word for word.
+
+### Lists and rows
+
+- **Why:** five large words separated by dashed circles, then eight `row-title` and description pairs in a grid of one, two or four columns with hairlines above each.
+- **Kinds of test:** four `mist` cards on a `paper` section, radius 1.25rem, no border.
+- **Tests developed so far:** a table-like list. Each row has the condition's name and a label on the left, and a description, tags and an "About the condition" disclosure on the right. The last row is always the open place: "The condition you need next", with a link to contact.
+- **Evidence:** four columns under a 2px rule, divided by hairlines.
+- **Audiences:** three columns, each under its own 2px rule.
+- **Disclosure:** a `<details>` whose summary is a `leaf` line of text with a plus that becomes a minus.
+- **Notice:** a `paper` box with a 2px border and a label, for the one message to individuals.
+
+### The map
+
+A map of India the reader can question. It is drawn in SVG, not WebGL, from the data in `src/js/drop/`.
+
+- **Segmented control:** three choices (Sickle cell, Thalassaemia, Our work) in a `paper` pill with a 2px border; the chosen one is `canopy` with `paper` text.
+- **States** are filled `meadow`, turned towards `sun` by how strongly the chosen layer marks them: 90% for a fully marked state, less for the others. The key's three swatches are 90%, 38% and 9%. Borders are 1px `canopy` at 40%. A grid of fine `paper` lines lies over the country, so it reads as the film's field of cards.
+- **Names:** fully marked states are named in 0.8125rem Nunito 800 with a `paper` glow. Under 430px across the names are moved apart; under 235px only a picked state is named.
+- **Picking a state** (pointing, tapping, or the arrow keys) lightens it halfway to `paper`, outlines it at 2.5px and replaces the sentence beside the map with what the map knows about that state under every layer. Escape, a second tap on the state, or a tap off the country lets go. The panel's space is reserved so the page does not jump.
+- **Our work** pins the four places: a `sun` dot with a `canopy` border, a short leader and a `paper` chip naming the place and what is there.
+- **Changing the layer** spreads the new colours outward from the middle of what it marks.
+- A key, a line of sources and a full text summary for screen readers always accompany it. Without script the map is a still image.
+
+### REASSURED
+
+The word set as nine buttons across the column at up to 9rem, above nine criteria in one, two or three columns. Pointing at or focusing a letter fills it `sun` and highlights its criterion, and the reverse.
+
+### Programmes, vision, contact, footer
+
+- **Field photos:** three in a row, 5:6, each with a label naming the place.
+- **Vision:** a `sprout` band with a label and one statement in `vision-line`.
+- **Contact actions:** four full-width rows in `action` type with an arrow at the right; on hover the row fills `sprout` and its text moves in 0.75rem. Each opens an email.
+- **Footer:** the full logo at 11rem, a short description and the campaign line as a label; contact links; two addresses; then, under a hairline, the disclaimer, a credits disclosure, the copyright line and the policy links.
+
+## Opening film
+
+The signature. About six and a half seconds, shot as one take, in three parts that match the three steps under "How it works".
+
+| Seconds | What happens | Caption |
+| --- | --- | --- |
+| 0 to 0.48 | The card's cover swings back (106 degrees). The camera is low beside the card and already moving. | "A single drop of blood, dried on a card." |
+| 0.24 to 1.04 | A drop of blood swells where it hangs and draws out into the shape of a drop. | |
+| 1.04 to 1.6 | It lets go and falls into the collection circle (0.56 s). This is the nearest the camera comes. | |
+| 1.6 to 2.56 | The paper draws it in and the spot soaks outward, as the camera climbs over it. | |
+| 2.6 | | "From card to result without a DNA extraction step." |
+| 2.72 to 3.52 | The cover folds shut. The card is one of a batch. | |
+| 4.16 | The camera passes over the batch, still climbing. | |
+| 5.0 | | "Built for screening at the scale of a nation." |
+| 5.2 to 6.0 | The cards have become a map of India, seen from straight above, north up. The places the company works light up. | |
+| 5.92 to 6.4 | The four places are named. The camera comes to rest, for the first time. | |
+| 6.56 | The film is over. Its button offers a replay. | |
+
+**Rules the client set. Do not undo them without being asked.**
+
+- It plays by itself and keeps its own time, like a video. Scrolling does not drive it, and scrolling it off screen does not pause it. Only the reader's pause button or a hidden tab holds it.
+- It is one continuous take. The camera is moving in the first frame and rests only on the map. No holds between the parts, no cuts.
+- One drop falls, from above, slowly enough to be seen as a drop.
+- The map is flat and upright: straight above, north up, not tilted.
+- No progress bar and no chapter markers. The film has one control: a 2.75rem round button at the end of the caption's line that pauses, plays or, at the end, replays.
+- Its pace is settled: 6.56 seconds. Do not slow it down.
+
+**How it sits on the page.**
+
+- *Wide windows:* the film fills the whole opening, at least 36rem and otherwise the height of the window. The heading, lead, two buttons and a note stand over its left side in a column of `min(38rem, 44vw)`. A veil of `mist` behind the text fades out where the column ends, so the text is readable whatever the film shows. The film's subject is centred 74% of the way across the page's column. The caption and the button run along the foot.
+- *Small screens:* heading first, then the film in a frame the full width of the screen and `min(100vw, 58svh)` tall, its top and bottom edges fading into `mist`; then the caption and button, the lead, the buttons and the note.
+- The heading, lead, buttons and note rise in on load, one after another (see Motion).
+
+**When the film cannot or should not play.**
+
+- *Reduced motion requested:* a still of the drop above the card, with a solid "Play the film" button on it. The film starts only when asked.
+- *No WebGL 2, or the film has not started within 7 seconds:* the still alone. Nothing is lost: the three steps under "How it works" say the same thing.
+- The film's code carries three.js (about 700 KB before compression) and is fetched only when the film will play.
+- On a slow machine it lowers its resolution before anything else, and still keeps to real time.
+
+**The card** is the company's own, drawn in code: a matchbook card with a cover flap carrying the full logo, one dashed collection circle on filter paper, and a pocket with a barcode and a code (`SCM / 100001`; the codes are illustrative). Do not swap in a generic card or a photograph.
+
+All the timing is in two tables at the top of `src/js/reel/scene.js`: `TAKE` (where the camera is at each second) and `TIMING` (everything else). The README explains how to change them and how to capture new stills.
+
+## Motion
+
+The film is the one orchestrated moment. Everything else moves only in answer to the reader, and briefly.
+
+| What | Motion |
+| --- | --- |
+| Hero text on load | Rises 14px and fades in over 0.8s, `cubic-bezier(0.2, 0.7, 0.2, 1)`, each item 90ms after the last |
+| Hover and selection colour | 0.14s to 0.16s, `ease` |
+| Link arrow, contact row | 0.2s |
+| Film caption change | 0.45s fade, rising 6px |
+| Map layer change | 0.5s per state, spreading outward |
+| Map names and pins | 0.35s to 0.4s fade |
+| Anchor links | Smooth scrolling |
+
+There are no scroll-triggered reveals, no parallax and nothing that loops. With reduced motion requested, the hero text does not rise, scrolling is not smoothed, the map's colours change at once and the film waits for its button.
+
+## Imagery
+
+- **The card is drawn, not photographed.** The stills (`assets/img/reel-*.webp`, `drop-map-*.webp`, `drop-blank.webp`) are rendered from the same model as the film. If the film's look changes, capture them again.
+- **Field photos** are of the places the company has worked: Nandurbar, Kothagudem and Jharkhand. Nobody in a photo may be identifiable. The current three are representative images from Wikimedia Commons and need the client's own before launch; their credits are in the footer and in `assets/img/CREDITS.md`.
+- **No stock illustrations, no icon sets, no decorative shapes.** If a section seems to need a picture, it gets a still of the card or none.
+- **Partner names are typeset.** No ICMR, CSIR-CCMB or other partner logos without written permission.
+
+### The logo
+
+The logo is the client's existing identity and is never redrawn, recoloured or restyled. Files and rules are in `assets/logo/README.md`.
+
+- Header: the emblem alone, with the name and tagline set beside it in the page's type.
+- Footer: the full logo, once, at 11rem. Its lettering cannot be read below about 160px wide.
+- Browser tab and home screen: `assets/logo/icons/`.
+- The logo's own colours (yellows, oranges, `#69A129` green, brown and maroon lettering) belong to the logo. They are not part of this palette.
+
+## Voice and content
+
+Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anaemia, thalassaemia, haemophilia, programme, organisation).
+
+- **Say what the company is:** an innovation-driven molecular diagnostics company that develops tests. Not a charity, an NGO or a laboratory.
+- **Proof stands beside the claim:** ICMR validation, the CSIR-CCMB collaboration, the national programmes.
+- **Any inherited condition.** The company develops a test for whatever condition a programme needs. The five existing tests are "developed so far", and any list of them ends with an open place for the next. Do not name a client or a request as an example.
+- **Institutions only.** Say so near every way of making contact, and tell individuals where to go instead.
+- **"A single drop of blood"** is the client's wording for this design (12 October 2026). It overrides the original brief, which ruled the phrase out. The larger claims built on it stay out: "limitless", "any genetic test is possible", "revolutionising", "endless possibilities".
+- **Collection is "minimally invasive"**, never "painless".
+- **No prices, procurement figures or clinical performance figures.**
+- **Headings** are sentence case. Section headings have no full stop; the hero's heading and the film's three lines do, because they are read as statements. **Buttons** start with a verb and say what happens: "Partner with us", "See our tests", "Request tests".
+- **The map** says "reported in", never "highest in", and always carries its sources.
+
+Claims still waiting for the client's confirmation are listed in the README under "Content still to settle".
+
+## Accessibility
+
+- Text meets 4.5:1 (see Contrast). One known exception as of 12 October 2026: the "Our vision" label is `leaf` on `sprout`, 4.19:1. Set it in `canopy`.
+- A skip link is the first thing in the page. Every section is labelled by its heading. The page has one `h1`.
+- Focus is always visible, and nothing is reachable only by pointer: the map answers to the arrow keys and Escape, and the REASSURED letters are buttons.
+- The film's captions are hidden from screen readers because the same three lines, with more to say, are under "How it works". The film's button always says what it will do ("Pause the film", "Play the film", "Replay the film").
+- The map has a full text summary for screen readers, and its changing sentence is a polite live region.
+- Menus and disclosures are `<details>` elements and work without script. Without script the film and the map are still images.
+- `prefers-reduced-motion` is respected throughout (see Motion).
+
+## Do's and Don'ts
+
+- Do keep Quicksand and Nunito, and `canopy` ink on `mist`. They are the client's choice.
+- Do let the film be the only showpiece. Keep everything after it quiet.
+- Do use `sun` only to point something out, always as a fill with `canopy` on it.
+- Do keep red for the blood sample.
+- Do separate things with surface, rules and outlines.
+- Do size everything in `rem`, and read colours from the custom properties, in the film as well.
+- Do give every list of the five tests an open place for the next.
+- Do keep a still image behind anything that needs WebGL or script.
+- Don't make the film follow the scroll, add stops or a progress bar to it, or slow it down.
+- Don't tilt the map or show more than one drop.
+- Don't add box shadows, gradients, glass effects or decorative illustration.
+- Don't use `sun` or `leaf` for text on `sprout`, or `sun` for text anywhere.
+- Don't restyle the logo, or use its colours in the interface.
+- Don't use partner logos without permission, or photos with identifiable people.
+- Don't add a cookie or consent banner. Say what analytics the site uses in the privacy policy.
+- Don't add scroll-triggered animation, parallax or anything that loops.
+
+## Where things live
+
+| What | File |
+| --- | --- |
+| The page | `reel.html` |
+| Tokens (`:root`) and every component's styles | `src/css/reel.css` (Tailwind CSS v4; tokens are exposed as utilities such as `bg-paper`, `text-moss`, `border-line`) |
+| Menu, REASSURED, the map, loading the film | `src/js/reel/main.js` |
+| The film: `TAKE`, `TIMING`, `DROP`, the card | `src/js/reel/scene.js` |
+| The map's facts and wording | `src/js/drop/map-layers.js` (Designs 01 and 07 keep a copy in `src/js/sample-card/india-data.js`) |
+| State outlines, names and the grid of cards | `src/js/drop/india-borders.js`, `india-states.js`, `india-cells.js` |
+| Stills | `assets/img/reel-*.webp`, `drop-map-*.webp`, `drop-blank.webp` |
+| Logo | `assets/logo/` |
+| Steps for going live, and content still to settle | `README.md` |
+
+Compiled files in `assets/css` and `assets/js` are committed; run `npm run build` after changing anything in `src/`.
