@@ -88,7 +88,9 @@ const SVG = 'http://www.w3.org/2000/svg';
 const PAD = 1.5; // map units of clear space round the country
 const VIEW = { x: -44.1 - PAD, y: -50 - PAD, w: 88.2 + PAD * 2, h: 100 + PAD * 2 }; // the borders' own extent
 const CARD = { w: 1.12, h: 2.36, x0: -44.52, z0: -50.74 }; // the film's cards, two by two, for the grid drawn over the map
-const MARK = 0.9; // how far a fully marked state goes to yellow
+const MARK = 0.9; // how far a fully marked state goes to sun amber
+const PALE = 0.45; // the half-way colour: this far from paper towards sun amber
+const TONE = { strong: 1, pale: 0.42, faint: 0.1 }; // the key's swatches, as the levels in map-layers.js
 // A name sits at the middle of its state. Where neighbours' names would run into each other, or a
 // name would cover a place too small to be seen under it, these move it, in map units east and south.
 const NAME_NUDGE = { MP: [-4.2, -0.6], CG: [0.3, 2.4], OD: [3.2, 0.9], DL: [5.4, 0.3] };
@@ -192,22 +194,27 @@ function initMap() {
   const picked = () => (hovered !== -1 ? hovered : pinned);
   const level = (index) => LAYERS[layer()].level(STATES[index].id);
 
-  // A state's colour: meadow green, turned to sun yellow by as much as the layer marks it, and
-  // lightened while it is picked out.
+  // A state's colour: meadow blue, lightened towards paper and then warmed to sun amber by as much
+  // as the layer marks it (a warm colour mixed straight into a blue one goes through khaki), and
+  // lightened further while it is picked out. The key's swatches are painted the same way.
   let colours = null;
-  const fillOf = (index) => {
+  const markedColour = (mark, light = 0) => {
     if (!colours) {
       const style = getComputedStyle(root);
       colours = ['--meadow', '--sun', '--paper'].map((name) => hexToRgb(style.getPropertyValue(name)));
     }
     const [meadow, sun, paper] = colours;
-    const mark = level(index) * MARK;
-    const light = index === picked() ? 0.5 : 0;
+    const half = MARK / 2;
     const mixed = meadow.map((channel, k) => {
-      const marked = channel + (sun[k] - channel) * mark;
+      const pale = paper[k] + (sun[k] - paper[k]) * PALE;
+      const marked = mark < half ? channel + (pale - channel) * (mark / half) : pale + (sun[k] - pale) * ((mark - half) / half);
       return Math.round(marked + (paper[k] - marked) * light);
     });
     return `rgb(${mixed.join(' ')})`;
+  };
+  const fillOf = (index) => markedColour(level(index) * MARK, index === picked() ? 0.5 : 0);
+  const paintKey = () => {
+    if (key) key.querySelectorAll('.key').forEach((swatch) => { swatch.style.background = markedColour(TONE[swatch.dataset.tone] * MARK); });
   };
 
   function placeNames() {
@@ -279,10 +286,12 @@ function initMap() {
         const item = document.createElement('li');
         const swatch = document.createElement('i');
         swatch.className = `key key-${entry.tone}`;
+        swatch.dataset.tone = entry.tone;
         item.append(swatch, entry.text);
         return item;
       }));
     }
+    paintKey();
     paint(spread);
     showMarks();
     showState();
@@ -323,7 +332,7 @@ function initMap() {
 
   inputs.forEach((input) => input.addEventListener('change', () => showLayer(true)));
   // The toolbar can change the page's colours; the map's fills are worked out from them.
-  document.addEventListener('ll:theme', () => { colours = null; paint(false); });
+  document.addEventListener('ll:theme', () => { colours = null; paint(false); paintKey(); });
   // The names keep their size when the map shrinks, so a small map places them differently and a
   // very small one shows only the name of a picked state.
   const measure = () => {

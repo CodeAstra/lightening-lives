@@ -759,8 +759,11 @@ function init(root) {
   const meadowColor = new Color();
   const tint = new Color();
   const painted = { glow: -1, far: -1 };
-  // Up close a card is paper. From far away the field turns meadow green so the map reads against
-  // the page, and the cards that are marked turn sun yellow.
+  // Up close a card is paper. From far away the field turns meadow blue so the map reads against
+  // the page, and the cards that are marked turn sun amber. Half-way to the sun is a pale amber, not
+  // the khaki that mixing amber straight into blue gives: a marked card is lightened first and
+  // warmed after, as the map on the page is.
+  const PALE = 0.45; // the half-way colour: this far from white towards the sun
   function paintField(glow, far, force) {
     if (!force && Math.abs(glow - painted.glow) < 0.004 && Math.abs(far - painted.far) < 0.004) return;
     sunColor.set(theme.sun);
@@ -768,14 +771,17 @@ function init(root) {
     const base = tint.set(1, 1, 1).lerp(meadowColor, far);
     const br = base.r, bg = base.g, bb = base.b;
     const sr = sunColor.r, sg = sunColor.g, sb = sunColor.b;
+    const pr = 1 + (sr - 1) * PALE, pg = 1 + (sg - 1) * PALE, pb = 1 + (sb - 1) * PALE;
     if (!cards.instanceColor) cards.setColorAt(0, tint);
     const colours = cards.instanceColor.array;
     for (let index = 0; index < field.length; index += 1) {
       const mark = marked[index] * glow;
       const shade = baseTint[index];
-      colours[index * 3] = (br + (sr - br) * mark) * shade;
-      colours[index * 3 + 1] = (bg + (sg - bg) * mark) * shade;
-      colours[index * 3 + 2] = (bb + (sb - bb) * mark) * shade;
+      const t = Math.min(mark, 0.5) * 2; // the way to the pale amber
+      const u = Math.max(mark - 0.5, 0) * 2; // and on to the sun
+      colours[index * 3] = (br + (pr - br) * t + (sr - pr) * u) * shade;
+      colours[index * 3 + 1] = (bg + (pg - bg) * t + (sg - pg) * u) * shade;
+      colours[index * 3 + 2] = (bb + (pb - bb) * t + (sb - pb) * u) * shade;
     }
     cards.instanceColor.needsUpdate = true;
     // The card the camera followed lies in Hyderabad's cell, one of our places.

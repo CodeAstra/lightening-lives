@@ -4,11 +4,11 @@
    the card joining a batch and the batch becoming a map of India, with the headline standing over
    the film's left side as it does in Design 10; the sections that follow are Design 10's, in the
    same order. What changes is the light, the material and the type. The page is ice white, each
-   white band is lit from one side by a soft pool of DNA blue or life green, and what Design 10 raises
+   white band is lit from one side by a soft pool of DNA blue or sunlight, and what Design 10 raises
    in flat paper (the controls, the chips, the cards, the notice) is frosted glass. Exo at Design 10's
    sizes, with Roboto Mono for the label voice and the codes on the cards; the comparison toolbar
-   offers Design 10's Quicksand and Nunito in their place. DNA blue for every action and label, life
-   green for what is being pointed out, and blood red for the sample and nothing else. Everything
+   offers Design 10's Quicksand and Nunito in their place. DNA blue for every action and label, sun
+   amber for what is being pointed out, and blood red for the sample and nothing else. Everything
    below the "Lumen's material" heading is the whole of the difference from src/css/reel.css;
    everything above it is that file with Lumen's values. */
 
@@ -41,14 +41,13 @@
     --leaf: #0369A1;    /* DNA blue: labels, links, actions, the print on the cards */
     --canopy: #0C4A6E;  /* text */
     --moss: #475569;    /* secondary text */
-    --sun: #6EE7B7;     /* life green: the glow on named proof, and on the places we have worked */
-    --accent: #059669;  /* emerald, in the green pools of light */
+    --sun: #FFC53D;     /* sun amber, the logo's own sun a shade softer: the one warm colour, for what is pointed out */
     --blood: #6A2A20;   /* the sample once it has dried into the paper */
     --drop: #A61B18;    /* and while it is still a falling drop */
     --line: rgba(12, 74, 110, 0.18);
     /* The material: the light behind the page, and the glass standing on it. */
     --pool-blue: rgba(3, 105, 161, 0.16);
-    --pool-green: rgba(5, 150, 105, 0.15);
+    --pool-sun: rgba(255, 197, 61, 0.2);
     --glass: rgba(255, 255, 255, 0.62);        /* a white the light shows through */
     --glass-strong: rgba(255, 255, 255, 0.86); /* where what is on it must stay readable over the film */
     --shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 22px 44px -26px rgba(12, 74, 110, 0.3), 0 2px 6px -3px rgba(12, 74, 110, 0.1);
@@ -79,7 +78,7 @@
     :root {
       --line: color-mix(in srgb, var(--canopy) 18%, transparent);
       --pool-blue: color-mix(in srgb, var(--leaf) 16%, transparent);
-      --pool-green: color-mix(in srgb, var(--accent) 15%, transparent);
+      --pool-sun: color-mix(in srgb, var(--sun) 20%, transparent);
       --glass: color-mix(in srgb, var(--paper) 62%, transparent);
       --glass-strong: color-mix(in srgb, var(--paper) 86%, transparent);
       --shadow: 0 1px 0 color-mix(in srgb, var(--paper) 90%, transparent) inset, 0 22px 44px -26px color-mix(in srgb, var(--canopy) 30%, transparent), 0 2px 6px -3px color-mix(in srgb, var(--canopy) 10%, transparent);
@@ -761,7 +760,7 @@
   /* Everything above is Design 10's page. What follows changes only what things are made of, never
      where they stand or how big they are. */
 
-  /* The light. Each white band is lit by one soft pool, blue from the left or green from the right,
+  /* The light. Each white band is lit by one soft pool, DNA blue from the left or sunlight from the right,
      and the vision by both. The pools are clipped to their band, so nothing widens the page. */
   .section.bg-paper, .vision { position: relative; isolation: isolate; overflow: clip; }
   .section.bg-paper::before, .vision::before, .vision::after {
@@ -778,7 +777,7 @@
   .section.bg-paper:nth-of-type(4n)::before, .vision::after {
     left: auto;
     right: -14vw;
-    background: radial-gradient(closest-side, var(--pool-green), transparent);
+    background: radial-gradient(closest-side, var(--pool-sun), transparent);
   }
 
   /* The glass. What Design 10 raises in flat paper is a white the light shows through, with a soft
@@ -801,6 +800,43 @@
   .btn-solid { background: var(--leaf); border-color: var(--leaf); }
   .btn-solid:hover { background: var(--canopy); border-color: var(--canopy); }
   .seg input:checked + span { background: var(--leaf); }
+
+  /* Between 73rem and 78rem the header has room for the name or for the links on one line, not both:
+     the emblem stands alone a little longer than in Design 10, until 78rem. */
+  @media (min-width: 73rem) and (max-width: 77.99rem) { .brand-text { display: none; } }
+
+  /* The marks. A name that is proof carries a bar of sun amber under it, the proof-reader's mark, not a
+     box round it: the letters stay ink on paper, and a name that wraps gets a bar on each line instead
+     of a slab. The --mark-* properties exist for the comparison toolbar, which can set the other ways
+     tried (Design 10's box, a stroke under the lower half of the words, the name in DNA blue); the
+     page itself never sets them. */
+  .hl {
+    background: var(--mark-bg, none);
+    color: var(--mark-ink, inherit);
+    padding: var(--mark-pad, 0);
+    margin: var(--mark-margin, 0);
+    box-shadow: none;
+    text-decoration-line: var(--mark-line, underline);
+    text-decoration-color: var(--sun);
+    text-decoration-thickness: 0.14em;
+    text-underline-offset: 0.12em;
+    text-decoration-skip-ink: none;
+  }
+  /* In REASSURED the mark is not proof but the reader's own pointing: the letter under the pointer
+     fills with sun, and its criterion's title fills the same way, so the pair light up as one. */
+  .criteria li.is-on h3 span {
+    background: var(--sun);
+    box-shadow: none;
+    padding: 0.04em 0.2em;
+    margin: 0 -0.2em;
+    border-radius: 0.2em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  /* The map's key. A blue state is lightened towards paper before it is warmed to amber, because the
+     two mixed straight give khaki; the script paints the map and these swatches the same way. */
+  .key-pale { background: color-mix(in srgb, var(--sun) 45%, var(--paper)); }
+  .key-faint { background: color-mix(in srgb, var(--sun) 12%, var(--paper)); }
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -508,11 +508,13 @@
   };
 
   // 11 · Lumen is Design 10's page and film, line for line, in the Lumen theme from the first design
-  // round: pools of DNA blue and life green light behind the white bands, frosted glass where Design
-  // 10 has flat paper, Exo with Roboto Mono for labels and codes, DNA blue for every action, and
-  // emerald kept as a glow. Its variations offer Design 10's Quicksand and Nunito whole (the display
-  // weight and the label voice's weight with them), Design 10's colours, and the same choice of how
-  // quickly the film runs.
+  // round: pools of DNA blue light and of sunlight behind the white bands, frosted glass where Design
+  // 10 has flat paper, Exo with Roboto Mono for labels and codes, DNA blue for every action, and sun
+  // amber (the logo's own sun, a shade softer) for what is being pointed out; it replaced the theme's
+  // emerald on 13 October 2026, when the user asked for a second colour that suits the blue. Its
+  // variations offer Design 10's Quicksand and Nunito whole (the display weight and the label voice's
+  // weight with them), Design 10's colours, other highlight colours and other ways of marking a name, and the
+  // same choices for the film.
   DESIGNS.lumen = {
     label: '11 · Lumen (3D film)',
     file: 'lumen.html',
@@ -555,6 +557,31 @@
           { id: 'designed', label: 'DNA blue (as designed)', swatch: '#0C4A6E' },
           { id: 'leaf', label: 'Leaf green (from Reel)', swatch: '#1F5E2E', vars: { '--canopy': '#1F5E2E', '--leaf': '#2B7A3D', '--moss': '#3F6A48' } },
           { id: 'slate', label: 'Slate (from Civic)', swatch: '#0F172A', vars: { '--canopy': '#0F172A', '--leaf': '#0369A1' } },
+        ],
+      },
+      // The colour of what is being pointed out: the highlighter, the proof tag, the map's marked states
+      // and the places. Only --sun changes; the warm pool of light, the film and the map follow it.
+      {
+        key: 'mark',
+        label: 'Highlight',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Sun amber (as designed)', swatch: '#FFC53D' },
+          { id: 'marigold', label: 'Marigold, softer', swatch: '#FFD166', vars: { '--sun': '#FFD166' } },
+          { id: 'coral', label: 'Coral', swatch: '#FFB4A2', vars: { '--sun': '#FFB4A2' } },
+          { id: 'green', label: 'Life green (until 13 Oct)', swatch: '#6EE7B7', vars: { '--sun': '#6EE7B7' } },
+        ],
+      },
+      // How a name is marked: the bar under it, or the other ways tried on 13 October 2026.
+      {
+        key: 'proof',
+        label: 'Mark',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Bar under the name (as designed)' },
+          { id: 'box', label: 'Box round the name (as Design 10)', vars: { '--mark-line': 'none', '--mark-bg': 'var(--sun)', '--mark-pad': '0.02em 0.18em', '--mark-margin': '0 -0.06em' } },
+          { id: 'stroke', label: 'Stroke under the lower half', vars: { '--mark-line': 'none', '--mark-bg': 'linear-gradient(transparent 52%, var(--sun) 52%, var(--sun) 92%, transparent 92%)', '--mark-pad': '0 0.1em', '--mark-margin': '0 -0.1em' } },
+          { id: 'ink', label: 'The name in DNA blue, no amber', vars: { '--mark-line': 'none', '--mark-ink': 'var(--leaf)' } },
         ],
       },
       // How long the opening film takes. --film-pace is the share of its designed length; choosing one replays the film.
@@ -699,6 +726,18 @@
     '.more .fluid{flex:none}','.more select{flex:1;width:auto;max-width:340px}',
     '.actions{margin-left:0}.actions button{flex:1}',
     '}',
+    // A bar with six or more controls does not fit in one line below about 1640px: it folds there too.
+    '@media (max-width:1639px){',
+    '.bar.dense .brand,.bar.dense .rule{display:none}',
+    '.bar.dense{gap:8px;padding:8px 12px}',
+    '.bar.dense .design{flex:1;min-width:0}.bar.dense .design select{flex:1;min-width:0;width:100%}',
+    '.bar.dense .toggle{display:block}',
+    '.bar.dense .more{position:absolute;left:0;right:0;top:100%;display:none;flex-direction:column;align-items:stretch;gap:14px;padding:16px;background:#16181B;border-bottom:1px solid #000;box-shadow:0 14px 28px rgba(0,0,0,.3)}',
+    '.bar.dense .more.open{display:flex}',
+    '.bar.dense .more .field{justify-content:space-between}',
+    '.bar.dense .more .fluid{flex:none}','.bar.dense .more select{flex:1;width:auto;max-width:340px}',
+    '.bar.dense .actions{margin-left:0}.bar.dense .actions button{flex:1}',
+    '}',
   ].join('');
 
   function element(tag, attributes, children) {
@@ -807,6 +846,7 @@
 
     var hide = element('button', { type: 'button', text: 'Hide', 'aria-label': 'Hide the comparison bar' });
     bar.appendChild(hide);
+    if (config.controls.length >= 6) bar.classList.add('dense');
     shadow.appendChild(bar);
 
     var reopen = element('button', { type: 'button', class: 'reopen', text: 'Compare designs', hidden: '' });
