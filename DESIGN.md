@@ -457,7 +457,7 @@ The signature. About six and a half seconds, shot as one take, in three parts th
 
 - It plays by itself and keeps its own time, like a video. Scrolling does not drive it, and scrolling it off screen does not pause it. Only the reader's pause button or a hidden tab holds it.
 - It is one continuous take. The camera is moving in the first frame and rests only on the map. No holds between the parts, no cuts.
-- One drop falls, from above, slowly enough to be seen as a drop.
+- One drop falls, from above, slowly enough to be seen as a drop. It is small: its radius is 0.036 of the card's length, a little under a quarter of the collection circle's (`DROP.radius` in the film's code). The client asked for it smaller on 13 October 2026 (it had been 0.05); do not enlarge it without being asked.
 - The map is flat and upright: straight above, north up, not tilted.
 - No progress bar and no chapter markers. The film has one control: a 2.75rem round button at the end of the caption's line that pauses, plays or, at the end, replays.
 - Its pace is settled: 6.56 seconds. Do not slow it down.

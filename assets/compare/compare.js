@@ -493,6 +493,92 @@
           { id: 'unhurried', label: 'Unhurried, 8 s', vars: { '--film-pace': '1.25' } },
         ],
       },
+      // How big the drop of blood is. --film-drop is a multiple of its designed radius; choosing one replays the film.
+      {
+        key: 'drop',
+        label: 'Drop',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Small (as designed)' },
+          { id: 'larger', label: 'Larger (the size before 13 Oct)', vars: { '--film-drop': '1.4' } },
+          { id: 'smaller', label: 'Smaller still', vars: { '--film-drop': '0.75' } },
+        ],
+      },
+    ],
+  };
+
+  // 11 · Lumen is Design 10's page and film, line for line, in the Lumen theme from the first design
+  // round: pools of DNA blue and life green light behind the white bands, frosted glass where Design
+  // 10 has flat paper, Exo with Roboto Mono for labels and codes, DNA blue for every action, and
+  // emerald kept as a glow. Its variations offer Design 10's Quicksand and Nunito whole (the display
+  // weight and the label voice's weight with them), Design 10's colours, and the same choice of how
+  // quickly the film runs.
+  DESIGNS.lumen = {
+    label: '11 · Lumen (3D film)',
+    file: 'lumen.html',
+    controls: [
+      {
+        key: 'type',
+        label: 'Typography',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Exo + Roboto Mono (as designed)' },
+          {
+            id: 'reel',
+            label: 'Quicksand + Nunito (from Reel)',
+            fonts: FONTS_DAYLIGHT,
+            vars: { '--ff-display': '"Quicksand"', '--ff-body': '"Nunito"', '--ff-mono': '"Nunito"', '--display-weight': '700', '--display-tracking': '-0.02em', '--label-weight': '800', '--label-tracking': '0.08em' },
+          },
+          {
+            id: 'sample-card',
+            label: 'Familjen Grotesk (from Sample Card)',
+            fonts: FONTS_SAMPLE_CARD,
+            vars: { '--ff-display': '"Familjen Grotesk"', '--ff-body': '"Familjen Grotesk"', '--ff-mono': '"Familjen Grotesk"', '--display-weight': '600', '--label-weight': '700', '--label-tracking': '0.08em' },
+          },
+        ],
+      },
+      {
+        key: 'bg',
+        label: 'Background',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'Ice white (as designed)', swatch: '#F0F9FF' },
+          { id: 'white', label: 'White', swatch: '#FFFFFF', vars: { '--mist': '#FFFFFF', '--sprout': '#EAF6FE' } },
+          { id: 'green', label: 'Pale green (from Reel)', swatch: '#F1F6DD', vars: { '--mist': '#F1F6DD', '--paper': '#FDFEF8', '--sprout': '#DDEBB0', '--meadow': '#BCD982', '--sun': '#F7D61E' } },
+        ],
+      },
+      {
+        key: 'accent',
+        label: 'Ink',
+        kind: 'swatch',
+        options: [
+          { id: 'designed', label: 'DNA blue (as designed)', swatch: '#0C4A6E' },
+          { id: 'leaf', label: 'Leaf green (from Reel)', swatch: '#1F5E2E', vars: { '--canopy': '#1F5E2E', '--leaf': '#2B7A3D', '--moss': '#3F6A48' } },
+          { id: 'slate', label: 'Slate (from Civic)', swatch: '#0F172A', vars: { '--canopy': '#0F172A', '--leaf': '#0369A1' } },
+        ],
+      },
+      // How long the opening film takes. --film-pace is the share of its designed length; choosing one replays the film.
+      {
+        key: 'pace',
+        label: 'Film',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'One take, 6.5 s (as designed)' },
+          { id: 'quicker', label: 'Quicker, 5.5 s', vars: { '--film-pace': '0.85' } },
+          { id: 'unhurried', label: 'Unhurried, 8 s', vars: { '--film-pace': '1.25' } },
+        ],
+      },
+      // How big the drop of blood is. --film-drop is a multiple of its designed radius; choosing one replays the film.
+      {
+        key: 'drop',
+        label: 'Drop',
+        kind: 'select',
+        options: [
+          { id: 'designed', label: 'Small (as designed)' },
+          { id: 'larger', label: 'Larger (the size before 13 Oct)', vars: { '--film-drop': '1.4' } },
+          { id: 'smaller', label: 'Smaller still', vars: { '--film-drop': '0.75' } },
+        ],
+      },
     ],
   };
 

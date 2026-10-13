@@ -62,7 +62,9 @@ const OPEN = 106 * DEG; // how far the cover stands back when open
 // The sample: one drop. It swells from nothing at the point it hangs from, draws out into the shape
 // of a drop, lets go, and falls into the middle of the circle. Lengths are in the card's units.
 const DROP = {
-  radius: 0.05, // once it has let go
+  // Once it has let go. A little under a quarter of the collection circle's radius (RING.r), so that it
+  // reads as a drop and not a bead of paint; the client asked for it smaller on 13 October 2026.
+  radius: 0.036,
   hang: 0.6, // the point it hangs from, above the paper
 };
 
@@ -1046,12 +1048,22 @@ function init(root) {
   };
   const readPace = () => clamp(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--film-pace')) || 1, 0.4, 2.5);
   pace = readPace();
+  // The toolbar can also ask for the drop at another size (--film-drop: a multiple of its designed
+  // radius). The page itself never sets it. The drop is reshaped every frame from DROP.radius, so a
+  // change takes effect at once.
+  const designedRadius = DROP.radius;
+  const readDrop = () => designedRadius * clamp(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--film-drop')) || 1, 0.5, 2);
+  DROP.radius = readDrop();
   document.addEventListener('ll:theme', () => {
     applyTheme();
     loadCodeFont();
-    // A change of pace is shown from the start, so that it can be judged.
+    // A change of pace or of the drop's size is shown from the start, so that it can be judged.
     const next = readPace();
-    if (next !== pace) { pace = next; if (film.started) seek(0); }
+    const radius = readDrop();
+    let replay = false;
+    if (next !== pace) { pace = next; replay = true; }
+    if (radius !== DROP.radius) { DROP.radius = radius; replay = true; }
+    if (replay && film.started) seek(0);
     wake();
   });
   loadCodeFont();
