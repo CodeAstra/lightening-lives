@@ -1,0 +1,88 @@
+{%- from "opening.njk" import opening -%}
+{#- Every page. An inner page sets title, description, label, h1, lead and chips in its front matter,
+    and the layout opens it and closes it with the closing band (closing: false leaves the band out;
+    closing: { h2, body, solid, line } replaces its words). The home page sets film: true and writes
+    all of its own sections. notice: true adds the notice for individuals. -#}
+{%- set url = site.domain + page.url -%}
+{%- set addresses = [] -%}
+{%- for key, a in site.addresses -%}
+  {%- set addresses = addresses.concat([{ "@type": "PostalAddress", "name": a.label, "streetAddress": a.street, "addressLocality": a.locality, "addressRegion": a.region, "postalCode": a.postcode, "addressCountry": "IN" }]) -%}
+{%- endfor -%}
+{%- set organization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": site.name,
+  "legalName": site.legalName,
+  "url": site.domain,
+  "logo": site.domain + "/assets/logo/lightening-lives-logo-512.png",
+  "slogan": site.tagline,
+  "description": site.about,
+  "email": site.email,
+  "telephone": site.phone,
+  "address": addresses
+} -%}
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}">
+<link rel="canonical" href="{{ url }}">
+<meta name="theme-color" content="#F0F9FF">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:locale" content="en_IN">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="{{ url }}">
+<meta property="og:image" content="{{ site.domain }}{{ social or '/assets/img/social.png' }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/icons/icon-32.png">
+<link rel="apple-touch-icon" href="/assets/logo/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/assets/css/site.css">
+{%- if film %}
+<script>
+/* The opening film needs WebGL, and it plays by itself only for a reader who has not asked for reduced
+   motion (anyone else is offered a button to start it). Decide before first paint, so the still image
+   is never fetched when the film will replace it; back out if the film never arrives. */
+(function () {
+  var root = document.documentElement;
+  if (!window.WebGL2RenderingContext) return;
+  root.classList.add('film-can');
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  root.classList.add('film-live');
+  setTimeout(function () { if (!root.classList.contains('film-ready')) root.classList.remove('film-live'); }, 7000);
+})();
+</script>
+{%- endif %}
+<script src="/assets/js/site.js" type="module" defer></script>
+<script type="application/ld+json">{{ organization | dump | safe }}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+{% include "header.njk" %}
+<main id="main">
+{%- if not film %}
+{{ opening(label, h1, lead, chips) }}
+{%- endif %}
+{{ content | safe }}
+{%- if not film %}
+{%- if closing !== false %}
+{% include "closing.njk" %}
+{%- elif notice %}
+<section class="section" aria-label="{{ site.notice.label }}">
+  <div class="wrap">
+    {% include "notice.njk" %}
+  </div>
+</section>
+{%- endif %}
+{%- endif %}
+</main>
+{% include "footer.njk" %}
+</body>
+</html>

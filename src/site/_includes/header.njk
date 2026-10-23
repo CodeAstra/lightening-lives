@@ -1,0 +1,26 @@
+{#- The header lies over the top of the page and scrolls away with it. Below 64rem the links move into
+    the Menu panel, a <details> that works without script. A link is marked current when the page is
+    in its section (/about/team/ is in About). -#}
+<header class="site-header">
+  <a href="/" class="brand" aria-label="{{ site.name }} home">
+    <img class="brand-mark" src="/assets/logo/lightening-lives-emblem.svg" alt="" width="60" height="60">
+    <span class="brand-text"><span class="brand-name">{{ site.name }}</span><span class="brand-line">{{ site.tagline }}</span></span>
+  </a>
+  <nav class="site-nav" aria-label="Main">
+    {%- for link in site.nav %}
+    <a class="nav-link" href="{{ link.href }}"{% if page.url.startsWith(link.href) %} aria-current="page"{% endif %}>{{ link.text }}</a>
+    {%- endfor %}
+    <a class="btn btn-solid ml-3" href="{{ site.cta.href }}"{% if page.url.startsWith(site.cta.href) %} aria-current="page"{% endif %}>{{ site.cta.text }}</a>
+  </nav>
+  <details class="menu" data-menu>
+    <summary class="btn btn-line bg-mist" aria-label="Menu"><span class="menu-open">Menu</span><span class="menu-close">Close</span></summary>
+    <nav class="menu-panel" aria-label="Main (mobile)">
+      <ul class="grid gap-0.5">
+        {%- for link in site.nav %}
+        <li><a class="nav-link" href="{{ link.href }}"{% if page.url.startsWith(link.href) %} aria-current="page"{% endif %}>{{ link.text }}</a></li>
+        {%- endfor %}
+        <li class="pt-2"><a class="btn btn-solid w-full" href="{{ site.cta.href }}"{% if page.url.startsWith(site.cta.href) %} aria-current="page"{% endif %}>{{ site.cta.text }}</a></li>
+      </ul>
+    </nav>
+  </details>
+</header>

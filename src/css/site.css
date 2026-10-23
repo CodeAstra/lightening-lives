@@ -1,0 +1,853 @@
+/* The Lightening Lives site: Design 11, Lumen, in the variation the client chose on 23 October 2026
+   (DESIGN.md). This is designs/src/css/lumen.css with DESIGN.md's "Making the chosen design the
+   page's own" edits 1 and 3 made: Quicksand and Nunito are the type, and a name that is proof is set
+   in DNA blue with nothing drawn under it. Every other rule is lumen.css's, unchanged. The page is
+   ice white, each white band is lit from one side by a soft pool of DNA blue or sunlight, and what
+   stands on the page is frosted glass. DNA blue for every action and label, sun amber for what is
+   being pointed out, and blood red for the sample and nothing else. */
+
+@import "tailwindcss" source(none);
+@import "./fonts.css";
+@source "../site";
+@source "../js/site";
+
+@theme inline {
+  --color-mist: var(--mist);
+  --color-paper: var(--paper);
+  --color-sprout: var(--sprout);
+  --color-leaf: var(--leaf);
+  --color-canopy: var(--canopy);
+  --color-moss: var(--moss);
+  --color-sun: var(--sun);
+  --color-line: var(--line);
+  --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--ff-display), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--ff-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@layer base {
+  /* Design tokens. The names are Design 10's, because the film and the comparison toolbar read them;
+     the values are Lumen's. */
+  :root {
+    --mist: #F0F9FF;    /* ice white: the page, and the haze the cards fade into */
+    --paper: #FFFFFF;   /* cards and raised surfaces */
+    --sprout: #E0F2FE;  /* hover and quiet fills */
+    --meadow: #BAE6FD;  /* sky blue: the field of cards, seen from far enough to be a map */
+    --leaf: #0369A1;    /* DNA blue: labels, links, actions, the print on the cards */
+    --canopy: #0C4A6E;  /* text */
+    --moss: #475569;    /* secondary text */
+    --sun: #FFC53D;     /* sun amber, the logo's own sun a shade softer: the one warm colour, for what is pointed out */
+    --blood: #6A2A20;   /* the sample once it has dried into the paper */
+    --drop: #A61B18;    /* and while it is still a falling drop */
+    --line: rgba(12, 74, 110, 0.18);
+    /* The material: the light behind the page, and the glass standing on it. */
+    --pool-blue: rgba(3, 105, 161, 0.16);
+    --pool-sun: rgba(255, 197, 61, 0.2);
+    --glass: rgba(255, 255, 255, 0.62);        /* a white the light shows through */
+    --glass-strong: rgba(255, 255, 255, 0.86); /* where what is on it must stay readable over the film */
+    --shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 22px 44px -26px rgba(12, 74, 110, 0.3), 0 2px 6px -3px rgba(12, 74, 110, 0.1);
+    --blur: blur(16px) saturate(150%);
+
+    --ff-display: "Quicksand";
+    --ff-body: "Nunito";
+    --ff-mono: "Nunito"; /* the label voice, and the codes printed on the cards in the film */
+    --display-stretch: 100%;
+    --display-weight: 700;
+    --display-tracking: -0.02em;
+    --label-weight: 800;      /* the label voice's weight and tracking */
+    --label-tracking: 0.08em;
+    --round: 999px;     /* buttons, chips and labels are pills, to go with the rounded type */
+
+    --pad: clamp(1.25rem, 5vw, 4.5rem);
+    /* The page keeps to a centred column. --gutter is the distance from the window's edge to that
+       column's content, for the full-width parts (header, story) that have to line up with it. */
+    --frame: 82rem;
+    --gutter: max(var(--pad), calc((100% - var(--frame)) / 2 + var(--pad)));
+    --text-w: min(38rem, 44vw); /* the opening's text column, beside the film */
+    --stage-h: calc(100vh - var(--compare-h, 0px));
+  }
+  @supports (height: 100svh) {
+    :root { --stage-h: calc(100svh - var(--compare-h, 0px)); }
+  }
+  @supports (color: color-mix(in srgb, red, red)) {
+    :root {
+      --line: color-mix(in srgb, var(--canopy) 18%, transparent);
+      --pool-blue: color-mix(in srgb, var(--leaf) 16%, transparent);
+      --pool-sun: color-mix(in srgb, var(--sun) 20%, transparent);
+      --glass: color-mix(in srgb, var(--paper) 62%, transparent);
+      --glass-strong: color-mix(in srgb, var(--paper) 86%, transparent);
+      --shadow: 0 1px 0 color-mix(in srgb, var(--paper) 90%, transparent) inset, 0 22px 44px -26px color-mix(in srgb, var(--canopy) 30%, transparent), 0 2px 6px -3px color-mix(in srgb, var(--canopy) 10%, transparent);
+    }
+  }
+  /* Without backdrop blur the glass is simply paper, as it is in Design 10. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    :root { --glass: var(--paper); --glass-strong: var(--paper); }
+  }
+
+  html {
+    /* On screens wider than a laptop's the whole page grows with the window, up to about a third
+       larger, so a big monitor gets a bigger page and not a small one in a wide margin. */
+    font-size: clamp(100%, 0.5vw + 0.55rem, 137.5%);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--compare-h, 0px);
+  }
+  body {
+    position: relative;
+    background: var(--mist);
+    color: var(--canopy);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: var(--display-weight);
+    font-stretch: var(--display-stretch);
+    letter-spacing: var(--display-tracking);
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 3px solid var(--canopy);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px var(--sun);
+    border-radius: 3px;
+  }
+  ::selection { background: var(--sun); color: var(--canopy); }
+}
+
+@layer components {
+  .wrap { width: 100%; max-width: var(--frame); margin-inline: auto; padding-inline: var(--pad); }
+  .section { padding-block: clamp(4.5rem, 9vw, 8rem); }
+
+  .display { font-size: clamp(2.6rem, 5vw, 4.75rem); line-height: 1; }
+  .h2 { font-size: clamp(2rem, 3.7vw, 3.3rem); line-height: 1.06; }
+  .h3 { font-size: clamp(1.4rem, 1.9vw, 1.7rem); line-height: 1.12; font-stretch: 106%; letter-spacing: -0.012em; }
+  .lead { font-size: clamp(1.15rem, 1.5vw, 1.35rem); line-height: 1.5; color: var(--moss); }
+
+  /* The small capital voice used for labels and data. */
+  .label {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--leaf);
+  }
+
+  /* Highlighter. Reserved for named proof, so yellow always means "you can check this". */
+  .hl {
+    background: var(--sun);
+    padding: 0.02em 0.18em;
+    margin: 0 -0.06em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    border: 2px solid var(--canopy);
+    border-radius: var(--round);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+  }
+  .btn-solid { background: var(--canopy); color: var(--paper); }
+  .btn-solid:hover { background: var(--leaf); border-color: var(--leaf); }
+  .btn-line { color: var(--canopy); }
+  .btn-line:hover { background: var(--sprout); }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    font-weight: 600;
+    color: var(--canopy);
+    text-decoration: underline;
+    text-decoration-color: var(--leaf);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+    transition: text-decoration-color 0.16s ease, color 0.16s ease;
+  }
+  .link:hover { color: var(--leaf); text-decoration-thickness: 3px; }
+  .link svg { flex: none; transition: translate 0.2s ease; }
+  .link:hover svg { translate: 4px 0; }
+
+  .skip {
+    position: absolute;
+    left: 1rem;
+    top: -6rem;
+    z-index: 60;
+    padding: 0.75rem 1.1rem;
+    background: var(--canopy);
+    color: var(--paper);
+    font-weight: 700;
+    border-radius: var(--round);
+  }
+  .skip:focus { top: calc(var(--compare-h, 0px) + 0.75rem); }
+
+  /* ---------- Header: floats over the opening film ---------- */
+  .site-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem var(--gutter) 0;
+  }
+  /* The header's mark. At header size the full logo's lettering is too small to read, so the emblem
+     stands alone and the name and the logo's own line are set in this page's type. The whole logo is
+     shown once, in the footer, large enough to read. */
+  .brand { display: inline-flex; align-items: center; gap: 0.7rem; flex: none; border-radius: 0.5rem; }
+  .brand-mark { flex: none; width: 3.25rem; height: 3.25rem; }
+  .brand-text { display: grid; gap: 0.32rem; }
+  .brand-name { font-family: var(--font-display); font-weight: 700; font-stretch: var(--display-stretch); font-size: 1.4rem; letter-spacing: var(--display-tracking); color: var(--canopy); line-height: 1; white-space: nowrap; }
+  .brand-line { font-family: var(--font-sans); font-weight: 800; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--leaf); line-height: 1; white-space: nowrap; }
+  @media (min-width: 75rem) {
+    .brand { gap: 0.8rem; }
+    .brand-mark { width: 3.75rem; height: 3.75rem; }
+  }
+  /* Between the menu appearing and the header having room for both, the emblem stands alone. */
+  @media (min-width: 64rem) and (max-width: 72.99rem) { .brand-text { display: none; } }
+  @media (max-width: 26rem) {
+    .brand { gap: 0.55rem; }
+    .brand-mark { width: 2.875rem; height: 2.875rem; }
+    .brand-name { font-size: clamp(1rem, 4.7vw, 1.4rem); }
+    .brand-line { font-size: clamp(0.58rem, 2.8vw, 0.75rem); }
+  }
+  @media (max-width: 21.99rem) { .brand-text { display: none; } }
+  .site-nav { display: none; align-items: center; gap: 0.25rem; }
+  @media (min-width: 64rem) {
+    .site-nav { display: flex; }
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 0.9rem;
+    border-radius: var(--round);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    transition: background-color 0.16s ease;
+  }
+  .nav-link:hover { background: var(--sprout); }
+
+  details.menu > summary { list-style: none; cursor: pointer; }
+  details.menu > summary::-webkit-details-marker { display: none; }
+  details.menu[open] .menu-open, details.menu:not([open]) .menu-close { display: none; }
+  .menu-panel {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    top: calc(100% + 0.5rem);
+    padding: 0.5rem;
+    background: var(--paper);
+    border: 2px solid var(--canopy);
+    border-radius: 1.25rem;
+  }
+  .menu-panel .nav-link { width: 100%; }
+  @media (min-width: 64rem) {
+    details.menu { display: none; }
+  }
+
+
+  /* ---------- The opening: a film that plays by itself ---------- */
+  /* Baseline (no WebGL, or a reader who has asked for less motion): the heading, a still from the
+     film, and the rest of the text. On a small screen they run in that order; side by side on a wide one. */
+  .hero { position: relative; display: flex; flex-direction: column; padding: 6.5rem var(--gutter) 3rem; }
+  .hero-text { display: contents; }
+  .hero .display { order: 1; }
+  @media (max-width: 30rem) { .hero .display { font-size: clamp(1.95rem, 9.4vw, 2.6rem); } }
+  .film-screen { order: 2; position: relative; width: 100%; max-width: 34rem; margin: 1.75rem auto 0; aspect-ratio: 1; }
+  .film-foot { order: 3; display: none; }
+  .hero-lead { order: 4; margin-top: 1.5rem; max-width: 34rem; }
+  .hero-actions { order: 5; display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+  .hero-note { order: 6; margin-top: 1.25rem; font-size: 1rem; color: var(--moss); }
+  .film-poster { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 1.25rem; }
+  .film-screen canvas { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 0.7s ease; }
+  html.film-ready .film-screen canvas { opacity: 1; }
+  /* For a reader who has asked for less motion the film waits to be started. */
+  .film-play { position: absolute; left: 50%; bottom: 1.25rem; translate: -50% 0; z-index: 3; white-space: nowrap; }
+  .film-play svg { flex: none; }
+  .hero-veil, .hero-frame { display: none; }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; gap: 2rem 4rem; padding: 8.5rem var(--gutter) 5rem; }
+    .hero-text { display: block; }
+    .film-screen { order: 0; grid-column: 2; grid-row: 1; margin: 0; justify-self: center; }
+    .hero-text { grid-column: 1; grid-row: 1; }
+  }
+
+  /* Live: on a small screen the film has a frame of its own under the heading, the width of the
+     screen, with its caption and its one button beneath. */
+  html.film-live .film-poster { display: none; }
+  html.film-live .film-play { display: none; }
+  html.film-live .film-screen { max-width: none; width: auto; margin: 1.25rem calc(var(--gutter) * -1) 0; aspect-ratio: auto; height: min(100vw, 58vh); }
+  @supports (height: 100svh) { html.film-live .film-screen { height: min(100vw, 58svh); } }
+  html.film-live .film-foot { margin-top: 0.5rem; }
+  /* Its top and bottom edges fade into the page, so the field of cards has no hard edge. */
+  html.film-live .film-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, var(--mist) 0, transparent 3rem, transparent calc(100% - 3rem), var(--mist) 100%);
+  }
+  /* On a wide screen it fills the whole opening, with the text over its left side and the caption
+     and the bar along its foot. */
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    html.film-live .hero { display: flex; flex-direction: row; align-items: center; min-height: max(36rem, var(--stage-h)); padding: 6.25rem var(--gutter) 7.5rem; overflow: clip; }
+    html.film-live .film-screen { position: absolute; inset: 0; height: auto; margin: 0; }
+    html.film-live .film-screen::after { content: none; }
+    html.film-live .hero-text { position: relative; z-index: 2; max-width: var(--text-w); }
+    html.film-live .hero-text > :not(.display) { max-width: calc(var(--text-w) * 0.82); }
+    html.film-live .film-foot { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 1.75rem; z-index: 3; margin: 0; }
+    /* Keeps the text readable whatever the film is showing behind it; it ends where the text column does. */
+    html.film-live .hero-veil {
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      --veil-from: calc(var(--gutter) + var(--text-w) * 0.82);
+      --veil-to: calc(var(--gutter) + var(--text-w) + 2.5rem);
+      background: linear-gradient(90deg, var(--mist) 0, var(--mist) var(--veil-from), transparent var(--veil-to));
+    }
+    @supports (color: color-mix(in srgb, red, red)) {
+      html.film-live .hero-veil {
+        background:
+          linear-gradient(180deg, var(--mist) 0, color-mix(in srgb, var(--mist) 94%, transparent) 4.5rem, transparent 8.25rem),
+          linear-gradient(90deg, var(--mist) 0, color-mix(in srgb, var(--mist) 97%, transparent) var(--veil-from), transparent var(--veil-to));
+      }
+    }
+    /* The column the rest of the page keeps to, marked out so the film can place its subject within it. */
+    html.film-live .hero-frame { display: block; position: absolute; inset-block: 0; left: var(--gutter); right: var(--gutter); pointer-events: none; }
+  }
+  /* A short, wide window: the heading gives way so that everything stays above the bar. */
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) and (max-height: 48rem) {
+    html.film-live .hero .display { font-size: clamp(2.3rem, min(5vw, 7.6vh), 4.75rem); }
+    html.film-live .hero-lead { font-size: 1.0625rem; margin-top: 1rem; }
+    html.film-live .hero-actions { margin-top: 1.25rem; }
+    html.film-live .hero { padding-bottom: 6.5rem; }
+  }
+
+  /* What the film is showing, in words: one line for each of its three parts. */
+  .film-captions { display: grid; flex: 1; min-width: 0; }
+  .film-caption { grid-area: 1 / 1; align-self: end; opacity: 0; translate: 0 6px; transition: opacity 0.45s ease, translate 0.45s ease; }
+  .film-caption.is-on { opacity: 1; translate: none; }
+  .film-line { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.2rem, 1.75vw, 1.55rem); line-height: 1.15; letter-spacing: var(--display-tracking); text-wrap: balance; }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .film-captions { max-width: calc(var(--text-w) * 0.9); }
+  }
+
+  /* The film's one control: pause it, play it on, or, once it has ended, play it again. It sits at
+     the end of the caption's line, out of the way. */
+  html.film-live .film-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+  .film-toggle { flex: none; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 2px solid var(--canopy); border-radius: 50%; background: var(--paper); color: var(--canopy); cursor: pointer; transition: background-color 0.16s ease; }
+  .film-toggle:hover { background: var(--sprout); }
+  .film-toggle svg { grid-area: 1 / 1; display: none; }
+  [data-film-state="playing"] .film-toggle .i-pause,
+  [data-film-state="paused"] .film-toggle .i-play,
+  [data-film-state="ended"] .film-toggle .i-replay { display: block; }
+
+  /* The places we have worked, each pinned where it is: a dot on the place itself, a short leader,
+     and a chip that names it and says what is there. */
+  .places { position: absolute; inset: 0; z-index: 2; margin: 0; padding: 0; list-style: none; opacity: 0; pointer-events: none; --lead: 1.1rem; }
+  .places li { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+  .places li::before { content: ""; position: absolute; left: 0; top: -1px; width: var(--lead); height: 2px; background: var(--canopy); }
+  .places li::after { content: ""; position: absolute; left: -0.3rem; top: -0.3rem; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--sun); border: 2px solid var(--canopy); }
+  .places b {
+    position: absolute;
+    left: var(--lead);
+    top: 0;
+    translate: 0 -50%;
+    padding: 0.14rem 0.5rem;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--canopy);
+    background: var(--paper);
+    border: 1.5px solid var(--canopy);
+    border-radius: var(--round);
+  }
+  .places small { display: none; font-size: 0.75rem; font-weight: 600; color: var(--moss); }
+  .places li[data-side="left"]::before { left: auto; right: 0; }
+  .places li[data-side="left"] b { left: auto; right: var(--lead); }
+  /* On the smallest phones the western pin's chip would touch the edge of the screen. */
+  @media (max-width: 22.5rem) {
+    .places { --lead: 0.7rem; }
+    .places b { padding-inline: 0.4rem; }
+  }
+  @media (min-width: 56.25rem) {
+    .places { --lead: 1.9rem; }
+    .places b { padding: 0.3rem 0.7rem 0.36rem; font-size: 0.875rem; border-radius: 0.85rem; }
+    .places small { display: block; }
+  }
+
+
+  /* ---------- How it works: the film's three parts, standing still ---------- */
+  .steps { display: grid; gap: 2.75rem; }
+  .steps > li { display: grid; gap: 0.5rem; align-content: start; }
+  .steps img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 1.25rem; margin-bottom: 0.9rem; background: var(--mist); }
+  .steps .h3 { margin-top: 0.15rem; }
+  .steps p:not(.label) { color: var(--moss); margin-top: 0.25rem; }
+  @media (min-width: 40rem) and (max-width: 59.99rem) {
+    .steps > li { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); column-gap: 2rem; align-items: center; }
+    .steps img { grid-row: 1 / span 3; margin-bottom: 0; }
+    .steps .label { align-self: end; }
+    .steps p:not(.label) { align-self: start; }
+  }
+  @media (min-width: 60rem) {
+    .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+  }
+
+  /* ---------- Why: what the tests are made to be ---------- */
+  /* Five words from the company's own description, set large; between them the card's dashed circle. */
+  .better { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.1rem; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 2.9vw, 2.5rem); line-height: 1.15; letter-spacing: var(--display-tracking); }
+  .better li { display: inline-flex; align-items: center; gap: 1.1rem; }
+  .better li:not(:last-child)::after { content: ""; flex: none; width: 0.5em; height: 0.5em; border: 2px dashed var(--leaf); border-radius: 50%; }
+  @media (max-width: 39.99rem) {
+    .better { display: grid; gap: 0.15rem; }
+    .better li:not(:last-child)::after { content: none; }
+  }
+  .why { display: grid; gap: 0 2.5rem; border-bottom: 1px solid var(--line); }
+  .why > li { padding: 1.2rem 0 1.3rem; border-top: 1px solid var(--line); }
+  .why h3 { font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.008em; }
+  .why p { margin-top: 0.35rem; color: var(--moss); font-size: 1.0625rem; line-height: 1.45; }
+  @media (min-width: 40rem) { .why { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 72rem) { .why { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .footnote { margin-top: 1rem; font-size: 1rem; color: var(--moss); }
+
+  /* ---------- Portfolio: the four kinds of test, then the tests developed so far ---------- */
+  .kinds { display: grid; gap: 1rem; }
+  .kinds > li { padding: 1.5rem 1.6rem 1.7rem; background: var(--mist); border-radius: 1.25rem; }
+  .kinds p { margin-top: 0.6rem; color: var(--moss); }
+  @media (min-width: 40rem) { .kinds { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 75rem) { .kinds { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .sofar { display: grid; gap: 0.75rem 3rem; margin-top: 4rem; }
+  .sofar p { color: var(--moss); max-width: 40rem; }
+  @media (min-width: 56rem) { .sofar { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: end; } }
+
+
+  /* ---------- The map: where the need is, and where we work ---------- */
+  /* On a small screen the map comes straight after the choice of what it shows, with what it says
+     underneath; on a wide one the words stand in a column beside it. */
+  .map-layout { display: flex; flex-direction: column; }
+  .map-words { display: contents; }
+  .map-words > * { order: 3; }
+  .map-words > .h2 { order: 0; }
+  .map-words > fieldset { order: 1; }
+  .map-figure { order: 2; margin-block: 1.5rem 0.5rem; }
+  @media (min-width: 60rem) {
+    .map-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 4rem; align-items: center; }
+    .map-words { display: block; }
+    .map-figure { margin-block: 0; }
+  }
+  .seg { display: inline-grid; grid-auto-flow: column; gap: 0.2rem; padding: 0.25rem; background: var(--paper); border: 2px solid var(--canopy); border-radius: var(--round); }
+  .seg label { position: relative; display: block; }
+  .seg input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+  .seg span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: 0 1.05rem;
+    border-radius: var(--round);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.15;
+    white-space: nowrap;
+    transition: background-color 0.16s ease, color 0.16s ease;
+  }
+  .seg label:hover span { background: var(--sprout); }
+  .seg input:checked + span { background: var(--canopy); color: var(--paper); }
+  .seg input:focus-visible + span { outline: 3px solid var(--canopy); outline-offset: 3px; box-shadow: 0 0 0 3px var(--sun); }
+  @media (max-width: 30rem) {
+    .seg { display: grid; grid-template-columns: 1fr 1.2fr 0.9fr; width: 100%; }
+    .seg span { padding: 0 0.3rem; font-size: 0.9375rem; }
+  }
+  /* What the map says: a sentence and a key for the whole country, or the facts for one state. The
+     space is held for either, so pointing at a state does not make the page jump. */
+  .map-info { min-height: 10.5rem; margin-top: 1.1rem; }
+  .map-readout { color: var(--moss); font-size: 1.0625rem; line-height: 1.5; }
+  .map-key { display: grid; gap: 0.35rem; margin-top: 0.8rem; font-size: 0.9375rem; line-height: 1.35; }
+  .map-key li { display: grid; grid-template-columns: 1.1rem minmax(0, 1fr); align-items: start; gap: 0.6rem; }
+  .key { width: 1.1rem; height: 1.1rem; margin-top: 0.08rem; border: 1.5px solid var(--canopy); border-radius: 0.3rem; background: var(--meadow); }
+  .key-strong { background: var(--sun); }
+  .key-pale { background: var(--sun); }
+  .key-faint { background: var(--meadow); }
+  @supports (color: color-mix(in srgb, red, red)) {
+    .key-strong { background: color-mix(in srgb, var(--sun) 90%, var(--meadow)); }
+    .key-pale { background: color-mix(in srgb, var(--sun) 38%, var(--meadow)); }
+    .key-faint { background: color-mix(in srgb, var(--sun) 9%, var(--meadow)); }
+  }
+  .state-title { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; line-height: 1.15; letter-spacing: var(--display-tracking); }
+  .state-facts { display: grid; gap: 0.45rem; margin-top: 0.6rem; font-size: 0.9375rem; line-height: 1.4; }
+  .state-facts > div { display: grid; grid-template-columns: 6.6rem minmax(0, 1fr); gap: 0.75rem; align-items: baseline; }
+  .state-facts dt { font-weight: 800; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--leaf); }
+  .state-facts dd { color: var(--moss); }
+  .state-facts .is-showing dd { color: var(--canopy); font-weight: 600; }
+
+
+  /* Only the drawn map can be pointed at, so only then is the reader told that it can. */
+  .map-hint { display: none; margin-top: 0.5rem; font-size: 0.9375rem; line-height: 1.4; color: var(--moss); }
+  .map-layout.is-live .map-hint { display: block; }
+  .hint-tap { display: none; }
+  @media (hover: none) {
+    .hint-point { display: none; }
+    .hint-tap { display: inline; }
+  }
+  .map-sources { margin-top: 0.3rem; }
+  .map-sources > summary { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; cursor: pointer; list-style: none; }
+  .map-sources > summary::-webkit-details-marker { display: none; }
+  .map-sources > summary::before {
+    content: "";
+    width: 0.6rem;
+    height: 0.6rem;
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+  }
+  .map-sources[open] > summary::before { background-size: 100% 2px, 0 0; }
+  .map-sources > p { max-width: 34rem; padding-bottom: 0.5rem; font-size: 0.9375rem; line-height: 1.5; color: var(--moss); }
+  .map-sources a { text-decoration: underline; text-decoration-color: var(--leaf); text-underline-offset: 3px; }
+  @media (max-width: 39.99rem) {
+    .map-info { min-height: 11.5rem; }
+    .state-facts > div { display: block; }
+    .state-facts dt { display: inline; margin-right: 0.4rem; }
+    .state-facts dd { display: inline; }
+  }
+
+  /* The map itself: every state drawn to its own outline and filled by how strongly the chosen
+     layer marks it, under a grid of fine lines that makes it the film's field of cards again. */
+  .map-figure { position: relative; width: 100%; max-width: 38rem; margin-inline: auto; }
+  #map { overflow-x: clip; } /* a label at the map's edge never widens the page */
+  .map-still { display: block; width: 100%; height: auto; border-radius: 1.25rem; }
+  .map-figure.is-live .map-still { display: none; }
+  .map-figure svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .map-figure .state { fill: var(--meadow); stroke: var(--canopy); stroke-width: 1; stroke-opacity: 0.4; stroke-linejoin: round; vector-effect: non-scaling-stroke; cursor: pointer; transition: fill 0.5s ease, stroke-opacity 0.15s ease, stroke-width 0.15s ease; }
+  .map-figure .state.is-on { stroke-width: 2.5; stroke-opacity: 1; }
+  .map-figure .weave { fill: none; stroke: var(--paper); stroke-opacity: 0.5; pointer-events: none; }
+  .map-names, .map-pins { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; pointer-events: none; }
+  .map-names li, .map-pins li { position: absolute; width: 0; height: 0; }
+  .map-names li { opacity: 0; transition: opacity 0.35s ease; }
+  .map-names li.is-shown { opacity: 1; }
+  .map-names b {
+    position: absolute;
+    left: 0;
+    top: 0;
+    translate: -50% -50%;
+    width: max-content;
+    max-width: 9rem; /* the longest names take two or three lines, and so stay on the map */
+    padding: 0.12rem 0.5rem;
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--canopy);
+    border: 1.5px solid transparent;
+    border-radius: 0.85rem;
+    text-shadow: 0 0 3px var(--paper), 0 0 3px var(--paper), 0 0 6px var(--paper);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+  .map-names li.is-on { z-index: 1; }
+  .map-names li.is-on b { background: var(--paper); border-color: var(--canopy); text-shadow: none; }
+  .map-pins { z-index: 2; opacity: 0; transition: opacity 0.4s ease; --lead: 1.1rem; }
+  .map-pins.is-shown { opacity: 1; }
+  .map-pins li::before { content: ""; position: absolute; left: 0; top: -1px; width: var(--lead); height: 2px; background: var(--canopy); }
+  .map-pins li::after { content: ""; position: absolute; left: -0.3rem; top: -0.3rem; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--sun); border: 2px solid var(--canopy); }
+  .map-pins b { position: absolute; left: var(--lead); top: 0; translate: 0 -50%; padding: 0.14rem 0.5rem; white-space: nowrap; font-size: 0.75rem; font-weight: 800; line-height: 1.25; color: var(--canopy); background: var(--paper); border: 1.5px solid var(--canopy); border-radius: var(--round); }
+  .map-pins small { display: none; font-size: 0.75rem; font-weight: 600; color: var(--moss); }
+  .map-pins li[data-side="left"]::before { left: auto; right: 0; }
+  .map-pins li[data-side="left"] b { left: auto; right: var(--lead); }
+  @media (min-width: 40rem) {
+    .map-pins { --lead: 1.6rem; }
+    .map-pins b { padding: 0.3rem 0.7rem 0.36rem; font-size: 0.875rem; border-radius: 0.85rem; }
+    .map-pins small { display: block; }
+  }
+  @media (max-width: 39.99rem) {
+    .map-names b { padding: 0.06rem 0.35rem; font-size: 0.6875rem; line-height: 1.2; }
+  }
+
+  /* ---------- Evidence ---------- */
+  .proof { display: grid; border-top: 2px solid var(--canopy); }
+  .proof > li { padding: 1.5rem 0 1.75rem; border-bottom: 1px solid var(--line); }
+  .proof .h3 { margin-bottom: 0.6rem; }
+  .proof p { color: var(--moss); max-width: 28rem; }
+  @media (min-width: 48rem) {
+    .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3rem; }
+  }
+  @media (min-width: 75rem) {
+    .proof { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 0; }
+    .proof > li { padding: 1.6rem 1.75rem 0.5rem 0; border-bottom: 0; }
+    .proof > li + li { padding-left: 1.75rem; border-left: 1px solid var(--line); }
+  }
+
+  /* ---------- Tests ---------- */
+  .tests { border-bottom: 1px solid var(--line); }
+  .test { display: grid; gap: 0.75rem 3rem; padding: 1.9rem 0; border-top: 1px solid var(--line); }
+  .test:first-child { border-top: 2px solid var(--canopy); }
+  .test-what { color: var(--moss); }
+  .test-what strong { color: var(--canopy); font-weight: 600; }
+  @media (min-width: 56rem) {
+    .test { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+    .test > .about { grid-column: 2; }
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.75rem;
+    padding: 0 0.6rem;
+    border: 1.5px solid var(--canopy);
+    border-radius: var(--round);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--canopy);
+  }
+  .tag-proof { background: var(--sun); }
+  .about > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--leaf);
+  }
+  .about > summary::-webkit-details-marker { display: none; }
+  .about > summary::before {
+    content: "";
+    width: 0.7rem;
+    height: 0.7rem;
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+    transition: rotate 0.2s ease;
+  }
+  .about[open] > summary::before { background-size: 100% 2px, 0 0; }
+  .about > summary:hover { color: var(--canopy); }
+  .about > p { max-width: 44rem; padding: 0.25rem 0 0.5rem; color: var(--moss); font-size: 1.0625rem; }
+
+  /* ---------- REASSURED ---------- */
+  .word { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); margin-inline: -0.4vw; }
+  .word button {
+    padding: 0.08em 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 9.8vw, 9rem);
+    font-weight: 700;
+    line-height: 0.92;
+    border-radius: 0.12em;
+    letter-spacing: -0.03em;
+    text-align: center;
+    color: var(--canopy);
+    cursor: pointer;
+    transition: background-color 0.14s ease;
+  }
+  .word button:hover, .word button.is-on { background: var(--sun); }
+  .word button:focus-visible { outline-offset: -3px; box-shadow: none; }
+
+  .criteria { display: grid; gap: 0 3rem; counter-reset: none; }
+  @media (min-width: 44rem) { .criteria { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 72rem) { .criteria { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .criteria > li {
+    display: grid;
+    grid-template-columns: 2.1rem minmax(0, 1fr);
+    padding: 1.15rem 0 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  .criteria .crit-letter {
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--leaf);
+  }
+  .criteria h3 { font-size: 1.3rem; line-height: 1.2; font-stretch: 104%; letter-spacing: -0.008em; }
+  .criteria h3 span { transition: background-color 0.14s ease; }
+  .criteria li.is-on h3 span { background: var(--sun); box-shadow: 0.2em 0 0 var(--sun), -0.2em 0 0 var(--sun); }
+  .criteria p { margin-top: 0.3rem; color: var(--moss); font-size: 1.0625rem; line-height: 1.45; }
+
+  /* ---------- Who we work with ---------- */
+  .audiences { display: grid; gap: 2rem 0; }
+  .audiences > li { padding-top: 1.4rem; border-top: 2px solid var(--canopy); }
+  .audiences p { margin-top: 0.6rem; color: var(--moss); max-width: 24rem; }
+  @media (min-width: 56rem) {
+    .audiences { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .audiences > li { padding-right: 2.5rem; }
+  }
+  .notice {
+    display: grid;
+    gap: 0.4rem 1.5rem;
+    padding: 1.4rem 1.6rem;
+    background: var(--paper);
+    border: 2px solid var(--canopy);
+    border-radius: 1.25rem;
+  }
+  @media (min-width: 48rem) { .notice { grid-template-columns: auto minmax(0, 1fr); align-items: baseline; } }
+
+  /* ---------- Programmes ---------- */
+  .fieldwork { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
+  .fieldwork img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 1rem; background: var(--sprout); }
+  .fieldwork figcaption { margin-top: 0.6rem; }
+  @media (min-width: 40rem) {
+    .fieldwork { gap: 1.25rem; }
+    .fieldwork img { aspect-ratio: 5 / 6; }
+  }
+
+  /* ---------- Contact ---------- */
+  .actions { border-bottom: 1px solid var(--line); }
+  .actions a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4rem;
+    padding: 0.6rem 0.75rem 0.6rem 0;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-weight: 600;
+    font-stretch: 106%;
+    letter-spacing: -0.012em;
+    line-height: 1.15;
+    transition: background-color 0.16s ease, padding-left 0.2s ease;
+  }
+  .actions li:first-child a { border-top: 2px solid var(--canopy); }
+  .actions a:hover { background: var(--sprout); padding-left: 0.75rem; }
+  .actions svg { flex: none; }
+  .blank-card { position: relative; width: 100%; max-width: 26rem; margin-inline: auto; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 1.25rem; }
+  .blank-card img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- Footer ---------- */
+  .site-footer { background: var(--paper); border-top: 2px solid var(--canopy); }
+  .foot-link { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 500; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .foot-link:hover { color: var(--leaf); text-decoration-color: var(--leaf); }
+  .credits > summary { cursor: pointer; list-style: none; }
+  .credits > summary::-webkit-details-marker { display: none; }
+  .credits a { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---------- Vision ---------- */
+  .vision { padding-block: clamp(4rem, 8vw, 7rem); background: var(--sprout); }
+  .vision-line { margin-top: 1.1rem; max-width: 62rem; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.7rem, 3.4vw, 3rem); line-height: 1.12; letter-spacing: var(--display-tracking); text-wrap: balance; }
+
+  /* ---------- Lumen's material ---------- */
+  /* Everything above is Design 10's page. What follows changes only what things are made of, never
+     where they stand or how big they are. */
+
+  /* The light. Each white band is lit by one soft pool, DNA blue from the left or sunlight from the right,
+     and the vision by both. The pools are clipped to their band, so nothing widens the page. */
+  .section.bg-paper, .vision { position: relative; isolation: isolate; overflow: clip; }
+  .section.bg-paper::before, .vision::before, .vision::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: -14vw;
+    width: min(64vw, 56rem);
+    background: radial-gradient(closest-side, var(--pool-blue), transparent);
+    pointer-events: none;
+  }
+  .section.bg-paper:nth-of-type(4n)::before, .vision::after {
+    left: auto;
+    right: -14vw;
+    background: radial-gradient(closest-side, var(--pool-sun), transparent);
+  }
+
+  /* The glass. What Design 10 raises in flat paper is a white the light shows through, with a soft
+     shadow; the chips over the film and the menu's panel are a stronger white, to stay readable. */
+  .btn-line, .film-toggle, .seg, .kinds > li, .notice, .menu-panel, .places b, .map-pins b {
+    background: var(--glass);
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
+    box-shadow: var(--shadow);
+  }
+  .menu-panel, .places b, .map-pins b { background: var(--glass-strong); }
+  .steps img, .map-still, .fieldwork img, .blank-card, .film-poster { box-shadow: var(--shadow); }
+
+  /* The label voice, in Nunito 800: the small capitals, the chips on the film and the map, the tags
+     on the tests and the facts about a state. Sizes and casing are Design 10's. */
+  .label, .brand-line, .state-facts dt, .places b, .map-pins b, .tag { font-family: var(--font-mono); font-weight: var(--label-weight); }
+  .label, .brand-line, .state-facts dt { letter-spacing: var(--label-tracking); }
+
+  /* DNA blue for every action: the solid button and the chosen layer, deepening to the ink on hover. */
+  .btn-solid { background: var(--leaf); border-color: var(--leaf); }
+  .btn-solid:hover { background: var(--canopy); border-color: var(--canopy); }
+  .seg input:checked + span { background: var(--leaf); }
+
+  /* Between 73rem and 78rem the header has room for the name or for the links on one line, not both:
+     the emblem stands alone a little longer than in Design 10, until 78rem. */
+  @media (min-width: 73rem) and (max-width: 77.99rem) { .brand-text { display: none; } }
+
+  /* The marks. A name that is proof is set in DNA blue, in the heading's own face, weight and size,
+     with nothing drawn on or under it: the colour is the mark (chosen 23 October 2026). The --mark-*
+     properties are kept from lumen.css, where the comparison toolbar sets the other marks tried (the
+     amber bar, Design 10's box, a stroke under the lower half of the words); the site never sets them. */
+  .hl {
+    background: var(--mark-bg, none);
+    color: var(--mark-ink, var(--leaf));
+    padding: var(--mark-pad, 0);
+    margin: var(--mark-margin, 0);
+    box-shadow: none;
+    text-decoration-line: var(--mark-line, none);
+    text-decoration-color: var(--sun);
+    text-decoration-thickness: 0.14em;
+    text-underline-offset: 0.12em;
+    text-decoration-skip-ink: none;
+  }
+  /* In REASSURED the mark is not proof but the reader's own pointing: the letter under the pointer
+     fills with sun, and its criterion's title fills the same way, so the pair light up as one. */
+  .criteria li.is-on h3 span {
+    background: var(--sun);
+    box-shadow: none;
+    padding: 0.04em 0.2em;
+    margin: 0 -0.2em;
+    border-radius: 0.2em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  /* The map's key. A blue state is lightened towards paper before it is warmed to amber, because the
+     two mixed straight give khaki; the script paints the map and these swatches the same way. */
+  .key-pale { background: color-mix(in srgb, var(--sun) 45%, var(--paper)); }
+  .key-faint { background: color-mix(in srgb, var(--sun) 12%, var(--paper)); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .rise { animation: sl-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 90ms + 80ms); }
+}
+@keyframes sl-rise { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: none; } }
+
+/* ---------- The site's own additions ---------- */
+/* What the inner pages need that lumen.css, a single landing page, did not. Built from lumen.css's own
+   parts and values; nothing above this heading changes. */
+@layer components {
+  /* An inner page opens like a section, under the header, which lies over the top of every page as
+     it does over the film: the same room above the heading as the opening film gives its text. */
+  .page-open { padding-top: 6.5rem; }
+  @media (min-width: 56.25rem) { .page-open { padding-top: 8.5rem; } }
+  /* Long words in a heading at display size ("haemoglobinopathies") break rather than widen the page. */
+  .page-open .display { hyphens: auto; overflow-wrap: break-word; }
+  @media (max-width: 30rem) { .page-open .display { font-size: clamp(1.95rem, 9.4vw, 2.6rem); } }
+}

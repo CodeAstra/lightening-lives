@@ -1,0 +1,70 @@
+{
+  "name": "Lightening Lives",
+  "legalName": "Lightening Lives LLP",
+  "tagline": "Every Life Matters",
+  "about": "An innovation-driven healthcare technology company in Hyderabad. We develop molecular diagnostics for inherited blood and muscle conditions that work from a spot of blood on a card, for hospitals, laboratories and public health programmes.",
+  "words": "Innovate • Diagnose • Transform Lives",
+  "domain": "https://lighteninglives.in",
+  "email": "admin@lighteninglives.in",
+  "phone": "+91 91825 88191",
+  "tel": "+919182588191",
+  "whatsapp": true,
+  "social": [
+    { "text": "LinkedIn", "href": "https://www.linkedin.com/in/lightening-lives-llp-32a12b392/" },
+    { "text": "X", "href": "https://x.com/LivesLlp85686" }
+  ],
+  "addresses": {
+    "lab": {
+      "label": "Laboratory and corporate office",
+      "street": "Flat No. 201, 2nd Floor, S B Hare Krishna Towers, H.No. 4-7-195/2/55, HMT Nagar, Nacharam",
+      "locality": "Hyderabad",
+      "region": "Telangana",
+      "postcode": "500076"
+    },
+    "registered": {
+      "label": "Registered office",
+      "street": "D-306, Sy. No. 117, Indu Aranya Pallavi, GSI (SR), Bandlaguda, Hayathnagar",
+      "locality": "Hyderabad",
+      "region": "Telangana",
+      "postcode": "500068"
+    }
+  },
+  "nav": [
+    { "text": "Technology", "href": "/technology/" },
+    { "text": "Solutions", "href": "/solutions/" },
+    { "text": "Programmes", "href": "/programmes/" },
+    { "text": "Our work", "href": "/our-work/" },
+    { "text": "About", "href": "/about/" }
+  ],
+  "cta": { "text": "Partner with us", "href": "/partnerships/" },
+  "footer": {
+    "whatWeDo": [
+      { "text": "Technology", "href": "/technology/" },
+      { "text": "Solutions", "href": "/solutions/" },
+      { "text": "Programmes", "href": "/programmes/" },
+      { "text": "Our work", "href": "/our-work/" }
+    ],
+    "company": [
+      { "text": "About", "href": "/about/" },
+      { "text": "Team", "href": "/about/team/" },
+      { "text": "Partnerships", "href": "/partnerships/" },
+      { "text": "Contact", "href": "/contact/" }
+    ],
+    "disclaimer": "We work with hospitals, laboratories, clinicians, NGOs, CSR funders and government health programmes. We don't offer testing to individuals. Information on this website is general and is not medical advice.",
+    "trademark": "LitLife™ is a trade mark of Lightening Lives LLP.",
+    "policies": [
+      { "text": "Privacy", "href": "/privacy/" },
+      { "text": "Terms", "href": "/terms/" }
+    ]
+  },
+  "notice": {
+    "label": "For individuals",
+    "body": "Looking for a test for yourself or your family? We work with institutions and don't test individuals. Please speak to your doctor or visit your nearest government health facility."
+  },
+  "closing": {
+    "h2": "Tell us what your programme needs",
+    "body": "Tell us the condition you need to test for and where the testing will happen. We will take it from there.",
+    "solid": { "text": "Partner with us", "href": "/partnerships/" },
+    "line": { "text": "Contact us", "href": "/contact/" }
+  }
+}

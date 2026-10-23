@@ -1,0 +1,32 @@
+{
+  "name": "lightening-lives",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The Lightening Lives website: Eleventy, Tailwind CSS and esbuild, built to dist/ for GitHub Pages.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs --watch --serve",
+    "pages": "node scripts/build.mjs --pages",
+    "images": "node scripts/images.mjs",
+    "pretest": "npm run build",
+    "test": "node --test --test-concurrency=1 \"tests/*.test.mjs\""
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1",
+    "@fontsource/nunito": "^5.3.0",
+    "@fontsource/quicksand": "^5.3.0",
+    "@tailwindcss/cli": "^4.3",
+    "cheerio": "^1.1",
+    "esbuild": "^0.28",
+    "gsap": "^3.13",
+    "html-validate": "^10",
+    "png-to-ico": "^3.0.2",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3",
+    "three": "^0.186"
+  }
+}
