@@ -241,9 +241,9 @@ components:
 
 # Lightening Lives: design
 
-This file describes the design chosen for production on 23 October 2026: Design 11, "Lumen" (`lumen.html`), in the variation the client settled on after comparing the toolbar's options: **Quicksand and Nunito** for the type (the comparison toolbar's "Quicksand + Nunito (from Reel)"), **a name that is proof set in DNA blue** with no amber mark ("The name in DNA blue, no amber"), and **the drop at its smallest** ("Smaller still"). It is Design 10, "Reel" (approved on 12 October), on the same page and with the same film, in another light: ice white instead of pale green, DNA blue instead of leaf green, and frosted glass lit from the sides where Design 10 had flat paper. It is the reference for building the live site and any page added to it.
+This file describes the design chosen for production on 23 October 2026: Design 11, "Lumen" (`designs/lumen.html`), in the variation the client settled on after comparing the toolbar's options: **Quicksand and Nunito** for the type (the comparison toolbar's "Quicksand + Nunito (from Reel)"), **a name that is proof set in DNA blue** with no amber mark ("The name in DNA blue, no amber"), and **the drop at its smallest** ("Smaller still"). It is Design 10, "Reel" (approved on 12 October), on the same page and with the same film, in another light: ice white instead of pale green, DNA blue instead of leaf green, and frosted glass lit from the sides where Design 10 had flat paper. It is the reference for building the live site and any page added to it.
 
-The page's own stylesheet does not yet carry these three choices as its defaults: `src/css/lumen.css` and `src/js/lumen/scene.js` still open on Exo and Roboto Mono, the amber bar and the larger drop, and the toolbar sets the chosen values over them. "Where things live" at the end lists the edits that make the chosen design the page's own. Until then, the chosen design is `lumen.html?type=reel&proof=ink&drop=smaller`.
+The page's own stylesheet does not yet carry these three choices as its defaults: `designs/src/css/lumen.css` and `designs/src/js/lumen/scene.js` still open on Exo and Roboto Mono, the amber bar and the larger drop, and the toolbar sets the chosen values over them. "Where things live" at the end lists the edits that make the chosen design the page's own. Until then, the chosen design is `designs/lumen.html?type=reel&proof=ink&drop=smaller`.
 
 ## Overview
 
@@ -289,7 +289,7 @@ One family of blues does nearly all the work. Sun amber and red each have a sing
 
 **Red is the sample and nothing else.** `drop` and `blood` appear only in the film and in the stills taken from it. Nothing in the interface is red.
 
-**Blue and amber are never mixed straight.** A warm colour mixed into a blue one goes through khaki, so a map state, a card in the film and a swatch in the key are first lightened towards `paper` and then warmed to `sun`: half-way is a pale amber (`#FFE5A8`), not a muddy green. The map, the film and the key share this rule (`markedColour` in `src/js/lumen/main.js`, `PALE` in the film).
+**Blue and amber are never mixed straight.** A warm colour mixed into a blue one goes through khaki, so a map state, a card in the film and a swatch in the key are first lightened towards `paper` and then warmed to `sun`: half-way is a pale amber (`#FFE5A8`), not a muddy green. The map, the film and the key share this rule (`markedColour` in `designs/src/js/lumen/main.js`, `PALE` in the film).
 
 ### Contrast
 
@@ -442,7 +442,7 @@ Three items: a square still from the film under the soft shadow, a label, an `h3
 
 ### The map
 
-A map of India the reader can question. It is drawn in SVG, not WebGL, from the data in `src/js/drop/`.
+A map of India the reader can question. It is drawn in SVG, not WebGL, from the data in `designs/src/js/drop/`.
 
 - **Segmented control:** three choices (Sickle cell, Thalassaemia, Our work) in a glass pill with a 2px border; the chosen one is `leaf` with `paper` text.
 - **States** are filled `meadow`, lightened towards `paper` and then warmed to `sun` by how strongly the chosen layer marks them: a fully marked state goes 90% of the way, which is `sun` itself; the others stop at a pale amber. The key's swatches are painted by the same rule, so they match the map in any colour the toolbar tries. Borders are 1px `canopy` at 40%. A grid of fine `paper` lines lies over the country, so it reads as the film's field of cards.
@@ -487,7 +487,7 @@ The first caption is the page's wording as approved on 12 October. The content f
 
 - It plays by itself and keeps its own time, like a video. Scrolling does not drive it, and scrolling it off screen does not pause it. Only the reader's pause button or a hidden tab holds it.
 - It is one continuous take. The camera is moving in the first frame and rests only on the map. No holds between the parts, no cuts.
-- One drop falls, from above, slowly enough to be seen as a drop. It is small: its radius is **0.027 of the card's length**, about a sixth of the collection circle's radius of 0.155. The client asked for it smaller on 13 October 2026 (0.05 became 0.036) and chose the toolbar's "Smaller still" (0.75 of that, 0.027) on 23 October. Do not enlarge it without being asked. In the code the designed radius is `DROP.radius` in `src/js/lumen/scene.js`, and `--film-drop` on the page is a multiple of it; the chosen size is either `DROP.radius: 0.027` with no multiple, or 0.036 with `--film-drop: 0.75`, which is how the toolbar shows it now.
+- One drop falls, from above, slowly enough to be seen as a drop. It is small: its radius is **0.027 of the card's length**, about a sixth of the collection circle's radius of 0.155. The client asked for it smaller on 13 October 2026 (0.05 became 0.036) and chose the toolbar's "Smaller still" (0.75 of that, 0.027) on 23 October. Do not enlarge it without being asked. In the code the designed radius is `DROP.radius` in `designs/src/js/lumen/scene.js`, and `--film-drop` on the page is a multiple of it; the chosen size is either `DROP.radius: 0.027` with no multiple, or 0.036 with `--film-drop: 0.75`, which is how the toolbar shows it now.
 - The map is flat and upright: straight above, north up, not tilted.
 - No progress bar and no chapter markers. The film has one control: a 2.75rem round glass button at the end of the caption's line that pauses, plays or, at the end, replays.
 - Its pace is settled: 6.56 seconds. Do not slow it down.
@@ -507,7 +507,7 @@ The first caption is the page's wording as approved on 12 October. The content f
 
 **The card** is the company's own, drawn in code: a matchbook card with a cover flap carrying the full logo, one dashed collection circle on filter paper, and a pocket with a barcode and a code (`SCM / 100001`; the codes are illustrative, set in the label voice, Nunito). Do not swap in a generic card or a photograph.
 
-All the timing is in two tables at the top of `src/js/lumen/scene.js`: `TAKE` (where the camera is at each second) and `TIMING` (everything else). The README explains how to change them and how to capture new stills. The film's code is Design 10's (`src/js/reel/scene.js`) with three differences: it reads `--ff-mono` first for the codes on the cards, it lightens a card before warming it, and its warning text names this design.
+All the timing is in two tables at the top of `designs/src/js/lumen/scene.js`: `TAKE` (where the camera is at each second) and `TIMING` (everything else). The README explains how to change them and how to capture new stills. The film's code is Design 10's (`designs/src/js/reel/scene.js`) with three differences: it reads `--ff-mono` first for the codes on the cards, it lightens a card before warming it, and its warning text names this design.
 
 ## Motion
 
@@ -527,20 +527,20 @@ There are no scroll-triggered reveals, no parallax and nothing that loops. With 
 
 ## Imagery
 
-- **The card is drawn, not photographed.** The stills (`assets/img/lumen-*.webp`) are rendered from the same model as the film, in this design's own colours. They were captured with Roboto Mono on the cards and the larger drop; capture them again once the chosen type and drop are the page's defaults (the README says how). The map's two stills come from the drawn map, and show the key's colours.
-- **The preview card** for links shared on social networks and in chat (`assets/img/lumen-social.png`, 1200 by 630) is the opening at the film's end, captured from the page. It is named in the page's `og:image`, which must be an absolute address on the site's domain. Capture it again with the chosen type.
-- **Field photos** are of the places the company has worked. Nobody in a photo may be identifiable. The current three are representative images from Wikimedia Commons and need the client's own before launch; their credits are in the footer and in `assets/img/CREDITS.md`. They are labelled as places, never captioned as the company's work.
+- **The card is drawn, not photographed.** The stills (`designs/assets/img/lumen-*.webp`) are rendered from the same model as the film, in this design's own colours. They were captured with Roboto Mono on the cards and the larger drop; capture them again once the chosen type and drop are the page's defaults (the README says how). The map's two stills come from the drawn map, and show the key's colours.
+- **The preview card** for links shared on social networks and in chat (`designs/assets/img/lumen-social.png`, 1200 by 630) is the opening at the film's end, captured from the page. It is named in the page's `og:image`, which must be an absolute address on the site's domain. Capture it again with the chosen type.
+- **Field photos** are of the places the company has worked. Nobody in a photo may be identifiable. The current three are representative images from Wikimedia Commons and need the client's own before launch; their credits are in the footer and in `designs/assets/img/CREDITS.md`. They are labelled as places, never captioned as the company's work.
 - **Photographs of the work** (the six steps of the method, the boxes, the field) belong on the inner pages, as the content file says. They are the company's own photographs, never stock.
 - **No stock illustrations, no icon sets, no decorative shapes.** If a section seems to need a picture, it gets a still of the card or none.
 - **Partner names are typeset.** No ICMR, CSIR-CCMB or other partner logos without written permission.
 
 ### The logo
 
-The logo is the client's existing identity and is never redrawn, recoloured or restyled. Files and rules are in `assets/logo/README.md`.
+The logo is the client's existing identity and is never redrawn, recoloured or restyled. Files and rules are in `designs/assets/logo/README.md`.
 
 - Header: the emblem alone, with the name and tagline set beside it in the page's type.
 - Footer: the full logo, once, at 11rem. Its lettering cannot be read below about 160px wide.
-- Browser tab and home screen: `assets/logo/icons/`.
+- Browser tab and home screen: `designs/assets/logo/icons/`.
 - The logo's own colours (its yellows, `#69A129` green, the brown and maroon lettering) belong to the logo. `sun` is the one colour taken from it, a shade softer than its rays so that it sits with the blue; nothing else in the interface uses them.
 
 ## Voice and content
@@ -597,22 +597,22 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 
 | What | File |
 | --- | --- |
-| The page | `lumen.html` |
-| Tokens (`:root`) and every component's styles | `src/css/lumen.css` (Tailwind CSS v4; tokens are exposed as utilities such as `bg-paper`, `text-moss`, `border-line`). It is `src/css/reel.css` with Lumen's values, and everything Lumen adds (the light, the glass, the label voice, the blue button, the proof mark, the key) is under one heading at its end |
-| Menu, REASSURED, the map, loading the film | `src/js/lumen/main.js` |
-| The film: `TAKE`, `TIMING`, `DROP`, the card | `src/js/lumen/scene.js` |
-| The map's facts and wording | `src/js/drop/map-layers.js` (Designs 01 and 07 keep a copy in `src/js/sample-card/india-data.js`) |
-| Stills and the preview card | `assets/img/lumen-*.webp`, `assets/img/lumen-social.png` |
-| Logo | `assets/logo/` |
+| The page | `designs/lumen.html` |
+| Tokens (`:root`) and every component's styles | `designs/src/css/lumen.css` (Tailwind CSS v4; tokens are exposed as utilities such as `bg-paper`, `text-moss`, `border-line`). It is `designs/src/css/reel.css` with Lumen's values, and everything Lumen adds (the light, the glass, the label voice, the blue button, the proof mark, the key) is under one heading at its end |
+| Menu, REASSURED, the map, loading the film | `designs/src/js/lumen/main.js` |
+| The film: `TAKE`, `TIMING`, `DROP`, the card | `designs/src/js/lumen/scene.js` |
+| The map's facts and wording | `designs/src/js/drop/map-layers.js` (Designs 01 and 07 keep a copy in `designs/src/js/sample-card/india-data.js`) |
+| Stills and the preview card | `designs/assets/img/lumen-*.webp`, `designs/assets/img/lumen-social.png` |
+| Logo | `designs/assets/logo/` |
 | The site's copy, strategy and open facts | `content/website-content.md` |
-| Steps for going live | `README.md` |
+| Steps for going live | `designs/README.md` |
 
-Compiled files in `assets/css` and `assets/js` are committed; run `npm run build` after changing anything in `src/`.
+Compiled files in `designs/assets/css` and `designs/assets/js` are committed; run `npm run build` in `designs/` after changing anything in `designs/src/`.
 
 **Making the chosen design the page's own.** The page still opens on Lumen's first pairing; the toolbar sets the chosen values over it. These edits make them the defaults, after which the toolbar's "as designed" options should be relabelled to offer Exo and Roboto Mono, the amber bar and the larger drop as the comparisons instead:
 
-1. In `src/css/lumen.css` `:root`: `--ff-display: "Quicksand"`, `--ff-body: "Nunito"`, `--ff-mono: "Nunito"`, `--display-weight: 700`, `--display-tracking: -0.02em`, `--label-weight: 800`, `--label-tracking: 0.08em`.
-2. In `lumen.html`: load `Quicksand:wght@600;700` and `Nunito:wght@400;600;700;800` from Google Fonts in place of Exo and Roboto Mono (or self-host both; the content file's privacy page prefers that).
-3. In `src/css/lumen.css`, the `.hl` rule under "The marks": colour `var(--leaf)` and no text decoration, in place of the amber underline; keep the `--mark-*` properties so the toolbar can still show the other marks.
-4. In `src/js/lumen/scene.js`: `DROP.radius: 0.027` (or leave 0.036 and set `--film-drop: 0.75` on the page; the first is cleaner).
+1. In `designs/src/css/lumen.css` `:root`: `--ff-display: "Quicksand"`, `--ff-body: "Nunito"`, `--ff-mono: "Nunito"`, `--display-weight: 700`, `--display-tracking: -0.02em`, `--label-weight: 800`, `--label-tracking: 0.08em`.
+2. In `designs/lumen.html`: load `Quicksand:wght@600;700` and `Nunito:wght@400;600;700;800` from Google Fonts in place of Exo and Roboto Mono (or self-host both; the content file's privacy page prefers that).
+3. In `designs/src/css/lumen.css`, the `.hl` rule under "The marks": colour `var(--leaf)` and no text decoration, in place of the amber underline; keep the `--mark-*` properties so the toolbar can still show the other marks.
+4. In `designs/src/js/lumen/scene.js`: `DROP.radius: 0.027` (or leave 0.036 and set `--film-drop: 0.75` on the page; the first is cleaner).
 5. Recapture the stills and the preview card, and update this file's front matter if any value differs from what was set.

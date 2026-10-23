@@ -76,7 +76,7 @@ What that changes in the content:
 | 4 | Box artwork for LitLife™-SCA and LitLife™-SMA, and photographs of the card | `content/assets/sca-kit/`, `content/assets/sma-kit/`, `content/assets/kit-reference-*` |
 | 5 | The company brief of 1 October 2026 | `content/Lightening_Lives___Website_content__draft_1_.md` |
 | 6 | The current website, read in full on 12 October 2026 | lighteninglives.in |
-| 7 | The approved landing page and its design reference | `lumen.html`, `DESIGN.md` |
+| 7 | The approved landing page and its design reference | `designs/lumen.html`, `DESIGN.md` |
 
 Where they disagree, the higher one wins, except where the company has since decided otherwise. The disagreements that matter:
 
@@ -1712,7 +1712,7 @@ Fifteen sites in nine states and the National Capital Territory of Delhi. Sickle
 
 ### 6.2 The map's "Our work" layer
 
-What the state panel says under "Our work" for each state with a site. The layer's data lives in `src/js/drop/map-layers.js`.
+What the state panel says under "Our work" for each state with a site. The layer's data lives in `designs/src/js/drop/map-layers.js`.
 
 | State | Line |
 | --- | --- |
@@ -1765,9 +1765,9 @@ One row per test, for whoever keeps the Solutions pages in step with the company
 | Photographs of the card | `content/assets/kit-reference-*` | Internal reference only: they show a handwritten name and a real sample code |
 | Portraits | `content/assets/people/` | About and Team. All but the founders' are small; ask for originals |
 | The collaborators' logos, as one collage | `content/assets/partners/collaborations-collage.png` | Reference only; each logo needs its owner's file and permission |
-| The logo | `assets/logo/` | Everywhere; never restyled |
-| The film's stills, the drawn card, the map | `assets/img/lumen-*.webp`, `drop-blank.webp` | Home, Technology |
-| Three place photographs: Nandurbar, Kothagudem, Patratu Valley | `assets/img/`, with credits in `assets/img/CREDITS.md` | Stand-ins on the home page until the company's own arrive. Never captioned as the company's work |
+| The logo | `designs/assets/logo/` | Everywhere; never restyled |
+| The film's stills, the drawn card, the map | `designs/assets/img/lumen-*.webp`, `drop-blank.webp` | Home, Technology |
+| Three place photographs: Nandurbar, Kothagudem, Patratu Valley | `designs/assets/img/`, with credits in `designs/assets/img/CREDITS.md` | Stand-ins on the home page until the company's own arrive. Never captioned as the company's work |
 
 ### 7.2 What the company should supply
 
@@ -1848,13 +1848,13 @@ In the order it is needed.
 ## 9. Notes for the build
 
 - **Nothing in the site has been changed to make this file.** It replaces the content file of 12 October (in git history) and adds nothing else. Nothing is committed.
-- **The approved page.** `lumen.html` carries the 12 October wording. The lines this file changes on it are listed in 5.1 under each section ("Changed from the approved page"). The largest are: the heading and first caption ("spot of blood"); the lead and note under the heading; the eight "why" rows; the seven portfolio rows; the four evidence columns; the "Our work" map sentence and pins; the nine REASSURED meanings; the partners' lead; the programmes' heading and lead; the contact note; and the one new section, "Who we are". `DESIGN.md`'s "Voice and content" section still records "a single drop of blood" as the client's wording and "validated" by ICMR; both follow this file once the company agrees (Part 8, items 1 and 4). Do not apply any of these changes to `lumen.html` until the company has reviewed this file: the approved page is the company's, and the instruction to change it comes from the company, not from this document.
-- **The map's data.** `src/js/drop/map-layers.js` pins four places under "Our work". It becomes the 15 sites in 6.1 with the state lines in 6.2, and the sickle cell and thalassaemia layers stay as they are. Designs 01 and 07 keep a copy in `src/js/sample-card/india-data.js`; change both or leave the old designs on the old data, since only Lumen goes live. With 15 pins, chips should appear on pointing, tapping or keyboard focus rather than all at once, and the pin for Hyderabad carries "laboratory" as well as the screening.
+- **The approved page.** `designs/lumen.html` carries the 12 October wording. The lines this file changes on it are listed in 5.1 under each section ("Changed from the approved page"). The largest are: the heading and first caption ("spot of blood"); the lead and note under the heading; the eight "why" rows; the seven portfolio rows; the four evidence columns; the "Our work" map sentence and pins; the nine REASSURED meanings; the partners' lead; the programmes' heading and lead; the contact note; and the one new section, "Who we are". `DESIGN.md`'s "Voice and content" section still records "a single drop of blood" as the client's wording and "validated" by ICMR; both follow this file once the company agrees (Part 8, items 1 and 4). Do not apply any of these changes to `designs/lumen.html` until the company has reviewed this file: the approved page is the company's, and the instruction to change it comes from the company, not from this document.
+- **The map's data.** `designs/src/js/drop/map-layers.js` pins four places under "Our work". It becomes the 15 sites in 6.1 with the state lines in 6.2, and the sickle cell and thalassaemia layers stay as they are. Designs 01 and 07 keep a copy in `designs/src/js/sample-card/india-data.js`; change both or leave the old designs on the old data, since only Lumen goes live. With 15 pins, chips should appear on pointing, tapping or keyboard focus rather than all at once, and the pin for Hyderabad carries "laboratory" as well as the screening.
 - **Components the inner pages need** that `DESIGN.md` does not describe yet, each to be agreed and then added to it: how an inner page opens (4.6) with chips under the lead; a comparison table (Technology); numbered steps with a photograph each (Technology, Programmes); a two-column family section (Solutions); a sites table with marks (Our work); a group of question disclosures (4.7); a list of collaborators; portraits of named staff, an exception to "nobody in a photo may be identifiable"; the 3D box view or its still; the enquiry form and its messages; the list of entries on Our work.
 - **Opening in two steps.** Everything marked "At launch" in 3.1 can be built from this file once the company has reviewed it. The DMD and LGMD pages wait for Part 8 items 9 to 11; until then their rows link to Develop a test. "Recent work" on Our work waits for photographs; the sites table does not.
 - **Hosting is static.** The contact actions open emails with the subject and condition filled in until the company chooses a form service (Part 8 item 37); entries on Our work live in one data file (Part 8 item 38). Old `.php` addresses cannot be redirected by the server: the Not found page sends readers on, using the table in 3.4.
-- **Going live** still means making the Lumen page the home page, removing the comparison toolbar and the line that hides the page from search engines, and adding the canonical link and the 404 page. Those steps are in `README.md` and are not part of this file; they wait for the company's yes.
-- **Two things in the approved page are still open** from the design review: a stray script (`assets/js/drop.js`) that hides a state's facts when the map's layer changes, and the "Our vision" label, which is below the contrast minimum on its band.
+- **Going live** still means making the Lumen page the home page, removing the comparison toolbar and the line that hides the page from search engines, and adding the canonical link and the 404 page. Those steps are in `designs/README.md` and are not part of this file; they wait for the company's yes.
+- **Two things in the approved page are still open** from the design review: a stray script (`designs/assets/js/drop.js`) that hides a state's facts when the map's layer changes, and the "Our vision" label, which is below the contrast minimum on its band.
 
 ---
 
