@@ -69,6 +69,8 @@ before(async () => {
   const input = path.join(dir, 'site');
   cpSync('src/site/_includes', path.join(input, '_includes'), { recursive: true });
   cpSync('src/site/_data', path.join(input, '_data'), { recursive: true });
+  // The data reads the map's module (src/site/_data/work.js), so the folder keeps src/'s shape.
+  cpSync('src/js/map', path.join(dir, 'js', 'map'), { recursive: true });
   for (const [name, body] of Object.entries(fixtures)) writeFileSync(path.join(input, name), body);
   // Eleventy lets the folders given here override the config's dir only when source is 'cli'.
   const eleventy = new Eleventy(input, path.join(dir, 'out'), { configPath: 'eleventy.config.mjs', quietMode: true, source: 'cli' });

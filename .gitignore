@@ -2,7 +2,7 @@ node_modules/
 dist/
 .DS_Store
 docs/*
-
+.superpowers/*
 # Compiled by scripts/build.mjs into src/assets and copied to dist/ (not sources)
 src/assets/css/
 src/assets/js/

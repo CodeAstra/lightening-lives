@@ -12,6 +12,7 @@
     "dev": "node scripts/build.mjs --watch --serve",
     "pages": "node scripts/build.mjs --pages",
     "images": "node scripts/images.mjs",
+    "stills": "node scripts/stills.mjs",
     "pretest": "npm run build",
     "test": "node --test --test-concurrency=1 \"tests/*.test.mjs\""
   },

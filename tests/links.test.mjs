@@ -26,7 +26,6 @@ const PENDING = new Map([
   ['/solutions/develop-a-test/', 'Phase 5, Task 5.4'],
   ['/privacy/', 'Phase 6, Task 6.1'],
   ['/terms/', 'Phase 6, Task 6.1'],
-  ['/assets/img/social.png', 'Phase 1, Task 1.4'],
 ]);
 
 // The file in dist/ that serves an address's path, or null.

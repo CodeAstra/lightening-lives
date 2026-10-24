@@ -70,3 +70,12 @@ test('no px sizes beyond those the design already has', () => {
   assert.ok(design > 0, 'the counter finds the design\'s own px sizes');
   assert.equal(site, design);
 });
+
+test('on wide windows the film\'s frame stretches across the opening, at any shape', () => {
+  // The still's layout centres the frame (justify-self: center); browsers that align absolutely
+  // positioned boxes would then shrink the live film to its canvas's shape, leaving bare sides on a
+  // 21:9 window. The live film's rule stretches it back. Measured in the browser in Task 1.5.
+  const css = readFileSync('dist/assets/css/site.css', 'utf8').replace(/\s+/g, '');
+  const wide = css.split('@media(min-width:56.25rem)and(min-aspect-ratio:21/20)').slice(1).join('');
+  assert.match(wide, /html\.film-live\.film-screen\{[^}]*justify-self:stretch/);
+});

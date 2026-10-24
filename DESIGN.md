@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: Lightening Lives
-description: The design of the Lightening Lives website, chosen for production on 23 October 2026 (Design 11, Lumen, in its chosen variation). DNA-blue ink on ice white, Quicksand and Nunito, frosted glass under pools of blue light and sunlight, named proof set in DNA blue, and one opening film in which a small drop of blood becomes a map of India.
+description: The design of the Lightening Lives website, chosen for production on 23 October 2026 (Design 11, Lumen, in its chosen variation). DNA-blue ink on ice white, Quicksand and Nunito, frosted glass under pools of blue light and green light, named proof set in DNA blue, and one opening film in which a small drop of blood becomes a map of India.
 colors:
   # Each name is the CSS custom property of the same name in src/css/lumen.css (--canopy, --mist, ...).
   primary: "#0C4A6E" # canopy, under the role name that design tools look for
@@ -12,12 +12,12 @@ colors:
   paper: "#FFFFFF"
   sprout: "#E0F2FE"
   meadow: "#BAE6FD"
-  sun: "#FFC53D"
+  sun: "#6EE7B7" # life green: what is being pointed out; the token keeps the name it had when it was amber
   drop: "#A61B18"
   blood: "#6A2A20"
   line: "#0C4A6E2E" # canopy at 18%
   pool-blue: "#0369A129" # leaf at 16%: the light behind a band, from the left
-  pool-sun: "#FFC53D33" # sun at 20%: the light behind a band, from the right
+  pool-sun: "#6EE7B733" # sun (life green) at 20%: the light behind a band, from the right
   glass: "#FFFFFF9E" # paper at 62%, blurred: what stands on the page
   glass-strong: "#FFFFFFDB" # paper at 86%: where what is on it must stay readable over the film
 typography:
@@ -241,29 +241,29 @@ components:
 
 # Lightening Lives: design
 
-This file describes the design chosen for production on 23 October 2026: Design 11, "Lumen" (`designs/lumen.html`), in the variation the client settled on after comparing the toolbar's options: **Quicksand and Nunito** for the type (the comparison toolbar's "Quicksand + Nunito (from Reel)"), **a name that is proof set in DNA blue** with no amber mark ("The name in DNA blue, no amber"), and **the drop at its smallest** ("Smaller still"). It is Design 10, "Reel" (approved on 12 October), on the same page and with the same film, in another light: ice white instead of pale green, DNA blue instead of leaf green, and frosted glass lit from the sides where Design 10 had flat paper. It is the reference for building the live site and any page added to it.
+This file describes the design chosen for production on 23 October 2026: Design 11, "Lumen" (`designs/lumen.html`), in the variation the client settled on after comparing the toolbar's options: **Quicksand and Nunito** for the type (the comparison toolbar's "Quicksand + Nunito (from Reel)"), **a name that is proof set in DNA blue** with no coloured mark ("The name in DNA blue, no amber"), and **the drop at its smallest** ("Smaller still"), and **life green for what is pointed out** (the Highlight choice "Life green", `#6EE7B7`, chosen on 24 October 2026 in place of sun amber). It is Design 10, "Reel" (approved on 12 October), on the same page and with the same film, in another light: ice white instead of pale green, DNA blue instead of leaf green, and frosted glass lit from the sides where Design 10 had flat paper. It is the reference for building the live site and any page added to it.
 
-The page's own stylesheet does not yet carry these three choices as its defaults: `designs/src/css/lumen.css` and `designs/src/js/lumen/scene.js` still open on Exo and Roboto Mono, the amber bar and the larger drop, and the toolbar sets the chosen values over them. "Where things live" at the end lists the edits that make the chosen design the page's own. Until then, the chosen design is `designs/lumen.html?type=reel&proof=ink&drop=smaller`.
+The page's own stylesheet does not yet carry these three choices as its defaults: `designs/src/css/lumen.css` and `designs/src/js/lumen/scene.js` still open on Exo and Roboto Mono, sun amber, the amber bar and the larger drop, and the toolbar sets the chosen values over them. The production site's own stylesheet, `src/css/site.css`, already carries the type and the proof mark; its `--sun` still reads `#FFC53D` and changes to `#6EE7B7` with the next build of the home page, after which the stills are recaptured. "Where things live" at the end lists the edits that make the chosen design the page's own. Until then, the chosen design is `designs/lumen.html?type=reel&proof=ink&drop=smaller`.
 
 ## Overview
 
 Lightening Lives is a healthcare technology company in Hyderabad that develops molecular diagnostics for inherited blood and muscle conditions. Its tests work from a dried blood spot on a card, and it builds them into solutions for hospitals, laboratories and public health programmes. The people reading the site are clinicians, laboratory heads, district health officers, programme officers, NGOs and CSR funders. It is not for individuals looking for a test, and it says so.
 
-The site should feel light, clear and sure of itself: a healthcare technology company with evidence behind it, not a charity. The client's one visual wish was lightness, and the name of the company is a kind of light. Lumen takes that literally: the page is ice white, and each white band is lit from one side, by DNA blue from the left or by sunlight from the right.
+The site should feel light, clear and sure of itself: a healthcare technology company with evidence behind it, not a charity. The client's one visual wish was lightness, and the name of the company is a kind of light. Lumen takes that literally: the page is ice white, and each white band is lit from one side, by DNA blue from the left or by life green from the right.
 
 The whole design rests on one picture: a drop of blood falls onto a card, the card joins a batch, and the batch becomes a map of India made of cards. That is the opening film, and it is the only showpiece on the site. Everything after it is a quiet page: white bands under soft light, blue ink, rounded type, thin rules, and glass only where something stands on the page.
 
 Five things were chosen by the client and stay as they are unless the client asks:
 
 - **Type:** Quicksand for headings and Nunito for everything else, including the label voice. Chosen on 23 October 2026 over Lumen's first pairing, Exo and Roboto Mono.
-- **Colour:** DNA-blue ink on ice white, with sun amber for what is being pointed out on the map, in REASSURED and in the proof tags. A name that is proof is set in DNA blue, not marked in amber (23 October 2026; the amber bar, a box and a stroke were all tried first).
+- **Colour:** DNA-blue ink on ice white, with life green (`#6EE7B7`, the Lumen theme's own highlight; chosen on 24 October 2026 over the sun amber that had stood in for it since 13 October) for what is being pointed out on the map, in REASSURED and in the proof tags. A name that is proof is set in DNA blue, not marked in colour (23 October 2026; a bar, a box and a stroke were all tried first).
 - **The film:** it plays by itself, in one continuous take of about six and a half seconds. It does not follow the scroll.
 - **The drop:** small. Its radius is 0.027 of the card's length, the toolbar's "Smaller still" (23 October 2026, after "smaller" on 13 October).
-- **The layout:** Design 10's, line for line. Sections, sizes, borders and breakpoints are the same; only what things are made of changed.
+- **The layout of the shell and the inner pages:** Design 10's, line for line. Sections, sizes, borders and breakpoints are the same; only what things are made of changed. **The home page's sections** were revised on 24 October 2026 from a mock-up the user chose (`docs/superpowers/mockups/home-card-closeup.html`; the build plan's Phase 1b): the film stays and its map comes alive afterwards, by state; after it come the card close up, the six-step method, the comparison, the two families, the proofs beside the drawn card, REASSURED, the testing-model loop, the audiences, who we are, the vision and contact. The Layout table below is the approved comparison page's order; Phase 1b's task updates it.
 
 ## Colors
 
-One family of blues does nearly all the work. Sun amber and red each have a single job.
+One family of blues does nearly all the work. Life green and red each have a single job.
 
 | Token | Value | Role |
 | --- | --- | --- |
@@ -274,7 +274,7 @@ One family of blues does nearly all the work. Sun amber and red each have a sing
 | `paper` | `#FFFFFF` | The second surface: alternate sections, the footer, the card stock in the film, and the white the glass is made of. |
 | `sprout` | `#E0F2FE` | Hover fills, and the one tinted band behind the vision statement. |
 | `meadow` | `#BAE6FD` | The map: a state that is not marked, and the field of cards seen from far away. |
-| `sun` | `#FFC53D` | Sun amber: what is being pointed out. See below. |
+| `sun` | `#6EE7B7` | Life green: what is being pointed out. See below. The token keeps the name it had when it was amber: it is `--sun` in the stylesheet and the film. |
 | `drop` | `#A61B18` | The blood while it is a falling drop. |
 | `blood` | `#6A2A20` | The blood once it has dried into the paper. |
 | `line` | `canopy` at 18% | Hairlines between rows. |
@@ -283,13 +283,13 @@ One family of blues does nearly all the work. Sun amber and red each have a sing
 | `glass` | `paper` at 62%, blurred 16px | What stands on the page: outline buttons, the film's button, the map's control, the portfolio cards, the notice. |
 | `glass-strong` | `paper` at 86%, blurred | The menu panel and the chips over the film and the map, which must stay readable over whatever is behind them. |
 
-**Sun amber means "this is being pointed out".** It is the logo's own sun, a shade softer, and the one warm colour on a cool page. It fills the proof tag ("Approved by ICMR"), the states and places the map marks, and the REASSURED letter and criterion the reader is on; it rings keyboard focus and selected text; and, at a fifth of its strength, it is the sunlight behind every fourth band. It is never a section background, never a button colour and never text.
+**Life green means "this is being pointed out".** It is the Lumen theme's own highlight, the mint the first round of designs called life green, chosen on 24 October 2026 after sun amber had stood in for it since 13 October; it is the one colour on the page that is neither blue nor white. It fills the proof tag ("Approved by ICMR"), the states and places the map marks, and the REASSURED letter and criterion the reader is on; it rings keyboard focus and selected text; and, at a fifth of its strength, it is the green light behind every fourth band. It is never a section background, never a button colour and never text.
 
-**A name that is proof is DNA blue.** Inside a heading, "ICMR", "CSIR-CCMB" and the like are set in `leaf` with no bar, box or fill (`.hl`). The blue says "you can check this" the way it says "this is a link" elsewhere. Chosen on 23 October 2026 in place of the bar of amber under the name; the toolbar's **Mark** choice still offers the bar, Design 10's box and the stroke for comparison.
+**A name that is proof is DNA blue.** Inside a heading, "ICMR", "CSIR-CCMB" and the like are set in `leaf` with no bar, box or fill (`.hl`). The blue says "you can check this" the way it says "this is a link" elsewhere. Chosen on 23 October 2026 in place of the bar of highlight colour under the name; the toolbar's **Mark** choice still offers the bar, Design 10's box and the stroke for comparison.
 
 **Red is the sample and nothing else.** `drop` and `blood` appear only in the film and in the stills taken from it. Nothing in the interface is red.
 
-**Blue and amber are never mixed straight.** A warm colour mixed into a blue one goes through khaki, so a map state, a card in the film and a swatch in the key are first lightened towards `paper` and then warmed to `sun`: half-way is a pale amber (`#FFE5A8`), not a muddy green. The map, the film and the key share this rule (`markedColour` in `designs/src/js/lumen/main.js`, `PALE` in the film).
+**Blue and green are mixed through paper.** A map state, a card in the film and a swatch in the key are first lightened towards `paper` and then moved to `sun`: half-way is a pale mint (`#B6F3DB`), so a partly marked state reads as a lighter green and not as a third blue-green competing with `meadow`. The map, the film and the key share this rule (`markedColour` in `designs/src/js/lumen/main.js`, `PALE` in the film). It was written when the highlight was amber, which mixed straight into blue went through khaki, and it holds as it is.
 
 ### Contrast
 
@@ -297,17 +297,17 @@ Measured against WCAG 2 (4.5:1 is the minimum for text of this size).
 
 | Text | on `mist` | on `paper` | on `sprout` | on `meadow` | on `sun` |
 | --- | --- | --- | --- | --- | --- |
-| `canopy` | 8.87 | 9.46 | 8.24 | 7.13 | 5.99 |
-| `moss` | 7.11 | 7.58 | 6.60 | 5.71 | 4.80 |
-| `leaf` | 5.57 | 5.93 | 5.17 | 4.47 (too low) | 3.76 (too low) |
+| `canopy` | 8.87 | 9.46 | 8.24 | 7.13 | 6.21 |
+| `moss` | 7.11 | 7.58 | 6.60 | 5.71 | 4.97 |
+| `leaf` | 5.57 | 5.93 | 5.17 | 4.47 (too low) | 3.89 (too low) |
 
-`paper` text is 9.46 on `canopy` and 5.93 on `leaf` (the solid button). Glass over `mist` is about `#F9FDFF`, where `canopy` is 9.24 and `leaf` 5.80. The pools are faint enough not to matter: at their densest, `leaf` is 5.39 on the sun pool and 4.68 on the blue pool, and the dense part of a pool lies beyond the column's content. A proof name in `leaf` sits in a heading on `mist` or `paper`, at heading size, so it clears the minimum with room.
+`paper` text is 9.46 on `canopy` and 5.93 on `leaf` (the solid button). Glass over `mist` is about `#F9FDFF`, where `canopy` is 9.24 and `leaf` 5.80. The pools are faint enough not to matter: at their densest, `leaf` is 5.42 on the green pool and 4.68 on the blue pool, and the dense part of a pool lies beyond the column's content. A proof name in `leaf` sits in a heading on `mist` or `paper`, at heading size, so it clears the minimum with room.
 
-So: `leaf` is for labels, links and proof names on `mist`, `paper`, `sprout` and glass, never on `meadow` or `sun`. `sun` is 1.5:1 on `mist` and can never carry meaning as text or as a thin line by itself: it is always a fill with `canopy` text on it, or a dot with a `canopy` border.
+So: `leaf` is for labels, links and proof names on `mist`, `paper`, `sprout` and glass, never on `meadow` or `sun`. `sun` is 1.4:1 on `mist` and can never carry meaning as text or as a thin line by itself: it is always a fill with `canopy` text on it, or a dot with a `canopy` border.
 
 ### Colours in the film
 
-The film is drawn in WebGL but takes its colours from the same custom properties: `--mist` for its background and fog, `--paper` for the card stock, `--canopy` for the card's print, `--meadow` and `--sun` for the map (lightened first, then warmed, as above), `--drop` and `--blood` for the sample. Its lighting is set so that a matte surface facing up shows exactly its own colour, which is why the cards match the page. Change a token and the film follows; do not hard-code a colour in the scene.
+The film is drawn in WebGL but takes its colours from the same custom properties: `--mist` for its background and fog, `--paper` for the card stock, `--canopy` for the card's print, `--meadow` and `--sun` for the map (lightened first, then moved to green, as above), `--drop` and `--blood` for the sample. Its lighting is set so that a matte surface facing up shows exactly its own colour, which is why the cards match the page. Change a token and the film follows; do not hard-code a colour in the scene.
 
 ## Typography
 
@@ -353,17 +353,18 @@ Two faces from Google Fonts. **Quicksand** (600, 700) is the display face: every
 | 1 | Opening film (hero) | `mist` | |
 | 2 | How it works | `paper` | blue, from the left |
 | 3 | Why | `mist` | |
-| 4 | Tests (portfolio) | `paper` | sun, from the right |
+| 4 | Tests (portfolio) | `paper` | green, from the right |
 | 5 | Evidence | `mist` | |
 | 6 | Map | `paper` | blue, from the left |
 | 7 | REASSURED | `mist` | |
-| 8 | Who we work with | `paper` | sun, from the right |
+| 8 | Who we work with | `paper` | green, from the right |
 | 9 | Programmes | `mist` | |
-| 10 | Vision | `sprout` band | blue from the left and sun from the right |
-| 11 | Contact | `paper` | blue, from the left |
-| 12 | Footer | `paper`, under a 2px `canopy` rule | |
+| 10 | Who we are (added on the site, content file 5.1) | `paper` | blue, from the left |
+| 11 | Vision | `sprout` band | blue from the left and green from the right |
+| 12 | Contact | `paper` | green, from the right (blue on the approved page, before "Who we are" moved it a place down) |
+| 13 | Footer | `paper`, under a 2px `canopy` rule | |
 
-A pool is a radial gradient the full height of its band and `min(64vw, 56rem)` wide, with its centre 14vw outside the window, clipped to the band (`overflow: clip`, so nothing widens the page). Which side it falls on follows from the band's place in the page (`:nth-of-type(4n)` takes the sun), not from a class: add a band and the light stays in step.
+A pool is a radial gradient the full height of its band and `min(64vw, 56rem)` wide, with its centre 14vw outside the window, clipped to the band (`overflow: clip`, so nothing widens the page). Which side it falls on follows from the band's place in the page (`:nth-of-type(4n)` takes the green), not from a class: add a band and the light stays in step.
 
 **A section's opening** is a twelve-column row on wide screens: the `h2` takes seven columns and a `lead` paragraph takes five, aligned to the heading's last line, with a 1.5rem gap. On small screens they stack. The section's content starts 3rem below.
 
@@ -402,7 +403,7 @@ The film is the only place with real depth: soft shadow under the card's open co
 - **1.25rem** (`rounded.lg`): pictures, the glass cards, the notice, the menu panel.
 - **1rem** (`rounded.md`): the three field photos. **0.85rem** (`rounded.sm`): labels on the map. **0.3rem** (`rounded.xs`): the map key's swatches.
 - **The dashed circle.** The card's collection circle is the design's one motif. It appears as a small dashed `leaf` ring between the five words under "Why". Use it sparingly, and only as a separator.
-- **A name that is proof** is set in `leaf`, in the heading's own face, weight and size, with nothing drawn on or under it. The colour is the mark. (A filled box, as in Design 10, a stroke under the lower half of the words, and a bar of amber under the name were each tried in October 2026 and turned down; the toolbar keeps them for comparison.)
+- **A name that is proof** is set in `leaf`, in the heading's own face, weight and size, with nothing drawn on or under it. The colour is the mark. (A filled box, as in Design 10, a stroke under the lower half of the words, and a bar of highlight colour under the name were each tried in October 2026 and turned down; the toolbar keeps them for comparison.)
 - **Icons** are drawn inline as SVG with a 2px to 2.2px stroke in `currentColor`: a right arrow on links and contact rows, and play, pause and replay on the film. There is no icon set. The plus and minus on disclosures are drawn in CSS.
 - **Pictures** are square (the film's stills), 4:5 (the blank card) or 5:6 (field photos; 4:5 on phones).
 
@@ -445,7 +446,7 @@ Three items: a square still from the film under the soft shadow, a label, an `h3
 A map of India the reader can question. It is drawn in SVG, not WebGL, from the data in `designs/src/js/drop/`.
 
 - **Segmented control:** three choices (Sickle cell, Thalassaemia, Our work) in a glass pill with a 2px border; the chosen one is `leaf` with `paper` text.
-- **States** are filled `meadow`, lightened towards `paper` and then warmed to `sun` by how strongly the chosen layer marks them: a fully marked state goes 90% of the way, which is `sun` itself; the others stop at a pale amber. The key's swatches are painted by the same rule, so they match the map in any colour the toolbar tries. Borders are 1px `canopy` at 40%. A grid of fine `paper` lines lies over the country, so it reads as the film's field of cards.
+- **States** are filled `meadow`, lightened towards `paper` and then moved to `sun` by how strongly the chosen layer marks them: a fully marked state goes 90% of the way, which is `sun` itself; the others stop at a pale mint. The key's swatches are painted by the same rule, so they match the map in any colour the toolbar tries. Borders are 1px `canopy` at 40%. A grid of fine `paper` lines lies over the country, so it reads as the film's field of cards.
 - **Names:** fully marked states are named in 0.8125rem Quicksand 700 with a `paper` glow. Under 430px across the names are moved apart; under 235px only a picked state is named.
 - **Picking a state** (pointing, tapping, or the arrow keys) lightens it halfway to `paper`, outlines it at 2.5px and replaces the sentence beside the map with what the map knows about that state under every layer. Escape, a second tap on the state, or a tap off the country lets go. The panel's space is reserved so the page does not jump.
 - **Our work** pins the places the company has worked: a `sun` dot with a `canopy` border, a short leader and a `glass-strong` chip in Nunito 800 naming the place and what is there. The content file lists fifteen sites for this layer; with that many, a chip shows on pointing, tapping or focusing its pin rather than all at once.
@@ -477,7 +478,7 @@ The signature. About six and a half seconds, shot as one take, in three parts th
 | 2.72 to 3.52 | The cover folds shut. The card is one of a batch. | |
 | 4.16 | The camera passes over the batch, still climbing. | |
 | 5.0 | | "Built for screening at the scale of a nation." |
-| 5.2 to 6.0 | The cards have become a map of India, seen from straight above, north up. The places the company works light up in sun amber. | |
+| 5.2 to 6.0 | The cards have become a map of India, seen from straight above, north up. The places the company works light up in life green. | |
 | 5.92 to 6.4 | The places are named, in glass chips. The camera comes to rest, for the first time. | |
 | 6.56 | The film is over. Its button offers a replay. | |
 
@@ -541,7 +542,7 @@ The logo is the client's existing identity and is never redrawn, recoloured or r
 - Header: the emblem alone, with the name and tagline set beside it in the page's type.
 - Footer: the full logo, once, at 11rem. Its lettering cannot be read below about 160px wide.
 - Browser tab and home screen: `designs/assets/logo/icons/`.
-- The logo's own colours (its yellows, `#69A129` green, the brown and maroon lettering) belong to the logo. `sun` is the one colour taken from it, a shade softer than its rays so that it sits with the blue; nothing else in the interface uses them.
+- The logo's own colours (its yellows, `#69A129` green, the brown and maroon lettering) belong to the logo. None of them is used in the interface: the highlight, `sun`, is the Lumen theme's own life green, not the logo's leaf green, and the amber that was taken from the logo's sun between 13 and 24 October 2026 is gone.
 
 ## Voice and content
 
@@ -574,7 +575,7 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 - Do keep Quicksand and Nunito, and `canopy` ink on `mist`. They are the client's choice.
 - Do let the film be the only showpiece. Keep everything after it quiet.
 - Do set a name that is proof in `leaf`, with nothing drawn on or under it.
-- Do use `sun` only to point something out: the fill of a proof tag, the fill under what the reader is pointing at in REASSURED, the map's marks, a dot with a `canopy` border, the focus ring. Lighten before you warm when a blue thing turns amber.
+- Do use `sun` only to point something out: the fill of a proof tag, the fill under what the reader is pointing at in REASSURED, the map's marks, a dot with a `canopy` border, the focus ring. Lighten before you move a blue thing to green.
 - Do keep red for the blood sample.
 - Do light a `paper` band from one side only, and let the band's place in the page decide which. The pools are the only gradients on the page besides the film's fades.
 - Do use glass for what stands on the page and nothing else, with `--shadow` and no other, and let it fall back to `paper`.
@@ -584,11 +585,11 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 - Do keep a still image behind anything that needs WebGL or script.
 - Don't make the film follow the scroll, add stops or a progress bar to it, slow it down, or enlarge the drop.
 - Don't tilt the map or show more than one drop.
-- Don't put a bar, a box or a fill on a proof name; the amber mark was turned down.
+- Don't put a bar, a box or a fill on a proof name; the coloured mark was turned down.
 - Don't add a second shadow, a second blur, glass on glass, a glass header or a glass band, or decorative illustration.
 - Don't use `leaf` for text on `meadow` or `sun`, or `sun` for text anywhere.
 - Don't mix `sun` straight into a blue: go through `paper`.
-- Don't restyle the logo. Its colours stay in the logo, except `sun`.
+- Don't restyle the logo. Its colours stay in the logo; none of them is used in the interface.
 - Don't use partner logos without permission, or photos with identifiable people.
 - Don't add a cookie or consent banner. Say what analytics the site uses in the privacy policy.
 - Don't add scroll-triggered animation, parallax or anything that loops.
@@ -609,10 +610,10 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 
 Compiled files in `designs/assets/css` and `designs/assets/js` are committed; run `npm run build` in `designs/` after changing anything in `designs/src/`.
 
-**Making the chosen design the page's own.** The page still opens on Lumen's first pairing; the toolbar sets the chosen values over it. These edits make them the defaults, after which the toolbar's "as designed" options should be relabelled to offer Exo and Roboto Mono, the amber bar and the larger drop as the comparisons instead:
+**Making the chosen design the page's own.** The page still opens on Lumen's first pairing; the toolbar sets the chosen values over it. These edits make them the defaults, after which the toolbar's "as designed" options should be relabelled to offer Exo and Roboto Mono, sun amber, the amber bar and the larger drop as the comparisons instead:
 
-1. In `designs/src/css/lumen.css` `:root`: `--ff-display: "Quicksand"`, `--ff-body: "Nunito"`, `--ff-mono: "Nunito"`, `--display-weight: 700`, `--display-tracking: -0.02em`, `--label-weight: 800`, `--label-tracking: 0.08em`.
+1. In `designs/src/css/lumen.css` `:root`: `--ff-display: "Quicksand"`, `--ff-body: "Nunito"`, `--ff-mono: "Nunito"`, `--display-weight: 700`, `--display-tracking: -0.02em`, `--label-weight: 800`, `--label-tracking: 0.08em`; and `--sun: #6EE7B7` (also in `src/css/site.css`; the pools, the key's swatches, the map and the film read it).
 2. In `designs/lumen.html`: load `Quicksand:wght@600;700` and `Nunito:wght@400;600;700;800` from Google Fonts in place of Exo and Roboto Mono (or self-host both; the content file's privacy page prefers that).
-3. In `designs/src/css/lumen.css`, the `.hl` rule under "The marks": colour `var(--leaf)` and no text decoration, in place of the amber underline; keep the `--mark-*` properties so the toolbar can still show the other marks.
+3. In `designs/src/css/lumen.css`, the `.hl` rule under "The marks": colour `var(--leaf)` and no text decoration, in place of the coloured underline; keep the `--mark-*` properties so the toolbar can still show the other marks.
 4. In `designs/src/js/lumen/scene.js`: `DROP.radius: 0.027` (or leave 0.036 and set `--film-drop: 0.75` on the page; the first is cleaner).
 5. Recapture the stills and the preview card, and update this file's front matter if any value differs from what was set.

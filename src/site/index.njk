@@ -1,14 +1,472 @@
 ---
 title: "Lightening Lives | Genetic testing from a spot of blood on a card"
 description: "Molecular diagnostics for inherited blood and muscle conditions, from a dried blood spot. Approved by ICMR, patented in India and Japan, screened at 15 sites. Hyderabad."
-h1: Lightening Lives
-lead: "Lightening Lives is an innovation-driven healthcare technology company in Hyderabad. We develop molecular diagnostics for inherited blood and muscle conditions that are designed to work where the patients are, and build them into solutions that hospitals, laboratories and public health programmes can run."
-chips:
-  - { text: Approved by ICMR, proof: true }
-  - { text: Patented in India and Japan, proof: true }
-  - { text: Dried blood spot }
-notice: true
+film: true
+socialAlt: "Genetic testing from a spot of blood on a card. A map of India made of dried blood spot cards, with Hyderabad, Delhi, Nandurbar, Jamshedpur and Gudalur named."
 ---
-{#- A stand-in until the home page is built: it shows the shared shell (header, an inner page's
-    opening, the closing band with the notice, the footer). The home page replaces it, opening on
-    the film (film: true) and writing its own sections. -#}
+{#- The home page: the approved page (designs/lumen.html) section for section, in its order, with the
+    content file's revised copy (content/website-content.md 5.1) and its one new section, "Who we are",
+    before the vision. The film's markup is the approved page's; the film itself is src/js/site/scene.js. -#}
+{%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' -%}
+{%- set actionArrow = '<svg aria-hidden="true" width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 8h22M16 1l7 7-7 7"/></svg>' %}
+
+  <!-- The opening film: a drop falls into one card's circle, the card joins a batch, and the batch becomes a map of India -->
+  <section class="hero" id="top" data-film data-film-state="playing" aria-labelledby="hero-h">
+    <div class="film-screen" data-film-screen>
+      <img class="film-poster" src="/assets/img/site-drop.webp" width="1000" height="1000" alt="A dried blood spot card held open, with a drop of blood falling towards its dashed collection circle. Rows of closed cards fade into the distance behind it." decoding="async">
+      <ol class="places" data-places aria-hidden="true">
+        {%- for place in work.film %}
+        <li data-place="{{ place.id }}"{% if place.side %} data-side="{{ place.side }}"{% endif %}><b>{{ place.name }} <small>{{ place.note }}</small></b></li>
+        {%- endfor %}
+      </ol>
+      <button type="button" class="btn btn-solid film-play" data-film-play hidden>
+        <svg aria-hidden="true" width="14" height="16" viewBox="0 0 14 16" fill="currentColor"><path d="M1 1.2v13.6a.6.6 0 0 0 .92.5l10.7-6.8a.6.6 0 0 0 0-1L1.92.7A.6.6 0 0 0 1 1.2Z"/></svg>
+        Play the film
+      </button>
+    </div>
+    <div class="hero-veil"></div>
+    <div class="hero-frame" data-frame></div>
+
+    <div class="hero-text">
+      <h1 id="hero-h" class="display rise" style="--i:0">Genetic testing from a spot of blood on a card.</h1>
+      <p class="hero-lead lead rise" style="--i:1">Lightening Lives is an innovation-driven healthcare technology company in Hyderabad. We develop molecular diagnostics for inherited blood and muscle conditions that are designed to work where the patients are, and build them into solutions that hospitals, laboratories and public health programmes can run.</p>
+      <div class="hero-actions rise" style="--i:2">
+        <a class="btn btn-solid" href="{{ site.cta.href }}">{{ site.cta.text }}</a>
+        <a class="btn btn-line" href="/solutions/">See our solutions</a>
+      </div>
+      <p class="hero-note rise" style="--i:3">Our sickle cell test is approved by ICMR and patented in India and Japan. We work with institutions and public health programmes.</p>
+    </div>
+
+    <div class="film-foot">
+      <!-- The same three lines are set out, with more to say, under "How it works" below -->
+      <div class="film-captions" aria-hidden="true">
+        <p class="film-caption film-line is-on" data-film-caption>A spot of blood, dried on a card.</p>
+        <p class="film-caption film-line" data-film-caption>From card to result without a DNA extraction step.</p>
+        <p class="film-caption film-line" data-film-caption>Built for screening at the scale of a nation.</p>
+      </div>
+      <button type="button" class="film-toggle" data-film-toggle aria-label="Pause the film">
+        <svg class="i-pause" aria-hidden="true" width="12" height="14" viewBox="0 0 14 16" fill="currentColor"><rect x="1" y="1" width="4.2" height="14" rx="1"/><rect x="8.8" y="1" width="4.2" height="14" rx="1"/></svg>
+        <svg class="i-play" aria-hidden="true" width="12" height="14" viewBox="0 0 14 16" fill="currentColor"><path d="M2 1.2v13.6a.6.6 0 0 0 .92.5l10.7-6.8a.6.6 0 0 0 0-1L2.92.7A.6.6 0 0 0 2 1.2Z"/></svg>
+        <svg class="i-replay" aria-hidden="true" width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 9a5.8 5.8 0 1 0 1.9-4.3"/><path d="M2.6 1.9v3.6h3.6"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how" class="section bg-paper" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="how-h" class="h2 lg:col-span-7">From one card to a national programme</h2>
+        <p class="lead lg:col-span-5">Our tests are simple, affordable and usable outside specialised laboratories, so that molecular diagnosis can reach everyone.</p>
+      </div>
+      <ol class="steps mt-12">
+        <li>
+          <img src="/assets/img/site-sample.webp" width="1000" height="1000" alt="The open card seen from above: a dried blood spot inside its dashed collection circle, above a barcode and sample code." loading="lazy" decoding="async">
+          <p class="label">One card</p>
+          <h3 class="h3">A spot of blood, dried on a card.</h3>
+          <p>That is the whole sample: a finger prick, a card, and no needle, no tube and no cold chain. Collection is simple and minimally invasive, and the card travels at room temperature to the nearest testing centre.</p>
+        </li>
+        <li>
+          <img src="/assets/img/site-batch.webp" width="1000" height="1000" alt="The same card, now closed, set down in a grid of many others that each carry the Lightening Lives logo and a barcode." loading="lazy" decoding="async">
+          <p class="label">One batch</p>
+          <h3 class="h3">From card to result without a DNA extraction step.</h3>
+          <p>A small punch from the dried spot goes straight into the reaction. The assay runs on standard PCR equipment in a modest laboratory, many cards at a time, and screens and confirms in the same test.</p>
+        </li>
+        <li>
+          <img src="/assets/img/site-map.webp" width="1000" height="1000" alt="Thousands of cards laid out in the shape of India, seen from straight above. The places we have worked are marked in amber, and Hyderabad, Delhi, Nandurbar, Jamshedpur and Gudalur are named." loading="lazy" decoding="async">
+          <p class="label">One programme</p>
+          <h3 class="h3">Built for screening at the scale of a nation.</h3>
+          <p>We have run population and newborn screening at 15 sites across India, and developed a test for the National Sickle Cell Anaemia Elimination Mission. Test details are captured on a mobile app, so a programme can follow its screening as it happens.</p>
+        </li>
+      </ol>
+      <a class="link mt-10" href="/technology/">How the technology works
+        {{ arrow | safe }}
+      </a>
+    </div>
+  </section>
+
+  <!-- Why -->
+  <section id="why" class="section" aria-labelledby="why-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="why-h" class="h2 lg:col-span-7">Molecular diagnostics without the limits of conventional testing</h2>
+        <p class="lead lg:col-span-5">Conventional genetic tests need venous blood, a cold chain, a specialist laboratory and, for screening, a second test to confirm. So they rarely reach the people who need them most. We design ours the other way round.</p>
+      </div>
+      <p class="label mt-12" id="better-h">Genetic diagnosis, made</p>
+      <ul class="better mt-3">
+        <li>Faster</li>
+        <li>Simpler</li>
+        <li>More affordable</li>
+        <li>More accessible</li>
+        <li>More scalable</li>
+      </ul>
+      <ul class="why mt-12">
+        <li><h3>A spot of blood, not a tube</h3><p>A finger prick onto a card. No venepuncture, no EDTA tube, no pre-processing.</p></li>
+        <li><h3>Room temperature, not a cold chain</h3><p>Cards keep and travel at room temperature, so samples can come from anywhere a health worker can reach.</p></li>
+        <li><h3>Screening and confirmation in one</h3><p>One test does both, so a positive result needs no second test and no second visit.*</p></li>
+        <li><h3>Extraction-free molecular diagnostics</h3><p>No separate DNA extraction step.*</p></li>
+        <li><h3>From birth</h3><p>Newborns can be tested at birth. Conventional confirmatory tests wait 72 hours.*</p></li>
+        <li><h3>Minimal laboratory infrastructure</h3><p>Standard PCR equipment and a gel tank. No specialised laboratory.</p></li>
+        <li><h3>High-throughput, automation-friendly</h3><p>Many cards in one run, on a workflow that can be automated.</p></li>
+        <li><h3>For one patient or a whole district</h3><p>Designed for a diagnosis in a clinic and for large-scale public health programmes.</p></li>
+      </ul>
+      <p class="footnote">* Where applicable for developed assays.</p>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="tests" class="section bg-paper" aria-labelledby="tests-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="tests-h" class="h2 lg:col-span-7">Our diagnostic portfolio</h2>
+        <p class="lead lg:col-span-5">Four kinds of genetic test, in two families so far, with more assays under development.</p>
+      </div>
+      <ul class="kinds mt-12">
+        <li>
+          <h3 class="h3">Monogenic disorders</h3>
+          <p>Haemoglobinopathies and musculopathies: inherited disorders of haemoglobin, and inherited conditions that weaken the muscles. The two families we have developed tests for so far.</p>
+        </li>
+        <li>
+          <h3 class="h3">Pharmacogenetic variants</h3>
+          <p>How a person's genes change their response to a medicine, for personalised therapy. In development.</p>
+        </li>
+        <li>
+          <h3 class="h3">Rare genetic disorders</h3>
+          <p>Testing for rare and inherited conditions.</p>
+        </li>
+        <li>
+          <h3 class="h3">Custom molecular diagnostic assays</h3>
+          <p>Assays designed for a research study or a clinical service.</p>
+        </li>
+      </ul>
+
+      <div class="sofar">
+        <h3 class="h3">Developed so far</h3>
+        <p>Each of these began with an institution that needed it. The next can begin with yours.</p>
+      </div>
+      <ul class="tests mt-8">
+        <li class="test test-row">
+          <div>
+            <h4 class="h3">Sickle cell anaemia</h4>
+            <p class="label mt-2">Haemoglobinopathy</p>
+          </div>
+          <div class="test-what">
+            <p><span class="whitespace-nowrap">LitLife™-SCA</span> screens for and confirms sickle cell anaemia in one test from a dried blood spot. Developed with CSIR-CCMB know-how for the National Sickle Cell Anaemia Elimination Mission.</p>
+            <ul class="tags">
+              <li class="tag tag-proof">Approved by ICMR</li>
+              <li class="tag tag-proof">Patented in India and Japan</li>
+              <li class="tag">Dried blood spot</li>
+            </ul>
+            <a class="link mt-2" href="/solutions/sickle-cell-anaemia/">About this test
+              {{ arrow | safe }}
+            </a>
+          </div>
+        </li>
+
+        <li class="test test-row">
+          <div>
+            <h4 class="h3">Thalassaemia and other haemoglobinopathies</h4>
+            <p class="label mt-2">Haemoglobinopathy</p>
+          </div>
+          <div class="test-what">
+            <p><span class="whitespace-nowrap">LitLife™-BThal</span> and <span class="whitespace-nowrap">LitLife™-AlphaThal</span> for beta and alpha thalassaemia, <span class="whitespace-nowrap">LitLife™-SiBThal217</span> for sickle cell anaemia and beta thalassaemia together, and testing for HbD and HbE.</p>
+            <ul class="tags">
+              <li class="tag">Dried blood spot</li>
+            </ul>
+            <a class="link mt-2" href="/solutions/thalassaemia/">About these tests
+              {{ arrow | safe }}
+            </a>
+          </div>
+        </li>
+
+        <li class="test test-row">
+          <div>
+            <h4 class="h3">Spinal muscular atrophy</h4>
+            <p class="label mt-2">Musculopathy</p>
+          </div>
+          <div class="test-what">
+            <p><span class="whitespace-nowrap">LitLife™-SMA</span> screens for and confirms SMA from a dried blood spot. Designed for newborn screening, where finding SMA before symptoms changes what treatment can do.</p>
+            <ul class="tags">
+              <li class="tag">Dried blood spot</li>
+              <li class="tag">No DNA extraction</li>
+            </ul>
+            <a class="link mt-2" href="/solutions/spinal-muscular-atrophy/">About this test
+              {{ arrow | safe }}
+            </a>
+          </div>
+        </li>
+
+        <li class="test test-row">
+          <div>
+            <h4 class="h3">Duchenne muscular dystrophy</h4>
+            <p class="label mt-2">Musculopathy</p>
+          </div>
+          <div class="test-what">
+            <p>A genetic test for DMD: an earlier diagnosis for a boy losing strength, and carrier testing for his mother and sisters.</p>
+            <a class="link mt-1" href="/solutions/develop-a-test/#musculopathies">Ask about this test
+              {{ arrow | safe }}
+            </a>
+          </div>
+        </li>
+
+        <li class="test test-row">
+          <div>
+            <h4 class="h3">Limb-girdle muscular dystrophy</h4>
+            <p class="label mt-2">Musculopathy</p>
+          </div>
+          <div class="test-what">
+            <p>A genetic test for LGMD, where the first symptom and a diagnosis are often years apart, and the subtype decides the care.</p>
+            <a class="link mt-1" href="/solutions/develop-a-test/#musculopathies">Ask about this test
+              {{ arrow | safe }}
+            </a>
+          </div>
+        </li>
+
+        <li class="test test-row">
+          <div>
+            <h4 class="h3">In development</h4>
+            <p class="label mt-2">Coming soon</p>
+          </div>
+          <div class="test-what">
+            <p>A blood coagulation panel for inherited bleeding disorders, and pharmacogenomics testing.</p>
+            <a class="link mt-1" href="/solutions/develop-a-test/#in-development">What we are developing
+              {{ arrow | safe }}
+            </a>
+          </div>
+        </li>
+
+        <li class="test test-row">
+          <div>
+            <h4 class="h3">The condition you need next</h4>
+          </div>
+          <div class="test-what">
+            <p>Tell us what your programme or laboratory needs to detect. We develop the test, to the same REASSURED standard as the ones above.</p>
+            <a class="link mt-1" href="/solutions/develop-a-test/">Talk to us about a new test
+              {{ arrow | safe }}
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Evidence -->
+  <section id="proof" class="section" aria-labelledby="proof-h">
+    <div class="wrap">
+      <h2 id="proof-h" class="h2 max-w-[44rem]">What stands behind the tests</h2>
+      <ul class="proof mt-10">
+        <li>
+          <h3 class="h3">Approved by <span class="hl">ICMR</span></h3>
+          <p><span class="whitespace-nowrap">LitLife™-SCA</span>, our sickle cell test, is approved by the Indian Council of Medical Research.</p>
+        </li>
+        <li>
+          <h3 class="h3">Patented in <span class="hl">India and Japan</span></h3>
+          <p>The technology behind our tests holds patents granted in India and Japan, and a patent published internationally.</p>
+        </li>
+        <li>
+          <h3 class="h3">Working with <span class="hl">CSIR-CCMB</span></h3>
+          <p>An MOU with the CSIR-Centre for Cellular and Molecular Biology, Hyderabad, covers developing and commercialising the sickle cell assay.</p>
+        </li>
+        <li>
+          <h3 class="h3">Proven at <span class="hl">15 sites</span></h3>
+          <p>Population and newborn screening in nine states and Delhi, from Udaipur to Gudalur, and a test developed for the National Sickle Cell Anaemia Elimination Mission.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- The map -->
+  <section id="map" class="section bg-paper" aria-labelledby="map-h">
+    <div class="wrap map-layout" data-map-layout>
+      <div class="map-words">
+        <h2 id="map-h" class="h2">Where the need is, and where we work</h2>
+        <fieldset class="mt-6">
+          <legend class="sr-only">Show on the map</legend>
+          <div class="seg">
+            <label><input type="radio" name="map-layer" value="sickle" checked data-still="/assets/img/site-map-sickle.webp" data-readout="Sickle cell disease is most common in a belt across central India, from Gujarat to Odisha."><span>Sickle cell</span></label>
+            <label><input type="radio" name="map-layer" value="thal" data-still="/assets/img/site-map-thal.webp" data-readout="Thalassaemia is found across India: on average, 3 to 4 people in 100 are carriers. Higher frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal."><span>Thalassaemia</span></label>
+            <label><input type="radio" name="map-layer" value="work" data-still="/assets/img/site-map-work.webp" data-readout="{{ work.sentence }}"><span>Our work</span></label>
+          </div>
+        </fieldset>
+
+        <!-- What the map says: about the whole country, or about one state once it is picked out -->
+        <div class="map-info" aria-live="polite">
+          <div data-map-country>
+            <p class="map-readout" data-map-readout>Sickle cell disease is most common in a belt across central India, from Gujarat to Odisha.</p>
+            <ul class="map-key" data-map-key>
+              <li><i class="key key-strong"></i>The central belt, where it is most common</li>
+              <li><i class="key key-pale"></i>Other focus states of the national mission</li>
+            </ul>
+          </div>
+          <div class="state-card" data-map-state hidden>
+            <p class="state-title" data-state-title></p>
+            <dl class="state-facts" data-state-facts></dl>
+          </div>
+        </div>
+
+        <p class="map-hint"><span class="hint-point">Point at a state to see what the map says about it.</span><span class="hint-tap">Tap a state to see what the map says about it.</span></p>
+        <details class="map-sources">
+          <summary class="label">Sources</summary>
+          <p>Sickle cell: Hockham et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6283872/" rel="noopener">Scientific Reports (2018)</a>; National Sickle Cell Anaemia Elimination Mission, Ministry of Health and Family Welfare. Thalassaemia: National Health Mission, Guidelines for Prevention and Control of Hemoglobinopathies in India (2016); Mohanty et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3537975/" rel="noopener">Journal of Community Genetics (2013)</a>; Madan et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2927789/" rel="noopener">Indian Journal of Human Genetics (2010)</a>. Indicative only, shown by state: frequencies differ more between communities than between states.</p>
+        </details>
+        <p class="sr-only">Map summary. Sickle cell disease is most common in a belt across central India, running from south-eastern Gujarat through Madhya Pradesh, Maharashtra and Chhattisgarh to south-western Odisha. The National Sickle Cell Anaemia Elimination Mission covers 17 focus states: Gujarat, Maharashtra, Rajasthan, Madhya Pradesh, Jharkhand, Chhattisgarh, West Bengal, Odisha, Tamil Nadu, Telangana, Andhra Pradesh, Karnataka, Assam, Uttar Pradesh, Kerala, Bihar and Uttarakhand. Thalassaemia: found across India, where on average 3 to 4 people in 100 are carriers; higher carrier frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal. Where we have worked: population and newborn screening at 15 sites across India: Delhi; Udaipur; Bhopal; Jamshedpur; Bilaspur; Nandurbar, Nagpur, Dhule, Chandrapur and Mumbai; Valsad; Kothagudem and Hyderabad; Mysore; and Gudalur.</p>
+      </div>
+      <div class="map-figure" data-map>
+        <img class="map-still" data-map-still src="/assets/img/site-map-sickle.webp" width="1000" height="1000" alt="A map of India with state borders drawn on it. The states the chosen layer marks are shown in amber and named." loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- REASSURED -->
+  <section id="reassured" class="section" aria-labelledby="reassured-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="reassured-h" class="h2 lg:col-span-7">The standard we design to, letter by letter</h2>
+        <p class="lead lg:col-span-5">REASSURED is a published set of nine criteria for diagnostic tests that work in low-resource settings. Here is what each one means in our tests.</p>
+      </div>
+
+      <div class="word mt-12" role="group" aria-label="REASSURED, one letter for each criterion" data-word>
+        <button type="button" aria-label="R: Real-time connectivity">R</button>
+        <button type="button" aria-label="E: Ease of specimen collection">E</button>
+        <button type="button" aria-label="A: Affordable">A</button>
+        <button type="button" aria-label="S: Sensitive">S</button>
+        <button type="button" aria-label="S: Specific">S</button>
+        <button type="button" aria-label="U: User-friendly">U</button>
+        <button type="button" aria-label="R: Rapid and robust">R</button>
+        <button type="button" aria-label="E: Equipment-free or simple">E</button>
+        <button type="button" aria-label="D: Deliverable to end-users">D</button>
+      </div>
+
+      <ol class="criteria mt-10" data-criteria>
+        <li><span class="crit-letter" aria-hidden="true">R</span><div><h3><span>Real-time connectivity</span></h3><p>Test details are captured on a mobile app, so a programme can follow its screening as it happens.</p></div></li>
+        <li><span class="crit-letter" aria-hidden="true">E</span><div><h3><span>Ease of specimen collection</span></h3><p>A spot of blood from a finger prick, dried on a card. Minimally invasive.</p></div></li>
+        <li><span class="crit-letter" aria-hidden="true">A</span><div><h3><span>Affordable</span></h3><p>Priced for programmes that test whole populations, and for the health system that pays.</p></div></li>
+        <li><span class="crit-letter" aria-hidden="true">S</span><div><h3><span>Sensitive</span></h3><p>Few false negatives.</p></div></li>
+        <li><span class="crit-letter" aria-hidden="true">S</span><div><h3><span>Specific</span></h3><p>Few false positives.</p></div></li>
+        <li><span class="crit-letter" aria-hidden="true">U</span><div><h3><span>User-friendly</span></h3><p>Extraction-free, with an automation-friendly workflow and minimal training.</p></div></li>
+        <li><span class="crit-letter" aria-hidden="true">R</span><div><h3><span>Rapid and robust</span></h3><p>Quick turnaround and high-throughput screening. Cards keep at room temperature.</p></div></li>
+        <li><span class="crit-letter" aria-hidden="true">E</span><div><h3><span>Equipment-free or simple</span></h3><p>Minimal laboratory infrastructure: standard PCR equipment, no specialised laboratory.</p></div></li>
+        <li><span class="crit-letter" aria-hidden="true">D</span><div><h3><span>Deliverable to end-users</span></h3><p>Designed for one patient in a clinic and for large-scale public health programmes.</p></div></li>
+      </ol>
+      <p class="mt-6 text-[1rem] text-moss"><span class="label mr-1">Source</span> Land et al., <a class="underline decoration-leaf decoration-2 underline-offset-4 hover:text-leaf" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7097043/table/Tab3" rel="noopener">Nature Microbiology (2019)</a>.</p>
+    </div>
+  </section>
+
+  <!-- Who we work with -->
+  <section id="partners" class="section bg-paper" aria-labelledby="partners-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="partners-h" class="h2 lg:col-span-7">We work with institutions</h2>
+        <p class="lead lg:col-span-5">Hospitals, laboratories and public health programmes come to us with a condition they need to screen for or diagnose. Most of that work begins as a collaboration.</p>
+      </div>
+      <ul class="audiences mt-12">
+        <li>
+          <h3 class="h3">Hospitals, laboratories and clinicians</h3>
+          <p>Genetic tests for inherited blood and muscle conditions, designed to run with minimal laboratory infrastructure. We help set the method up and train your staff.</p>
+        </li>
+        <li>
+          <h3 class="h3">District health officers and government programmes</h3>
+          <p>Tests developed for national health programmes, for screening at population scale, with counselling and follow-up alongside.</p>
+        </li>
+        <li>
+          <h3 class="h3">NGOs and CSR funders</h3>
+          <p>A partner for large, population-level screening: the testing, the method for the field, and support for the families it identifies.</p>
+        </li>
+      </ul>
+      <a class="link mt-8" href="/partnerships/#how-it-starts">How a collaboration works
+        {{ arrow | safe }}
+      </a>
+      <div class="mt-12">
+        {% include "notice.njk" %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Programmes -->
+  <section id="programmes" class="section" aria-labelledby="programmes-h">
+    <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
+      <div class="lg:col-span-5">
+        <h2 id="programmes-h" class="h2">A test is the middle of the story</h2>
+        <p class="lead mt-6">After the result come treatment, counselling and follow-up. We run awareness and counselling programmes, mostly on behalf of the government, and help set up patient support groups.</p>
+        <p class="mt-4 text-moss">Sample collection, transport, testing, reporting, treatment with counselling, follow-up: our testing model covers all six, so that a result leads somewhere.</p>
+        <a class="link mt-4" href="/programmes/">See our programmes
+          {{ arrow | safe }}
+        </a>
+      </div>
+      <div class="lg:col-span-7">
+        <p class="label mb-4">Where our field work has taken us</p>
+        <div class="fieldwork">
+          <figure>
+            <img src="/assets/img/place-nandurbar-640.webp" srcset="/assets/img/place-nandurbar-640.webp 640w, /assets/img/place-nandurbar-1280.webp 1280w" sizes="(min-width: 1024px) 22vw, 30vw" width="640" height="399" style="object-position: 62% 50%" alt="A monsoon-green gorge with a thin waterfall dropping down red basalt cliffs at Toranmal, Nandurbar district, Maharashtra." loading="lazy" decoding="async">
+            <figcaption class="label">Nandurbar, Maharashtra</figcaption>
+          </figure>
+          <figure>
+            <img src="/assets/img/place-kothagudem-640.webp" srcset="/assets/img/place-kothagudem-640.webp 640w, /assets/img/place-kothagudem-1280.webp 1280w" sizes="(min-width: 1024px) 22vw, 30vw" width="640" height="400" style="object-position: 58% 50%" alt="Still water of the Kinnerasani reservoir with a forested island, Bhadradri Kothagudem district, Telangana." loading="lazy" decoding="async">
+            <figcaption class="label">Kothagudem, Telangana</figcaption>
+          </figure>
+          <figure>
+            <img src="/assets/img/place-jharkhand-640.webp" srcset="/assets/img/place-jharkhand-640.webp 640w, /assets/img/place-jharkhand-1280.webp 1280w" sizes="(min-width: 1024px) 22vw, 30vw" width="640" height="400" style="object-position: 36% 50%" alt="A hill road winding through forest above the Patratu reservoir, Patratu Valley, Jharkhand." loading="lazy" decoding="async">
+            <figcaption class="label">Patratu Valley, Jharkhand</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who we are: the founders' standing, in text; their portraits belong on About and Team -->
+  <section id="who" class="section bg-paper" aria-labelledby="who-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-7">
+          <p class="label mb-4">Who we are</p>
+          <h2 id="who-h" class="h2">Founded by a physician and scientist</h2>
+        </div>
+        <div class="lg:col-span-5">
+          <p class="lead">Lightening Lives was founded by Dr.&nbsp;Giriraj Ratan Chandak, formerly Chief Scientist at the CSIR-Centre for Cellular and Molecular Biology and a former Director of the Centre for DNA Fingerprinting and Diagnostics, with Mrs.&nbsp;Nidhi Chandak. The company draws on more than 25 years of work in genetic and molecular diagnostics.</p>
+          <p class="mt-4 flex flex-wrap gap-x-8">
+            <a class="link" href="/about/">About the company
+              {{ arrow | safe }}
+            </a>
+            <a class="link" href="/about/team/">Meet the team
+              {{ arrow | safe }}
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision -->
+  <section id="vision" class="vision" aria-labelledby="vision-h">
+    <div class="wrap">
+      <h2 id="vision-h" class="label">Our vision</h2>
+      <p class="vision-line">To make precision genetic diagnosis accessible to every individual, through innovative technologies that need only a single drop of blood.</p>
+    </div>
+  </section>
+
+  <!-- Contact: each action opens an email with its subject filled in, until a form service is chosen -->
+  <section id="contact" class="section bg-paper" aria-labelledby="contact-h">
+    <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
+      <div class="lg:col-span-7">
+        <h2 id="contact-h" class="h2">Tell us what your programme needs</h2>
+        <p class="lead mt-6 max-w-[36rem]">Choose where you would like to begin.</p>
+        <ul class="actions mt-8">
+          <li><a class="action" href="mailto:{{ site.email }}?subject=Partnership">Explore a partnership{{ actionArrow | safe }}</a></li>
+          <li><a class="action" href="mailto:{{ site.email }}?subject=Request%20tests">Request tests{{ actionArrow | safe }}</a></li>
+          <li><a class="action" href="mailto:{{ site.email }}?subject=Awareness%20and%20counselling">Ask about awareness and counselling{{ actionArrow | safe }}</a></li>
+          <li><a class="action" href="mailto:{{ site.email }}?subject=Sales">Talk to sales{{ actionArrow | safe }}</a></li>
+        </ul>
+        <p class="mt-6 flex flex-wrap items-center gap-x-6">
+          <span class="label">Write or call</span>
+          <a class="link" href="mailto:{{ site.email }}">{{ site.email }}</a>
+          <a class="link" href="tel:{{ site.tel }}">{{ site.phone | replace(" ", "&nbsp;") | safe }}</a>
+        </p>
+        <p class="mt-3 max-w-[38rem] text-[1rem] text-moss">We work with institutions. Each request is discussed on its own terms, based on your institutional or regulatory requirements.</p>
+      </div>
+      <div class="lg:col-span-5">
+        <div class="blank-card" aria-hidden="true">
+          <img src="/assets/img/site-blank.webp" width="800" height="1000" alt="" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </section>

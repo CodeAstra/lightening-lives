@@ -850,4 +850,38 @@
   /* Long words in a heading at display size ("haemoglobinopathies") break rather than widen the page. */
   .page-open .display { hyphens: auto; overflow-wrap: break-word; }
   @media (max-width: 30rem) { .page-open .display { font-size: clamp(1.95rem, 9.4vw, 2.6rem); } }
+
+  /* On a wide window the live film fills the whole opening (DESIGN.md), whatever its shape. The
+     still's layout above centres the frame (justify-self: center), and browsers that align
+     absolutely positioned boxes would shrink the live film to its canvas's shape, leaving bare sides
+     on a window wider than 2:1, such as 21:9. */
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    html.film-live .film-screen { justify-self: stretch; }
+  }
+
+  /* The map's fifteen sites (content file 6.1). Each is lumen.css's dot; its leader and chip show
+     only for the pin pointed at, focused or tapped, so fifteen names never crowd the map (DESIGN.md,
+     "The map"). The pin is a 1.5rem button centred on its dot: the sites lie closer together than a
+     larger target would allow, and the state panel and the summary say the same in words. */
+  .map-pins .pin {
+    position: absolute;
+    left: -0.75rem;
+    top: -0.75rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+  .map-pins:not(.is-shown) .pin { pointer-events: none; }
+  .map-pins .pin:focus-visible { border-radius: 50%; }
+  .map-pins li::before, .map-pins b { opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
+  .map-pins li.is-on { z-index: 1; }
+  .map-pins li.is-on::before, .map-pins li.is-on b { opacity: 1; }
+  /* What was screened can run long ("SCA, sickle-beta thal., beta thal. · population and newborn"):
+     it wraps rather than leave the map. */
+  .map-pins small { width: max-content; max-width: 14rem; white-space: normal; }
 }
