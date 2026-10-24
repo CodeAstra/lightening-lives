@@ -3,7 +3,7 @@ version: alpha
 name: Lightening Lives
 description: The design of the Lightening Lives website, chosen for production on 23 October 2026 (Design 11, Lumen, in its chosen variation). DNA-blue ink on ice white, Quicksand and Nunito, frosted glass under pools of blue light and green light, named proof set in DNA blue, and one opening film in which a small drop of blood becomes a map of India.
 colors:
-  # Each name is the CSS custom property of the same name in src/css/lumen.css (--canopy, --mist, ...).
+  # Each name is the CSS custom property of the same name in the production stylesheet src/css/site.css (--canopy, --mist, ...); designs/src/css/lumen.css keeps the comparison page's copy.
   primary: "#0C4A6E" # canopy, under the role name that design tools look for
   canopy: "#0C4A6E"
   leaf: "#0369A1"
@@ -243,7 +243,7 @@ components:
 
 This file describes the design chosen for production on 23 October 2026: Design 11, "Lumen" (`designs/lumen.html`), in the variation the client settled on after comparing the toolbar's options: **Quicksand and Nunito** for the type (the comparison toolbar's "Quicksand + Nunito (from Reel)"), **a name that is proof set in DNA blue** with no coloured mark ("The name in DNA blue, no amber"), and **the drop at its smallest** ("Smaller still"), and **life green for what is pointed out** (the Highlight choice "Life green", `#6EE7B7`, chosen on 24 October 2026 in place of sun amber). It is Design 10, "Reel" (approved on 12 October), on the same page and with the same film, in another light: ice white instead of pale green, DNA blue instead of leaf green, and frosted glass lit from the sides where Design 10 had flat paper. It is the reference for building the live site and any page added to it.
 
-The page's own stylesheet does not yet carry these three choices as its defaults: `designs/src/css/lumen.css` and `designs/src/js/lumen/scene.js` still open on Exo and Roboto Mono, sun amber, the amber bar and the larger drop, and the toolbar sets the chosen values over them. The production site's own stylesheet, `src/css/site.css`, already carries the type and the proof mark; its `--sun` still reads `#FFC53D` and changes to `#6EE7B7` with the next build of the home page, after which the stills are recaptured. "Where things live" at the end lists the edits that make the chosen design the page's own. Until then, the chosen design is `designs/lumen.html?type=reel&proof=ink&drop=smaller`.
+The page's own stylesheet does not yet carry these three choices as its defaults: `designs/src/css/lumen.css` and `designs/src/js/lumen/scene.js` still open on Exo and Roboto Mono, sun amber, the amber bar and the larger drop, and the toolbar sets the chosen values over them. The production site's own stylesheet, `src/css/site.css`, already carries the type and the proof mark, but the home page built in Phase 1 still shows sun amber: its `--sun` reads `#FFC53D` (and the `--pool-sun` fallback `rgba(255, 197, 61, 0.2)`), because the build plan was written before green was chosen and its stylesheet test pins amber. The change to `#6EE7B7` is Step 3a of Task 2.0 in the build plan, the first task of Phase 2, after which the stills and the social card are recaptured. Where the site and this file differ, this file is the reference. "Where things live" at the end lists the edits that make the chosen design the page's own. Until then, the chosen design is `designs/lumen.html?type=reel&proof=ink&drop=smaller`.
 
 ## Overview
 
@@ -259,7 +259,7 @@ Five things were chosen by the client and stay as they are unless the client ask
 - **Colour:** DNA-blue ink on ice white, with life green (`#6EE7B7`, the Lumen theme's own highlight; chosen on 24 October 2026 over the sun amber that had stood in for it since 13 October) for what is being pointed out on the map, in REASSURED and in the proof tags. A name that is proof is set in DNA blue, not marked in colour (23 October 2026; a bar, a box and a stroke were all tried first).
 - **The film:** it plays by itself, in one continuous take of about six and a half seconds. It does not follow the scroll.
 - **The drop:** small. Its radius is 0.027 of the card's length, the toolbar's "Smaller still" (23 October 2026, after "smaller" on 13 October).
-- **The layout of the shell and the inner pages:** Design 10's, line for line. Sections, sizes, borders and breakpoints are the same; only what things are made of changed. **The home page's sections** were revised on 24 October 2026 from a mock-up the user chose (`docs/superpowers/mockups/home-card-closeup.html`; the build plan's Phase 1b): the film stays and its map comes alive afterwards, by state; after it come the card close up, the six-step method, the comparison, the two families, the proofs beside the drawn card, REASSURED, the testing-model loop, the audiences, who we are, the vision and contact. The Layout table below is the approved comparison page's order; Phase 1b's task updates it.
+- **The layout:** Design 10's, line for line. Sections, sizes, borders and breakpoints are the same; only what things are made of changed.
 
 ## Colors
 

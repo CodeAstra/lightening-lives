@@ -2,7 +2,7 @@
 
 Content strategy, site map, routes and page-by-page copy for the new lighteninglives.in, built on the production design (Design 11, Lumen; `DESIGN.md`).
 
-23 October 2026 · Second full draft, for the company's review. It replaces the draft of 12 October 2026, which is kept in git history.
+23 October 2026 · Second full draft, for the company's review. It replaces the draft of 12 October 2026, which is kept in git history. Revised 24 October 2026 after the review of the built home page: the copy tightened for production and places named by state (requirements R1 to R3, below).
 
 ## How to read this file
 
@@ -24,6 +24,75 @@ Content strategy, site map, routes and page-by-page copy for the new lighteningl
 8. To confirm before publishing
 9. Notes for the build
 10. What is left out of the current website, and why
+
+Before Part 1: **Requirements from the review of 24 October 2026**, which every part below must meet.
+
+---
+
+## Requirements from the review of 24 October 2026
+
+The user reviewed the home page as built in Phase 1 and gave three requirements. They outrank the copy and notes below wherever the two disagree. The build plan (`docs/superpowers/plans/2026-10-24-website-build.md`, "Requirements from the Phase 1 review") carries the same three, with the tasks that apply them and the checks that prove them.
+
+### R1. Copy that is short enough to read
+
+The user's words: "The website content generated is not up to the mark. Example: see the hero description, it is very long."
+
+The copy says true things, but too many of them at once, and says several of them more than once. Every line on every page keeps to these limits:
+
+| Element | Limit |
+| --- | --- |
+| The home page's lead, under the H1 | 25 words at most, in one or two sentences. Three lines at most at 1440 px, four on a 390 px phone |
+| The note under the home page's buttons | One line at 1440 px (12 words at most), or none |
+| A page's opening lead, and a section's lead beside its H2 | 30 words at most. Four lines at most at 1440 px |
+| The body of a card, a row, a step or a column | 25 words at most on the home page; 35 on other pages; 60 for a test page's account of a condition, and for an answer under "Questions" |
+| Any other paragraph | 60 words at most. A longer one is split into two paragraphs, not cut, where every sentence earns its place (a test page's account of the condition) |
+| A label, a tag, a chip | 4 words at most |
+
+And these rules:
+
+- **Say each thing once on a page.** The home page as built in Phase 1 says "We work with institutions" four times (the hero's note, the partners' heading, the notice and the contact note) and "a spot of blood" in the film, How it works, Why and REASSURED. Keep each where it does most work and cut or replace the others. The film's captions and How it works' three headings mirror each other on purpose and may stay.
+- **Lead with what the company does, for whom.** Self-description ("an innovation-driven healthcare technology company") belongs on About, not in the opening.
+- **No line that only defines a word.** "Sensitive: Few false negatives." tells a reader nothing about the company's tests. Say what the company does about it, or leave the meaning to the source.
+- **Show, don't list adjectives.** "Faster · Simpler · More affordable · More accessible · More scalable" goes against 2.6 ("Contrast, not adjectives"). Replace such a line with a contrast the reader can check, or remove it (this one is removed).
+- **The limits are checked on the built page**, not by eye: the build's tests count the words of each element (plan, Task 2.0).
+
+**Applied in this file on 24 October 2026** (a review for production, not a rewrite: what already worked is unchanged). Each change is noted where it was made, with the old wording, and git history keeps the rest.
+
+| Where | Before | After |
+| --- | --- | --- |
+| Home, the lead under the H1 (7 lines at 1440 px, 8 at 390 px, 10 at 320 px) | 43 words | 18: "We develop genetic tests for inherited blood and muscle conditions, built for hospitals, laboratories and public health programmes." |
+| Home, the note under the buttons | 22 words, repeating "We work with institutions" | 12: the proof alone |
+| Home, How it works, the three steps | 37, 36 and 42 words, repeating Why | 24, 20 and 23: what happens at each step |
+| Home, Why | A 37-word lead; five adjectives ("Faster · Simpler · More affordable…") | A 28-word lead; the adjectives removed, the eight contrasts kept |
+| Home, REASSURED, Sensitive and Specific | "Few false negatives." "Few false positives." | What each means for the company's tests |
+| Home, Who we are | 51 words | 30 |
+| Home, Contact note | Repeated "We work with institutions" | The repetition removed |
+| Home, Portfolio, and Develop a test | "Rare genetic disorders: Testing for rare and inherited conditions." | Says what the company does |
+| Every page's opening lead over 30 words (Technology, Solutions, the five test pages, Develop a test, Programmes, Our work, About, Partnerships) | 34 to 53 words | 24 to 30 |
+| Paragraphs over 60 words (sickle cell anaemia, SMA, LGMD, About) | 62 to 86 words | Split into two paragraphs, same words |
+| Three rows far over (beta thalassaemia, the coagulation panel, About's "Why") | 64, 41 and 39 words | 59, 24 and 31 |
+
+> How R1 holds from here: the plan's Task 2.0 puts the revised 5.1 on the built home page, with a test that counts the words of each element, and every inner page is built from this file as it now stands. A page whose copy is changed later is checked against the table above before it is built.
+
+### R2. States, not cities
+
+The user's words: "update the content to use the state name over city name", and "See the states information from content/Lightening Lives Poster v9-selection.png".
+
+The poster names the 15 sites, in its map and its table, but not their states. The states below are read from the sites and agree with the state borders on the poster's map: Delhi; Rajasthan (Udaipur); Madhya Pradesh (Bhopal); Jharkhand (Jamshedpur); Chhattisgarh (Bilaspur); Maharashtra (Nandurbar, Nagpur, Dhule, Chandrapur, Mumbai); Gujarat (Valsad); Telangana (Kothagudem, Hyderabad); Karnataka (Mysore); Tamil Nadu (Gudalur). Nine states and Delhi. What was screened in each state is the poster's table, added up by state (6.2).
+
+- **Where the company has worked is named by state.** "Maharashtra", not "Nandurbar"; "nine states and Delhi", not "from Delhi to Gudalur". This holds for copy, the map's "Our work" layer, the film's labels, photograph captions, titles, descriptions and alt text written for sharing.
+- **The map's "Our work" layer marks states**, as its two other layers do. A state's panel says what was screened there (6.2). There are no pins for towns.
+- **The film's labels at its end name states:** Delhi · Maharashtra · Jharkhand · Telangana (our laboratory) · Tamil Nadu, in the places where it names Delhi, Nandurbar, Jamshedpur, Hyderabad and Gudalur today.
+- **Two places keep a town's name, as detail under its state:** the data in 6.1 (which is the record the rest is made from) and the sites table on Our work (5.11), where a programme officer wants the field record. There the state names the group and the sites follow it.
+- **The company's own address keeps its city.** The laboratory and office are in Hyderabad, Telangana; addresses, the footer and About say so.
+
+> Applied in this file on 24 October 2026: 2.6, 5.1 (evidence, the map, programmes' photographs, the film's labels), 5.4, 5.5, 5.11, 6.2 and Part 9. The site as built in Phase 1 still names towns; the plan's Task 2.0 changes it.
+
+### R3. Every screen, from a phone to a television
+
+The user's words: "the website in larger screens is not good. Example: map and text overlapping etc." and "Make sure all screens are handled from large screens like TV to small screens like mobile".
+
+What this asks of the content: every label, chip and button text fits on a 320 px phone without breaking inside a word, and the home page's opening fits the first screen of a television (R1's limits do most of this). What it asks of the layout is in the plan ("R3"), with the defects found on the Phase 1 build and the screen sizes every page is checked at.
 
 ---
 
@@ -147,7 +216,7 @@ The techniques the copy uses, so that whoever extends the site can use the same 
 
 - **Contrast, not adjectives.** Where the brief says "innovative", the page shows the row of the table: cold chain against room temperature, 1 to 2 ml of venous blood against a spot on a card, 72 hours against birth. The reader draws the conclusion.
 - **Proof beside the claim.** No sentence says a test works without the next saying who approved it, where it was used or who it was built with.
-- **Specific nouns.** Nandurbar and Gudalur, not "underserved communities". A lancet, a card and a punch, not "an innovative sampling solution". A PCR machine and a gel tank, not "minimal infrastructure" on its own.
+- **Specific nouns.** Maharashtra and Tamil Nadu, not "underserved communities" (places are named by state: R2). A lancet, a card and a punch, not "an innovative sampling solution". A PCR machine and a gel tank, not "minimal infrastructure" on its own.
 - **The loop.** The testing model's six steps are the shape of the Programmes page and the order of the home page: sample, laboratory, programme, result, what follows.
 - **The open place.** Every list of the tests ends with the condition the reader needs next. The tests are "so far", never "only" and never "our range".
 - **Two families, one method.** Wherever the blood conditions are named, the muscle conditions are named beside them. The poster's silence on them is a feature of the conference, not of the company.
@@ -341,15 +410,18 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 #### Opening film (*opening film*) · revised
 
 - **H1:** Genetic testing from a spot of blood on a card.
-- **Lead:** Lightening Lives is an innovation-driven healthcare technology company in Hyderabad. We develop molecular diagnostics for inherited blood and muscle conditions that are designed to work where the patients are, and build them into solutions that hospitals, laboratories and public health programmes can run.
+- **Lead:** We develop genetic tests for inherited blood and muscle conditions, built for hospitals, laboratories and public health programmes.
 - **Solid button:** Partner with us
 - **Line button:** See our solutions
-- **Note:** Our sickle cell test is approved by ICMR and patented in India and Japan. We work with institutions and public health programmes.
+- **Note:** Our sickle cell test: approved by ICMR, patented in India and Japan.
 - **Film captions** (the first is reworded; the film itself does not change):
   1. A spot of blood, dried on a card.
   2. From card to result without a DNA extraction step.
   3. Built for screening at the scale of a nation.
 - **Button for readers who have asked for less motion:** Play the film
+- **Places the film names at its end** (R2): Delhi · Maharashtra · Jharkhand · Telangana · Tamil Nadu. Each label's second line is "Screening", except Telangana's: "Our laboratory, and screening".
+
+> Revised on 24 October 2026 (R1). The lead was 43 words ("Lightening Lives is an innovation-driven healthcare technology company in Hyderabad. We develop molecular diagnostics… that hospitals, laboratories and public health programmes can run.") and ran to seven lines beside the film; it is now 18. "We develop" keeps the innovator's voice; the self-description moves to About. The note was 22 words and repeated "We work with institutions", which the page says in its own section; it now carries only the proof.
 
 > Changed from the approved page: the heading was "Genetic testing from a single drop of blood."; the first caption was "A single drop of blood, dried on a card."; the lead named no conditions and said "affordable, rapid, scalable and extraction-free"; the note was "We supply institutions and programmes only."
 >
@@ -362,27 +434,27 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 | Label | H3 | Body |
 | --- | --- | --- |
-| One card | A spot of blood, dried on a card. | That is the whole sample: a finger prick, a card, and no needle, no tube and no cold chain. Collection is simple and minimally invasive, and the card travels at room temperature to the nearest testing centre. |
-| One batch | From card to result without a DNA extraction step. | A small punch from the dried spot goes straight into the reaction. The assay runs on standard PCR equipment in a modest laboratory, many cards at a time, and screens and confirms in the same test. |
-| One programme | Built for screening at the scale of a nation. | We have run population and newborn screening at 15 sites across India, and developed a test for the National Sickle Cell Anaemia Elimination Mission. Test details are captured on a mobile app, so a programme can follow its screening as it happens. `[TBC: the app, Part 8 item 7]` |
+| One card | A spot of blood, dried on a card. | That is the whole sample: a finger prick and a card. No needle, no tube, no cold chain on the way to the testing centre. |
+| One batch | From card to result without a DNA extraction step. | A small punch from the spot goes straight into the reaction. Many cards run at once, on standard PCR equipment. |
+| One programme | Built for screening at the scale of a nation. | Population and newborn screening at 15 sites in nine states and Delhi, with test details captured on a mobile app as it happens. `[TBC: the app, Part 8 item 7]` |
 
 - **Link:** How the technology works
 
+> Revised on 24 October 2026 (R1): the three bodies were 37, 36 and 42 words and told the advantages that Why tells again; they now tell what happens at each step, and Why keeps the contrasts. The national mission is named once, in the sickle cell row.
+>
 > Changed from the approved page: the heading was "From one drop to a national programme"; the first step was labelled "One drop"; the bodies said less. "Screens and confirms in the same test" is true of LitLife™-SCA and LitLife™-SMA by the company's own descriptions; Part 8 item 5 asks whether it holds for the others.
 
 #### Why (*why*) · revised
 
 - **H2:** Molecular diagnostics without the limits of conventional testing
-- **Lead:** Conventional genetic tests need venous blood, a cold chain, a specialist laboratory and, for screening, a second test to confirm. So they rarely reach the people who need them most. We design ours the other way round.
-- **Label:** Genetic diagnosis, made
-- **Five words:** Faster · Simpler · More affordable · More accessible · More scalable
+- **Lead:** Conventional genetic tests need venous blood, a cold chain, a specialist laboratory and a second test to confirm. So they rarely reach the people who need them most.
 
 | Title | Body |
 | --- | --- |
 | A spot of blood, not a tube | A finger prick onto a card. No venepuncture, no EDTA tube, no pre-processing. |
 | Room temperature, not a cold chain | Cards keep and travel at room temperature, so samples can come from anywhere a health worker can reach. |
 | Screening and confirmation in one | One test does both, so a positive result needs no second test and no second visit.* |
-| Extraction-free molecular diagnostics | No separate DNA extraction step.* |
+| Extraction-free molecular diagnostics | No separate DNA extraction step, which saves a laboratory time and reagents.* |
 | From birth | Newborns can be tested at birth. Conventional confirmatory tests wait 72 hours.* |
 | Minimal laboratory infrastructure | Standard PCR equipment and a gel tank. No specialised laboratory. |
 | High-throughput, automation-friendly | Many cards in one run, on a workflow that can be automated. |
@@ -390,6 +462,8 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Footnote:** * Where applicable for developed assays.
 
+> Revised on 24 October 2026 (R1): the lead was 37 words; "We design ours the other way round" goes, since the eight rows show it. The label "Genetic diagnosis, made" and its five words (Faster · Simpler · More affordable · More accessible · More scalable) are removed: adjectives a reader cannot check, where the rows below give the contrasts that prove them (2.6). The home page drops that line of words; the rest of the section's layout stays.
+>
 > Changed from the approved page: the eight rows were the 12 October poster's "why" points. These keep the four that programme officers feel least ("extraction-free", "minimal infrastructure", "high-throughput", "large-scale programmes") and add the four the conference poster's comparison makes vivid: the tube, the cold chain, the second test, the 72 hours.
 
 #### Portfolio (*kinds of test*, then *tests developed so far*) · revised
@@ -401,7 +475,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 | --- | --- |
 | Monogenic disorders | Haemoglobinopathies and musculopathies: inherited disorders of haemoglobin, and inherited conditions that weaken the muscles. The two families we have developed tests for so far. |
 | Pharmacogenetic variants | How a person's genes change their response to a medicine, for personalised therapy. In development. |
-| Rare genetic disorders | Testing for rare and inherited conditions. `[TBC: available now, or in development]` |
+| Rare genetic disorders | Tests for rare inherited conditions, developed when an institution needs one. `[TBC: available now, or in development]` |
 | Custom molecular diagnostic assays | Assays designed for a research study or a clinical service. |
 
 - **H3:** Developed so far
@@ -409,13 +483,13 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 | Name | Label | Body | Tags | Link |
 | --- | --- | --- | --- | --- |
-| Sickle cell anaemia | Haemoglobinopathy | LitLife™-SCA screens for and confirms sickle cell anaemia in one test from a dried blood spot. Developed with CSIR-CCMB know-how for the National Sickle Cell Anaemia Elimination Mission. | Approved by ICMR (proof) · Patented in India and Japan (proof) · Dried blood spot | About this test |
+| Sickle cell anaemia | Haemoglobinopathy | LitLife™-SCA screens for and confirms sickle cell anaemia in one test. Developed with CSIR-CCMB know-how for the National Sickle Cell Anaemia Elimination Mission. | Approved by ICMR (proof) · Patented in India and Japan (proof) · Dried blood spot | About this test |
 | Thalassaemia and other haemoglobinopathies | Haemoglobinopathy | LitLife™-BThal and LitLife™-AlphaThal for beta and alpha thalassaemia, LitLife™-SiBThal217 for sickle cell anaemia and beta thalassaemia together, and testing for HbD and HbE. | Dried blood spot | About these tests |
 | Spinal muscular atrophy | Musculopathy | LitLife™-SMA screens for and confirms SMA from a dried blood spot. Designed for newborn screening, where finding SMA before symptoms changes what treatment can do. | Dried blood spot · No DNA extraction | About this test |
 | Duchenne muscular dystrophy | Musculopathy | A genetic test for DMD: an earlier diagnosis for a boy losing strength, and carrier testing for his mother and sisters. | `[TBC]` | About this test (until the page opens: Ask about this test, 3.1) |
 | Limb-girdle muscular dystrophy | Musculopathy | A genetic test for LGMD, where the first symptom and a diagnosis are often years apart, and the subtype decides the care. | `[TBC]` | About this test (until the page opens: Ask about this test, 3.1) |
 | In development | Coming soon | A blood coagulation panel for inherited bleeding disorders, and pharmacogenomics testing. | | What we are developing |
-| The condition you need next | | Tell us what your programme or laboratory needs to detect. We develop the test, to the same REASSURED standard as the ones above. | | Talk to us about a new test |
+| The condition you need next | | Tell us what your programme or laboratory needs to detect. We develop the test to the same REASSURED standard. | | Talk to us about a new test |
 
 > Changed from the approved page: five rows become seven; the lead and the "developed so far" line no longer say "these five are all for monogenic disorders"; "flagship" is gone; each row's "About the condition" disclosure moves to that test's page and a link takes its place. Until the DMD and LGMD pages open, their links go to Develop a test (3.1).
 
@@ -428,9 +502,9 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 | Approved by **ICMR** | LitLife™-SCA, our sickle cell test, is approved by the Indian Council of Medical Research. `[TBC: exact wording, Part 8 item 4]` |
 | Patented in **India and Japan** | The technology behind our tests holds patents granted in India and Japan, and a patent published internationally. `[TBC: what the patents cover, Part 8 item 3]` |
 | Working with **CSIR-CCMB** | An MOU with the CSIR-Centre for Cellular and Molecular Biology, Hyderabad, covers developing and commercialising the sickle cell assay. |
-| Proven at **15 sites** | Population and newborn screening in nine states and Delhi, from Udaipur to Gudalur, and a test developed for the National Sickle Cell Anaemia Elimination Mission. |
+| Proven at **15 sites** | Population and newborn screening in nine states and Delhi, and a test built for the National Sickle Cell Anaemia Elimination Mission. |
 
-> "ICMR", "India and Japan", "CSIR-CCMB" and "15 sites" carry the bar of sun amber. Changed from the approved page: "Built for national programmes" folds into the fourth column, and "Made by a certified manufacturer" moves to Solutions, under "How a test arrives".
+> "ICMR", "India and Japan", "CSIR-CCMB" and "15 sites" are set in DNA blue, with no coloured mark (DESIGN.md, 23 October 2026). Changed from the approved page: "Built for national programmes" folds into the fourth column, and "Made by a certified manufacturer" moves to Solutions, under "How a test arrives".
 
 #### Map (*the map*) · revised
 
@@ -438,10 +512,10 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 - **Choices:** Sickle cell · Thalassaemia · Our work
 - **Sickle cell:** Sickle cell disease is most common in a belt across central India, from Gujarat to Odisha.
 - **Thalassaemia:** Thalassaemia is found across India: on average, 3 to 4 people in 100 are carriers. Higher frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal.
-- **Our work:** Our laboratory is in Hyderabad. We have run population and newborn screening at 15 sites across India, from Delhi to Gudalur.
-- **Hint:** Point at a state to see what the map says about it. (On touch screens: Tap a state to see what the map says about it.)
+- **Our work:** Our laboratory is in Hyderabad, Telangana. We have run population and newborn screening at 15 sites in nine states and Delhi.
+- **Hint:** Point at a state to see what the map says about it. (On touch screens: Tap a state to see what the map says about it. With a remote or keyboard and no pointer, as on a television: Select a state to see what the map says about it.)
 
-> The sickle cell and thalassaemia layers, their keys and sources are unchanged. The "Our work" layer changes: it pins the 15 sites in Part 6.1 instead of four places, and the state lines for the states that have a site change to match (Part 6.2). The chips name the site and what was screened there. With 15 pins, show the chip on pointing or picking rather than all at once (Part 9).
+> The sickle cell and thalassaemia layers, their keys and sources are unchanged. The "Our work" layer changes (R2): it marks the nine states and Delhi where the 15 sites in Part 6.1 are, by state, as the other two layers mark theirs, and each of those states' panels says what was screened there (Part 6.2). No pins for towns. A state's chip names the state and what was screened there, shown on pointing, picking or keyboard focus rather than all at once (Part 9).
 
 #### REASSURED (*REASSURED*) · revised
 
@@ -453,8 +527,8 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 | R | Real-time connectivity | Test details are captured on a mobile app, so a programme can follow its screening as it happens. `[TBC: Part 8 item 7]` |
 | E | Ease of specimen collection | A spot of blood from a finger prick, dried on a card. Minimally invasive. |
 | A | Affordable | Priced for programmes that test whole populations, and for the health system that pays. |
-| S | Sensitive | Few false negatives. |
-| S | Specific | Few false positives. |
+| S | Sensitive | Few false negatives. Our validation data is shared with institutions on request. `[TBC: Part 8 item 6]` |
+| S | Specific | Few false positives, which is what lets one test both screen and confirm. `[TBC: Part 8 item 6]` |
 | U | User-friendly | Extraction-free, with an automation-friendly workflow and minimal training. |
 | R | Rapid and robust | Quick turnaround and high-throughput screening. Cards keep at room temperature. |
 | E | Equipment-free or simple | Minimal laboratory infrastructure: standard PCR equipment, no specialised laboratory. |
@@ -467,7 +541,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 #### Who we work with (*audiences*, *notice*) · revised
 
 - **H2:** We work with institutions
-- **Lead:** Hospitals, laboratories and public health programmes come to us with a condition they need to screen for or diagnose. Most of that work begins as a collaboration.
+- **Lead:** Hospitals, laboratories and public health programmes bring us a condition to screen for or diagnose. Most of that work begins as a collaboration.
 
 | H3 | Body |
 | --- | --- |
@@ -486,7 +560,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 - **Lead:** After the result come treatment, counselling and follow-up. We run awareness and counselling programmes, mostly on behalf of the government, and help set up patient support groups.
 - **Body:** Sample collection, transport, testing, reporting, treatment with counselling, follow-up: our testing model covers all six, so that a result leads somewhere.
 - **Link:** See our programmes
-- **Three photographs:** the three newest entries from Our work (5.11), each labelled with its place, under the heading "From our work". Until the company's photographs arrive, the approved page's three place photographs stay under their present heading, "Where our field work has taken us", labelled as places and never captioned as the company's work.
+- **Three photographs:** the three newest entries from Our work (5.11), each labelled with its state (R2), under the heading "From our work". The three place photographs the page shows today are labelled Maharashtra, Telangana and Jharkhand; their alt text may still describe the exact place, since it describes the picture. Until the company's photographs arrive, the approved page's three place photographs stay under their present heading, "Where our field work has taken us", labelled as places and never captioned as the company's work.
 
 > Changed from the approved page: the heading was "Awareness and counselling, alongside the tests". The photographs' heading becomes "From our work" only when the photographs are the company's own.
 
@@ -494,7 +568,9 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Label:** Who we are
 - **H2:** Founded by a physician and scientist
-- **Body:** Lightening Lives was founded by Dr. Giriraj Ratan Chandak, formerly Chief Scientist at the CSIR-Centre for Cellular and Molecular Biology and a former Director of the Centre for DNA Fingerprinting and Diagnostics, with Mrs. Nidhi Chandak. The company draws on more than 25 years of work in genetic and molecular diagnostics.
+- **Body:** Dr. Giriraj Ratan Chandak, formerly Chief Scientist at CSIR-CCMB and a Director of CDFD, founded the company with Mrs. Nidhi Chandak. He brings more than 25 years in genetic diagnostics.
+
+> Revised on 24 October 2026 (R1): the body was 51 words beside a seven-column heading. CSIR-CCMB is named in full in the evidence above; CDFD in full on About.
 - **Links:** About the company · Meet the team
 
 > Text only. The founders' portrait belongs on About and Team, not here. This is the one new section; if the company prefers the approved page's length, it can be dropped and nothing else moves.
@@ -513,8 +589,10 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 - **Actions:** Explore a partnership · Request tests · Ask about awareness and counselling · Talk to sales
 - **Label:** Write or call
 - **Details:** admin@lighteninglives.in · +91 91825 88191
-- **Note:** We work with institutions. Each request is discussed on its own terms, based on your institutional or regulatory requirements.
+- **Note:** Each request is discussed on its own terms, based on your institutional or regulatory requirements.
 
+> Revised on 24 October 2026 (R1): "We work with institutions." is dropped here; the page says it in its own section and in the notice.
+>
 > Changed from the approved page: the note was "Orders are institutional and in bulk. Order details are discussed per request…". Each action goes to Contact with that subject chosen; until the form exists it opens an email, as now.
 
 ---
@@ -529,7 +607,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Label:** Innovate
 - **H1:** How a spot of blood on a card becomes a genetic diagnosis
-- **Lead:** Conventional genetic testing was designed for the laboratory. We designed ours for the places where testing has to happen: a primary health centre, a tribal district, a maternity ward a day's journey from the nearest genetics laboratory.
+- **Lead:** Conventional genetic testing was designed for the laboratory. We designed ours for where testing has to happen: a primary health centre, or a maternity ward far from any genetics laboratory.
 - **Chips:** Approved by ICMR (proof) · Patented in India and Japan (proof) · Dried blood spot
 
 #### Where conventional testing stops (*audiences*: three columns)
@@ -642,7 +720,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Label:** Diagnose
 - **H1:** Diagnostic solutions for inherited conditions
-- **Lead:** We develop molecular tests for inherited blood and muscle conditions, and build each into something an institution can run: the assay, the sample card, the laboratory method, the training, and the counselling that follows a result.
+- **Lead:** We develop tests for inherited blood and muscle conditions, and make each one something an institution can run: assay, card, method, training and counselling.
 
 #### Two families (`#haemoglobinopathies`, `#musculopathies`; *audiences*: two columns)
 
@@ -726,18 +804,20 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Label:** Haemoglobinopathy
 - **H1:** Sickle cell anaemia
-- **Lead:** LitLife™-SCA is a molecular test that screens for and confirms sickle cell anaemia in one test, from a spot of blood dried on a card. It was developed with CSIR-CCMB know-how for the National Sickle Cell Anaemia Elimination Mission, and has been used in population and newborn screening at 15 sites across India.
+- **Lead:** LitLife™-SCA screens for and confirms sickle cell anaemia in one test, from a dried blood spot. Approved by ICMR, and used at 15 sites in nine states and Delhi.
 - **Chips:** Approved by ICMR (proof) · Patented in India and Japan (proof) · Dried blood spot · Room temperature transport · From birth
 
 #### The condition
 
 - **H2:** The condition
-- **Body:** Sickle cell disease is an inherited blood disorder in which red blood cells become rigid and sickle-shaped. They slow or block blood flow, causing pain, anaemia, infections and organ damage. A person with one copy of the sickle gene is a carrier, usually healthy and often unaware; when both parents are carriers, each pregnancy has a 1 in 4 chance of the disease. In India it is most common among tribal communities, in a belt across the centre of the country from Gujarat to Odisha.
+- **Body:** Sickle cell disease is an inherited blood disorder in which red blood cells become rigid and sickle-shaped. They slow or block blood flow, causing pain, anaemia, infections and organ damage.
+- **Body:** A person with one copy of the sickle gene is a carrier, usually healthy and often unaware; when both parents are carriers, each pregnancy has a 1 in 4 chance of the disease. In India it is most common among tribal communities, in a belt across the centre of the country from Gujarat to Odisha.
 
 #### Why it needs testing at scale
 
 - **H2:** Why it needs testing at scale
-- **Body:** The Government of India launched the National Sickle Cell Anaemia Elimination Mission in July 2023, with the aim of eliminating sickle cell disease as a public health problem by 2047. The mission has 17 focus states. Reaching that aim means testing very large numbers of people, many of them in districts a long way from a genetics laboratory, and knowing, for each one, whether they are affected, a carrier or neither. A screening test that needs a second test to confirm leaves that last question open.
+- **Body:** The Government of India launched the National Sickle Cell Anaemia Elimination Mission in July 2023, with the aim of eliminating sickle cell disease as a public health problem by 2047. The mission has 17 focus states.
+- **Body:** Reaching that aim means testing very large numbers of people, many of them in districts a long way from a genetics laboratory, and knowing, for each one, whether they are affected, a carrier or neither. A screening test that needs a second test to confirm leaves that last question open.
 
 > The map can be reused here, opened on the sickle cell layer.
 
@@ -759,7 +839,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 #### Where it has been used (*the map*, opened on Our work, with a list)
 
 - **H2:** Where it has been used
-- **Body:** Population screening for sickle cell anaemia at 14 sites: Delhi, Udaipur, Bhopal, Jamshedpur, Bilaspur, Nandurbar, Nagpur, Valsad, Chandrapur, Mumbai, Kothagudem, Hyderabad, Mysore and Gudalur. Newborn screening at Udaipur, Nagpur and Dhule.
+- **Body:** Population screening for sickle cell anaemia in nine states and Delhi: Rajasthan, Madhya Pradesh, Jharkhand, Chhattisgarh, Maharashtra, Gujarat, Telangana, Karnataka and Tamil Nadu. Newborn screening in Rajasthan and Maharashtra.
 - **Link:** See all our work
 
 #### In the box
@@ -803,7 +883,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Label:** Haemoglobinopathy
 - **H1:** Thalassaemia and other haemoglobinopathies
-- **Lead:** Three tests and two more options cover the haemoglobin disorders a programme meets alongside sickle cell anaemia: beta thalassaemia, alpha thalassaemia, sickle cell anaemia and beta thalassaemia together, HbD and HbE. All from a spot of blood on a card.
+- **Lead:** Tests for the haemoglobin disorders a programme meets alongside sickle cell anaemia: beta and alpha thalassaemia, sickle-beta thalassaemia, HbD and HbE. All from a spot of blood on a card.
 - **Chips:** Dried blood spot · Room temperature transport
 
 #### The conditions (*rows*)
@@ -812,7 +892,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 | Title | Body |
 | --- | --- |
-| Beta thalassaemia | The body makes too little of the beta chain of haemoglobin. People with the severe form, thalassaemia major, need blood transfusions throughout life. Carriers are usually healthy, and their mild anaemia is often mistaken for iron deficiency. On average 3 to 4 people in 100 in India are carriers; when both parents are, each pregnancy has a 1 in 4 chance of thalassaemia major. |
+| Beta thalassaemia | The body makes too little of the beta chain of haemoglobin. The severe form, thalassaemia major, needs blood transfusions for life. Carriers are usually healthy; their mild anaemia is often mistaken for iron deficiency. On average 3 to 4 in 100 Indians are carriers; when both parents are, each pregnancy has a 1 in 4 chance of thalassaemia major. |
 | Alpha thalassaemia | Changes in the alpha-globin genes, most often deletions. The effect runs from no symptoms to a lifelong anaemia, depending on how many of the four genes are affected. Routine screening often misses it. |
 | Sickle-beta thalassaemia | A person who inherits the sickle gene from one parent and a beta thalassaemia gene from the other. It can look like sickle cell disease, and it is common where both conditions run, as they do in the central belt. Telling the two apart matters for care and for counselling. |
 | HbE and HbD | Two other variants of haemoglobin. HbE is common in eastern and north-eastern India, and with a beta thalassaemia gene it can cause a serious anaemia. HbD, found in Punjab and Gujarat, can be mistaken for the sickle gene on a screening test. |
@@ -837,7 +917,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 #### Where they have been used
 
 - **H2:** Where they have been used
-- **Body:** Population screening for sickle-beta thalassaemia at Nandurbar, Valsad and Kothagudem, and newborn screening at Nandurbar. Population screening for beta thalassaemia at Nandurbar and Kothagudem.
+- **Body:** Population screening for sickle-beta thalassaemia in Maharashtra, Gujarat and Telangana, and newborn screening in Maharashtra. Population screening for beta thalassaemia in Maharashtra and Telangana.
 - **Link:** See all our work
 
 #### Who they are for
@@ -873,20 +953,22 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Label:** Musculopathy
 - **H1:** Spinal muscular atrophy
-- **Lead:** LitLife™-SMA is a molecular test that screens for and confirms spinal muscular atrophy from a spot of blood dried on a card. It is designed for newborn screening, where finding the condition before symptoms appear changes what treatment can do.
+- **Lead:** LitLife™-SMA screens for and confirms spinal muscular atrophy from a dried blood spot. It is built for newborn screening, where finding SMA before symptoms changes what treatment can do.
 - **Chips:** Dried blood spot · No DNA extraction · Room temperature transport
 - **Line under the lead:** Early detection. Timely care. Better outcomes.
 
 #### The condition
 
 - **H2:** The condition
-- **Body:** SMA is an inherited neuromuscular condition. A missing or faulty SMN1 gene leaves the nerve cells that control muscles without a protein they need, and they die. Muscles weaken progressively, and in the severe forms breathing and swallowing are affected within the first months of life. Most people with SMA have lost both copies of the gene; about 1 in 40 adults carries one faulty copy without knowing, and a study in north India found closer to 1 in 30.
+- **Body:** SMA is an inherited neuromuscular condition. A missing or faulty SMN1 gene leaves the nerve cells that control muscles without a protein they need, and they die. Muscles weaken progressively, and in the severe forms breathing and swallowing are affected within the first months of life.
+- **Body:** Most people with SMA have lost both copies of the gene; about 1 in 40 adults carries one faulty copy without knowing, and a study in north India found closer to 1 in 30.
 - **Source:** `[TBC: Part 8 item 11. Carrier frequency: Journal of Family Medicine and Primary Care (2022), a north Indian cohort; 1 in 40 to 60 is the usual global range.]`
 
 #### Why newborn screening matters
 
 - **H2:** Why newborn screening matters
-- **Body:** Treatments for SMA now exist, and they work best when started early, ideally before symptoms appear. By the time weakness is noticed, nerve cells have already been lost. That makes the first weeks of life the time to look, and it means a test that can be run for every newborn, from a heel-prick spot on a card, at a cost a programme can bear. India's National Policy for Rare Diseases lists SMA among the conditions for which treatment is supported at designated Centres of Excellence. `[TBC: the policy reference and wording, Part 8 item 11]`
+- **Body:** Treatments for SMA now exist, and they work best when started early, ideally before symptoms appear. By the time weakness is noticed, nerve cells have already been lost.
+- **Body:** That makes the first weeks of life the time to look, and it means a test that can be run for every newborn, from a heel-prick spot on a card, at a cost a programme can bear. India's National Policy for Rare Diseases lists SMA among the conditions for which treatment is supported at designated Centres of Excellence. `[TBC: the policy reference and wording, Part 8 item 11]`
 
 #### The test (*rows*)
 
@@ -1002,19 +1084,21 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Label:** Musculopathy
 - **H1:** Limb-girdle muscular dystrophy
-- **Lead:** A genetic test for LGMD that names the subtype. For a patient, that ends a search that often takes years and passes through a muscle biopsy; for the family, it says who else carries the condition and what the next generation faces.
+- **Lead:** A genetic test for LGMD that names the subtype. It can end a search that often takes years and a muscle biopsy, and tells the family who else carries it.
 - **Chips:** `[TBC: Dried blood spot; others as confirmed]`
 
 #### The condition
 
 - **H2:** The condition
-- **Body:** Limb-girdle muscular dystrophy is not one condition but a group of more than 30, each caused by a change in a different gene. All weaken the muscles of the shoulders and hips first, so that lifting the arms, rising from a chair and climbing stairs become hard. Symptoms can begin in childhood or in adult life. In India most cases are the recessive forms, in which both parents carry the change: the sarcoglycanopathies, calpainopathy and dysferlinopathy are the subtypes most often found.
+- **Body:** Limb-girdle muscular dystrophy is not one condition but a group of more than 30, each caused by a change in a different gene. All weaken the muscles of the shoulders and hips first, so that lifting the arms, rising from a chair and climbing stairs become hard.
+- **Body:** Symptoms can begin in childhood or in adult life. In India most cases are the recessive forms, in which both parents carry the change: the sarcoglycanopathies, calpainopathy and dysferlinopathy are the subtypes most often found.
 - **Source:** `[TBC: Part 8 item 11. Annals of Indian Academy of Neurology (2017), a review of LGMD in India.]`
 
 #### Why the subtype matters
 
 - **H2:** Why the subtype matters
-- **Body:** Without a genetic result, a diagnosis rests on examination, blood enzymes and a muscle biopsy, and the subtype is often never settled. The subtype decides what the patient can expect, which complications to watch for, how the condition is inherited, and whether a treatment or a trial exists for it. A molecular diagnosis answers all of that from a spot of blood.
+- **Body:** Without a genetic result, a diagnosis rests on examination, blood enzymes and a muscle biopsy, and the subtype is often never settled.
+- **Body:** The subtype decides what the patient can expect, which complications to watch for, how the condition is inherited, and whether a treatment or a trial exists for it. A molecular diagnosis answers all of that from a spot of blood.
 
 #### The test (*rows*)
 
@@ -1060,7 +1144,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Label:** The condition you need next
 - **H1:** Tell us the condition. We develop the test
-- **Lead:** Every test we have developed so far began with an institution that needed one: a national mission, a hospital, a screening programme. We take on any inherited condition a programme or laboratory needs to detect, and develop the test to the same REASSURED standard. `[TBC: "any inherited condition", with the scientific and regulatory teams]`
+- **Lead:** Every test we have developed so far began with an institution that needed it. Yours can be next: any inherited condition, to the same REASSURED standard. `[TBC: "any inherited condition", with the scientific and regulatory teams]`
 
 #### Also developed (`#musculopathies`)
 
@@ -1076,7 +1160,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 | Title | Body |
 | --- | --- |
-| Blood coagulation panel | Genetic testing for inherited bleeding disorders such as haemophilia A and B, in which blood does not clot properly because a clotting factor is missing or low. The panel confirms a diagnosis, identifies carriers, and supports family counselling and care planning. `[TBC: which disorders and genes; when]` |
+| Blood coagulation panel | Genetic testing for inherited bleeding disorders such as haemophilia A and B. The panel will confirm a diagnosis, identify carriers and support family counselling. `[TBC: which disorders and genes; when]` |
 | Pharmacogenomics | Testing for the genetic differences that change how a person responds to a medicine, so that the drug and the dose can be chosen for the person. `[TBC: which genes and drugs; when]` |
 
 - **Link:** Ask about a test in development
@@ -1089,7 +1173,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 | --- | --- |
 | Monogenic disorders | Conditions caused by a change in a single gene, such as the haemoglobinopathies and musculopathies we already test for. |
 | Pharmacogenetic variants | Tests for the genetic differences that change how a person responds to a medicine. |
-| Rare genetic disorders | Testing for rare and inherited conditions. `[TBC: available now, or in development]` |
+| Rare genetic disorders | Tests for rare inherited conditions, developed when an institution needs one. `[TBC: available now, or in development]` |
 | Custom molecular diagnostic assays | Assays designed for a research study or a clinical service. |
 
 #### What we need from you
@@ -1132,7 +1216,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Label:** Transform lives
 - **H1:** A test is the middle of the story
-- **Lead:** A result only transforms a life if something happens next. Our testing model runs from the finger prick to the follow-up, and we run awareness and counselling programmes, mostly on behalf of the government, so that every result leads somewhere.
+- **Lead:** A result only transforms a life if something happens next. Our testing model goes from finger prick to follow-up, and we run awareness and counselling programmes, mostly for the government.
 
 #### The testing model (`#testing-model`; *steps*, numbered, six)
 
@@ -1156,7 +1240,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 #### Counselling (`#counselling`)
 
 - **H2:** After the result: counselling
-- **Body:** Counselling helps people and families understand a result and their carrier status, and what it means for treatment, for relatives and for the children they may have. For a couple who both carry a condition, it means knowing their options before the next pregnancy. For the family of a child with a muscle condition, it means knowing who else to test.
+- **Body:** Counselling helps families understand a result and their carrier status, and what it means for treatment, for relatives and for the children they may have. For a couple who both carry a condition, it means knowing their options before the next pregnancy. For the family of a child with a muscle condition, it means knowing who else to test.
 - `[PLACEHOLDER: who counsels, how (in person or by phone), and how results are kept confidential]`
 
 #### Support groups
@@ -1220,7 +1304,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Route:** `/our-work/`
 - **Title:** Our work: 15 sites across India | Lightening Lives
-- **Description:** Where Lightening Lives has run population and newborn screening for sickle cell anaemia and thalassaemia: 15 sites across India, from Delhi to Gudalur. Photographs from the field and the laboratory.
+- **Description:** Where Lightening Lives has run population and newborn screening for sickle cell anaemia and thalassaemia: 15 sites in nine states and Delhi. Photographs from the field and the laboratory.
 
 > This page is the company's field record. Until now no source held it; the conference poster does. The table and the map can open at launch. The photographs wait for the company: no source holds a photograph of its work.
 
@@ -1228,12 +1312,12 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 - **Label:** Our work
 - **H1:** Where we have worked
-- **Lead:** Population and newborn screening at 15 sites across India, with government programmes, hospitals and NGOs, for sickle cell anaemia, sickle-beta thalassaemia and beta thalassaemia. The laboratory is in Hyderabad. We add to this page as the work goes on.
+- **Lead:** Population and newborn screening at 15 sites in nine states and Delhi, with government programmes, hospitals and NGOs. We add to this page as the work goes on.
 
 #### The sites (`#sites`; a table)
 
 - **H2:** Population and newborn screening, by site
-- **Table:** Part 6.1, as a table with the site, the state, and a mark for each of the five columns (sickle cell anaemia: population, newborn; sickle-beta thalassaemia: population, newborn; beta thalassaemia: population). On narrow screens the table becomes a list, one site per entry, naming what was screened there.
+- **Table:** Part 6.1, grouped by state (R2): the state names each group, in the order of 6.2, and its sites follow as detail, each with a mark for each of the five columns (sickle cell anaemia: population, newborn; sickle-beta thalassaemia: population, newborn; beta thalassaemia: population). On narrow screens the table becomes a list, one state per entry, naming what was screened there and then its sites.
 - **Line under the table:** We thank the participating individuals, clinicians and frontline health workers at every site.
 - `[PLACEHOLDER: for each site, the month and year, and the institution worked with, where it may be named]`
 
@@ -1242,15 +1326,15 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 #### Where we work (`#map`; *the map*)
 
 - **H2:** On the map
-- **Body:** Fifteen sites in nine states and Delhi, from Delhi in the north to Gudalur in the south, and from Mumbai in the west to Jamshedpur in the east. Most lie in the sickle cell belt across central India, where the need is greatest.
+- **Body:** Fifteen sites in nine states and Delhi, from Delhi in the north to Tamil Nadu in the south, and from Gujarat in the west to Jharkhand in the east. Most lie in the sickle cell belt across central India, where the need is greatest.
 
-> The map from the home page, opened on "Our work", with all 15 pins.
+> The map from the home page, opened on "Our work", with the nine states and Delhi marked (R2).
 
 #### Recent work
 
 - **H2:** Recent work
 - **Order:** newest first.
-- **Each entry:** one to four photographs; a label for the kind of work; the place, as its title; the month and year; and 30 to 50 words on what was done, for which condition and with whom.
+- **Each entry:** one to four photographs; a label for the kind of work; the state, as its title (R2); the month and year; and 30 to 50 words on what was done, for which condition and with whom.
 - **Labels:** In the field · In the laboratory · Training · With our partners · At a conference
 - **Under a photograph, where it is owed:** a credit.
 
@@ -1259,15 +1343,15 @@ Entries to open with, as the company supplies them:
 | Label | Title | What the sources say | What the company supplies |
 | --- | --- | --- | --- |
 | At a conference | `[PLACEHOLDER: the conference, city, month 2026]` | The poster: a novel molecular screening cum confirmatory kit for sickle cell anaemia and other haemoglobinopathies | A photograph of the poster being presented, and the conference's name |
-| In the field | Nandurbar, Maharashtra | Population screening for sickle cell anaemia, population and newborn screening for sickle-beta thalassaemia, and population screening for beta thalassaemia | Photographs, the month and year, and the institution |
-| In the field | Kothagudem, Telangana | Population screening for sickle cell anaemia, sickle-beta thalassaemia and beta thalassaemia | The same |
-| In the field | Udaipur, Rajasthan · Nagpur, Maharashtra · Dhule, Maharashtra | Newborn screening for sickle cell anaemia | The same |
-| In the field | Each of the other sites | Population screening for sickle cell anaemia | The same |
-| In the laboratory | Hyderabad | The laboratory and corporate office are at Nacharam | Photographs of the laboratory at work, and what is being developed or tested there now |
+| In the field | Maharashtra | Population screening for sickle cell anaemia, population and newborn screening for sickle-beta thalassaemia, and population screening for beta thalassaemia | Photographs, the month and year, and the institution |
+| In the field | Telangana | Population screening for sickle cell anaemia, sickle-beta thalassaemia and beta thalassaemia | The same |
+| In the field | Rajasthan · Maharashtra | Newborn screening for sickle cell anaemia | The same |
+| In the field | Each of the other states | Population screening for sickle cell anaemia | The same |
+| In the laboratory | Hyderabad, Telangana | The laboratory and corporate office are at Nacharam | Photographs of the laboratory at work, and what is being developed or tested there now |
 | Training | `[PLACEHOLDER: place]` | Workshops `[TBC: Part 8 item 28]` | Photographs of a session, who was trained, and in what |
 | With our partners | `[PLACEHOLDER: partner]` | The MOU with CSIR-CCMB, and thirteen collaborators | Photographs the partner agrees to, and one line on the work done together |
 
-- **How an entry reads:** `[PLACEHOLDER: "In (month and year), with (institution), we screened (who) for (condition) in (place)." Then one more sentence: what happened next.]`
+- **How an entry reads:** `[PLACEHOLDER: "In (month and year), with (institution), we screened (who) for (condition) in (state)." Then one more sentence: what happened next.]`
 
 #### The photographs
 
@@ -1298,12 +1382,13 @@ Entries to open with, as the company supplies them:
 
 - **Label:** About
 - **H1:** A genetic diagnosis should not depend on where you live
-- **Lead:** Lightening Lives is an innovation-driven healthcare technology company based in Hyderabad. We develop molecular diagnostics for inherited conditions that are simple, affordable and usable outside specialised laboratories, so that molecular diagnosis can reach everyone.
+- **Lead:** Lightening Lives is an innovation-driven healthcare technology company in Hyderabad. We develop genetic tests that work outside specialised laboratories, so that diagnosis can reach everyone.
 
 #### How the company began
 
 - **H2:** How the company began
-- **Body:** Lightening Lives grew out of more than 25 years of work in genetic and molecular diagnostics, alongside clinicians, the health ministry and its district health authorities, NGOs, universities and companies. Over those years one thing kept showing. The people who most need a genetic diagnosis are often the least likely to get one, because the test needs a laboratory, equipment and specialists that their district does not have.
+- **Body:** Lightening Lives grew out of more than 25 years of work in genetic and molecular diagnostics, alongside clinicians, the health ministry and its district health authorities, NGOs, universities and companies.
+- **Body:** Over those years one thing kept showing. The people who most need a genetic diagnosis are often the least likely to get one, because the test needs a laboratory, equipment and specialists that their district does not have.
 - **Body:** We started the company to develop tests that do not need them. The first, for sickle cell anaemia, was built for the National Sickle Cell Anaemia Elimination Mission, approved by ICMR, and patented in India and Japan. More have followed, for the other haemoglobinopathies and for the musculopathies.
 - `[PLACEHOLDER: the year the company was founded]`
 
@@ -1313,7 +1398,7 @@ Entries to open with, as the company supplies them:
 
 | H3 | Body |
 | --- | --- |
-| Why | The burden of genetic disorders is large, and testing is hard to reach. It is too far away, too slow, too costly and too dependent on infrastructure. We believe that can be changed by thinking about the test differently. |
+| Why | The burden of genetic disorders is large, and testing is hard to reach: too far, too slow, too costly, too dependent on infrastructure. A different kind of test can change that. |
 | How | By making genetic and molecular tests robust, simple, affordable and easy to use, with a sample that is easy to take, a result that needs no second test, and results that come back quickly. |
 | What | Tests that make early diagnosis practical, newborn screening above all, so that treatment starts on time. And tests that make carrier screening and counselling routine, so that fewer families meet a genetic disorder unprepared. |
 
@@ -1454,7 +1539,7 @@ A biotechnology graduate with more than nine years in molecular diagnostics: pat
 
 - **Label:** Partner with us
 - **H1:** Most of our work begins as a collaboration
-- **Lead:** An institution has a condition it needs to screen for or diagnose. We bring the test, the method, the training and the counselling that follows a result. This page says how that usually works, and who we already work with.
+- **Lead:** You bring the condition you need to screen for or diagnose. We bring the test, the method, the training and the counselling that follows a result.
 
 #### How we partner with you (*audiences*: four columns)
 
@@ -1716,20 +1801,22 @@ What the state panel says under "Our work" for each state with a site. The layer
 
 | State | Line |
 | --- | --- |
-| Delhi | Population screening for sickle cell anaemia in Delhi. |
-| Rajasthan | Population and newborn screening for sickle cell anaemia in Udaipur. |
-| Madhya Pradesh | Population screening for sickle cell anaemia in Bhopal. |
-| Jharkhand | Population screening for sickle cell anaemia in Jamshedpur. |
-| Chhattisgarh | Population screening for sickle cell anaemia in Bilaspur. |
-| Maharashtra | Population and newborn screening for sickle cell anaemia in Nagpur, newborn screening in Dhule, population screening in Chandrapur and Mumbai. In Nandurbar: population screening for sickle cell anaemia, population and newborn screening for sickle-beta thalassaemia, and population screening for beta thalassaemia. |
-| Gujarat | Population screening for sickle cell anaemia and sickle-beta thalassaemia in Valsad. |
-| Telangana | Our laboratory and office, in Hyderabad, and population screening for sickle cell anaemia there. In Kothagudem: population screening for sickle cell anaemia, sickle-beta thalassaemia and beta thalassaemia. |
-| Karnataka | Population screening for sickle cell anaemia in Mysore. |
-| Tamil Nadu | Population screening for sickle cell anaemia in Gudalur. |
+| Delhi | Population screening for sickle cell anaemia. |
+| Rajasthan | Population and newborn screening for sickle cell anaemia. |
+| Madhya Pradesh | Population screening for sickle cell anaemia. |
+| Jharkhand | Population screening for sickle cell anaemia. |
+| Chhattisgarh | Population screening for sickle cell anaemia. |
+| Maharashtra | Population and newborn screening for sickle cell anaemia and for sickle-beta thalassaemia, and population screening for beta thalassaemia, at five sites. |
+| Gujarat | Population screening for sickle cell anaemia and sickle-beta thalassaemia. |
+| Telangana | Our laboratory and office, and population screening for sickle cell anaemia, sickle-beta thalassaemia and beta thalassaemia, at two sites. |
+| Karnataka | Population screening for sickle cell anaemia. |
+| Tamil Nadu | Population screening for sickle cell anaemia. |
 
-- **The layer's sentence:** Our laboratory is in Hyderabad. We have run population and newborn screening at 15 sites across India, from Delhi to Gudalur.
-- **A pin's chip:** the site's name, then what was screened, in the shortest form: "Nandurbar · SCA, sickle-beta thal., beta thal. · population and newborn".
-- **The text summary for screen readers** ends: Where we have worked: population and newborn screening at 15 sites across India: Delhi; Udaipur; Bhopal; Jamshedpur; Bilaspur; Nandurbar, Nagpur, Dhule, Chandrapur and Mumbai; Valsad; Kothagudem and Hyderabad; Mysore; and Gudalur.
+> R2: the lines name the state and what was screened, not the towns. Which town saw which screening is in 6.1 and on Our work.
+
+- **The layer's sentence:** Our laboratory is in Hyderabad, Telangana. We have run population and newborn screening at 15 sites in nine states and Delhi.
+- **A state's chip:** the state's name, then what was screened, in the shortest form: "Maharashtra · SCA, sickle-beta thal., beta thal. · population and newborn".
+- **The text summary for screen readers** ends: Where we have worked: population and newborn screening at 15 sites in nine states and Delhi: Delhi, Rajasthan, Madhya Pradesh, Jharkhand, Chhattisgarh, Maharashtra, Gujarat, Telangana, Karnataka and Tamil Nadu.
 
 ### 6.3 The tests
 
@@ -1767,7 +1854,7 @@ One row per test, for whoever keeps the Solutions pages in step with the company
 | The collaborators' logos, as one collage | `content/assets/partners/collaborations-collage.png` | Reference only; each logo needs its owner's file and permission |
 | The logo | `designs/assets/logo/` | Everywhere; never restyled |
 | The film's stills, the drawn card, the map | `designs/assets/img/lumen-*.webp`, `drop-blank.webp` | Home, Technology |
-| Three place photographs: Nandurbar, Kothagudem, Patratu Valley | `designs/assets/img/`, with credits in `designs/assets/img/CREDITS.md` | Stand-ins on the home page until the company's own arrive. Never captioned as the company's work |
+| Three place photographs: Nandurbar, Kothagudem, Patratu Valley | `designs/assets/img/`, with credits in `designs/assets/img/CREDITS.md` | Stand-ins on the home page until the company's own arrive. Never captioned as the company's work. Captioned by state: Maharashtra, Telangana, Jharkhand (R2) |
 
 ### 7.2 What the company should supply
 
@@ -1849,7 +1936,8 @@ In the order it is needed.
 
 - **Nothing in the site has been changed to make this file.** It replaces the content file of 12 October (in git history) and adds nothing else. Nothing is committed.
 - **The approved page.** `designs/lumen.html` carries the 12 October wording. The lines this file changes on it are listed in 5.1 under each section ("Changed from the approved page"). The largest are: the heading and first caption ("spot of blood"); the lead and note under the heading; the eight "why" rows; the seven portfolio rows; the four evidence columns; the "Our work" map sentence and pins; the nine REASSURED meanings; the partners' lead; the programmes' heading and lead; the contact note; and the one new section, "Who we are". `DESIGN.md`'s "Voice and content" section still records "a single drop of blood" as the client's wording and "validated" by ICMR; both follow this file once the company agrees (Part 8, items 1 and 4). Do not apply any of these changes to `designs/lumen.html` until the company has reviewed this file: the approved page is the company's, and the instruction to change it comes from the company, not from this document.
-- **The map's data.** `designs/src/js/drop/map-layers.js` pins four places under "Our work". It becomes the 15 sites in 6.1 with the state lines in 6.2, and the sickle cell and thalassaemia layers stay as they are. Designs 01 and 07 keep a copy in `designs/src/js/sample-card/india-data.js`; change both or leave the old designs on the old data, since only Lumen goes live. With 15 pins, chips should appear on pointing, tapping or keyboard focus rather than all at once, and the pin for Hyderabad carries "laboratory" as well as the screening.
+- **The map's data.** `designs/src/js/drop/map-layers.js` pins four places under "Our work". It becomes the nine states and Delhi of 6.1, marked by state with the lines in 6.2 (R2: no town pins), and the sickle cell and thalassaemia layers stay as they are. Designs 01 and 07 keep a copy in `designs/src/js/sample-card/india-data.js`; change both or leave the old designs on the old data, since only Lumen goes live. A state's chip appears on pointing, tapping or keyboard focus rather than all at once, and Telangana's carries "our laboratory" as well as the screening. The production site's copy of this data is `src/js/map/map-layers.js` (and the film's labels, `src/js/map/india-cells.js`).
+- **Every screen (R3).** Labels, chips and buttons must fit a 320 px phone without breaking inside a word, and the home page's opening must fit the first screen of a television. The layout checks are in the plan, under "Requirements from the Phase 1 review".
 - **Components the inner pages need** that `DESIGN.md` does not describe yet, each to be agreed and then added to it: how an inner page opens (4.6) with chips under the lead; a comparison table (Technology); numbered steps with a photograph each (Technology, Programmes); a two-column family section (Solutions); a sites table with marks (Our work); a group of question disclosures (4.7); a list of collaborators; portraits of named staff, an exception to "nobody in a photo may be identifiable"; the 3D box view or its still; the enquiry form and its messages; the list of entries on Our work.
 - **Opening in two steps.** Everything marked "At launch" in 3.1 can be built from this file once the company has reviewed it. The DMD and LGMD pages wait for Part 8 items 9 to 11; until then their rows link to Develop a test. "Recent work" on Our work waits for photographs; the sites table does not.
 - **Hosting is static.** The contact actions open emails with the subject and condition filled in until the company chooses a form service (Part 8 item 37); entries on Our work live in one data file (Part 8 item 38). Old `.php` addresses cannot be redirected by the server: the Not found page sends readers on, using the table in 3.4.
