@@ -1,0 +1,40 @@
+{#- REASSURED (content file 5.1, and 5.2 "As on the home page"): the word as nine buttons, the nine
+    criteria in the company's words, and the source. A page that includes it may set, before the
+    include, reassured = { surface: "bg-paper", after: "a sentence under it" }: the band's surface,
+    where the page's order of bands needs paper (DESIGN.md, Layout), and 5.2's body under it. -#}
+<section id="reassured" class="section{% if reassured and reassured.surface %} {{ reassured.surface }}{% endif %}" aria-labelledby="reassured-h">
+  <div class="wrap">
+    <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+      <h2 id="reassured-h" class="h2 lg:col-span-7">The standard we design to, letter by letter</h2>
+      <p class="lead lg:col-span-5">REASSURED is a published set of nine criteria for diagnostic tests that work in low-resource settings. Here is what each one means in our tests.</p>
+    </div>
+
+    <div class="word mt-12" role="group" aria-label="REASSURED, one letter for each criterion" data-word>
+      <button type="button" aria-label="R: Real-time connectivity">R</button>
+      <button type="button" aria-label="E: Ease of specimen collection">E</button>
+      <button type="button" aria-label="A: Affordable">A</button>
+      <button type="button" aria-label="S: Sensitive">S</button>
+      <button type="button" aria-label="S: Specific">S</button>
+      <button type="button" aria-label="U: User-friendly">U</button>
+      <button type="button" aria-label="R: Rapid and robust">R</button>
+      <button type="button" aria-label="E: Equipment-free or simple">E</button>
+      <button type="button" aria-label="D: Deliverable to end-users">D</button>
+    </div>
+
+    <ol class="criteria mt-10" data-criteria>
+      <li><span class="crit-letter" aria-hidden="true">R</span><div><h3><span>Real-time connectivity</span></h3><p>Test details are captured on a mobile app, so a programme can follow its screening as it happens.</p></div></li>
+      <li><span class="crit-letter" aria-hidden="true">E</span><div><h3><span>Ease of specimen collection</span></h3><p>A spot of blood from a finger prick, dried on a card. Minimally invasive.</p></div></li>
+      <li><span class="crit-letter" aria-hidden="true">A</span><div><h3><span>Affordable</span></h3><p>Priced for programmes that test whole populations, and for the health system that pays.</p></div></li>
+      <li><span class="crit-letter" aria-hidden="true">S</span><div><h3><span>Sensitive</span></h3><p>Few false negatives. Our validation data is shared with institutions on request.</p></div></li>
+      <li><span class="crit-letter" aria-hidden="true">S</span><div><h3><span>Specific</span></h3><p>Few false positives, which is what lets one test both screen and confirm.</p></div></li>
+      <li><span class="crit-letter" aria-hidden="true">U</span><div><h3><span>User-friendly</span></h3><p>Extraction-free, with an automation-friendly workflow and minimal training.</p></div></li>
+      <li><span class="crit-letter" aria-hidden="true">R</span><div><h3><span>Rapid and robust</span></h3><p>Quick turnaround and high-throughput screening. Cards keep at room temperature.</p></div></li>
+      <li><span class="crit-letter" aria-hidden="true">E</span><div><h3><span>Equipment-free or simple</span></h3><p>Minimal laboratory infrastructure: standard PCR equipment, no specialised laboratory.</p></div></li>
+      <li><span class="crit-letter" aria-hidden="true">D</span><div><h3><span>Deliverable to end-users</span></h3><p>Designed for one patient in a clinic and for large-scale public health programmes.</p></div></li>
+    </ol>
+    <p class="mt-6 text-[1rem] text-moss"><span class="label mr-1">Source</span> Land et al., <a class="underline decoration-leaf decoration-2 underline-offset-4 hover:text-leaf focus-visible:text-leaf" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7097043/table/Tab3" rel="noopener">Nature Microbiology (2019)</a>.</p>
+    {%- if reassured and reassured.after %}
+    <p class="reassured-after">{{ reassured.after }}</p>
+    {%- endif %}
+  </div>
+</section>

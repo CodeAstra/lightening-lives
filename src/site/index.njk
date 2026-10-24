@@ -8,8 +8,10 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
     content file's revised copy (content/website-content.md 5.1) and its one new section, "Who we are",
     before the vision. The film's markup is the approved page's; the film itself is src/js/site/scene.js. -#}
 {%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' -%}
-{%- set actionArrow = '<svg aria-hidden="true" width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 8h22M16 1l7 7-7 7"/></svg>' %}
 {%- from "picture.njk" import picture with context %}
+{%- from "actions.njk" import actionList with context %}
+{%- from "proof.njk" import evidence %}
+{%- from "map.njk" import mapSection with context %}
 
   <!-- The opening film: a drop falls into one card's circle, the card joins a batch, and the batch becomes a map of India -->
   <section class="hero" id="top" data-film data-film-state="playing" aria-labelledby="hero-h">
@@ -137,218 +139,18 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
         <h3 class="h3">Developed so far</h3>
         <p>Each of these began with an institution that needed it. The next can begin with yours.</p>
       </div>
-      <ul class="tests mt-8">
-        <li class="test test-row">
-          <div>
-            <h4 class="h3">Sickle cell anaemia</h4>
-            <p class="label mt-2">Haemoglobinopathy</p>
-          </div>
-          <div class="test-what">
-            <p><span class="whitespace-nowrap">LitLife™-SCA</span> screens for and confirms sickle cell anaemia in one test. Developed with CSIR-CCMB know-how for the National Sickle Cell Anaemia Elimination Mission.</p>
-            <ul class="tags">
-              <li class="tag tag-proof">Approved by ICMR</li>
-              <li class="tag tag-proof">Patented in India and Japan</li>
-              <li class="tag">Dried blood spot</li>
-            </ul>
-            <a class="link mt-2" href="/solutions/sickle-cell-anaemia/">About this test
-              {{ arrow | safe }}
-            </a>
-          </div>
-        </li>
-
-        <li class="test test-row">
-          <div>
-            <h4 class="h3">Thalassaemia and other haemoglobinopathies</h4>
-            <p class="label mt-2">Haemoglobinopathy</p>
-          </div>
-          <div class="test-what">
-            <p><span class="whitespace-nowrap">LitLife™-BThal</span> and <span class="whitespace-nowrap">LitLife™-AlphaThal</span> for beta and alpha thalassaemia, <span class="whitespace-nowrap">LitLife™-SiBThal217</span> for sickle cell anaemia and beta thalassaemia together, and testing for HbD and HbE.</p>
-            <ul class="tags">
-              <li class="tag">Dried blood spot</li>
-            </ul>
-            <a class="link mt-2" href="/solutions/thalassaemia/">About these tests
-              {{ arrow | safe }}
-            </a>
-          </div>
-        </li>
-
-        <li class="test test-row">
-          <div>
-            <h4 class="h3">Spinal muscular atrophy</h4>
-            <p class="label mt-2">Musculopathy</p>
-          </div>
-          <div class="test-what">
-            <p><span class="whitespace-nowrap">LitLife™-SMA</span> screens for and confirms SMA from a dried blood spot. Designed for newborn screening, where finding SMA before symptoms changes what treatment can do.</p>
-            <ul class="tags">
-              <li class="tag">Dried blood spot</li>
-              <li class="tag">No DNA extraction</li>
-            </ul>
-            <a class="link mt-2" href="/solutions/spinal-muscular-atrophy/">About this test
-              {{ arrow | safe }}
-            </a>
-          </div>
-        </li>
-
-        <li class="test test-row">
-          <div>
-            <h4 class="h3">Duchenne muscular dystrophy</h4>
-            <p class="label mt-2">Musculopathy</p>
-          </div>
-          <div class="test-what">
-            <p>A genetic test for DMD: an earlier diagnosis for a boy losing strength, and carrier testing for his mother and sisters.</p>
-            <a class="link mt-1" href="/solutions/develop-a-test/#musculopathies">Ask about this test
-              {{ arrow | safe }}
-            </a>
-          </div>
-        </li>
-
-        <li class="test test-row">
-          <div>
-            <h4 class="h3">Limb-girdle muscular dystrophy</h4>
-            <p class="label mt-2">Musculopathy</p>
-          </div>
-          <div class="test-what">
-            <p>A genetic test for LGMD, where the first symptom and a diagnosis are often years apart, and the subtype decides the care.</p>
-            <a class="link mt-1" href="/solutions/develop-a-test/#musculopathies">Ask about this test
-              {{ arrow | safe }}
-            </a>
-          </div>
-        </li>
-
-        <li class="test test-row">
-          <div>
-            <h4 class="h3">In development</h4>
-            <p class="label mt-2">Coming soon</p>
-          </div>
-          <div class="test-what">
-            <p>A blood coagulation panel for inherited bleeding disorders, and pharmacogenomics testing.</p>
-            <a class="link mt-1" href="/solutions/develop-a-test/#in-development">What we are developing
-              {{ arrow | safe }}
-            </a>
-          </div>
-        </li>
-
-        <li class="test test-row">
-          <div>
-            <h4 class="h3">The condition you need next</h4>
-          </div>
-          <div class="test-what">
-            <p>Tell us what your programme or laboratory needs to detect. We develop the test to the same REASSURED standard.</p>
-            <a class="link mt-1" href="/solutions/develop-a-test/">Talk to us about a new test
-              {{ arrow | safe }}
-            </a>
-          </div>
-        </li>
-      </ul>
+      {%- include "test-rows.njk" %}
     </div>
   </section>
 
   <!-- Evidence -->
-  <section id="proof" class="section" aria-labelledby="proof-h">
-    <div class="wrap">
-      <h2 id="proof-h" class="h2 max-w-[44rem]">What stands behind the tests</h2>
-      <ul class="proof mt-10">
-        <li>
-          <h3 class="h3">Approved by <span class="hl">ICMR</span></h3>
-          <p><span class="whitespace-nowrap">LitLife™-SCA</span>, our sickle cell test, is approved by the Indian Council of Medical Research.</p>
-        </li>
-        <li>
-          <h3 class="h3">Patented in <span class="hl">India and Japan</span></h3>
-          <p>The technology behind our tests holds patents granted in India and Japan, and a patent published internationally.</p>
-        </li>
-        <li>
-          <h3 class="h3">Working with <span class="hl">CSIR-CCMB</span></h3>
-          <p>An MOU with the CSIR-Centre for Cellular and Molecular Biology, Hyderabad, covers developing and commercialising the sickle cell assay.</p>
-        </li>
-        <li>
-          <h3 class="h3">Proven at <span class="hl">15 sites</span></h3>
-          <p>Population and newborn screening in nine states and Delhi, and a test built for the National Sickle Cell Anaemia Elimination Mission.</p>
-        </li>
-      </ul>
-    </div>
-  </section>
+  {{ evidence() }}
 
   <!-- The map -->
-  <section id="map" class="section bg-paper" aria-labelledby="map-h">
-    <div class="wrap map-layout" data-map-layout>
-      <div class="map-words">
-        <h2 id="map-h" class="h2">Where the need is, and where we work</h2>
-        <fieldset class="mt-6">
-          <legend class="sr-only">Show on the map</legend>
-          <div class="seg">
-            <label><input type="radio" name="map-layer" value="sickle" checked data-still="/assets/img/site-map-sickle.webp" data-readout="Sickle cell disease is most common in a belt across central India, from Gujarat to Odisha."><span>Sickle cell</span></label>
-            <label><input type="radio" name="map-layer" value="thal" data-still="/assets/img/site-map-thal.webp" data-readout="Thalassaemia is found across India: on average, 3 to 4 people in 100 are carriers. Higher frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal."><span>Thalassaemia</span></label>
-            <label><input type="radio" name="map-layer" value="work" data-still="/assets/img/site-map-work.webp" data-readout="{{ work.sentence }}"><span>Our work</span></label>
-          </div>
-        </fieldset>
-
-        <!-- What the map says: about the whole country, or about one state once it is picked out -->
-        <div class="map-info" aria-live="polite">
-          <div data-map-country>
-            <p class="map-readout" data-map-readout>Sickle cell disease is most common in a belt across central India, from Gujarat to Odisha.</p>
-            <ul class="map-key" data-map-key>
-              <li><i class="key key-strong"></i>The central belt, where it is most common</li>
-              <li><i class="key key-pale"></i>Other focus states of the national mission</li>
-            </ul>
-          </div>
-          <div class="state-card" data-map-state hidden>
-            <p class="state-title" data-state-title></p>
-            <dl class="state-facts" data-state-facts></dl>
-          </div>
-        </div>
-
-        <p class="map-hint"><span class="hint-point">Point at a state to see what the map says about it.</span><span class="hint-tap">Tap a state to see what the map says about it.</span><span class="hint-select">Select a state to see what the map says about it.</span></p>
-        <details class="map-sources">
-          <summary class="label">Sources</summary>
-          <p>Sickle cell: Hockham et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6283872/" rel="noopener">Scientific Reports (2018)</a>; National Sickle Cell Anaemia Elimination Mission, Ministry of Health and Family Welfare.</p>
-          <p>Thalassaemia: National Health Mission, Guidelines for Prevention and Control of Hemoglobinopathies in India (2016); Mohanty et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3537975/" rel="noopener">Journal of Community Genetics (2013)</a>; Madan et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2927789/" rel="noopener">Indian Journal of Human Genetics (2010)</a>.</p>
-          <p>Indicative only, shown by state: frequencies differ more between communities than between states.</p>
-        </details>
-        <p class="sr-only">Map summary. Sickle cell disease is most common in a belt across central India, running from south-eastern Gujarat through Madhya Pradesh, Maharashtra and Chhattisgarh to south-western Odisha.</p>
-        <p class="sr-only">The National Sickle Cell Anaemia Elimination Mission covers 17 focus states: Gujarat, Maharashtra, Rajasthan, Madhya Pradesh, Jharkhand, Chhattisgarh, West Bengal, Odisha, Tamil Nadu, Telangana, Andhra Pradesh, Karnataka, Assam, Uttar Pradesh, Kerala, Bihar and Uttarakhand.</p>
-        <p class="sr-only">Thalassaemia: found across India, where on average 3 to 4 people in 100 are carriers; higher carrier frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal.</p>
-        <p class="sr-only">{{ work.summary }}</p>
-      </div>
-      <div class="map-figure" data-map>
-        <img class="map-still" data-map-still src="/assets/img/site-map-sickle.webp" width="1000" height="1000" alt="A map of India with state borders drawn on it. The states the chosen layer marks are shown in green and named." loading="lazy" decoding="async">
-      </div>
-    </div>
-  </section>
+  {{ mapSection() }}
 
   <!-- REASSURED -->
-  <section id="reassured" class="section" aria-labelledby="reassured-h">
-    <div class="wrap">
-      <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
-        <h2 id="reassured-h" class="h2 lg:col-span-7">The standard we design to, letter by letter</h2>
-        <p class="lead lg:col-span-5">REASSURED is a published set of nine criteria for diagnostic tests that work in low-resource settings. Here is what each one means in our tests.</p>
-      </div>
-
-      <div class="word mt-12" role="group" aria-label="REASSURED, one letter for each criterion" data-word>
-        <button type="button" aria-label="R: Real-time connectivity">R</button>
-        <button type="button" aria-label="E: Ease of specimen collection">E</button>
-        <button type="button" aria-label="A: Affordable">A</button>
-        <button type="button" aria-label="S: Sensitive">S</button>
-        <button type="button" aria-label="S: Specific">S</button>
-        <button type="button" aria-label="U: User-friendly">U</button>
-        <button type="button" aria-label="R: Rapid and robust">R</button>
-        <button type="button" aria-label="E: Equipment-free or simple">E</button>
-        <button type="button" aria-label="D: Deliverable to end-users">D</button>
-      </div>
-
-      <ol class="criteria mt-10" data-criteria>
-        <li><span class="crit-letter" aria-hidden="true">R</span><div><h3><span>Real-time connectivity</span></h3><p>Test details are captured on a mobile app, so a programme can follow its screening as it happens.</p></div></li>
-        <li><span class="crit-letter" aria-hidden="true">E</span><div><h3><span>Ease of specimen collection</span></h3><p>A spot of blood from a finger prick, dried on a card. Minimally invasive.</p></div></li>
-        <li><span class="crit-letter" aria-hidden="true">A</span><div><h3><span>Affordable</span></h3><p>Priced for programmes that test whole populations, and for the health system that pays.</p></div></li>
-        <li><span class="crit-letter" aria-hidden="true">S</span><div><h3><span>Sensitive</span></h3><p>Few false negatives. Our validation data is shared with institutions on request.</p></div></li>
-        <li><span class="crit-letter" aria-hidden="true">S</span><div><h3><span>Specific</span></h3><p>Few false positives, which is what lets one test both screen and confirm.</p></div></li>
-        <li><span class="crit-letter" aria-hidden="true">U</span><div><h3><span>User-friendly</span></h3><p>Extraction-free, with an automation-friendly workflow and minimal training.</p></div></li>
-        <li><span class="crit-letter" aria-hidden="true">R</span><div><h3><span>Rapid and robust</span></h3><p>Quick turnaround and high-throughput screening. Cards keep at room temperature.</p></div></li>
-        <li><span class="crit-letter" aria-hidden="true">E</span><div><h3><span>Equipment-free or simple</span></h3><p>Minimal laboratory infrastructure: standard PCR equipment, no specialised laboratory.</p></div></li>
-        <li><span class="crit-letter" aria-hidden="true">D</span><div><h3><span>Deliverable to end-users</span></h3><p>Designed for one patient in a clinic and for large-scale public health programmes.</p></div></li>
-      </ol>
-      <p class="mt-6 text-[1rem] text-moss"><span class="label mr-1">Source</span> Land et al., <a class="underline decoration-leaf decoration-2 underline-offset-4 hover:text-leaf" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7097043/table/Tab3" rel="noopener">Nature Microbiology (2019)</a>.</p>
-    </div>
-  </section>
+  {% include "reassured.njk" %}
 
   <!-- Who we work with -->
   <section id="partners" class="section bg-paper" aria-labelledby="partners-h">
@@ -451,12 +253,7 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
       <div class="lg:col-span-7">
         <h2 id="contact-h" class="h2">Tell us what your programme needs</h2>
         <p class="lead mt-6 max-w-[36rem]">Choose where you would like to begin.</p>
-        <ul class="actions mt-8">
-          <li><a class="action" href="mailto:{{ site.email }}?subject=Partnership">Explore a partnership{{ actionArrow | safe }}</a></li>
-          <li><a class="action" href="mailto:{{ site.email }}?subject=Request%20tests">Request tests{{ actionArrow | safe }}</a></li>
-          <li><a class="action" href="mailto:{{ site.email }}?subject=Awareness%20and%20counselling">Ask about awareness and counselling{{ actionArrow | safe }}</a></li>
-          <li><a class="action" href="mailto:{{ site.email }}?subject=Sales">Talk to sales{{ actionArrow | safe }}</a></li>
-        </ul>
+        {{ actionList("mt-8") }}
         <p class="mt-6 flex flex-wrap items-center gap-x-6">
           <span class="label">Write or call</span>
           <a class="link" href="mailto:{{ site.email }}">{{ site.email }}</a>

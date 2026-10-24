@@ -1,11 +1,36 @@
 {
+  "box-alphathal": {
+    "widths": [
+      476
+    ],
+    "height": 356
+  },
+  "box-bthal": {
+    "widths": [
+      476
+    ],
+    "height": 356
+  },
+  "box-sibthal217": {
+    "widths": [
+      476
+    ],
+    "height": 356
+  },
+  "box-sma": {
+    "widths": [
+      640,
+      1120
+    ],
+    "height": 373
+  },
   "care-anganwadi": {
     "widths": [
       640,
       1280,
       1920
     ],
-    "height640": 425
+    "height": 425
   },
   "care-newborn": {
     "widths": [
@@ -13,7 +38,7 @@
       1280,
       1920
     ],
-    "height640": 479
+    "height": 479
   },
   "care-phc": {
     "widths": [
@@ -21,7 +46,7 @@
       1280,
       1920
     ],
-    "height640": 427
+    "height": 427
   },
   "lab-bench": {
     "widths": [
@@ -29,7 +54,7 @@
       1280,
       1920
     ],
-    "height640": 423
+    "height": 423
   },
   "lab-gel": {
     "widths": [
@@ -37,7 +62,7 @@
       1280,
       1920
     ],
-    "height640": 425
+    "height": 425
   },
   "lab-pipette": {
     "widths": [
@@ -45,7 +70,7 @@
       1280,
       1920
     ],
-    "height640": 427
+    "height": 427
   },
   "lab-thermal-cycler": {
     "widths": [
@@ -53,7 +78,7 @@
       1280,
       1920
     ],
-    "height640": 360
+    "height": 360
   },
   "method-fingerprick": {
     "widths": [
@@ -61,7 +86,7 @@
       1280,
       1920
     ],
-    "height640": 427
+    "height": 427
   },
   "method-paper": {
     "widths": [
@@ -69,7 +94,68 @@
       1280,
       1920
     ],
-    "height640": 422
+    "height": 422
+  },
+  "person-abhishek-chandak": {
+    "widths": [
+      370
+    ],
+    "height": 431
+  },
+  "person-d-nageshwar-reddy": {
+    "widths": [
+      370
+    ],
+    "height": 431
+  },
+  "person-founders": {
+    "widths": [
+      640,
+      670
+    ],
+    "height": 821
+  },
+  "person-gv-krishnaveni": {
+    "widths": [
+      370
+    ],
+    "height": 431
+  },
+  "person-jyothi-vislavath": {
+    "widths": [
+      370
+    ],
+    "height": 431
+  },
+  "person-kalyanaraman-kumaran": {
+    "widths": [
+      370
+    ],
+    "height": 431
+  },
+  "person-manisha-arumalla": {
+    "widths": [
+      370
+    ],
+    "height": 431
+  },
+  "person-mehraj-begum": {
+    "widths": [
+      370
+    ],
+    "height": 431
+  },
+  "person-pruthvi-bellamkonda": {
+    "widths": [
+      370
+    ],
+    "height": 431
+  },
+  "person-punyasri-pskdb": {
+    "widths": [
+      370
+    ],
+    "height": 431
   },
   "place-gudalur": {
     "widths": [
@@ -77,7 +163,7 @@
       1280,
       1920
     ],
-    "height640": 480
+    "height": 480
   },
   "place-hyderabad": {
     "widths": [
@@ -85,7 +171,7 @@
       1280,
       1920
     ],
-    "height640": 443
+    "height": 443
   },
   "place-jharkhand": {
     "widths": [
@@ -93,7 +179,7 @@
       1280,
       1920
     ],
-    "height640": 400
+    "height": 400
   },
   "place-kothagudem": {
     "widths": [
@@ -101,7 +187,7 @@
       1280,
       1920
     ],
-    "height640": 400
+    "height": 400
   },
   "place-mysore": {
     "widths": [
@@ -109,7 +195,7 @@
       1280,
       1920
     ],
-    "height640": 433
+    "height": 433
   },
   "place-nandurbar": {
     "widths": [
@@ -117,7 +203,7 @@
       1280,
       1920
     ],
-    "height640": 399
+    "height": 399
   },
   "place-udaipur": {
     "widths": [
@@ -125,7 +211,7 @@
       1280,
       1920
     ],
-    "height640": 425
+    "height": 425
   },
   "place-valsad": {
     "widths": [
@@ -133,6 +219,6 @@
       1280,
       1920
     ],
-    "height640": 428
+    "height": 428
   }
 }

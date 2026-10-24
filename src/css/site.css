@@ -872,8 +872,9 @@
      it does over the film: the same room above the heading as the opening film gives its text. */
   .page-open { padding-top: 6.5rem; }
   @media (min-width: 56.25rem) { .page-open { padding-top: 8.5rem; } }
-  /* Long words in a heading at display size ("haemoglobinopathies") break rather than widen the page. */
-  .page-open .display { hyphens: auto; overflow-wrap: break-word; }
+  /* Long words in a heading at display size ("haemoglobinopathies") break rather than widen the page;
+     a short one ("be-gins", Partnerships at 5120 px) never does. */
+  .page-open .display { hyphens: auto; hyphenate-limit-chars: 10 4 4; -webkit-hyphenate-limit-before: 4; -webkit-hyphenate-limit-after: 4; overflow-wrap: break-word; }
   @media (max-width: 30rem) { .page-open .display { font-size: clamp(1.95rem, 9.4vw, 2.6rem); } }
 
   /* On a wide window the live film fills the whole opening (DESIGN.md), whatever its shape. The
@@ -929,6 +930,415 @@
   }
   @media (min-width: 24rem) and (max-width: 30rem) {
     .seg span { font-size: 1rem; }
+  }
+
+  /* ---------- Inner pages: what Phase 4 adds (DESIGN.md, Components) ---------- */
+  /* The bands alternate back from the closing band's paper, so where a page has an odd number of
+     sections its first one stays on the opening's mist: it continues the opening's sheet, without a
+     second band's worth of space above it. */
+  .page-open + .section:not(.bg-paper) { padding-top: 0; }
+
+  /* Rows: a title and a sentence or two about it, one under another, as the tests are listed. A 2px
+     ink rule opens the list and hairlines divide it; from 56rem the title takes five columns of
+     twelve and the words seven. */
+  .rows { border-top: 2px solid var(--canopy); border-bottom: 1px solid var(--line); }
+  .rows > :is(li, div) { display: grid; gap: 0.4rem 3rem; padding: 1.3rem 0 1.4rem; }
+  .rows > li + li { border-top: 1px solid var(--line); }
+  .rows h3 { font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.008em; }
+  .rows p { color: var(--moss); max-width: 40rem; }
+  @media (min-width: 56rem) {
+    .rows > :is(li, div) { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: baseline; padding: 1.6rem 0 1.7rem; }
+  }
+
+  /* Numbered steps with a picture each: a real sequence, so each carries its number, set in the
+     heading's face in DNA blue and hung beside the step's heading, with the words under the heading.
+     One column on a phone, two from 40rem, three from 64rem. */
+  .steps-numbered { display: grid; gap: 3rem 2.5rem; counter-reset: step; }
+  .steps-numbered > li { counter-increment: step; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 0.85rem; align-content: start; }
+  .steps-numbered img { grid-column: 1 / -1; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 1.25rem; margin-bottom: 1.15rem; background: var(--sprout); box-shadow: var(--shadow); }
+  .steps-numbered > li::before {
+    content: counter(step);
+    content: counter(step) / "";
+    grid-column: 1;
+    grid-row: 2 / span 3;
+    min-width: 1.6rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2rem, 2.6vw, 2.5rem);
+    line-height: 0.82;
+    letter-spacing: var(--display-tracking);
+    color: var(--leaf);
+  }
+  .steps-numbered h3, .steps-numbered p { grid-column: 2; }
+  .steps-numbered p { margin-top: 0.4rem; color: var(--moss); }
+  .steps-numbered p + p { margin-top: 0.6rem; }
+  /* A quiet line under the steps (Technology's representative photographs, content 5.2): 1rem in
+     moss, as a table's source is. */
+  .steps-note { margin-top: 2.5rem; max-width: 44rem; font-size: 1rem; color: var(--moss); }
+  @media (min-width: 40rem) { .steps-numbered { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 64rem) { .steps-numbered { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3.5rem 2.5rem; } }
+
+  /* The comparison table. On a wide screen, a table: a 2px ink rule over the column names, hairlines
+     between the rows, the row names in the heading face, and our own column lit as a band of pale
+     life green (sun through paper), the one thing on it pointed out. The caption is the table's
+     source, under it. */
+  .compare-table { width: 100%; border-collapse: collapse; caption-side: bottom; text-align: left; }
+  .compare-table caption { margin-top: 1rem; font-size: 1rem; color: var(--moss); text-align: left; }
+  .compare-table th, .compare-table td { padding: 0.95rem 1.1rem; vertical-align: top; }
+  .compare-table thead th { padding-block: 1.1rem 0.9rem; font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; line-height: 1.2; letter-spacing: -0.008em; vertical-align: bottom; }
+  .compare-table thead tr { border-bottom: 2px solid var(--canopy); }
+  .compare-table tbody tr + tr { border-top: 1px solid var(--line); }
+  .compare-table tbody tr:last-child { border-bottom: 1px solid var(--line); }
+  .compare-table tbody th { padding-left: 0; width: 22%; font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; line-height: 1.25; letter-spacing: -0.008em; }
+  .compare-table td { color: var(--moss); }
+  .compare-table .is-ours { background: color-mix(in srgb, var(--sun) 22%, var(--paper)); color: var(--canopy); font-weight: 700; }
+  .compare-table thead .is-ours { border-radius: 1rem 1rem 0 0; white-space: nowrap; }
+  .compare-table tbody tr:last-child .is-ours { border-radius: 0 0 1rem 1rem; }
+
+  /* On a phone and a small tablet each row is a card (glass, as the portfolio's cards are): its name
+     at the top, then each answer under its column's name, ours last and lit. The column names are
+     the cells' own labels (data-label). The table's display is no longer a table's here, so its
+     semantics go and the head row would be heard as a stray run of names: it is removed; each cell
+     names its column itself. */
+  @media (max-width: 47.99rem) {
+    .compare-table, .compare-table tbody { display: grid; gap: 1rem; }
+    .compare-table caption { display: block; order: 1; margin-top: 0.25rem; }
+    .compare-table thead { display: none; }
+    .compare-table tbody tr, .compare-table tbody tr + tr, .compare-table tbody tr:last-child {
+      display: grid;
+      padding: 1.15rem 1.25rem 1.25rem;
+      border: 0;
+      border-radius: 1.25rem;
+      background: var(--glass);
+      -webkit-backdrop-filter: var(--blur);
+      backdrop-filter: var(--blur);
+      box-shadow: var(--shadow);
+    }
+    .compare-table tbody th { width: auto; padding: 0 0 0.6rem; font-size: 1.3rem; }
+    .compare-table td { display: grid; gap: 0.15rem; padding: 0.6rem 0; border-top: 1px solid var(--line); }
+    .compare-table td::before {
+      content: attr(data-label);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-tracking);
+      line-height: 1.3;
+      text-transform: uppercase;
+      color: var(--leaf);
+    }
+    /* Ours is lit edge to edge of a band that reaches 0.8rem into the card's padding, so its label and
+       answer stay in line with the others'. */
+    .compare-table td.is-ours, .compare-table tbody tr:last-child td.is-ours { margin: 0.35rem -0.8rem 0; padding: 0.6rem 0.8rem; border-top: 0; border-radius: 0.85rem; }
+  }
+  /* Room for the column's name beside its answer, from 26rem. */
+  @media (min-width: 26rem) and (max-width: 47.99rem) {
+    .compare-table td { grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); gap: 1rem; align-items: baseline; }
+  }
+
+  /* Two families (Solutions): two columns, each under its own ink rule, as the audiences are: what the
+     family is, what a test does for it, its tests by name in the heading's face, and its pages. */
+  .families { display: grid; gap: 3rem; }
+  .families > li { padding-top: 1.4rem; border-top: 2px solid var(--canopy); }
+  .families p:not(.label) { margin-top: 0.6rem; color: var(--moss); max-width: 34rem; }
+  .families .label { margin-top: 1.6rem; }
+  .family-tests { display: flex; flex-wrap: wrap; gap: 0.3rem 1.4rem; margin-top: 0.45rem; }
+  .family-tests li { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; line-height: 1.35; letter-spacing: -0.008em; color: var(--canopy); white-space: nowrap; }
+  .family-links { display: grid; justify-items: start; margin-top: 1rem; }
+  .family-links .link { display: inline-block; padding-block: 0.625rem; line-height: 1.5; }
+  .family-links .link svg { display: inline; margin-left: 0.5rem; vertical-align: -0.05em; }
+  @media (min-width: 56rem) { .families { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4rem; } }
+
+  /* The boxes, as stills (the 3D view the reader can turn is Phase 7; the SCA box is withheld until
+     the CSIR-CCMB permission, DESIGN.md): one row from 64rem, three to a
+     row from 40rem, two on a phone. Each is a 4:3 picture under the soft shadow with its name under
+     it, and the row ends with the open place: a plain carton drawn in dashed DNA blue on a mist tile,
+     unprinted, waiting for the condition the reader needs next. Its three faces are the tile's
+     container units, so the drawing keeps its shape at every size. A browser without container units
+     gets rem sizes, drawn at a phone's tile (under @supports: the build's minifier drops a fallback
+     declaration written first). */
+  .boxes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem 1rem; }
+  .boxes img, .boxes .tile { display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 1.25rem; }
+  .boxes img { object-fit: cover; background: var(--sprout); box-shadow: var(--shadow); }
+  .boxes figcaption, .boxes .open-name { display: block; margin-top: 0.75rem; font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; line-height: 1.25; letter-spacing: -0.008em; color: var(--canopy); overflow-wrap: anywhere; }
+  .boxes .open a { display: block; border-radius: 1.25rem; }
+  .boxes .tile { container-type: inline-size; display: grid; place-items: center; background: var(--mist); transition: background-color 0.16s ease; }
+  .boxes .open-name { text-decoration: underline; text-decoration-color: var(--leaf); text-decoration-thickness: 0.125rem; text-underline-offset: 0.3rem; }
+  .boxes .open a:hover .tile, .boxes .open a:focus-visible .tile { background: var(--sprout); }
+  .boxes .open a:hover .open-name, .boxes .open a:focus-visible .open-name { color: var(--leaf); text-decoration-thickness: 0.1875rem; }
+  .carton { position: relative; width: 42cqi; height: 26cqi; translate: -5cqi 5cqi; border: 0.125rem dashed var(--leaf); border-radius: 0.15rem; }
+  .carton::before, .carton::after { content: ""; position: absolute; border: 0.125rem dashed var(--leaf); }
+  .carton::before { left: -0.125rem; bottom: 100%; width: calc(100% + 0.25rem); height: 10cqi; border-bottom: 0; transform-origin: bottom left; transform: skewX(-45deg); }
+  .carton::after { left: 100%; top: -0.125rem; width: 10cqi; height: calc(100% + 0.25rem); border-left: 0; border-top: 0; transform-origin: top left; transform: skewY(-45deg); }
+  @supports not (width: 1cqi) {
+    .carton { width: 4.5rem; height: 2.8rem; translate: -0.55rem 0.55rem; }
+    .carton::before { height: 1.1rem; }
+    .carton::after { width: 1.1rem; }
+  }
+  @media (min-width: 40rem) { .boxes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.25rem 1.5rem; } }
+  @media (min-width: 64rem) { .boxes { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 1.25rem; } } /* one column for each place in the row */
+
+  /* Questions we are asked: a list of disclosures under an ink rule, divided by hairlines. Each
+     question is set in the heading's face, with the disclosure's plus in DNA blue before it; the
+     answer hangs under the question's first word. Closed, they work without script. */
+  .faq { border-top: 2px solid var(--canopy); border-bottom: 1px solid var(--line); }
+  .faq details + details { border-top: 1px solid var(--line); }
+  .faq summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    min-height: 2.75rem;
+    padding: 1.15rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    letter-spacing: -0.008em;
+    color: var(--canopy);
+    transition: color 0.16s ease;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::before {
+    content: "";
+    flex: none;
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-top: 0.4rem;
+    color: var(--leaf);
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% 0.125rem no-repeat,
+      linear-gradient(currentColor, currentColor) center / 0.125rem 100% no-repeat;
+    transition: rotate 0.2s ease;
+  }
+  .faq details[open] summary::before { background-size: 100% 0.125rem, 0 0; }
+  .faq summary:hover, .faq summary:focus-visible { color: var(--leaf); }
+  .faq details > p { max-width: 40rem; padding: 0 0 1.4rem 1.7rem; color: var(--moss); }
+  .motion-on .faq summary::before { transition: rotate 0.2s ease, background-size 0.2s ease; }
+  .motion-on .faq details[open] summary::before { rotate: 180deg; }
+
+  /* REASSURED's sentence under it, where a page adds one (Technology, content 5.2). */
+  .reassured-after { margin-top: 1.5rem; max-width: 44rem; color: var(--moss); }
+
+  /* Numbered steps in words alone (Programmes' testing model): no picture, so each step stands under
+     its own ink rule, as the audiences do, with its number hung beside the words and the step's name
+     run in at the start of its sentence in the heading's face. */
+  .steps-text > li { padding-top: 1.3rem; border-top: 2px solid var(--canopy); }
+  .steps-text > li::before { grid-row: 1; padding-top: 0.2rem; }
+  .steps-text p { margin-top: 0; max-width: 26rem; }
+  .run-in { font-family: var(--font-display); font-weight: 700; font-stretch: var(--display-stretch); letter-spacing: -0.008em; color: var(--canopy); }
+
+  /* A pair: two short sections that belong together (before the test and after it; training and
+     setting up) side by side in one band, each under its own ink rule, its h2 over its words. One
+     column on a phone and a tablet, two from 56rem. */
+  .pair { display: grid; gap: 3.5rem 4rem; }
+  .pair > div { padding-top: 1.4rem; border-top: 2px solid var(--canopy); }
+  .pair p { margin-top: 0.9rem; color: var(--moss); max-width: 34rem; }
+  .pair h2 + p { margin-top: 1.5rem; }
+  @media (min-width: 56rem) { .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  /* Accounts from the field: as the rows, larger, a 2px ink rule opening the list and hairlines
+     dividing it; the account's title takes five columns of twelve from 56rem and its two paragraphs
+     seven. */
+  .accounts { border-top: 2px solid var(--canopy); border-bottom: 1px solid var(--line); }
+  .accounts > li { display: grid; gap: 0.9rem 3rem; padding: 1.7rem 0 1.9rem; }
+  .accounts > li + li { border-top: 1px solid var(--line); }
+  .accounts p { color: var(--moss); max-width: 40rem; }
+  .accounts p + p { margin-top: 0.9rem; }
+  @media (min-width: 56rem) {
+    .accounts > li { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: baseline; padding: 2.2rem 0 2.4rem; }
+  }
+
+  /* Four up (Partnerships): the audiences' columns and the numbered steps where there are four of
+     them, two by two from 40rem and four in a row from 75rem, so that a four never breaks three and one. */
+  @media (min-width: 40rem) {
+    .audiences.four-up, .steps-numbered.four-up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .audiences.four-up > li { padding-right: 2.5rem; }
+  }
+  @media (min-width: 75rem) {
+    .audiences.four-up, .steps-numbered.four-up { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  /* Collaborators (Partnerships): the names typeset, never as logos (no logo without written
+     permission). A register: the names in the heading's face in canopy, each over a hairline, flowing
+     down one, two or three columns in the content file's order under one 2px ink rule. */
+  .collaborators { columns: 1; column-gap: 3rem; border-top: 2px solid var(--canopy); }
+  .collaborators li {
+    break-inside: avoid;
+    padding: 0.95rem 0 1rem;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1875rem;
+    line-height: 1.3;
+    letter-spacing: -0.008em;
+    color: var(--canopy);
+    text-wrap: balance;
+  }
+  @media (min-width: 40rem) { .collaborators { columns: 2; } }
+  @media (min-width: 64rem) { .collaborators { columns: 3; column-gap: 3.5rem; } }
+
+  /* People (About and Team): a register of entries under one 2px ink rule, each over a hairline. An
+     entry is a name in the heading's face, any credentials after it in moss, the role in the label
+     voice, and a bio in moss. A portrait, where there is one, is small, because the company's are
+     (370 px wide): it stands at the entry's left with the name and role beside its foot, the bio
+     running the entry's full width under both, so that the picture is never drawn much wider than its
+     pixels (10rem at most: 160 px on a laptop, 320 at 2x) and the bio never squeezes beside it. */
+  .people { display: grid; column-gap: 4rem; border-top: 2px solid var(--canopy); }
+  .person { padding: 1.5rem 0 1.75rem; border-bottom: 1px solid var(--line); }
+  .person.has-photo { --portrait: 6.5rem; display: grid; grid-template-columns: var(--portrait) minmax(0, 1fr); column-gap: 1.25rem; align-content: start; }
+  .person-photo { width: 100%; height: auto; aspect-ratio: 370 / 431; object-fit: cover; border-radius: 1rem; background: var(--sprout); box-shadow: var(--shadow); }
+  .person.has-photo .person-head { align-self: end; padding-bottom: 0.2rem; }
+  .person-name { font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.008em; color: var(--canopy); }
+  .person-credentials { font-family: var(--font-sans); font-weight: 600; font-size: 1rem; letter-spacing: 0; color: var(--moss); white-space: nowrap; }
+  .person .person-role { margin-top: 0.45rem; }
+  .person-bio { grid-column: 1 / -1; margin-top: 1.1rem; }
+  .person-bio p { color: var(--moss); max-width: 36rem; }
+  .person-bio p + p { margin-top: 0.8rem; }
+  @media (min-width: 30rem) { .person.has-photo { --portrait: 8rem; column-gap: 1.5rem; } }
+  @media (min-width: 64rem) { .person.has-photo { --portrait: 10rem; } }
+  @media (min-width: 40rem) { .people-names, .people-two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 48rem) { .people-team { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 100rem) { .people-team { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  /* An entry with a portrait and no bio (the patron, the advisers): the name and role under the
+     portrait, as a caption, so that a long name never wraps a word to a line beside it. */
+  .people-figures .person.has-photo { display: block; }
+  .people-figures .person-photo { width: var(--portrait); }
+  .people-figures .person-head { margin-top: 1rem; }
+  /* The patron and the advisory board share a band: stacked on a phone and a tablet, side by side
+     from 64rem with the advisers' two entries taking twice the patron's room, so that the three
+     portraits stand in one row at one size. */
+  .people-groups { display: grid; gap: 4rem; }
+  @media (min-width: 64rem) { .people-groups { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); } }
+  /* About's founders: their one portrait (670 px wide, so at most 20rem) beside their two entries,
+     from 56rem in five columns of twelve and seven. */
+  .founders { display: grid; gap: 3rem 4rem; }
+  .founders-photo img { width: 100%; max-width: 20rem; height: auto; aspect-ratio: 670 / 860; object-fit: cover; border-radius: 1.25rem; background: var(--sprout); box-shadow: var(--shadow); }
+  .people-one .person-bio { margin-top: 1rem; }
+  .people-one .person-bio p { max-width: 40rem; }
+  @media (min-width: 56rem) { .founders { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } }
+
+  /* A story in paragraphs beside its heading (About, "How the company began"). */
+  .story p { max-width: 40rem; }
+  .story p + p { margin-top: 1rem; }
+
+  /* Facts (About, "The company in brief"): a real table, a row name and its answer, as the rows are
+     drawn: a 2px ink rule opens it, hairlines divide it; the name in the heading's face takes five
+     columns of twelve from 40rem, the answer in moss seven. On a phone each name stands over its
+     answer. */
+  .facts { width: 100%; border-collapse: collapse; text-align: left; border-top: 2px solid var(--canopy); border-bottom: 1px solid var(--line); }
+  .facts tr + tr { border-top: 1px solid var(--line); }
+  .facts th, .facts td { display: block; }
+  .facts th { padding: 1.2rem 0 0.3rem; font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; line-height: 1.25; letter-spacing: -0.008em; color: var(--canopy); }
+  .facts td { padding: 0 0 1.25rem; color: var(--moss); max-width: 40rem; }
+  @media (min-width: 40rem) {
+    .facts th, .facts td { display: table-cell; vertical-align: baseline; }
+    .facts th { width: 41.66%; padding: 1.25rem 3rem 1.35rem 0; }
+    .facts td { padding: 1.25rem 0 1.35rem; }
+  }
+
+  /* The sites (Our work, content 5.11): the field record, 6.1 grouped by state (R2). On a wide screen
+     a real table drawn as the facts are: the three conditions in the heading's face over their
+     columns, population and newborn in the label voice under them, a 2px ink rule under the head and
+     a hairline over each state. A state names its group in the heading's face and its towns follow
+     as rows. A screening done is the proof
+     tag, drawn as a small filled lozenge centred in its column (its name, the column's, is for
+     assistive technology there); one not done is left empty, as the poster leaves it. */
+  .sites { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; text-align: left; }
+  .sites-col-site { width: 30%; }
+  .sites thead th { padding: 0.75rem 0.5rem 0.4rem; vertical-align: bottom; text-align: center; font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; line-height: 1.2; letter-spacing: -0.008em; color: var(--canopy); text-wrap: balance; }
+  /* A condition's name spans its columns over a hairline, so the pairs read as pairs. */
+  .sites thead th[scope=colgroup] { padding: 0.75rem 0.25rem 0.5rem; background-image: linear-gradient(var(--line), var(--line)); background-position: center bottom; background-size: calc(100% - 1.5rem) 0.0625rem; background-repeat: no-repeat; }
+  .sites thead .sites-site-h, .sites .sites-kinds th {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-tracking);
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--leaf);
+  }
+  .sites thead .sites-site-h { padding-left: 0; text-align: left; }
+  .sites .sites-kinds th { padding-block: 0.35rem 0.9rem; }
+  /* The head stays in view while the states scroll under it (from 64rem; the site's header scrolls
+     away, so it sticks to the top of the window), on the band's own mist so no mark shows through.
+     The rules are drawn by the cells (the table's borders are separate), so none shows through the
+     head: its 2px rule as a band at the foot of its last row, a hairline over each state. */
+  @media (min-width: 64rem) {
+    .sites thead { position: sticky; top: 0; z-index: 1; }
+    .sites thead th { background-color: var(--mist); }
+    .sites thead .sites-site-h, .sites .sites-kinds th { background-image: linear-gradient(var(--canopy), var(--canopy)); background-position: left bottom; background-size: 100% 0.125rem; background-repeat: no-repeat; }
+    .sites tbody + tbody .sites-group th { border-top: 1px solid var(--line); }
+    .sites tbody:last-of-type tr:last-child > * { border-bottom: 1px solid var(--line); }
+  }
+  .sites-group th { padding: 1.5rem 0 0.5rem; font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.008em; color: var(--canopy); }
+  .sites tbody th[scope=row] { padding: 0.45rem 1rem 0.45rem 0; font-weight: 700; font-size: 1.0625rem; line-height: 1.35; color: var(--canopy); }
+  .sites tbody tr:last-child > * { padding-bottom: 1.5rem; }
+  .sites td { padding: 0.45rem 0.5rem; text-align: center; vertical-align: middle; }
+  .sites .tag-proof { width: 2.25rem; min-height: 1.125rem; padding: 0; vertical-align: middle; }
+  .sites .mark-name { position: absolute; width: 0.0625rem; height: 0.0625rem; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .sites-thanks { margin-top: 1.25rem; max-width: 44rem; font-size: 1rem; color: var(--moss); }
+
+  /* On a phone and a tablet the table is a list, one state per entry (CSS only, no script), since
+     under 64rem the five columns are too narrow for their names. Each state stands under its own
+     rule, its name, then its towns, each followed by the screenings done there as proof tags
+     that name themselves, which together say what was screened in the state. The blocks drop the
+     table's semantics, so the head row is removed (each mark names its column itself) and an empty
+     cell is not drawn. */
+  @media (max-width: 63.99rem) {
+    .sites, .sites tbody, .sites tr, .sites th, .sites td { display: block; }
+    .sites colgroup { display: none; }
+    .sites thead { display: none; }
+    .sites tbody { padding: 1.4rem 0 1.5rem; border-top: 1px solid var(--line); }
+    .sites tbody:first-of-type { border-top: 2px solid var(--canopy); }
+    .sites tbody:last-of-type { border-bottom: 1px solid var(--line); }
+    .sites-group th { padding: 0; }
+    .sites tbody tr:not(.sites-group) { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.5rem; padding-top: 0.75rem; }
+    .sites tbody th[scope=row] { flex: 1 0 100%; padding: 0; }
+    .sites tbody tr:last-child > * { padding-bottom: 0; }
+    .sites td { padding: 0; }
+    .sites td:empty { display: none; }
+    .sites .tag-proof { width: auto; min-height: 1.75rem; padding: 0.25rem 0.6rem; line-height: 1.25; text-align: left; }
+    .sites .mark-name { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; }
+  }
+
+  /* Recent work (Our work): the entries' list (.entries), which holds the kinds of entry in the label
+     voice under a 2px ink rule until the company's photographs arrive (Phase 7). */
+  /* The kinds run on, a middot before each; the list starts one middot's width to the left and the
+     band clips it, so a kind that begins a line never starts with one. */
+  .entries { overflow: hidden; border-top: 2px solid var(--canopy); border-bottom: 1px solid var(--line); }
+  .entries-kinds { display: flex; flex-wrap: wrap; row-gap: 0.6rem; margin-left: -1.75rem; padding-block: 1.2rem 1.3rem; }
+  .entries-kinds li { display: inline-flex; align-items: center; white-space: nowrap; }
+  .entries-kinds li::before { content: "·"; content: "·" / ""; width: 1.75rem; text-align: center; color: var(--moss); }
+
+  /* The map's paragraph under its heading, where a page gives it one (Our work). */
+  .map-body { margin-top: 1.1rem; max-width: 34rem; color: var(--moss); }
+  .map-words > .map-body { order: 0; }
+
+  /* Contact (content 5.15). The contact actions with the line under each (actionList(…, { lines: true })):
+     the whole row is the link, its label in the action voice over its line in moss, the arrow level
+     with the label. Beside them, writing or calling directly, drawn as the actions' list is drawn in
+     body type: a 2px ink rule, hairlines. Under them, the two offices, each under its own ink rule. */
+  .actions-lined a { align-items: flex-start; min-height: 5rem; padding-block: 1.05rem 1.15rem; }
+  .actions-lined svg { margin-top: 0.3em; }
+  .action-text { display: grid; gap: 0.4rem; }
+  .action-line { max-width: 34rem; font-family: var(--font-sans); font-size: 1rem; font-weight: 400; font-stretch: normal; letter-spacing: 0; line-height: 1.45; color: var(--moss); }
+  .reach { border-top: 2px solid var(--canopy); border-bottom: 1px solid var(--line); }
+  .reach li { display: flex; flex-wrap: wrap; align-items: center; column-gap: 0.5rem; padding: 0.6rem 0; }
+  .reach li + li { border-top: 1px solid var(--line); }
+  .reach .link { font-size: 1.125rem; overflow-wrap: anywhere; }
+  .addresses { display: grid; gap: 2.5rem 3rem; }
+  .addresses > li { padding-top: 1.4rem; border-top: 2px solid var(--canopy); }
+  .addresses address { margin-top: 0.75rem; max-width: 26rem; font-style: normal; color: var(--moss); }
+  .addresses .link { margin-top: 0.75rem; }
+  /* Side by side, the two share their rows (a subgrid), so the names, the addresses and the two
+     "Open in maps" links stand level when one name or address runs a line longer. */
+  @media (min-width: 40rem) {
+    .addresses { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @supports (grid-template-rows: subgrid) {
+      .addresses > li { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; align-content: start; }
+      .addresses > li > .link { align-self: start; }
+    }
   }
 
   /* ---------- Preview cards (src/site/_social/card.njk, photographed by npm run social) ----------

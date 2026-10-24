@@ -1,0 +1,18 @@
+{#- The four contact actions (content file 5.1 "Contact", 5.14's closing band, 5.15 "Where to begin"),
+    from one source, src/site/_data/actions.json: { label, subject, line }. Each opens an email with its
+    subject filled in until a form service is chosen. Home and Partnerships show the labels;
+    actionList(classes, { lines: true }) sets each action's line under its label, as Contact does.
+    Import it with {% from "actions.njk" import actionList with context %}. -#}
+{%- macro actionList(classes, options) -%}
+{%- set actionArrow = '<svg aria-hidden="true" width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 8h22M16 1l7 7-7 7"/></svg>' -%}
+{%- set lines = options and options.lines -%}
+<ul class="actions{% if lines %} actions-lined{% endif %}{% if classes %} {{ classes }}{% endif %}">
+  {%- for action in actions %}
+  {%- if lines %}
+  <li><a class="action" href="mailto:{{ site.email }}?subject={{ action.subject | urlencode }}"><span class="action-text"><span class="action-label">{{ action.label }}</span> <span class="action-line">{{ action.line }}</span></span>{{ actionArrow | safe }}</a></li>
+  {%- else %}
+  <li><a class="action" href="mailto:{{ site.email }}?subject={{ action.subject | urlencode }}">{{ action.label }}{{ actionArrow | safe }}</a></li>
+  {%- endif %}
+  {%- endfor %}
+</ul>
+{%- endmacro %}

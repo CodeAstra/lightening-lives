@@ -1,0 +1,220 @@
+---
+title: "Technology | Lightening Lives"
+description: "How Lightening Lives runs a genetic test from a dried blood spot: no DNA extraction, room temperature transport, screening and confirmation in one, on standard PCR equipment. Patented in India and Japan."
+label: Innovate
+h1: How a spot of blood on a card becomes a genetic diagnosis
+lead: "Conventional genetic testing was designed for the laboratory. We designed ours for where testing has to happen: a primary health centre, or a maternity ward far from any genetics laboratory."
+chips:
+  - { text: Approved by ICMR, proof: true }
+  - { text: Patented in India and Japan, proof: true }
+  - { text: Dried blood spot }
+closing:
+  h2: Have a condition in mind?
+  body: Tell us what you need to detect. We develop the test.
+  solid: { text: Develop a test with us, href: /solutions/develop-a-test/ }
+---
+{#- Technology (content file 5.2). The layout opens the page (label, h1, lead, chips) and closes it
+    with the band whose words are above. [TBC] brackets are stripped and the sentence before each is
+    kept; the Time row and the publications, whose bodies are only brackets, are left out; the
+    globally published patent keeps its heading alone. The bands alternate back from the closing
+    band's paper, so the first section stays on the opening's mist and continues its sheet. -#}
+{%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' %}
+{%- from "picture.njk" import picture with context %}
+{%- set stepSizes = "(min-width: 64rem) 30vw, (min-width: 40rem) 46vw, 92vw" %}
+
+  <!-- Where conventional testing stops -->
+  <section id="limits" class="section" aria-labelledby="limits-h">
+    <div class="wrap">
+      <h2 id="limits-h" class="h2 max-w-[44rem]">Where conventional testing stops</h2>
+      <ul class="audiences mt-10">
+        <li>
+          <h3 class="h3">Screening tests</h3>
+          <p>Quick and cheap, but every positive result needs a second, confirmatory test. In a district programme the second test is often the one that never happens.</p>
+        </li>
+        <li>
+          <h3 class="h3">Confirmatory tests</h3>
+          <p>One to two millilitres of venous blood, a cold chain to the laboratory, pre-processing before the assay, and a laboratory that few districts have. For a newborn, a wait of 72 hours.</p>
+        </li>
+        <li>
+          <h3 class="h3">What a programme needs</h3>
+          <p>A sample a health worker can take anywhere, a result that needs no second test, a laboratory within reach, and a cost that works for a whole population.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Compared: the poster's table, without its sensitivity and specificity rows (content 2.1) -->
+  <section id="compared" class="section bg-paper" aria-labelledby="compared-h">
+    <div class="wrap">
+      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="compared-h" class="h2 lg:col-span-7">The same question, three ways of answering it</h2>
+        <p class="lead lg:col-span-5">How <span class="whitespace-nowrap">LitLife™</span> compares with the tests a programme would otherwise use.</p>
+      </div>
+      <table class="compare-table mt-12" aria-labelledby="compared-h">
+        <caption>From our presentation to the haematology community, October 2026.</caption>
+        <thead>
+          <tr>
+            <td></td>
+            <th scope="col">Conventional screening tests</th>
+            <th scope="col">Conventional confirmatory tests</th>
+            <th scope="col" class="is-ours">LitLife™</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- set compared = [
+            ["Sample", "20 to 50 µl of blood", "1 to 2 ml of EDTA blood", "A spot of blood on a card"],
+            ["Collection", "Finger prick", "Venepuncture", "Finger prick"],
+            ["Storage and transport", "Cold chain", "Cold chain", "Room temperature"],
+            ["Pre-processing", "Yes", "Yes", "None"],
+            ["Throughput", "Low", "Low", "High"],
+            ["A second test to confirm", "Yes", "No", "No"],
+            ["Newborns", "No", "After 72 hours of birth", "At birth"]
+          ] %}
+          {%- for row in compared %}
+          <tr>
+            <th scope="row">{{ row[0] }}</th>
+            <td data-label="Conventional screening tests">{{ row[1] }}</td>
+            <td data-label="Conventional confirmatory tests">{{ row[2] }}</td>
+            <td data-label="LitLife™" class="is-ours">{{ row[3] }}</td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- The method: the poster's six steps. Steps 1 and 2 are the film's stills until the company's
+       photographs arrive; 3 to 6 are representative photographs of the same work (CREDITS.md), labelled so under the steps. -->
+  <section id="method" class="section" aria-labelledby="method-h">
+    <div class="wrap">
+      <h2 id="method-h" class="h2 max-w-[44rem]">From card to result in six steps</h2>
+      <!-- [html-validate-disable-next no-redundant-role, prefer-native-element: preflight's list-style: none drops the list role in Safari/VoiceOver] -->
+      <ol role="list" class="steps-numbered mt-12">
+        <li>
+          <img src="/assets/img/site-drop.webp" width="1000" height="1000" alt="A drawn dried blood spot card held open, with a drop of blood falling towards its dashed collection circle." loading="lazy" decoding="async">
+          <h3 class="h3">Collect</h3>
+          <p>A health worker cleans the fingertip, pricks it with a single-use lancet and lets the blood fall into the circle on the card.</p>
+          <p>The spot dries, the cover closes over it, and the card travels at room temperature.</p>
+        </li>
+        <li>
+          <img src="/assets/img/site-batch.webp" width="1000" height="1000" alt="The drawn card, closed, set down in a grid of many others, each with the Lightening Lives logo and a barcode." loading="lazy" decoding="async">
+          <h3 class="h3">Punch</h3>
+          <p>In the laboratory a small punch takes a disc from the dried spot straight into a PCR tube. There is no DNA extraction step.</p>
+        </li>
+        <li>
+          {{ picture("lab-pipette", "A multichannel pipette dispensing into a 96-well plate on a laboratory bench.", stepSizes) }}
+          <h3 class="h3">Prepare</h3>
+          <p>The reaction mix is specific to the mutation being looked for.</p>
+        </li>
+        <li>
+          {{ picture("lab-thermal-cycler", "A benchtop PCR thermal cycler with its lid open and a full rack of tubes in its block.", stepSizes) }}
+          <h3 class="h3">Amplify</h3>
+          <p>PCR, on a standard thermal cycler. Many cards run in one batch.</p>
+        </li>
+        <li>
+          {{ picture("lab-gel", "Gloved hands at a horizontal agarose gel electrophoresis tank, its leads running to a power supply.", stepSizes) }}
+          <h3 class="h3">Separate</h3>
+          <p>Agarose gel electrophoresis.</p>
+        </li>
+        <li>
+          {{ picture("lab-bench", "A gloved hand steadying a rack of open tubes while a pipette dispenses into one.", stepSizes) }}
+          <h3 class="h3">Read</h3>
+          <p>The result is visualised and interpreted, with controls alongside: affected, carrier or unaffected.</p>
+        </li>
+      </ol>
+      <p class="steps-note">Photographs of steps 3 to 6 are representative images, not pictures of our own laboratory.</p>
+    </div>
+  </section>
+
+  <!-- What a laboratory needs -->
+  <section id="laboratory" class="section bg-paper" aria-labelledby="laboratory-h">
+    <div class="wrap">
+      <h2 id="laboratory-h" class="h2 max-w-[44rem]">What a laboratory needs</h2>
+      <ul class="rows mt-10">
+        <li>
+          <h3>Equipment</h3>
+          <p>A thermal cycler, a gel electrophoresis tank and a punch: the equipment of a district or hospital laboratory, not a genetics institute.</p>
+        </li>
+        <li>
+          <h3>Space and storage</h3>
+          <p>A bench. Cards keep at room temperature, so no cold chain for samples.</p>
+        </li>
+        <li>
+          <h3>People</h3>
+          <p>Laboratory staff who have run PCR before, or who have been trained. We train them.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Monitoring -->
+  <section id="monitoring" class="section" aria-labelledby="monitoring-h">
+    <div class="wrap">
+      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="monitoring-h" class="h2 lg:col-span-7">Seeing the programme as it happens</h2>
+        <p class="text-moss lg:col-span-5">Test details are captured on a mobile app at the point of collection, so a programme can follow its screening in real time: how many samples, from where, and what came back.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Patents and approvals -->
+  <section id="patents" class="section bg-paper" aria-labelledby="patents-h">
+    <div class="wrap">
+      <h2 id="patents-h" class="h2 max-w-[44rem]">Patented, approved, published</h2>
+      <ul class="proof mt-10">
+        <li>
+          <h3 class="h3">Patents granted in <span class="hl">India and Japan</span></h3>
+          <p>For the technology behind our dried blood spot tests.</p>
+        </li>
+        <li>
+          <h3 class="h3">A <span class="hl">globally published</span> patent</h3>
+        </li>
+        <li>
+          <h3 class="h3">Approved by <span class="hl">ICMR</span></h3>
+          <p><span class="whitespace-nowrap">LitLife™-SCA</span> is approved by the Indian Council of Medical Research.</p>
+        </li>
+        <li>
+          <h3 class="h3">Built on <span class="hl">CSIR-CCMB</span> know-how</h3>
+          <p>An MOU with the CSIR-Centre for Cellular and Molecular Biology covers developing and commercialising the sickle cell assay.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- The card: the drawn card (the photographs in content/assets/kit-reference-* are internal) -->
+  <section id="card" class="section" aria-labelledby="card-h">
+    <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
+      <div class="lg:col-span-7">
+        <h2 id="card-h" class="h2">A card made for the field</h2>
+        <p class="mt-6 max-w-[38rem] text-moss">The card opens like a matchbook. Its cover carries our logo and protects the sample. Inside, a circle on filter paper shows where the spot goes. A barcode and a code identify each card, and the back has room for the person's name, age, sex and the date.</p>
+      </div>
+      <div class="lg:col-span-5">
+        <div class="blank-card">
+          <img src="/assets/img/site-blank.webp" width="800" height="1000" alt="The drawn card, open: an empty dashed circle where the spot goes, above a barcode and the code SCM / 100001, among closed cards that carry the Lightening Lives logo." loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REASSURED, as on the home page, with 5.2's sentence under it -->
+  {%- set reassured = { surface: "bg-paper", after: "The criteria were published in 2019 as an update to ASSURED, the list the World Health Organization's tropical disease research programme drew up for diagnostic tests in places with few resources." } %}
+  {% include "reassured.njk" %}
+
+  <!-- Research and development -->
+  <section id="research" class="section" aria-labelledby="research-h">
+    <div class="wrap grid gap-6 lg:grid-cols-12 lg:gap-16">
+      <h2 id="research-h" class="h2 lg:col-span-5">What we are working on</h2>
+      <div class="lg:col-span-7">
+        <p class="text-moss">Our portfolio covers four kinds of genetic test: monogenic disorders, pharmacogenetic variants, rare genetic disorders and custom molecular diagnostic assays. Tests for nine conditions have been developed so far, across two families of inherited conditions, and more assays are under development: a blood coagulation panel and pharmacogenomics testing among them.</p>
+        <p class="mt-4 text-moss">We also develop and validate assays for other organisations, and write laboratory methods for hospitals and laboratories with limited resources.</p>
+        <p class="mt-6 flex flex-wrap gap-x-8">
+          <a class="link" href="/solutions/">See our solutions
+            {{ arrow | safe }}
+          </a>
+          <a class="link" href="/solutions/develop-a-test/">Develop a test with us
+            {{ arrow | safe }}
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>

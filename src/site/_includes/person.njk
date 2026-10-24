@@ -1,0 +1,28 @@
+{#- A portrait entry (.person, About and Team; content file 5.12, 5.13): one person from
+    src/site/_data/team.json, its id the person's slug (3.2), the name as an h3 with any credentials
+    after it, the role in the label voice, and, when asked, the portrait and the bio. The portrait is
+    the company's own (person-<slug>, small, never upscaled) and its alt is the person's name; a bio
+    paragraph over 60 words is split at a sentence (R1, the paragraphs filter). Import it with context:
+    {% from "person.njk" import person with context %}; person(p, { photo: true, bio: true }); { credentials: false } leaves the credentials out (Team, whose
+    founders' line in 5.13 is name and role). -#}
+{%- from "picture.njk" import picture with context -%}
+{%- macro person(p, opts) -%}
+<li class="person{% if opts.photo %} has-photo{% endif %}" id="{{ p.slug }}">
+  {%- if opts.photo %}
+  {{ picture("person-" + p.slug, p.name, "(min-width: 64rem) 10rem, (min-width: 30rem) 8rem, 6.5rem", { class: "person-photo" }) }}
+  {%- endif %}
+  <div class="person-head">
+    <h3 class="person-name">{{ p.name }}{% if p.credentials and opts.credentials !== false %} <span class="person-credentials">{{ p.credentials }}</span>{% endif %}</h3>
+    {%- if p.role %}
+    <p class="label person-role">{{ p.role }}</p>
+    {%- endif %}
+  </div>
+  {%- if opts.bio and p.bio %}
+  <div class="person-bio">
+    {%- for para in p.bio | paragraphs %}
+    <p>{{ para }}</p>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+</li>
+{%- endmacro -%}

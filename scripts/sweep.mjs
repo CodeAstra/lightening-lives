@@ -117,7 +117,9 @@ const seen = (el) => {
   for (let e = el; e && e.nodeType === 1; e = e.parentElement) {
     const s = getComputedStyle(e);
     if (s.visibility === 'hidden' || s.display === 'none' || Number(s.opacity) < 0.05) return false;
-    if (e.matches('.sr-only')) return false;
+    // Visually hidden (.sr-only, or the same clip under another name, as the sites table's mark names
+    // on a wide screen): for screen readers, not the eye.
+    if (e.matches('.sr-only') || s.clipPath === 'inset(50%)') return false;
     // Inside a closed disclosure, only its summary is shown.
     const shut = e.parentElement && e.parentElement.matches('details:not([open])');
     if (shut && e.tagName !== 'SUMMARY') return false;

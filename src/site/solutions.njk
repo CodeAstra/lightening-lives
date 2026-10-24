@@ -1,0 +1,198 @@
+---
+title: "Diagnostic solutions | Lightening Lives"
+description: "Molecular tests for sickle cell anaemia, thalassaemia, HbD and HbE, spinal muscular atrophy, Duchenne and limb-girdle muscular dystrophy, from a dried blood spot, for hospitals, laboratories and health programmes."
+label: Diagnose
+h1: Diagnostic solutions for inherited conditions
+lead: "We develop tests for inherited blood and muscle conditions, and make each one something an institution can run: assay, card, method, training and counselling."
+notice: true
+---
+{#- Solutions (content file 5.3). The layout opens the page (label, h1, lead) and closes it with 4.5's
+    band and the notice for individuals (4.4). Brackets are stripped and the sentence before each is
+    kept; the DMD and LGMD tests are named without their names, and their links ask about them on
+    Develop a test until their pages open (3.1). A column body over 35 words is split at a sentence
+    (R1). "Kit" is said only under "How a test arrives". The LitLife™-SCA box is withheld from the
+    row of boxes: its pictures carry the CSIR-CCMB logo and printed claims still to be confirmed
+    (content 7.1, Part 8 items 4 and 25). The bands alternate back from the closing
+    band's paper, so the first section is a paper band of its own. -#}
+{%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' %}
+{%- from "picture.njk" import picture with context %}
+{%- from "faq.njk" import faq %}
+{%- set boxSizes = "(min-width: 64rem) 15vw, (min-width: 40rem) 30vw, 46vw" %}
+{#- A family's link to a page: the arrow stays with the last word when the name wraps on a phone. -#}
+{%- macro pageLink(href, name) -%}
+{%- set words = name.split(" ") -%}
+<a class="link" href="{{ href }}">{{ words.slice(0, -1).join(" ") }}{% if words.length > 1 %} {% endif %}<span class="whitespace-nowrap">{{ words | last }}{{ arrow | safe }}</span></a>
+{%- endmacro %}
+
+  <!-- Two families of conditions -->
+  <section id="families" class="section bg-paper" aria-labelledby="families-h">
+    <div class="wrap">
+      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="families-h" class="h2 lg:col-span-7">Two families of conditions, one way of testing</h2>
+        <p class="lead lg:col-span-5">Every test works the same way: a spot of blood on a card, no DNA extraction, a modest laboratory. What differs is the condition.</p>
+      </div>
+      <ul class="families mt-12">
+        <li id="haemoglobinopathies">
+          <h3 class="h3">Haemoglobinopathies</h3>
+          <p>Inherited disorders of haemoglobin. They are India's most common single-gene conditions, and most families learn of them only after an affected child is born.</p>
+          <p>Carrier screening, diagnosis and newborn screening, from the same card.</p>
+          <p class="label">Tests</p>
+          <ul class="family-tests">
+            <li>LitLife™-SCA</li>
+            <li>LitLife™-SiBThal217</li>
+            <li>LitLife™-BThal</li>
+            <li>LitLife™-AlphaThal</li>
+            <li>HbD and HbE testing</li>
+          </ul>
+          <ul class="family-links">
+            <li>{{ pageLink("/solutions/sickle-cell-anaemia/", "Sickle cell anaemia") }}</li>
+            <li>{{ pageLink("/solutions/thalassaemia/", "Thalassaemia and other haemoglobinopathies") }}</li>
+          </ul>
+        </li>
+        <li id="musculopathies">
+          <h3 class="h3">Musculopathies</h3>
+          <p>Inherited conditions that weaken the muscles. Children are often thought to be weak or undernourished, and families wait years for a diagnosis.</p>
+          <p>A genetic result ends the wait, opens the treatment that exists, and tells the family who else carries the condition.</p>
+          <p class="label">Tests</p>
+          <ul class="family-tests">
+            <li>LitLife™-SMA</li>
+            <li>DMD test</li>
+            <li>LGMD test</li>
+          </ul>
+          <ul class="family-links">
+            <li>{{ pageLink("/solutions/spinal-muscular-atrophy/", "Spinal muscular atrophy") }}</li>
+            <li>{{ pageLink("/solutions/develop-a-test/#musculopathies", "Duchenne muscular dystrophy") }}</li>
+            <li>{{ pageLink("/solutions/develop-a-test/#musculopathies", "Limb-girdle muscular dystrophy") }}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Developed so far: the home page's rows -->
+  <section id="developed" class="section" aria-labelledby="developed-h">
+    <div class="wrap">
+      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="developed-h" class="h2 lg:col-span-7">Developed so far</h2>
+        <p class="lead lg:col-span-5">Each of these began with an institution that needed it. The next can begin with yours.</p>
+      </div>
+      {%- set testRows = { heading: "h3" } %}
+      {%- include "test-rows.njk" %}
+    </div>
+  </section>
+
+  <!-- In development -->
+  <section id="in-development" class="section bg-paper" aria-labelledby="in-development-h">
+    <div class="wrap">
+      <h2 id="in-development-h" class="h2 max-w-[44rem]">In development</h2>
+      <ul class="rows mt-10">
+        <li>
+          <h3>Blood coagulation panel</h3>
+          <p>Genetic testing for inherited bleeding disorders such as haemophilia: confirming a diagnosis, identifying carriers, and supporting family counselling and care planning.</p>
+        </li>
+        <li>
+          <h3>Pharmacogenomics</h3>
+          <p>How a person's genes change their response to a medicine, so that the drug and the dose can be chosen for the person.</p>
+        </li>
+      </ul>
+      <p class="mt-6">
+        <a class="link" href="/solutions/develop-a-test/#in-development">Ask about a test in development
+          {{ arrow | safe }}
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- What a solution includes -->
+  <section id="what-you-get" class="section" aria-labelledby="what-you-get-h">
+    <div class="wrap">
+      <h2 id="what-you-get-h" class="h2 max-w-[44rem]">What you get when we work together</h2>
+      <ul class="rows mt-10">
+        <li>
+          <h3>A test developed for the condition</h3>
+          <p>An assay built and validated for what your programme needs to detect.</p>
+        </li>
+        <li>
+          <h3>A sample that can be taken anywhere</h3>
+          <p>A spot of blood on a card, carried at room temperature. Collection is simple and minimally invasive.</p>
+        </li>
+        <li>
+          <h3>A method your laboratory can run</h3>
+          <p>Written for laboratories with minimal infrastructure, with no DNA extraction step.*</p>
+        </li>
+        <li>
+          <h3>Training for the people who run it</h3>
+          <p>Hands-on workshops for laboratory staff and health workers.</p>
+        </li>
+        <li>
+          <h3>A way to watch the programme</h3>
+          <p>Test details captured on a mobile app, for real-time monitoring.</p>
+        </li>
+        <li>
+          <h3>Help with what follows a result</h3>
+          <p>Genetic and social counselling for patients and carriers, awareness programmes, and patient support groups.</p>
+        </li>
+      </ul>
+      <p class="footnote">* Where applicable for developed assays.</p>
+    </div>
+  </section>
+
+  <!-- How a test arrives: the boxes as stills (the 3D view is Phase 7), then the open place, drawn -->
+  <section id="how-a-test-arrives" class="section bg-paper" aria-labelledby="how-a-test-arrives-h">
+    <div class="wrap">
+      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="how-a-test-arrives-h" class="h2 lg:col-span-7">How a test arrives</h2>
+        <p class="text-moss lg:col-span-5">Each test is packed as a kit: a sample collection kit for the people who take the samples, and, where the laboratory needs it, a reagent kit. Our tests are made in India by a third-party manufacturer that holds a quality certification.</p>
+      </div>
+      <ul class="boxes mt-12">
+        <li>
+          <figure>
+            {{ picture("box-sibthal217", "The LitLife™-SiBThal217 box, printed with the Lightening Lives logo, sickled red blood cells and a strand of DNA.", boxSizes) }}
+            <figcaption>LitLife™-SiBThal217</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            {{ picture("box-bthal", "The LitLife™-BThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.", boxSizes) }}
+            <figcaption>LitLife™-BThal</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            {{ picture("box-alphathal", "The LitLife™-AlphaThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.", boxSizes) }}
+            <figcaption>LitLife™-AlphaThal</figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure>
+            {{ picture("box-sma", "The front of the LitLife™-SMA box: the Lightening Lives logo above the test's name, among drawings of DNA, muscle and nerve cells.", boxSizes) }}
+            <figcaption>LitLife™-SMA</figcaption>
+          </figure>
+        </li>
+        <li class="open">
+          <a href="/solutions/develop-a-test/">
+            <span class="tile" aria-hidden="true"><span class="carton"></span></span>
+            <span class="open-name">The condition you need next</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Questions we are asked -->
+  <section id="faq" class="section" aria-labelledby="faq-h">
+    <div class="wrap grid gap-10 lg:grid-cols-12 lg:gap-16">
+      <h2 id="faq-h" class="h2 lg:col-span-5">Questions we are asked</h2>
+      <div class="lg:col-span-7">
+        {{ faq([
+          { q: "Do you test individuals?", a: "No. We work with hospitals, laboratories, clinicians, NGOs, CSR funders and government health programmes. If you are looking for a test for yourself or your family, please speak to your doctor or visit your nearest government health facility." },
+          { q: "What does our laboratory need to run the tests?", a: "A thermal cycler, a gel electrophoresis tank and a punch, a bench, and staff who have run PCR or have been trained. We help set the method up and train your staff." },
+          { q: "How do samples reach the laboratory?", a: "On the card, at room temperature, by ordinary courier or post. No cold chain." },
+          { q: "Are the tests approved?", a: "LitLife™-SCA, our sickle cell test, is approved by ICMR. The technology behind our tests is patented in India and Japan." },
+          { q: "Does a positive result need a second test?", a: "For LitLife™-SCA and LitLife™-SMA, no: the test screens and confirms." },
+          { q: "Can you develop a test for a condition that isn't listed?", a: "Yes. Each test we have developed began with an institution that needed it. Tell us the condition and the setting, and we take it from there." },
+          { q: "How do we start?", a: "Write to us with the condition, who will be tested and roughly how many, where samples will be collected and which laboratory will run them. We reply with how we would approach it." }
+        ]) }}
+      </div>
+    </div>
+  </section>

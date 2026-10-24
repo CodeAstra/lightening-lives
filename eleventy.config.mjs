@@ -24,18 +24,37 @@ export default function (eleventyConfig) {
   });
 
   // The footer credits what its page shows: a photograph whose file the page's body names, and the
-  // map's outline where the page draws the map.
+  // map's outline where the page draws the map. The company's own pictures (box-, person-) are not
+  // stand-ins: they are never credited, so a page that shows only those has no credits and no
+  // "representative" line.
+  const own = (row) => /^(box|person)-/.test(row.basename);
   eleventyConfig.addFilter('creditsFor', (rows, html = '') =>
-    rows.filter((row) => (row.basename === 'map-india' ? /\sdata-map[\s>]/.test(html) : html.includes(`/assets/img/${row.basename}-`))));
+    rows.filter((row) => !own(row) && (row.basename === 'map-india' ? /\sdata-map[\s>]/.test(html) : html.includes(`/assets/img/${row.basename}-`))));
 
-  // The rows that are photographs (the map's outline is data, not a photograph).
-  eleventyConfig.addFilter('photographs', (rows) => rows.filter((row) => row.basename !== 'map-india'));
+  // The rows that are representative photographs (the map's outline is data, not a photograph).
+  eleventyConfig.addFilter('photographs', (rows) => rows.filter((row) => row.basename !== 'map-india' && !own(row)));
 
   // Preview cards (src/site/_social/card.njk): one per page but the home page, named by the page's
   // whole path: /solutions/sickle-cell-anaemia/ → solutions-sickle-cell-anaemia.
   eleventyConfig.addFilter('socialSlug', (url) => url.replace(/^\/|\/$/g, '').replace(/\//g, '-'));
   eleventyConfig.addCollection('cardable', (api) =>
     api.getAll().filter((item) => item.url && item.url !== '/' && item.url.endsWith('/') && !item.data.eleventyExcludeFromCollections));
+
+  // R1: a paragraph over 60 words is split into two at the sentence boundary that leaves the halves
+  // most even, its words unchanged (a bio in team.json, About and Team). A full stop after a title
+  // or an initial ("Dr.", "J.C.") does not end a sentence.
+  const wordCount = (s) => s.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
+  eleventyConfig.addFilter('paragraphs', (paras = []) => paras.flatMap((p) => {
+    if (wordCount(p) <= 60) return [p];
+    let best = null;
+    for (const m of p.matchAll(/[.?!]\s+(?=[A-Z])/g)) {
+      const before = p.slice(0, m.index + 1);
+      if (/(?:\b(?:Dr|Mr|Mrs|Ms|Prof|St|No)|\b[A-Z](?:\.[A-Z])*)\.$/.test(before)) continue;
+      const worst = Math.max(wordCount(before), wordCount(p.slice(m.index + m[0].length)));
+      if (!best || worst < best.worst) best = { worst, at: m.index + 1, next: m.index + m[0].length };
+    }
+    return best ? [p.slice(0, best.at), p.slice(best.next)] : [p];
+  }));
 
   eleventyConfig.setServerOptions({ port: 8080 });
 

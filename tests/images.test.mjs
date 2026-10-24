@@ -2,6 +2,10 @@
 // enough) 1920 px WebPs; every picture a page shows is in its widths, offered whole through srcset,
 // and credited; the footer credits only what its page shows. Run `npm run images` after adding a
 // source; the build does not run it.
+// Task 4.2: the company's own pictures (basenames starting box- or person-) are small and are not
+// stand-ins. They are never upscaled: each is written at the stock widths it is wide enough for and,
+// below 1280, at its own width as the widest (a source under 640 once, at its own width). They need
+// no row in CREDITS.md, and a page whose only photographs are the company's own shows no credits.
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { execSync } from 'node:child_process';
@@ -23,11 +27,20 @@ const SHORTLIST = [
 ];
 const LICENCES = /^(CC0 1\.0|Public domain|CC BY(-SA)? [1-4]\.0|Unsplash Licence)$/;
 const SRC = 'src/images-src';
-const sources = () => readdirSync(SRC).filter((f) => /\.(jpe?g|png)$/i.test(f)).map((f) => ({ file: `${SRC}/${f}`, base: f.replace(/\.\w+$/, '') }));
+const OWN = /^(box|person)-/;
+const all = () => readdirSync(SRC).filter((f) => /\.(jpe?g|png)$/i.test(f)).map((f) => ({ file: `${SRC}/${f}`, base: f.replace(/\.\w+$/, '') }));
+const sources = () => all().filter((s) => !OWN.test(s.base)); // the stock photographs
+const own = () => all().filter((s) => OWN.test(s.base));
+// The widths the company's own picture of a given width is written at.
+const ownWidths = (width) => {
+  const widths = [640, 1280, 1920].filter((w) => w <= width);
+  if (width < 1280 && !widths.includes(width)) widths.push(width);
+  return widths;
+};
 const credits = () => JSON.parse(readFileSync('src/site/_data/credits.json', 'utf8'));
 const images = () => JSON.parse(readFileSync('src/site/_data/images.json', 'utf8'));
 const placed = ($) => $('img[src^="/assets/img/"]').filter((i, el) => !/^\/assets\/img\/(site-|social)/.test(el.attribs.src));
-const baseOf = (src) => src.replace(/^\/assets\/img\//, '').replace(/-(640|1280|1920)\.webp$/, '');
+const baseOf = (src) => src.replace(/^\/assets\/img\//, '').replace(/-\d+\.webp$/, '');
 
 test('every picture on the shortlist has a source of at least 1600 px on its long side', async () => {
   const have = new Set(sources().map((s) => s.base));
@@ -55,8 +68,32 @@ test('every source is written at 640 and 1280, and at 1920 when it is that wide,
     // The manifest the picture include reads agrees with the files, to the pixel (the <img>'s
     // width and height reserve its box before it loads).
     assert.deepEqual(images()[base]?.widths, widths, `images.json for ${base}`);
-    assert.equal(images()[base]?.height640, (await sharp(`src/assets/img/${base}-640.webp`).metadata()).height, `images.json height640 for ${base}`);
+    assert.equal(images()[base]?.height, (await sharp(`src/assets/img/${base}-640.webp`).metadata()).height, `images.json height for ${base}`);
   }
+});
+
+test('the company\'s own pictures are written at their true widths, never upscaled', async () => {
+  assert.ok(own().length >= 4, 'the box stills are sources');
+  for (const { file, base } of own()) {
+    const { width } = (await sharp(file).metadata()).autoOrient;
+    const widths = ownWidths(width);
+    assert.deepEqual(images()[base]?.widths, widths, `images.json for ${base}`);
+    for (const w of widths) {
+      const out = `src/assets/img/${base}-${w}.webp`;
+      assert.ok(existsSync(out), out);
+      const m = await sharp(out).metadata();
+      assert.equal(m.width, w, `${out} is named by its true width`);
+      assert.equal(m.exif, undefined, `${out} keeps EXIF`);
+    }
+    // Nothing wider than the source, under any name.
+    const written = readdirSync('src/assets/img').filter((f) => f.startsWith(`${base}-`)).map((f) => Number(f.slice(base.length + 1, -'.webp'.length)));
+    assert.deepEqual(written.sort((a, b) => a - b), widths, `${base}: files written`);
+    assert.equal(images()[base].height, (await sharp(`src/assets/img/${base}-${widths[0]}.webp`).metadata()).height, `images.json height for ${base}`);
+  }
+  assert.deepEqual(ownWidths(476), [476]);
+  assert.deepEqual(ownWidths(1118), [640, 1118]);
+  assert.deepEqual(ownWidths(640), [640]);
+  assert.deepEqual(ownWidths(2000), [640, 1280, 1920]);
 });
 
 test('the screening card\'s printed number, at the left edge of method-paper, is cut away', async () => {
@@ -64,7 +101,7 @@ test('the screening card\'s printed number, at the left edge of method-paper, is
   // published picture may show. The published widths start 16% in.
   const { width, height } = await sharp(`${SRC}/method-paper.jpg`).metadata();
   const kept = width - Math.round(width * 0.16);
-  assert.equal(images()['method-paper'].height640, Math.round((640 * height) / kept));
+  assert.equal(images()['method-paper'].height, Math.round((640 * height) / kept));
   const m = await sharp('src/assets/img/method-paper-1280.webp').metadata();
   assert.equal(m.height, Math.round((1280 * height) / kept));
 });
@@ -93,6 +130,12 @@ test('every placed image exists in both widths and is credited', () => {
     const $ = load(url);
     placed($).each((i, el) => {
       const base = baseOf(el.attribs.src);
+      if (OWN.test(base)) {
+        // The company's own: every width it lists is there; no credit is owed.
+        for (const w of images()[base].widths) assert.ok(existsSync(`dist/assets/img/${base}-${w}.webp`), `${base}-${w}`);
+        assert.doesNotMatch(md, new RegExp('`' + base + '`'), `${base} is the company's own, not a credited stand-in`);
+        return;
+      }
       assert.ok(existsSync(`dist/assets/img/${base}-640.webp`) && existsSync(`dist/assets/img/${base}-1280.webp`), base);
       if (el.attribs.srcset) assert.match(el.attribs.srcset, /1280w/, base); // the widest available is offered
       assert.match(md, new RegExp('`' + base + '`'), `${base} is not credited`);
@@ -107,13 +150,16 @@ test('every placed photograph comes through the picture include: every width, si
       const base = baseOf(el.attribs.src);
       const entry = images()[base];
       assert.ok(entry, `${url}: ${base} is not in images.json`);
-      assert.equal(el.attribs.src, `/assets/img/${base}-640.webp`, `${url}: ${base} src`);
+      assert.equal(el.attribs.src, `/assets/img/${base}-${entry.widths[0]}.webp`, `${url}: ${base} src`);
       assert.equal(el.attribs.srcset, entry.widths.map((w) => `/assets/img/${base}-${w}.webp ${w}w`).join(', '), `${url}: ${base} srcset`);
       assert.ok(el.attribs.sizes, `${url}: ${base} sizes`);
       assert.equal(el.attribs.loading, 'lazy', `${url}: ${base} loading`);
       assert.equal(el.attribs.decoding, 'async', `${url}: ${base} decoding`);
-      assert.deepEqual([Number(el.attribs.width), Number(el.attribs.height)], [640, entry.height640], `${url}: ${base} dimensions`);
-      assert.ok((el.attribs.alt ?? '').trim().split(/\s+/).length >= 4, `${url}: ${base} alt`);
+      assert.deepEqual([Number(el.attribs.width), Number(el.attribs.height)], [entry.widths[0], entry.height], `${url}: ${base} dimensions`);
+      // A photograph's alt describes it; a portrait's (person-, Task 4.5) is the person's name, which
+      // can be three words ("Mr. Abhishek Chandak").
+      if (/^person-/.test(base)) assert.ok((el.attribs.alt ?? '').trim(), `${url}: ${base} alt`);
+      else assert.ok((el.attribs.alt ?? '').trim().split(/\s+/).length >= 4, `${url}: ${base} alt`);
     });
   }
 });
@@ -167,6 +213,24 @@ lead: A lead.
 {% from "picture.njk" import picture with context %}
 <section class="section"><div class="wrap">{{ picture('lab-gel', 'Agarose gel under blue light with bands of DNA.') }}</div></section>
 `);
+  writeFileSync(path.join(input, 'own.njk'), `---
+title: Own | Lightening Lives
+description: A fixture page that shows only one of the company's own pictures.
+h1: Own
+lead: A lead.
+---
+{% from "picture.njk" import picture with context %}
+<section class="section"><div class="wrap">{{ picture('box-bthal', 'The LitLife™-BThal box, printed with red blood cells.') }}</div></section>
+`);
+  writeFileSync(path.join(input, 'mixed.njk'), `---
+title: Mixed | Lightening Lives
+description: A fixture page that shows one of the company's own pictures and one stand-in.
+h1: Mixed
+lead: A lead.
+---
+{% from "picture.njk" import picture with context %}
+<section class="section"><div class="wrap">{{ picture('box-bthal', 'The LitLife™-BThal box, printed with red blood cells.') }}{{ picture('lab-gel', 'Agarose gel under blue light with bands of DNA.') }}</div></section>
+`);
   writeFileSync(path.join(input, 'bare.njk'), `---
 title: Bare | Lightening Lives
 description: A fixture page that shows no photograph and no map at all.
@@ -192,6 +256,21 @@ test('a page credits only its own pictures; a page with none has no credits disc
   const lab = fixture('/lab/')('.credits li[data-credit]').map((i, li) => li.attribs['data-credit']).get();
   assert.deepEqual(lab, ['lab-gel']);
   assert.equal(fixture('/bare/')('.credits').length, 0);
+});
+
+test('picture() gives a small picture of the company\'s own its true size: the one width, and its height', () => {
+  const img = fixture('/own/')('main img');
+  const entry = images()['box-bthal'];
+  assert.equal(img.attr('src'), `/assets/img/box-bthal-${entry.widths[0]}.webp`);
+  assert.equal(img.attr('srcset'), entry.widths.map((w) => `/assets/img/box-bthal-${w}.webp ${w}w`).join(', '));
+  assert.deepEqual([Number(img.attr('width')), Number(img.attr('height'))], [entry.widths[0], entry.height]);
+});
+
+test('the company\'s own pictures are neither credited nor called representative', () => {
+  assert.equal(fixture('/own/')('.credits').length, 0, 'a page with only its own pictures has no credits');
+  const mixed = fixture('/mixed/');
+  assert.deepEqual(mixed('.credits li[data-credit]').map((i, li) => li.attribs['data-credit']).get(), ['lab-gel']);
+  assert.match(mixed('.credits > p').first().text(), /representative/);
 });
 
 test('images.mjs is idempotent', () => {

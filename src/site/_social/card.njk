@@ -16,7 +16,7 @@ layout: false
 <meta charset="utf-8">
 <meta name="viewport" content="width=1200">
 <meta name="robots" content="noindex, nofollow">
-<title>Preview card: {{ target.data.title }}</title>
+<title>Preview card: {{ target.data.title | replace(" | " + site.name, "") }}</title>
 <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body class="social-body">

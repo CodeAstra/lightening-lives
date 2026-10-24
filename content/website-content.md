@@ -655,6 +655,10 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 
 > Pictures: the six photographs from the poster's workflow strip, in order (Part 7). Steps 1 and 2 can use the film's stills until the originals arrive.
 
+- **Under the steps:** Photographs of steps 3 to 6 are representative images, not pictures of our own laboratory.
+
+> Added on 24 October 2026 in the build's Phase 4 review: until the originals arrive, steps 3 to 6 show representative photographs, and the stand-ins must be labelled where they are seen. The company may reword it.
+
 #### What a laboratory needs (`#laboratory`; *rows*)
 
 - **H2:** What a laboratory needs
@@ -774,7 +778,7 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 - **H2:** How a test arrives
 - **Body:** Each test is packed as a kit: a sample collection kit for the people who take the samples, and, where the laboratory needs it, a reagent kit. Our tests are made in India by a third-party manufacturer that holds a quality certification. `[TBC: the two-part packing for every test; whether to name the manufacturer and its certification, Part 8 item 13]`
 
-> The boxes are shown here as one row, each a 3D view the reader can turn, or a still: LitLife™-SCA, LitLife™-SiBThal217, LitLife™-BThal, LitLife™-AlphaThal, LitLife™-SMA, then the open place, a plain unprinted carton labelled "The condition you need next". The DMD and LGMD tests join the row when their boxes exist. This is the only place on this page where the word "kit" appears.
+> The boxes are shown here as one row, each a 3D view the reader can turn, or a still: LitLife™-SCA, LitLife™-SiBThal217, LitLife™-BThal, LitLife™-AlphaThal, LitLife™-SMA, then the open place, a plain unprinted carton labelled "The condition you need next". The DMD and LGMD tests join the row when their boxes exist. This is the only place on this page where the word "kit" appears. The LitLife™-SCA box's pictures carry the CSIR-CCMB logo and the printed claims "Validated by Indian Council of Medical Research" and "India's First Dried Blood Spot Molecular Kit"; the still is withheld from the site until the company gives written permission for the CCMB mark on the web and confirms the claims (Part 8 items 4 and 25).
 
 #### Questions we are asked (`#faq`; *disclosure*)
 
@@ -1339,6 +1343,10 @@ Short questions and answers, each a disclosure, under the heading "Questions we 
 - **Order:** newest first.
 - **Each entry:** one to four photographs; a label for the kind of work; the state, as its title (R2); the month and year; and 30 to 50 words on what was done, for which condition and with whom.
 - **Labels:** In the field · In the laboratory · Training · With our partners · At a conference
+- **Until the first entry:** Photographs from our work are on their way.
+
+> The line the section shows, under its heading and above the labels, until the company's photographs arrive. Added on 24 October 2026 in the build's Phase 4; the company may reword it.
+
 - **Under a photograph, where it is owed:** a credit.
 
 Entries to open with, as the company supplies them:
@@ -1848,7 +1856,7 @@ One row per test, for whoever keeps the Solutions pages in step with the company
 | What | Where | Use |
 | --- | --- | --- |
 | Six photographs of the method: finger prick and spotting, punching into a PCR tube, the reaction mix, PCR, gel electrophoresis, the result | On the conference poster, `content/Lightening Lives Poster v9-selection.png` | Technology, "The method". Ask for the originals; the poster's are small and some are illustrations |
-| Photographs of four boxes: LitLife™-SCA, SiBThal217, BThal, AlphaThal | On the conference poster | Solutions, "How a test arrives"; each test's "In the box". Ask for the originals |
+| Photographs of four boxes: LitLife™-SCA, SiBThal217, BThal, AlphaThal | On the conference poster | Solutions, "How a test arrives"; each test's "In the box". Ask for the originals. The LitLife™-SCA box's pictures carry the CSIR-CCMB logo and the printed claims "Validated by Indian Council of Medical Research" and "India's First Dried Blood Spot Molecular Kit"; the still is withheld from the site until the company gives written permission for the CCMB mark on the web and confirms the claims (Part 8 items 4 and 25). |
 | A photograph of the LitLife™-SMA box | On page 1 of `content/Design revision request.pdf` | Solutions and the SMA page. Ask for the original. Only the kit pictures were taken from this file; its figures were not used |
 | The four faces of the LitLife™-SCA box | `content/assets/sca-kit/` | A 3D view, if the build makes one |
 | Six screenshots of the LitLife™-SMA box artwork | `content/assets/sma-kit/` | Exported faces are needed for a 3D view |

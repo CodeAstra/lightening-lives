@@ -1,0 +1,137 @@
+[
+  {
+    "name": "Delhi",
+    "state": "Delhi",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Udaipur",
+    "state": "Rajasthan",
+    "sca_pop": true,
+    "sca_nb": true,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Bhopal",
+    "state": "Madhya Pradesh",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Jamshedpur",
+    "state": "Jharkhand",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Bilaspur",
+    "state": "Chhattisgarh",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Nandurbar",
+    "state": "Maharashtra",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": true,
+    "sbt_nb": true,
+    "bt_pop": true
+  },
+  {
+    "name": "Nagpur",
+    "state": "Maharashtra",
+    "sca_pop": true,
+    "sca_nb": true,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Dhule",
+    "state": "Maharashtra",
+    "sca_pop": false,
+    "sca_nb": true,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Valsad",
+    "state": "Gujarat",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": true,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Chandrapur",
+    "state": "Maharashtra",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Mumbai",
+    "state": "Maharashtra",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Kothagudem",
+    "state": "Telangana",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": true,
+    "sbt_nb": false,
+    "bt_pop": true
+  },
+  {
+    "name": "Hyderabad",
+    "state": "Telangana",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Mysore",
+    "state": "Karnataka",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  },
+  {
+    "name": "Gudalur",
+    "state": "Tamil Nadu",
+    "sca_pop": true,
+    "sca_nb": false,
+    "sbt_pop": false,
+    "sbt_nb": false,
+    "bt_pop": false
+  }
+]

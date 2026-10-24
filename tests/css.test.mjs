@@ -90,3 +90,45 @@ test('on wide windows the film\'s frame stretches across the opening, at any sha
   const wide = css.split('@media(min-width:56.25rem)and(min-aspect-ratio:21/20)').slice(1).join('');
   assert.match(wide, /html\.film-live\.film-screen\{[^}]*justify-self:stretch/);
 });
+
+// The block a media query opens in the built stylesheet, up to its closing brace.
+const mediaBlock = (css, query) => {
+  const start = css.indexOf(`@media ${query}{`);
+  assert.ok(start !== -1, query);
+  let depth = 0;
+  for (let i = css.indexOf('{', start); i < css.length; i++) {
+    if (css[i] === '{') depth++;
+    else if (css[i] === '}' && --depth === 0) return css.slice(start, i + 1);
+  }
+  return css.slice(start);
+};
+
+test('the tables\' list forms drop the head row, not clip it: their entries name themselves (M1)', () => {
+  const css = built();
+  const sites = mediaBlock(css, '(max-width:63.99rem)');
+  assert.match(sites, /\.sites thead\{[^}]*display:none/);
+  assert.doesNotMatch(sites, /\.sites thead\{[^}]*clip-path/);
+  const compare = mediaBlock(css, '(max-width:47.99rem)');
+  assert.match(compare, /\.compare-table thead\{[^}]*display:none/);
+  assert.doesNotMatch(compare, /\.compare-table thead\{[^}]*clip-path/);
+});
+
+test('the sticky sites head sticks at the top, naming no variable that is never set (M8)', () => {
+  assert.doesNotMatch(built(), /\.sites thead\{[^}]*--compare-h/);
+  assert.match(built(), /\.sites thead\{[^}]*top:0[;}]/);
+});
+
+test('Recent work\'s middots are drawn, not read aloud (M3)', () => {
+  const rule = built().match(/\.entries-kinds li:before\{[^}]*\}/)?.[0] ?? '';
+  assert.match(rule, /content:"·"\s*\/\s*""/);
+});
+
+test('the drawn carton has rem sizes for a browser without container units (M8)', () => {
+  // The minifier drops a fallback declaration written before the cqi one, so the fallback is a
+  // @supports block.
+  assert.match(built(), /\.carton\{[^}]*width:42cqi/);
+  const fallback = mediaBlock(built().replace('@supports not (width:1cqi){', '@media FALLBACK{'), 'FALLBACK');
+  assert.match(fallback, /\.carton\{[^}]*width:[\d.]+rem[^}]*height:[\d.]+rem/);
+  assert.match(fallback, /\.carton:before\{[^}]*height:[\d.]+rem/);
+  assert.match(fallback, /\.carton:after\{[^}]*width:[\d.]+rem/);
+});

@@ -1,12 +1,14 @@
 // The site's behaviour, ported from the approved design (designs/src/js/lumen/main.js): the menu,
-// REASSURED, the map, and loading the opening film. Each part does nothing on a page without its
-// markup. The film is a separate bundle (it carries three.js) and is only fetched when it will play.
+// REASSURED, the map, and loading the opening film; and the contact page's condition (contact.js,
+// a few hundred bytes, so it rides in this bundle rather than costing a request of its own). Each
+// part does nothing on a page without its markup. The film is a separate bundle (it carries three.js) and is only fetched when it will play.
 
 // The map's data: one list of states, their outlines, and what each layer marks.
 import { STATES } from '../map/india-states.js';
 import { BORDERS } from '../map/india-borders.js';
 import { LAYERS, LAYER_ORDER } from '../map/map-layers.js';
 import { initMotion } from './motion.js';
+import { initContact } from './contact.js';
 
 // This file is loaded as a module, where document.currentScript is null: the film's bundle is found
 // beside this one through import.meta.url.
@@ -102,9 +104,9 @@ const PALE = 0.45; // the half-way colour: this far from paper towards life gree
 const TONE = { strong: 1, pale: 0.42, faint: 0.1 }; // the key's swatches, as the levels in map-layers.js
 // A name sits at the middle of its state. Where neighbours' names would run into each other, or a
 // name would cover a place too small to be seen under it, these move it, in map units east and south.
-const NAME_NUDGE = { MP: [-4.2, -0.6], CG: [0.3, 2.4], OD: [4.2, 2.6], DL: [5.4, 0.3] };
+const NAME_NUDGE = { MP: [-4.2, -0.6], JH: [2, 0.5], CG: [0.3, 2.4], OD: [4.2, 2.6], DL: [5.4, 0.3] };
 // On a small map the names are no smaller, so they need moving further.
-const NAME_NUDGE_SMALL = { GJ: [-4.5, -0.6], MP: [-1.5, -4.2], MH: [1.5, 1.5], CG: [-1.2, 3.4], OD: [7.2, 4.4], DL: [8.2, 0.4], PB: [-1.5, -1], WB: [5.5, 3] };
+const NAME_NUDGE_SMALL = { GJ: [-4.5, -0.6], MP: [-1.5, -4.2], MH: [1.5, 0.9], JH: [3.5, 2.6], TS: [2, 2.4], CG: [-1.2, 3.4], OD: [7.2, 4.4], DL: [8.2, 0.4], PB: [-1.5, -1], WB: [5.5, 3] };
 const SMALL_MAP = 430; // pixels across, below which the names use the second set
 const NAMES_FROM = 235; // and below which the map is too small to carry more than one name
 
@@ -388,4 +390,5 @@ ready(() => {
   initMap();
   initFilm();
   initMotion();
+  initContact();
 });

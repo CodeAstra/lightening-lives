@@ -1,0 +1,65 @@
+{#- The map of India the reader can question (DESIGN.md, Components, "The map"): the home page's section,
+    shared with Our work. mapSection({ layer, h2, body }): the layer it opens on (sickle, the home
+    page's, unless a page names another), its heading, and a paragraph under the heading where a page
+    has one (Our work, 5.11). Whatever it opens on, the checked choice, the sentence, the key and the
+    still agree, so the page says the same thing before the script runs, after it, and without it;
+    the script (src/js/site/main.js, initMap) reads the checked choice. Import it with context: it
+    reads work (src/site/_data/work.js). -#}
+{%- macro mapSection(options = {}) %}
+{%- set opened = options.layer or "sickle" %}
+{%- set readouts = {
+  sickle: "Sickle cell disease is most common in a belt across central India, from Gujarat to Odisha.",
+  thal: "Thalassaemia is found across India: on average, 3 to 4 people in 100 are carriers. Higher frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal.",
+  work: work.sentence
+} %}
+{%- set layers = [["sickle", "Sickle cell"], ["thal", "Thalassaemia"], ["work", "Our work"]] -%}
+  <section id="map" class="section bg-paper" aria-labelledby="map-h">
+    <div class="wrap map-layout" data-map-layout>
+      <div class="map-words">
+        <h2 id="map-h" class="h2">{{ options.h2 or "Where the need is, and where we work" }}</h2>
+        {%- if options.body %}
+        <p class="map-body">{{ options.body }}</p>
+        {%- endif %}
+        <fieldset class="mt-6">
+          <legend class="sr-only">Show on the map</legend>
+          <div class="seg">
+            {%- for value, name in layers %}
+            <label><input type="radio" name="map-layer" value="{{ value }}"{% if value == opened %} checked{% endif %} data-still="/assets/img/site-map-{{ value }}.webp" data-readout="{{ readouts[value] }}"><span>{{ name }}</span></label>
+            {%- endfor %}
+          </div>
+        </fieldset>
+
+        <!-- What the map says: about the whole country, or about one state once it is picked out -->
+        <div class="map-info" aria-live="polite">
+          <div data-map-country>
+            <p class="map-readout" data-map-readout>{{ readouts[opened] }}</p>
+            <ul class="map-key" data-map-key>
+              {%- for entry in work.keys[opened] %}
+              <li><i class="key key-{{ entry.tone }}"></i>{{ entry.text }}</li>
+              {%- endfor %}
+            </ul>
+          </div>
+          <div class="state-card" data-map-state hidden>
+            <p class="state-title" data-state-title></p>
+            <dl class="state-facts" data-state-facts></dl>
+          </div>
+        </div>
+
+        <p class="map-hint"><span class="hint-point">Point at a state to see what the map says about it.</span><span class="hint-tap">Tap a state to see what the map says about it.</span><span class="hint-select">Select a state to see what the map says about it.</span></p>
+        <details class="map-sources">
+          <summary class="label">Sources</summary>
+          <p>Sickle cell: Hockham et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6283872/" rel="noopener">Scientific Reports (2018)</a>; National Sickle Cell Anaemia Elimination Mission, Ministry of Health and Family Welfare.</p>
+          <p>Thalassaemia: National Health Mission, Guidelines for Prevention and Control of Hemoglobinopathies in India (2016); Mohanty et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3537975/" rel="noopener">Journal of Community Genetics (2013)</a>; Madan et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2927789/" rel="noopener">Indian Journal of Human Genetics (2010)</a>.</p>
+          <p>Indicative only, shown by state: frequencies differ more between communities than between states.</p>
+        </details>
+        <p class="sr-only">Map summary. Sickle cell disease is most common in a belt across central India, running from south-eastern Gujarat through Madhya Pradesh, Maharashtra and Chhattisgarh to south-western Odisha.</p>
+        <p class="sr-only">The National Sickle Cell Anaemia Elimination Mission covers 17 focus states: Gujarat, Maharashtra, Rajasthan, Madhya Pradesh, Jharkhand, Chhattisgarh, West Bengal, Odisha, Tamil Nadu, Telangana, Andhra Pradesh, Karnataka, Assam, Uttar Pradesh, Kerala, Bihar and Uttarakhand.</p>
+        <p class="sr-only">Thalassaemia: found across India, where on average 3 to 4 people in 100 are carriers; higher carrier frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal.</p>
+        <p class="sr-only">{{ work.summary }}</p>
+      </div>
+      <div class="map-figure" data-map>
+        <img class="map-still" data-map-still src="/assets/img/site-map-{{ opened }}.webp" width="1000" height="1000" alt="A map of India with state borders drawn on it. The states the chosen layer marks are shown in green and named." loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+{%- endmacro %}

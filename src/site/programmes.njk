@@ -1,0 +1,176 @@
+---
+title: "Screening, counselling and follow-up programmes | Lightening Lives"
+description: "Lightening Lives runs its tests inside a six-step model: sample collection, transport, testing, reporting, treatment with counselling, and follow-up. Awareness programmes, genetic counselling, support groups and training."
+label: Transform lives
+h1: A test is the middle of the story
+lead: "A result only transforms a life if something happens next. Our testing model goes from finger prick to follow-up, and we run awareness and counselling programmes, mostly for the government."
+notice: true
+closing:
+  h2: Planning a screening programme?
+  body: Tell us the community, the condition and who you are working with.
+  solid: { text: Ask about our programmes, href: /contact/ }
+  line: { text: Partner with us, href: /partnerships/ }
+---
+{#- Programmes (content file 5.10). The layout opens the page (label, h1, lead) and closes it with the
+    band whose words are above, and the notice for individuals (4.4). [TBC] brackets are stripped and
+    the sentence before each is kept; the [PLACEHOLDER] lines under Awareness and Counselling are left
+    out. "Where screening fits" has four rows: the prenatal row is omitted whole until Part 8 item 29
+    closes (prenatal testing is regulated under the PC-PNDT Act). Each account from the field is two
+    paragraphs, split at a sentence (R1); the fourth account, from Jharkhand, is held back (5.10).
+    The six steps carry no pictures: only two of them have a fitting stand-in, and a picture of a
+    report, a treatment or a follow-up would show a patient or put a named centre forward as our work.
+    The place photographs are the home page's, labelled by state (R2), until Our work has entries of
+    its own. The bands alternate back from the closing band's paper, so the first section stays on the
+    opening's mist and continues its sheet. -#}
+{%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' %}
+{%- from "picture.njk" import picture with context %}
+
+  <!-- The testing model: the poster's six steps, in its order and nearly its words -->
+  <section id="testing-model" class="section" aria-labelledby="testing-model-h">
+    <div class="wrap">
+      <h2 id="testing-model-h" class="h2 max-w-[44rem]">Six steps, from the sample to the follow-up</h2>
+      <!-- [html-validate-disable-next no-redundant-role, prefer-native-element: preflight's list-style: none drops the list role in Safari/VoiceOver] -->
+      <ol role="list" class="steps-numbered steps-text mt-12">
+        <li><p><b class="run-in">Sample collection.</b> At a health centre, a school, an anganwadi or a maternity ward: a finger prick, a spot of blood on a card, and the details captured on the app.</p></li>
+        <li><p><b class="run-in">Transport to a nearby testing centre.</b> Cards travel at room temperature, by ordinary courier or post. No cold chain, no ice box.</p></li>
+        <li><p><b class="run-in">Molecular testing.</b> At the testing centre, many cards in one run, with no DNA extraction step.</p></li>
+        <li><p><b class="run-in">Test reporting.</b> Results go back to the clinician and the programme. Affected, carrier or unaffected, each with a next step.</p></li>
+        <li><p><b class="run-in">Patient management through proper treatment.</b> Genetic and social counselling for patients and for carriers, and a path to treatment where it exists.</p></li>
+        <li><p><b class="run-in">Follow-up of patients.</b> Awareness programmes for the community, and patient support groups so that families are not alone with a diagnosis.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Before the test and after it: awareness and counselling, side by side -->
+  <section id="before-and-after" class="section bg-paper" aria-labelledby="awareness-h counselling-h">
+    <div class="wrap">
+      <div class="pair">
+        <div id="awareness">
+          <h2 id="awareness-h" class="h2">Before <span class="whitespace-nowrap">the test:</span> awareness</h2>
+          <p>Awareness programmes explain inherited conditions and screening to communities: what the condition is, how it is passed on, who should be tested and what the test involves.</p>
+          <p>Community screening and awareness camps are run together, so that a camp both explains and tests.</p>
+        </div>
+        <div id="counselling">
+          <h2 id="counselling-h" class="h2">After the result: counselling</h2>
+          <p>Counselling helps families understand a result and their carrier status, and what it means for treatment, for relatives and for the children they may have.</p>
+          <p>For a couple who both carry a condition, it means knowing their options before the next pregnancy. For the family of a child with a muscle condition, it means knowing who else to test.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support groups -->
+  <section id="support-groups" class="section" aria-labelledby="support-groups-h">
+    <div class="wrap">
+      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="support-groups-h" class="h2 lg:col-span-7">Patient support groups</h2>
+        <p class="text-moss lg:col-span-5">A diagnosis is easier to live with among others who have one. We help set up patient support groups in the communities we screen, and work with patient organisations for the conditions we test for.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where screening fits: four rows; the prenatal row waits for Part 8 item 29 -->
+  <section id="where-screening-fits" class="section bg-paper" aria-labelledby="fits-h">
+    <div class="wrap">
+      <h2 id="fits-h" class="h2 max-w-[44rem]">Where screening fits in a life</h2>
+      <ul class="rows mt-10">
+        <li>
+          <h3>At birth</h3>
+          <p>Newborn screening finds a condition before symptoms appear, so that treatment can start on time. Our tests for sickle cell anaemia and SMA can be run from birth.</p>
+        </li>
+        <li>
+          <h3>In the community</h3>
+          <p>Population screening finds the carriers and the affected in a district, a school or a community where a condition runs.</p>
+        </li>
+        <li>
+          <h3>After a diagnosis in the family</h3>
+          <p>Family and carrier screening shows which relatives carry the condition.</p>
+        </li>
+        <li>
+          <h3>Before marriage or conception</h3>
+          <p>Couples learn their carrier status before they plan a family.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Training, and help with setting up: side by side -->
+  <section id="training-and-setting-up" class="section" aria-labelledby="training-h setting-up-h">
+    <div class="wrap">
+      <div class="pair">
+        <div id="training">
+          <h2 id="training-h" class="h2">Training the people who run the tests</h2>
+          <p>We run hands-on workshops in molecular testing for laboratory staff and health workers, help laboratories set up the method, and advise on laboratory set-up and consultancy for hospitals and programmes.</p>
+        </div>
+        <div id="setting-up">
+          <h2 id="setting-up-h" class="h2">Help with <span class="whitespace-nowrap">setting up</span> a programme</h2>
+          <p>We advise hospitals and laboratories on setting up molecular diagnostics, support large screening programmes, and help with the planning of projects and grants: goals, budget, staffing, the laboratory and reviews of progress.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where we have worked: the home page's three place photographs, labelled by state (R2) -->
+  <section id="where-we-have-worked" class="section bg-paper" aria-labelledby="worked-h">
+    <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
+      <div class="lg:col-span-5">
+        <h2 id="worked-h" class="h2">Where we have worked</h2>
+        <p class="lead mt-6">Population and newborn screening at 15 sites across India, with government programmes, hospitals and NGOs.</p>
+        <a class="link mt-4" href="/our-work/">See all our work
+          {{ arrow | safe }}
+        </a>
+      </div>
+      <div class="lg:col-span-7">
+        <div class="fieldwork">
+          {#- As on the home page: the frames are portrait and the pictures 16:10, so sizes gives the
+              drawn width, not the frame's. #}
+          {%- set fieldSizes = "(min-width: 64rem) 28vw, (min-width: 24rem) 58vw, 90vw" %}
+          <figure>
+            {{ picture("place-nandurbar", "A monsoon-green gorge with a thin waterfall dropping down red basalt cliffs at Toranmal, Nandurbar district, Maharashtra.", fieldSizes, { position: "62% 50%" }) }}
+            <figcaption class="label">Maharashtra</figcaption>
+          </figure>
+          <figure>
+            {{ picture("place-kothagudem", "Still water of the Kinnerasani reservoir with a forested island, Bhadradri Kothagudem district, Telangana.", fieldSizes, { position: "58% 50%" }) }}
+            <figcaption class="label">Telangana</figcaption>
+          </figure>
+          <figure>
+            {{ picture("place-jharkhand", "A hill road winding through forest above the Patratu reservoir, Patratu Valley, Jharkhand.", fieldSizes, { position: "36% 50%" }) }}
+            <figcaption class="label">Jharkhand</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- From the field: three accounts, each in two paragraphs (R1) -->
+  <section id="from-the-field" class="section" aria-labelledby="from-the-field-h">
+    <div class="wrap">
+      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="from-the-field-h" class="h2 lg:col-span-7">From the field</h2>
+        <p class="lead lg:col-span-5">Three accounts from our work with institutions. Details that could identify a family have been left out.</p>
+      </div>
+      <ul class="accounts mt-12">
+        <li>
+          <h3 class="h3">A diagnosis at three</h3>
+          <div>
+            <p>A three-year-old boy in a village in Madhya Pradesh was losing strength in his muscles. His family, a long way from any specialist hospital, took it for poor nutrition. An NGO working in the area arranged a molecular test, and the result was Duchenne muscular dystrophy.</p>
+            <p>With a diagnosis at three, the family could begin supportive therapy and join a patient support group, instead of spending years without an answer.</p>
+          </div>
+        </li>
+        <li>
+          <h3 class="h3">Two carriers, one plan</h3>
+          <div>
+            <p>A couple in Chhattisgarh had lost their first child to spinal muscular atrophy without ever learning the cause. During their second pregnancy they were referred to us through a government screening programme. Carrier testing showed that both parents carry the SMA mutation.</p>
+            <p>With counselling and early testing they could plan with full information. They now have a healthy child.</p>
+          </div>
+        </li>
+        <li>
+          <h3 class="h3">What had been called fate</h3>
+          <div>
+            <p>In a village in Odisha, a young couple had watched two children in their extended family live with severe anaemia and repeated infections. Testing showed that both of them carry the sickle cell gene.</p>
+            <p>In their village the illness had been put down to fate. The couple now know what it is, how it is passed on and what their choices are.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>

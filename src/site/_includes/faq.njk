@@ -1,0 +1,18 @@
+{#- Questions we are asked (content file 4.7): faq(items), items an array of { q, a }, renders each as a
+    closed disclosure (.faq, a list of <details>, so it works without script) and the same words as a
+    FAQPage in structured data, whose names and answers are exactly what the page shows. Used on
+    Solutions and Partnerships. Every "<" in the data is written \u003c, so an answer that holds
+    "</script" cannot end the script early; the JSON still parses to the same words. Import it with {% from "faq.njk" import faq %}. -#}
+{%- macro faq(items) -%}
+<div class="faq">
+  {%- set entities = [] %}
+  {%- for item in items %}
+  <details>
+    <summary>{{ item.q }}</summary>
+    <p>{{ item.a }}</p>
+  </details>
+  {%- set entities = entities.concat([{ "@type": "Question", "name": item.q, "acceptedAnswer": { "@type": "Answer", "text": item.a } }]) %}
+  {%- endfor %}
+</div>
+<script type="application/ld+json">{{ { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": entities } | dump | replace("<", "\\u003c") | safe }}</script>
+{%- endmacro %}

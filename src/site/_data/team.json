@@ -1,0 +1,100 @@
+{
+  "founders": [
+    {
+      "name": "Dr. Giriraj Ratan Chandak",
+      "credentials": "MD, PhD, DNB",
+      "role": "Founder and CEO",
+      "slug": "giriraj-ratan-chandak",
+      "photo": "founder-1.jpg",
+      "bio": [
+        "Dr. Chandak is a physician, scientist and medical researcher who works on molecular diagnostics and genetic disorders. He was Chief Scientist at the CSIR-Centre for Cellular and Molecular Biology (CCMB), Hyderabad, and is a founding faculty member and former Director of the Centre for DNA Fingerprinting and Diagnostics (CDFD). His research on genetic disease includes work on sickle cell anaemia among populations in several states that have had little access to testing.",
+        "He is a recipient of the Sir J.C. Bose Fellowship, a Fellow of all four Indian national science academies and of The World Academy of Sciences, and a member of national and international consortia that work on non-communicable diseases such as diabetes and cardiovascular disease. He founded Lightening Lives to develop affordable diagnostic tests that reduce the burden of disease."
+      ]
+    },
+    {
+      "name": "Mrs. Nidhi Chandak",
+      "role": "Co-Founder",
+      "slug": "nidhi-chandak",
+      "photo": "founder-1.jpg",
+      "bio": [
+        "Nidhi Chandak holds an MSc in Operations Research and a postgraduate diploma in Computer Applications. She brings statistical data management and operations planning to the company, and supports the delivery of diagnostic services for musculopathies and haemoglobinopathies. She works directly with patients, families and support groups."
+      ]
+    }
+  ],
+  "team": [
+    {
+      "name": "Mr. Abhishek Chandak",
+      "role": "Head, Finance",
+      "slug": "abhishek-chandak",
+      "photo": "abhishek-chandak.jpg",
+      "bio": [
+        "A finance leader with more than 20 years' experience at PwC, GE, Wipro, SenecaGlobal and Fourth Frontier, in audit and assurance, manufacturing, IT services and start-ups. He was named MSME CFO of the Year by CII Southern Region in 2021, for his work at SenecaGlobal IT Services."
+      ]
+    },
+    {
+      "name": "Ms. Manisha Arumalla",
+      "role": "Scientific Officer",
+      "slug": "manisha-arumalla",
+      "photo": "manisha-arumalla.jpg",
+      "bio": [
+        "A molecular and cell biologist with an MSc in Human Genetics and Genomics from the University of Barcelona, and a background in protein engineering. She spent more than seven years at CCMB, working with Dr. Chandak on the genomics of complex diseases, where she designed experiments, planned projects, managed teams and ran training programmes."
+      ]
+    },
+    {
+      "name": "Ms. Punyasri PSKDB",
+      "role": "Technical Officer",
+      "slug": "punyasri-pskdb",
+      "photo": "punyasri-pskdb.jpg",
+      "bio": [
+        "Holds a BSc in Microbiology, Genetics and Chemistry and an MSc in Nutrition, and has more than seven years' experience in genetic screening, awareness campaigns and field work. She sets up and runs experiments in the laboratory and helps keep the diagnostic process reliable."
+      ]
+    },
+    {
+      "name": "Ms. Mehraj Begum",
+      "role": "Admin and Operations Executive",
+      "slug": "mehraj-begum",
+      "photo": "mehraj-begum.jpg",
+      "bio": [
+        "A commerce graduate who runs the company's administration: materials for the laboratory, social media, and meetings with investors and stakeholders."
+      ]
+    },
+    {
+      "name": "Mr. Pruthvi Bellamkonda",
+      "role": "Accounts Executive",
+      "slug": "pruthvi-bellamkonda",
+      "photo": "pruthvi.png",
+      "bio": [
+        "Looks after the company's day-to-day finances. Holds an MBA in Finance and HR from SK University, Anantapur."
+      ]
+    },
+    {
+      "name": "Jyothi Vislavath",
+      "role": "Technical Officer",
+      "slug": "jyothi-vislavath",
+      "photo": "jyothi.png",
+      "bio": [
+        "A biotechnology graduate with more than nine years in molecular diagnostics: patient counselling, genetic testing and clinical reporting, in government and private healthcare. Has helped develop affordable diagnostic methods for haemoglobinopathies and musculopathies."
+      ]
+    }
+  ],
+  "patron": [
+    {
+      "name": "Dr. D. Nageshwar Reddy",
+      "role": "Founder of AIG Hospitals",
+      "slug": "d-nageshwar-reddy",
+      "photo": "dr-nageswar.png"
+    }
+  ],
+  "advisers": [
+    {
+      "name": "Prof Kalyanaraman Kumaran",
+      "slug": "kalyanaraman-kumaran",
+      "photo": "prof-kalyanaraman.png"
+    },
+    {
+      "name": "Prof GV Krishnaveni",
+      "slug": "gv-krishnaveni",
+      "photo": "prof-krishnaveni.png"
+    }
+  ]
+}

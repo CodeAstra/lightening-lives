@@ -25,7 +25,7 @@ test('leads, bodies, paragraphs and labels keep to the limits on every page', ()
       assert.ok(n <= limit, `${url} ${what} (${n} words): ${text($, e).slice(0, 60)}`);
     });
     over('.page-open .lead, section .lead', 30, 'lead');
-    over('.steps li > p:not(.label), .why p, .kinds p, .test-what > p, .proof p, .audiences p', home ? 25 : 35, 'body');
+    over('.steps li > p:not(.label), .why p, .kinds p, .test-what > p, .proof p, .audiences p, .steps-numbered li p, .rows > :is(li, div) p, .families p:not(.label), .pair p', home ? 25 : 35, 'body');
     over('main p', 60, 'paragraph');
     // A heading set in the label voice is a heading, not a label. The two proof tags are the content
     // file's own wording (4.3), which its R1 revision kept: "Patented in India and Japan" is five.
@@ -41,12 +41,23 @@ test('leads, bodies, paragraphs and labels keep to the limits on every page', ()
 // headings, which mirror each other on purpose (R1); tags, which label rows and repeat by design
 // ("Dried blood spot" on three); links and buttons, which name an action ("Ask about this test" on
 // the two rows whose pages are not open yet, content 5.1); and what is hidden from the eye.
+// A run of text ends wherever an element begins or ends (a heading, a paragraph, a list item, a
+// table cell), except the text-level elements that sit inside a sentence (PHRASING). A span is part
+// of its sentence where it sits in running text ("How <span>LitLife™</span> compares…"); where its
+// parent holds no text of its own (a cell's name and line, the map's three hints) or it is a label,
+// it is a line of its own. Only sentences are counted, text that ends in . ? or !: a table's values
+// ("Cold chain", "Yes") and headings repeat by design.
+const PHRASING = new Set(['a', 'abbr', 'b', 'br', 'cite', 'code', 'em', 'i', 'mark', 'q', 's', 'small', 'strong', 'sub', 'sup', 'time', 'u', 'wbr']);
+const inRunningText = ($, e) => e.tagName === 'span' && !$(e).is('.label')
+  && $(e).parent().contents().toArray().some((node) => node.type === 'text' && node.data.trim());
 function sentences($) {
   const main = $('main').clone();
   main.find('.film-captions, #how h3, .tags, .tag, a, button, .sr-only, [aria-hidden="true"], script, template').remove();
-  // Block elements end a sentence even where the copy has no full stop (a heading, a list item).
-  main.find('h1, h2, h3, h4, p, li, dt, dd, figcaption, summary, label').each((i, e) => { $(e).append(' ¶ '); });
-  return main.text().replace(/\s+/g, ' ').split(/(?<=[.?!])\s+|\s*¶\s*/).map((s) => s.trim()).filter((s) => words(s) >= 4);
+  // Decided for every element before any mark is added, since a mark is text in its parent.
+  const ends = main.find('*').toArray().filter((e) => !PHRASING.has(e.tagName) && !inRunningText($, e));
+  for (const e of ends) $(e).prepend(' ¶ ').append(' ¶ ');
+  return main.text().replace(/\s+/g, ' ').split(/(?<=[.?!])\s+|\s*¶\s*/).map((s) => s.trim())
+    .filter((s) => /[.?!]$/.test(s) && words(s) >= 4);
 }
 
 test('no sentence twice on a page, the film captions and step headings aside', () => {

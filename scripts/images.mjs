@@ -4,8 +4,12 @@
 //   2. Every photograph in src/images-src (jpg or png, at most 2400 px on its long side) is cropped
 //      where CROPS says, then written to src/assets/img as <name>-640.webp, <name>-1280.webp and,
 //      when the picture is at least 1920 px wide, <name>-1920.webp: quality 80, metadata stripped.
-//   3. src/site/_data/images.json (the widths and the 640's height, read by picture.njk) and
-//      src/site/_data/credits.json (the table in src/assets/img/CREDITS.md, read by the footer).
+//      The company's own pictures (names starting box- or person-: the boxes, the portraits) are
+//      small, and are never upscaled: each is written at the widths above that it is wide enough
+//      for and, below 1280, at its own width as the widest, so that a source under 640 px is written
+//      once, at its own width. Every file is named by its true width. They need no credit.
+//   3. src/site/_data/images.json (the widths and the height of the narrowest, read by picture.njk)
+//      and src/site/_data/credits.json (the table in src/assets/img/CREDITS.md, read by the footer).
 // A file is written only when its bytes change, so running it twice changes nothing.
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
@@ -38,6 +42,18 @@ const CROPS = {
   'method-paper': { left: 0.16 }, // part of the card's printed serial number, a sample code
 };
 const WIDTHS = [640, 1280, 1920];
+const OWN = /^(box|person)-/; // the company's own pictures, not stand-ins
+
+// The widths a picture of a given width is written at.
+function widthsFor(name, width) {
+  if (!OWN.test(name)) {
+    if (width < 1280) throw new Error(`${name} is ${width} px wide: a source needs at least 1280`);
+    return WIDTHS.filter((w) => w <= 1280 || width >= w);
+  }
+  const widths = WIDTHS.filter((w) => w <= width);
+  if (width < 1280 && !widths.includes(width)) widths.push(width);
+  return widths;
+}
 
 const manifest = {};
 const sources = readdirSync(at('src/images-src')).filter((f) => /\.(jpe?g|png)$/i.test(f)).sort();
@@ -57,17 +73,18 @@ for (const file of sources) {
     region = { left: x, top: Math.round((height - h) * y), width, height: h };
     height = h;
   }
-  if (width < 1280) throw new Error(`${file} is ${width} px wide: a source needs at least 1280`);
-  const widths = WIDTHS.filter((w) => w <= 1280 || width >= w);
-  let height640;
+  const widths = widthsFor(name, width);
+  let firstHeight;
   for (const w of widths) {
     let image = sharp(input).rotate();
     if (region) image = image.extract(region);
-    const { data, info } = await image.resize({ width: w }).webp({ quality: 80, effort: 5 }).toBuffer({ resolveWithObject: true });
+    if (w < width) image = image.resize({ width: w }); // at its own width it is written as it is
+    const { data, info } = await image.webp({ quality: 80, effort: 5 }).toBuffer({ resolveWithObject: true });
+    if (info.width !== w) throw new Error(`${name}-${w}.webp came out ${info.width} px wide`);
     put(`src/assets/img/${name}-${w}.webp`, data);
-    if (w === 640) height640 = info.height; // what was written, not a sum that can round the other way
+    if (w === widths[0]) firstHeight = info.height; // what was written, not a sum that can round the other way
   }
-  manifest[name] = { widths, height640 };
+  manifest[name] = { widths, height: firstHeight };
 }
 put('src/site/_data/images.json', `${JSON.stringify(manifest, null, 2)}\n`);
 
@@ -92,7 +109,7 @@ for (const line of readFileSync(at('src/assets/img/CREDITS.md'), 'utf8').split('
     changes: changes === '-' ? '' : changes,
   });
 }
-for (const name of Object.keys(manifest)) {
+for (const name of Object.keys(manifest).filter((n) => !OWN.test(n))) {
   if (!rows.some((r) => r.basename === name)) throw new Error(`src/images-src/${name} has no row in src/assets/img/CREDITS.md`);
 }
 put('src/site/_data/credits.json', `${JSON.stringify(rows, null, 2)}\n`);

@@ -16,7 +16,7 @@
     "social": "node scripts/social.mjs",
     "sweep": "node scripts/sweep.mjs",
     "pretest": "npm run build",
-    "test": "node --test --test-concurrency=1 \"tests/*.test.mjs\""
+    "test": "node --test --test-concurrency=1 \"tests/*.test.mjs\" \"tests/pages/*.test.mjs\""
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1",

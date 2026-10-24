@@ -1,0 +1,96 @@
+---
+title: "Partner with us | Lightening Lives"
+description: "How hospitals, laboratories, government programmes, NGOs and CSR funders work with Lightening Lives on genetic screening and diagnosis, and who it already works with."
+label: Partner with us
+h1: Most of our work begins as a collaboration
+lead: "You bring the condition you need to screen for or diagnose. We bring the test, the method, the training and the counselling that follows a result."
+notice: true
+closing:
+  h2: Tell us what your programme needs
+  body: Choose where you would like to begin.
+  actions: true
+---
+{#- Partnerships (content file 5.14). The layout opens the page (label, h1, lead) and closes it with the
+    band above, whose four contact actions stand in the two buttons' place (src/site/_data/actions.json,
+    shared with the home page and Contact), and the notice for individuals (4.4). [TBC] brackets are
+    stripped and the sentence before each kept; the note under the steps (Part 8 item 36) is for the
+    company and does not render. The collaborators are typeset from src/site/_data/collaborators.json:
+    no logos without written permission (Part 8 item 25). The page has no photographs: a picture of a
+    centre or a camp here would read as a partner. The bands alternate back from the closing band's
+    paper, so the first section is a paper band of its own. -#}
+{%- from "faq.njk" import faq %}
+
+  <!-- How we partner with you: the brochure's four ways, as four columns -->
+  <section id="how-we-partner" class="section bg-paper" aria-labelledby="how-we-partner-h">
+    <div class="wrap">
+      <h2 id="how-we-partner-h" class="h2 max-w-[44rem]">How we partner with you</h2>
+      <ul class="audiences four-up mt-12">
+        <li>
+          <h3 class="h3">Community screening and awareness camps</h3>
+          <p>For district programmes, NGOs and CSR funders: screening a community where a condition runs, and explaining the condition while we do.</p>
+        </li>
+        <li>
+          <h3 class="h3">Patient, carrier and newborn testing</h3>
+          <p>For hospitals, laboratories and clinicians: the test for the patient in front of you, the family around them, and the newborn in the ward.</p>
+        </li>
+        <li>
+          <h3 class="h3">Genetic counselling for families</h3>
+          <p>For every programme: counselling for patients and carriers, and support groups for the families a programme finds.</p>
+        </li>
+        <li>
+          <h3 class="h3">Laboratory <span class="whitespace-nowrap">set-up,</span> training and consultancy</h3>
+          <p>For laboratories adopting the method: equipment advice, hands-on training, and help planning a programme or a grant.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- How a collaboration starts: four steps in words alone, the step's title run in as written -->
+  <section id="how-it-starts" class="section" aria-labelledby="how-it-starts-h">
+    <div class="wrap">
+      <h2 id="how-it-starts-h" class="h2 max-w-[44rem]">How a collaboration starts</h2>
+      <!-- [html-validate-disable-next no-redundant-role, prefer-native-element: preflight's list-style: none drops the list role in Safari/VoiceOver] -->
+      <ol role="list" class="steps-numbered steps-text four-up mt-12">
+        <li><p><b class="run-in">You tell us the condition and the setting.</b> Who will be tested, roughly how many, where samples will be collected and which laboratory will run them.</p></li>
+        <li><p><b class="run-in">We agree the scope.</b> What the test must detect, how results will be reported and monitored, and what training and counselling the programme needs.</p></li>
+        <li><p><b class="run-in">We develop the test, or adapt one we have.</b></p></li>
+        <li><p><b class="run-in">We train your team and stay with the programme,</b> through reporting, counselling and follow-up.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Our collaborators: the names typeset, then the approval -->
+  <section id="collaborators" class="section bg-paper" aria-labelledby="collaborators-h">
+    <div class="wrap">
+      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-end">
+        <h2 id="collaborators-h" class="h2 lg:col-span-7">Our collaborators</h2>
+        <p class="lead lg:col-span-5">Organisations we work with.</p>
+      </div>
+      <ul class="collaborators mt-12">
+        {%- for name in collaborators %}
+        <li>{{ name }}</li>
+        {%- endfor %}
+      </ul>
+      <div class="rows mt-12">
+        <div>
+          <h3>Approved by <span class="hl">ICMR</span></h3>
+          <p>LitLife™-SCA, our sickle cell test, is approved by the Indian Council of Medical Research.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Questions we are asked -->
+  <section id="faq" class="section" aria-labelledby="faq-h">
+    <div class="wrap grid gap-10 lg:grid-cols-12 lg:gap-16">
+      <h2 id="faq-h" class="h2 lg:col-span-5">Questions we are asked</h2>
+      <div class="lg:col-span-7">
+        {{ faq([
+          { q: "We are an NGO with no laboratory. Can we still run screening?", a: "Yes. Cards travel at room temperature to a nearby testing centre, so the laboratory need not be yours. Tell us where you plan to screen and we will say how the samples would be tested." },
+          { q: "We are a hospital laboratory. What would it take to run the tests ourselves?", a: "A thermal cycler, a gel tank and a punch, and staff who have run PCR or have been trained. We help set the method up." },
+          { q: "What happens to the families a programme identifies?", a: "Counselling for patients and carriers, a path to treatment where it exists, and support groups. That is part of the programme, not an extra." },
+          { q: "Do you work with CSR funders?", a: "Yes. Most population-level screening is funded that way or by government. Tell us the community and the condition, and we will propose a programme." }
+        ]) }}
+      </div>
+    </div>
+  </section>

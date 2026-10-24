@@ -1,0 +1,82 @@
+[
+  {
+    "family": "Haemoglobinopathy",
+    "name": "LitLife™-SCA",
+    "for": "Screening and confirmation of sickle cell anaemia",
+    "sample": "Dried blood spot",
+    "status": "Approved by ICMR; patented in India and Japan; used at 15 sites",
+    "page": "5.4"
+  },
+  {
+    "family": "Haemoglobinopathy",
+    "name": "LitLife™-SiBThal217",
+    "for": "Diagnosis of sickle cell anaemia and beta thalassaemia",
+    "sample": "Dried blood spot",
+    "status": "Available; used at 3 sites",
+    "page": "5.5"
+  },
+  {
+    "family": "Haemoglobinopathy",
+    "name": "LitLife™-BThal",
+    "for": "Diagnosis of beta thalassaemia",
+    "sample": "Dried blood spot",
+    "status": "Available; used at 2 sites",
+    "page": "5.5"
+  },
+  {
+    "family": "Haemoglobinopathy",
+    "name": "LitLife™-AlphaThal",
+    "for": "Diagnosis of alpha thalassaemia",
+    "sample": "Dried blood spot",
+    "status": "Available",
+    "page": "5.5"
+  },
+  {
+    "family": "Haemoglobinopathy",
+    "name": "HbD testing",
+    "for": "The HbD variant",
+    "status": "Available",
+    "page": "5.5"
+  },
+  {
+    "family": "Haemoglobinopathy",
+    "name": "HbE testing",
+    "for": "The HbE variant",
+    "status": "Available",
+    "page": "5.5"
+  },
+  {
+    "family": "Musculopathy",
+    "name": "LitLife™-SMA",
+    "for": "Screening and confirmation of spinal muscular atrophy",
+    "sample": "Dried blood spot",
+    "status": "Available",
+    "page": "5.6"
+  },
+  {
+    "family": "Musculopathy",
+    "for": "Duchenne muscular dystrophy",
+    "status": "Solution exists",
+    "page": "5.7"
+  },
+  {
+    "family": "Musculopathy",
+    "for": "Limb-girdle muscular dystrophy",
+    "status": "Solution exists",
+    "page": "5.8"
+  },
+  {
+    "family": "In development",
+    "name": "Blood coagulation panel",
+    "for": "Inherited bleeding disorders",
+    "status": "Coming soon",
+    "page": "5.9"
+  },
+  {
+    "family": "In development",
+    "name": "Pharmacogenomics",
+    "for": "Response to medicines",
+    "status": "Coming soon",
+    "page": "5.9"
+  }
+]

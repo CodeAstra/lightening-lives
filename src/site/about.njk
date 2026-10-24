@@ -1,0 +1,104 @@
+---
+title: About Lightening Lives
+description: "Lightening Lives LLP is a Hyderabad healthcare technology company founded by Dr. Giriraj Ratan Chandak, formerly of CSIR-CCMB, to make genetic diagnosis reach everyone. Patented in India and Japan; approved by ICMR."
+label: About
+h1: A genetic diagnosis should not depend on where you live
+lead: "Lightening Lives is an innovation-driven healthcare technology company in Hyderabad. We develop genetic tests that work outside specialised laboratories, so that diagnosis can reach everyone."
+---
+{#- About (content file 5.12). The layout opens the page (label, h1, lead) and closes it with 4.5's
+    closing band; About has no notice. [TBC] brackets are stripped and the sentence before each kept;
+    the [PLACEHOLDER] lines (the founding year, the LLP identification number) are left out. The
+    founders have one joint portrait, shown once beside their two entries; their bios are team.json's,
+    Dr. Chandak's first paragraph split at a sentence (R1). The evidence is the home page's own
+    include. The vision keeps the company's words, "a single drop of blood", its one permitted use
+    (5.1). The bands alternate back from the closing band's paper, so the first section stays on the
+    opening's mist and continues its sheet; the mission and vision are the sprout band, as on home. -#}
+{%- from "picture.njk" import picture with context %}
+{%- from "person.njk" import person with context %}
+{%- from "proof.njk" import evidence %}
+
+  <!-- How the company began: three paragraphs; the founding year waits for the company -->
+  <section id="how-it-began" class="section" aria-labelledby="began-h">
+    <div class="wrap grid gap-8 lg:grid-cols-12 lg:gap-16">
+      <h2 id="began-h" class="h2 lg:col-span-5">How the company began</h2>
+      <div class="story lg:col-span-7">
+        <p>Lightening Lives grew out of more than 25 years of work in genetic and molecular diagnostics, alongside clinicians, the health ministry and its district health authorities, NGOs, universities and companies.</p>
+        <p>Over those years one thing kept showing. The people who most need a genetic diagnosis are often the least likely to get one, because the test needs a laboratory, equipment and specialists that their district does not have.</p>
+        <p>We started the company to develop tests that do not need them. The first, for sickle cell anaemia, was built for the National Sickle Cell Anaemia Elimination Mission, approved by ICMR, and patented in India and Japan. More have followed, for the other haemoglobinopathies and for the musculopathies.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why, how and what: three columns -->
+  <section id="why-how-what" class="section bg-paper" aria-labelledby="why-how-what-h">
+    <div class="wrap">
+      <h2 id="why-how-what-h" class="h2 max-w-[44rem]">Why, how and what, in that order</h2>
+      <ul class="audiences mt-12">
+        <li>
+          <h3 class="h3">Why</h3>
+          <p>The burden of genetic disorders is large, and testing is hard to reach: too far, too slow, too costly, too dependent on infrastructure. A different kind of test can change that.</p>
+        </li>
+        <li>
+          <h3 class="h3">How</h3>
+          <p>By making genetic and molecular tests robust, simple, affordable and easy to use, with a sample that is easy to take, a result that needs no second test, and results that come back quickly.</p>
+        </li>
+        <li>
+          <h3 class="h3">What</h3>
+          <p>Tests that make early diagnosis practical, newborn screening above all, so that treatment starts on time. And tests that make carrier screening and counselling routine, so that fewer families meet a genetic disorder unprepared.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Mission and vision: the home page's vision band, with the mission above the vision -->
+  <section id="mission-and-vision" class="vision" aria-labelledby="mission-h vision-h">
+    <div class="wrap">
+      <div>
+        <h2 id="mission-h" class="label">Our mission</h2>
+        <p class="vision-line">To make molecular diagnosis accessible to all by developing innovative REASSURED genetic tests, with simple, affordable, minimally invasive sample collection and a quick turnaround for results.</p>
+      </div>
+      <div class="mt-12 lg:mt-16">
+        <h2 id="vision-h" class="label">Our vision</h2>
+        <p class="vision-line">To make precision genetic diagnosis accessible to every individual, through innovative technologies that need only a single drop of blood.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founders: one portrait of both, beside their two entries -->
+  <section id="founders" class="section" aria-labelledby="founders-h">
+    <div class="wrap">
+      <h2 id="founders-h" class="h2">Founders</h2>
+      <div class="founders mt-12">
+        <div class="founders-photo">
+          {{ picture("person-founders", "Dr. Giriraj Ratan Chandak and Mrs. Nidhi Chandak", "(min-width: 40rem) 20rem, 90vw") }}
+        </div>
+        <ul class="people people-one">
+          {{ person(team.founders[0], { bio: true }) }}
+          {{ person(team.founders[1], { bio: true }) }}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- The company in brief: a table; the registration row waits for the LLP number -->
+  <section id="in-brief" class="section bg-paper" aria-labelledby="in-brief-h">
+    <div class="wrap">
+      <h2 id="in-brief-h" class="h2 max-w-[44rem]">The company in brief</h2>
+      <table class="facts mt-10" aria-labelledby="in-brief-h">
+        <tbody>
+          <tr><th scope="row">Name</th><td>{{ site.legalName }}</td></tr>
+          <tr><th scope="row">What it is</th><td>A limited liability partnership. An innovation-driven healthcare technology company</td></tr>
+          <tr><th scope="row">What it does</th><td>Develops molecular diagnostics for inherited conditions, and builds them into solutions for institutions</td></tr>
+          <tr><th scope="row">Who it works with</th><td>Hospitals, laboratories, clinicians, government health programmes, NGOs and CSR funders</td></tr>
+          <tr><th scope="row">Approvals and patents</th><td><span class="whitespace-nowrap">LitLife™-SCA</span> approved by ICMR. Patents granted in India and Japan; a patent published internationally</td></tr>
+          <tr><th scope="row">Where its tests are made</th><td>In India, by a third-party manufacturer that holds a quality certification</td></tr>
+          {%- for key, a in site.addresses %}
+          <tr><th scope="row">{{ a.label }}</th><td>{{ a.street }}, {{ a.locality }}, {{ a.region }} {{ a.postcode }}</td></tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Evidence and links: the home page's four items, then Meet the team and Who we work with -->
+  {{ evidence([{ text: "Meet the team", href: "/about/team/" }, { text: "Who we work with", href: "/partnerships/" }]) }}

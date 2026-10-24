@@ -12,14 +12,6 @@ const DOMAIN = 'https://lighteninglives.in';
 // Addresses the site already links to whose pages or files later phases build (content 3.1). Each
 // leaves this list in the task that builds it; the last test fails if one is built and still listed.
 const PENDING = new Map([
-  ['/technology/', 'Phase 4, Task 4.1'],
-  ['/solutions/', 'Phase 4, Task 4.2'],
-  ['/programmes/', 'Phase 4, Task 4.3'],
-  ['/partnerships/', 'Phase 4, Task 4.4'],
-  ['/about/', 'Phase 4, Task 4.5'],
-  ['/about/team/', 'Phase 4, Task 4.5'],
-  ['/contact/', 'Phase 4, Task 4.6'],
-  ['/our-work/', 'Phase 4, Task 4.7'],
   ['/solutions/sickle-cell-anaemia/', 'Phase 5, Task 5.1'],
   ['/solutions/thalassaemia/', 'Phase 5, Task 5.2'],
   ['/solutions/spinal-muscular-atrophy/', 'Phase 5, Task 5.3'],
