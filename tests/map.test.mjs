@@ -1,9 +1,11 @@
-// The map's "Our work" layer and the film's pins: the fifteen sites of content 6.1, the state lines and
-// the sentence of 6.2, projected onto the map the way its first pins were.
+// The map's "Our work" layer and the film's labels: the fifteen sites of content 6.1 as the record, and
+// on the map and in the film the nine states and Delhi they lie in, with the lines and sentence of 6.2
+// (R2: places by state, no town pins).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { LAYERS, WORK, chip, said } from '../src/js/map/map-layers.js';
-import { GRID, PLACES, RUNS } from '../src/js/map/india-cells.js';
+import { readFileSync } from 'node:fs';
+import { LAYERS, WORK, chip, said, stateChip } from '../src/js/map/map-layers.js';
+import { GRID, LABELS, PLACES, RUNS } from '../src/js/map/india-cells.js';
 import { STATES } from '../src/js/map/india-states.js';
 import { load } from './helpers.mjs';
 
@@ -20,19 +22,20 @@ const COLUMNS = {
   'Sickle-beta thal. newborn': ['Nandurbar'],
   'Beta thal. population': ['Nandurbar', 'Kothagudem'],
 };
-// Content 6.2: what the state panel says under "Our work".
+// Content 6.2: what the state panel says under "Our work", naming the state's screening, not its towns.
 const LINES = {
-  'Delhi': 'Population screening for sickle cell anaemia in Delhi.',
-  'Rajasthan': 'Population and newborn screening for sickle cell anaemia in Udaipur.',
-  'Madhya Pradesh': 'Population screening for sickle cell anaemia in Bhopal.',
-  'Jharkhand': 'Population screening for sickle cell anaemia in Jamshedpur.',
-  'Chhattisgarh': 'Population screening for sickle cell anaemia in Bilaspur.',
-  'Maharashtra': 'Population and newborn screening for sickle cell anaemia in Nagpur, newborn screening in Dhule, population screening in Chandrapur and Mumbai. In Nandurbar: population screening for sickle cell anaemia, population and newborn screening for sickle-beta thalassaemia, and population screening for beta thalassaemia.',
-  'Gujarat': 'Population screening for sickle cell anaemia and sickle-beta thalassaemia in Valsad.',
-  'Telangana': 'Our laboratory and office, in Hyderabad, and population screening for sickle cell anaemia there. In Kothagudem: population screening for sickle cell anaemia, sickle-beta thalassaemia and beta thalassaemia.',
-  'Karnataka': 'Population screening for sickle cell anaemia in Mysore.',
-  'Tamil Nadu': 'Population screening for sickle cell anaemia in Gudalur.',
+  'Delhi': 'Population screening for sickle cell anaemia.',
+  'Rajasthan': 'Population and newborn screening for sickle cell anaemia.',
+  'Madhya Pradesh': 'Population screening for sickle cell anaemia.',
+  'Jharkhand': 'Population screening for sickle cell anaemia.',
+  'Chhattisgarh': 'Population screening for sickle cell anaemia.',
+  'Maharashtra': 'Population and newborn screening for sickle cell anaemia and for sickle-beta thalassaemia, and population screening for beta thalassaemia, at five sites.',
+  'Gujarat': 'Population screening for sickle cell anaemia and sickle-beta thalassaemia.',
+  'Telangana': 'Our laboratory and office, and population screening for sickle cell anaemia, sickle-beta thalassaemia and beta thalassaemia, at two sites.',
+  'Karnataka': 'Population screening for sickle cell anaemia.',
+  'Tamil Nadu': 'Population screening for sickle cell anaemia.',
 };
+const TOWNS = /Delhi to|Udaipur|Bhopal|Jamshedpur|Bilaspur|Nandurbar|Nagpur|Dhule|Valsad|Chandrapur|Mumbai|Kothagudem|Hyderabad\b(?!, Telangana)|Mysore|Gudalur/;
 const stateName = (id) => STATES.find((s) => s.id === id)?.n;
 
 test('fifteen sites in the order of 6.1', () => {
@@ -48,15 +51,26 @@ test('what was screened at each site is 6.1, column by column, and nothing else'
   for (const p of WORK) for (const s of p.screened) assert.ok(s in COLUMNS, `${p.name}: ${s}`);
 });
 
-test('the Our work layer says 6.2 for each state with a site, and nothing for any other', () => {
-  for (const state of STATES) {
-    const line = LINES[state.n] ?? '';
-    assert.equal(LAYERS.work.note(state.id), line, state.n);
-    assert.equal(LAYERS.work.level(state.id) > 0, Boolean(line), state.n);
-  }
-  assert.match(LAYERS.work.states.MH, /Nandurbar: population screening for sickle cell anaemia, population and newborn screening for sickle-beta thalassaemia/);
-  assert.equal(LAYERS.work.sentence, 'Our laboratory is in Hyderabad. We have run population and newborn screening at 15 sites across India, from Delhi to Gudalur.');
-  assert.match(LAYERS.work.sentence, /15 sites across India, from Delhi to Gudalur/);
+test('the Our work layer marks the nine states and Delhi, as the other layers mark theirs, and says 6.2', () => {
+  const marked = STATES.filter((state) => LAYERS.work.level(state.id) > 0).map((state) => state.id);
+  assert.deepEqual(marked.sort(), ['DL', 'RJ', 'MP', 'JH', 'CG', 'MH', 'GJ', 'TS', 'KA', 'TN'].sort());
+  // Fully, as the other two layers mark their strongest states: so each is named on the map.
+  for (const id of marked) assert.equal(LAYERS.work.level(id), 1, id);
+  for (const state of STATES) assert.equal(LAYERS.work.note(state.id), LINES[state.n] ?? '', state.n);
+  for (const line of Object.values(LAYERS.work.states)) assert.doesNotMatch(line, TOWNS);
+  assert.equal(LAYERS.work.sentence, 'Our laboratory is in Hyderabad, Telangana. We have run population and newborn screening at 15 sites in nine states and Delhi.');
+  // No pins for towns: the layer marks states only, and the page's script draws no pins.
+  assert.equal(LAYERS.work.places, 0);
+  assert.doesNotMatch(readFileSync('src/js/site/main.js', 'utf8'), /map-pins|PLACES/);
+});
+
+test('a state\'s chip names it and what was screened there, in the shortest form (6.2)', () => {
+  assert.equal(stateChip('MH'), 'Maharashtra · SCA, sickle-beta thal., beta thal. · population and newborn');
+  assert.equal(stateChip('TS'), 'Telangana · Laboratory · SCA, sickle-beta thal., beta thal. · population');
+  assert.equal(stateChip('RJ'), 'Rajasthan · SCA · population and newborn');
+  assert.equal(stateChip('GJ'), 'Gujarat · SCA, sickle-beta thal. · population');
+  assert.equal(stateChip('DL'), 'Delhi · SCA · population');
+  assert.equal(stateChip('UP'), '', 'a state with no site has no chip');
 });
 
 test('the sites are placed on the map as its first pins were', () => {
@@ -92,15 +106,17 @@ test('a pin\'s chip says what was screened in the shortest form, and its name sa
   assert.equal(said(site('Dhule')), 'Dhule, Maharashtra: newborn screening for sickle cell anaemia.');
 });
 
-test('the home page says what the map\'s script says, and the film names Hyderabad and four sites', () => {
+test('the home page says what the map\'s script says, and the film names five states (R2)', () => {
   const $ = load('/');
   assert.equal($('#map input[value=work]').attr('data-readout'), LAYERS.work.sentence);
-  const named = $('.hero [data-places] [data-place]').map((i, li) => li.attribs['data-place']).get();
-  assert.equal(named.length, 5);
-  assert.ok(named.includes('hyderabad'));
-  for (const id of named) assert.ok(PLACES.some((p) => p.id === id), id);
-  $('.hero [data-places] [data-place]').each((i, li) => {
-    const place = PLACES.find((p) => p.id === li.attribs['data-place']);
-    assert.equal($(li).find('b').contents().first().text().trim(), place.name);
-  });
+  const named = $('.hero [data-places] [data-place]').map((i, li) => [[li.attribs['data-place'], $(li).find('b').contents().first().text().trim()]]).get();
+  assert.deepEqual(named, [['DL', 'Delhi'], ['MH', 'Maharashtra'], ['JH', 'Jharkhand'], ['TS', 'Telangana'], ['TN', 'Tamil Nadu']]);
+  // Each label is placed on its own state.
+  const cells = [];
+  RUNS.forEach((row, r) => { for (let i = 0; i < row.length; i += 3) for (let c = row[i]; c <= row[i + 1]; c += 1) cells.push({ x: GRID.x0 + (c + 0.5) * GRID.pitchX, z: GRID.z0 + (r + 0.5) * GRID.pitchZ, state: STATES[row[i + 2]].id }); });
+  for (const [id] of named) {
+    const label = LABELS.find((l) => l.id === id);
+    assert.ok(label, id);
+    assert.ok(cells.some((c) => c.state === id && Math.hypot(c.x - label.x, c.z - label.z) < 0.8), `${id}'s label is not on ${stateName(id)}`);
+  }
 });

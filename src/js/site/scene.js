@@ -32,7 +32,7 @@ import {
 // this bundle, so the canvas that draws it stays same-origin and the site ships no extra file.
 import logoUrl from './logo-768.png';
 // The map's data: one list of states, places and what the company does where.
-import { GRID, PLACES, RUNS } from '../map/india-cells.js';
+import { GRID, LABELS, PLACES, RUNS } from '../map/india-cells.js';
 import { STATES } from '../map/india-states.js';
 import { LAYERS } from '../map/map-layers.js';
 
@@ -80,12 +80,15 @@ const KEY = { from: new Vector3(-1.5, 2.7, 1.9), intensity: 1.75 };
 const SKY = Math.PI - KEY.intensity * (KEY.from.y / KEY.from.length());
 
 // Where the subject sits in the film's frame. `across` and `up` are the shares of the available
-// width and height it may fill, `at` is how far across that width its centre sits, and `shiftY`
-// moves it up by that share of the height. In the wide layout the film fills the whole opening
-// with the text over its left side, and the available width is the page's own centred column; the
-// subject sits a little low, clear of the header.
-const WIDE = { across: 0.8, at: 0.74, up: 0.79, shiftY: -0.032 };
-const NARROW = { across: 0.9, at: 0.5, up: 0.86, shiftY: 0 }; // the film in a frame of its own, text above and below
+// width and height it may fill, centred in that width, and `shiftY` moves it up by that share of the
+// height. In the wide layout the film fills the whole opening with the text over its left side, and
+// the available width is the room the text leaves: from the text's widest line, plus `GAP` root ems,
+// to the right edge of the page's column (R3: the map once ran under the text on wide screens, where
+// a fixed share of the column was used). The subject sits a little low, clear of the header.
+const WIDE = { across: 0.96, up: 0.79, shiftY: -0.032 };
+const NARROW = { across: 0.9, up: 0.86, shiftY: 0 }; // the film in a frame of its own, text above and below
+const GAP = 4.5; // rem between the text's widest line and the subject's room: the page's veil is solid
+// for 3rem past that line and gone by 5rem (site.css, .hero-veil)
 
 // The camera's one take. Each row is where the camera is at that second (`at`); between rows it
 // follows a smooth curve through them (see `curve`), so it has no stop to arrive at or to leave: it
@@ -369,6 +372,7 @@ function init(root) {
   const filmRoot = root.querySelector('[data-film]');
   const mount = root.querySelector('[data-film-screen]');
   const pageColumn = root.querySelector('[data-frame]');
+  const heroText = root.querySelector('[data-hero-text]');
   const placeList = root.querySelector('[data-places]');
   const placeLabels = new Map([...root.querySelectorAll('[data-place]')].map((el) => [el.dataset.place, el]));
   const toggle = root.querySelector('[data-film-toggle]');
@@ -569,16 +573,11 @@ function init(root) {
   cards.geometry.setAttribute('aSeed', new InstancedBufferAttribute(seeds, 1));
   scene.add(cards);
 
-  // How strongly each card is marked once the cards are a map: the states the company works in are
-  // tinted a little, and the cards round each place it works glow.
+  // How strongly each card is marked once the cards are a map: the nine states and Delhi where the
+  // company has worked, as the map's Our work layer marks them (R2: states, not towns). 0.9 is the
+  // map's own MARK, so the film's end and the map below agree.
   const marked = new Float32Array(field.length);
-  field.forEach((cell, index) => { marked[index] = LAYERS.work.states[STATES[cell.state].id] ? 0.27 : 0; });
-  PLACES.forEach((place) => {
-    field.forEach((cell, index) => {
-      const distance = Math.hypot(cell.x - place.x, cell.z - place.z);
-      if (distance < 1.9) marked[index] = Math.max(marked[index], 1 - smooth(clamp((distance - 0.7) / 1.2, 0, 1)) * 0.75);
-    });
-  });
+  field.forEach((cell, index) => { marked[index] = LAYERS.work.level(STATES[cell.state].id) * 0.9; });
 
   // --- The open card: back, filter paper, pocket, and a cover hinged at the top edge ---
   const card = new Group();
@@ -762,9 +761,9 @@ function init(root) {
   const tint = new Color();
   const painted = { glow: -1, far: -1 };
   // Up close a card is paper. From far away the field turns meadow blue so the map reads against
-  // the page, and the cards that are marked turn sun amber. Half-way to the sun is a pale amber, not
-  // the khaki that mixing amber straight into blue gives: a marked card is lightened first and
-  // warmed after, as the map on the page is.
+  // the page, and the cards that are marked turn life green (--sun). Half-way there is a pale mint
+  // (#B6F3DB), not a third blue-green: a marked card is lightened first and moved to green
+  // after, as the map on the page is.
   const PALE = 0.45; // the half-way colour: this far from white towards the sun
   function paintField(glow, far, force) {
     if (!force && Math.abs(glow - painted.glow) < 0.004 && Math.abs(far - painted.far) < 0.004) return;
@@ -779,7 +778,7 @@ function init(root) {
     for (let index = 0; index < field.length; index += 1) {
       const mark = marked[index] * glow;
       const shade = baseTint[index];
-      const t = Math.min(mark, 0.5) * 2; // the way to the pale amber
+      const t = Math.min(mark, 0.5) * 2; // the way to the pale mint
       const u = Math.max(mark - 0.5, 0) * 2; // and on to the sun
       colours[index * 3] = (br + (pr - br) * t + (sr - pr) * u) * shade;
       colours[index * 3 + 1] = (bg + (pg - bg) * t + (sg - pg) * u) * shade;
@@ -795,7 +794,7 @@ function init(root) {
   }
 
   // --- State ---
-  const view = { width: 0, height: 0, aspect: 1, layout: WIDE, across: WIDE.across, shiftX: 0, ratio: Math.min(window.devicePixelRatio || 1, 2) };
+  const view = { width: 0, height: 0, aspect: 1, layout: WIDE, across: WIDE.across, up: WIDE.up, shiftX: 0, shiftY: WIDE.shiftY, ratio: Math.min(window.devicePixelRatio || 1, 2) };
   // The film: where it has got to, and why it is or is not running. Like a video it runs at its own
   // pace from start to end, whatever the page is doing: only the reader's pause button or a hidden
   // tab stops it. While its frame is off screen (`away`) it keeps time without being drawn.
@@ -829,7 +828,7 @@ function init(root) {
   function distanceFor(mark) {
     const tan = Math.tan((FOV * DEG) / 2);
     const across = (view.layout === NARROW ? mark.narrow : mark.span) / (2 * tan * view.aspect * view.across);
-    const up = mark.tall / (2 * tan * view.layout.up);
+    const up = mark.tall / (2 * tan * view.up);
     return Math.max(across, up);
   }
   // How far the camera stands from its subject along the take, for a frame of this shape. Distances
@@ -911,7 +910,7 @@ function init(root) {
     camera.lookAt(focus);
     camera.near = clamp(distance * 0.12, 0.05, 30);
     camera.far = distance * 3 + 80;
-    camera.setViewOffset(view.width, view.height, -view.shiftX * view.width, view.layout.shiftY * view.height, view.width, view.height);
+    camera.setViewOffset(view.width, view.height, -view.shiftX * view.width, view.shiftY * view.height, view.width, view.height);
     camera.updateProjectionMatrix();
 
     scene.fog.near = distance * path.fogNear(time);
@@ -932,7 +931,7 @@ function init(root) {
       placeList.style.opacity = pinned.toFixed(3);
       if (pinned > 0.01) {
         camera.updateMatrixWorld();
-        PLACES.forEach((place) => {
+        LABELS.forEach((place) => {
           const label = placeLabels.get(place.id);
           if (!label) return;
           point.set(place.x, 0, place.z).project(camera);
@@ -1016,6 +1015,20 @@ function init(root) {
   }
 
   // --- Where the canvas lives, and how big it is ---
+  // The right edge of the hero's text as it is set: its widest line of words, or a button.
+  function textEdge() {
+    if (!heroText) return -Infinity;
+    let edge = -Infinity;
+    const range = document.createRange();
+    const walker = document.createTreeWalker(heroText, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      if (!node.textContent.trim()) continue;
+      range.selectNodeContents(node);
+      for (const rect of range.getClientRects()) if (rect.width > 0) edge = Math.max(edge, rect.right);
+    }
+    heroText.querySelectorAll('a, button').forEach((el) => { edge = Math.max(edge, el.getBoundingClientRect().right); });
+    return edge;
+  }
   function resize() {
     const width = mount.clientWidth;
     const height = mount.clientHeight;
@@ -1028,9 +1041,22 @@ function init(root) {
     const whole = mount.getBoundingClientRect();
     const column = pageColumn ? pageColumn.getBoundingClientRect() : whole;
     view.layout = pageColumn && column.width > 0 ? WIDE : NARROW;
-    const room = view.layout === WIDE ? column : whole;
+    let room = whole;
+    if (view.layout === WIDE) {
+      const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const edge = textEdge();
+      if (filmRoot && Number.isFinite(edge)) filmRoot.style.setProperty('--text-edge', `${(edge - filmRoot.getBoundingClientRect().left).toFixed(1)}px`);
+      const left = Math.max(column.left, edge + GAP * rem);
+      room = { left, width: Math.max(column.right - left, width * 0.2) };
+    }
     view.across = (room.width * view.layout.across) / width;
-    view.shiftX = (room.left - whole.left + room.width * view.layout.at) / width - 0.5;
+    view.shiftX = (room.left - whole.left + room.width / 2) / width - 0.5;
+    // The opening is at least 36rem tall, so on a short window (a phone held sideways, a television's
+    // browser at 960 by 540) it runs past the first screen: the subject is fitted into the part of it
+    // that is on the first screen, so the map is never cut by the fold (R3, defect 3).
+    const shown = clamp(window.innerHeight - (whole.top + window.scrollY), height * 0.5, height);
+    view.up = view.layout.up * (shown / height);
+    view.shiftY = 0.5 - (shown * (0.5 - view.layout.shiftY)) / height;
     renderer.setPixelRatio(view.ratio);
     renderer.setSize(width, height, false);
     camera.aspect = view.aspect;
@@ -1039,7 +1065,12 @@ function init(root) {
   }
   mount.appendChild(canvas);
   window.addEventListener('resize', resize);
-  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(mount);
+  if ('ResizeObserver' in window) {
+    const watch = new ResizeObserver(resize);
+    watch.observe(mount);
+    if (heroText) watch.observe(heroText); // the text reflows when its typeface arrives
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
 
   // Scrolling the film off screen does not stop it: it keeps its own time, and is only not drawn
   // until it is back. A hidden tab does stop it, and it carries on from where it was.

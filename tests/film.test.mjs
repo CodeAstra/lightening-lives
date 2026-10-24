@@ -59,3 +59,15 @@ test('the film waits for the opening to be painted, and compiles its shaders bef
   assert.match(source('scene.js'), /renderer\.compileAsync\(scene, camera\)\.then\(begin, begin\)/);
   assert.match(source('scene.js'), /if \(!path\.distance \|\| !compiled\) return;/);
 });
+
+test('on wide windows the film fits its subject into the room the hero\'s text leaves (R3, defect 1)', () => {
+  // A fixed share of the column (WIDE.at 0.74, across 0.8) put the map under the text past 1900 px.
+  // The scene measures the text's right edge and gives the subject the room between it, plus a
+  // clear gap, and the column's right edge. The sweep (npm run sweep) checks the drawn pixels.
+  const scene = source('scene.js');
+  const resize = scene.match(/function resize\(\) \{[\s\S]*?\n {2}\}/)?.[0] ?? '';
+  assert.match(scene, /querySelector\('\[data-hero-text\]'\)/);
+  assert.match(resize, /textEdge\(\)/);
+  assert.doesNotMatch(scene.match(/const WIDE = \{[^}]*\}/)?.[0] ?? '', /\bat:/);
+  assert.match(readFileSync('dist/index.html', 'utf8'), /class="hero-text" data-hero-text/);
+});

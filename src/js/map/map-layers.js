@@ -68,18 +68,19 @@ export function project(lat, lon) {
   };
 }
 
-// What the state panel says under "Our work" for each state with a site (content file 6.2).
+// What the state panel says under "Our work" for each state with a site (content file 6.2): the
+// state and what was screened there, not its towns (R2). Which town saw which screening is WORK above.
 const WORK_STATES = {
-  DL: 'Population screening for sickle cell anaemia in Delhi.',
-  RJ: 'Population and newborn screening for sickle cell anaemia in Udaipur.',
-  MP: 'Population screening for sickle cell anaemia in Bhopal.',
-  JH: 'Population screening for sickle cell anaemia in Jamshedpur.',
-  CG: 'Population screening for sickle cell anaemia in Bilaspur.',
-  MH: 'Population and newborn screening for sickle cell anaemia in Nagpur, newborn screening in Dhule, population screening in Chandrapur and Mumbai. In Nandurbar: population screening for sickle cell anaemia, population and newborn screening for sickle-beta thalassaemia, and population screening for beta thalassaemia.',
-  GJ: 'Population screening for sickle cell anaemia and sickle-beta thalassaemia in Valsad.',
-  TS: 'Our laboratory and office, in Hyderabad, and population screening for sickle cell anaemia there. In Kothagudem: population screening for sickle cell anaemia, sickle-beta thalassaemia and beta thalassaemia.',
-  KA: 'Population screening for sickle cell anaemia in Mysore.',
-  TN: 'Population screening for sickle cell anaemia in Gudalur.',
+  DL: 'Population screening for sickle cell anaemia.',
+  RJ: 'Population and newborn screening for sickle cell anaemia.',
+  MP: 'Population screening for sickle cell anaemia.',
+  JH: 'Population screening for sickle cell anaemia.',
+  CG: 'Population screening for sickle cell anaemia.',
+  MH: 'Population and newborn screening for sickle cell anaemia and for sickle-beta thalassaemia, and population screening for beta thalassaemia, at five sites.',
+  GJ: 'Population screening for sickle cell anaemia and sickle-beta thalassaemia.',
+  TS: 'Our laboratory and office, and population screening for sickle cell anaemia, sickle-beta thalassaemia and beta thalassaemia, at two sites.',
+  KA: 'Population screening for sickle cell anaemia.',
+  TN: 'Population screening for sickle cell anaemia.',
 };
 
 // The conditions in the poster's columns: the short name a pin's chip uses, and the name in full.
@@ -92,12 +93,21 @@ const KINDS = ['population', 'newborn'];
 const conditionsOf = (site, kind) => CONDITIONS.filter((c) => site.screened.includes(`${c.column} ${kind}`));
 const list = (words) => (words.length < 2 ? words.join('') : `${words.slice(0, -1).join(', ')} and ${words[words.length - 1]}`);
 
-// A pin's chip, under the site's name: what was screened there, in the shortest form (content 6.2),
-// as "SCA, sickle-beta thal., beta thal. · population and newborn".
+// What was screened at a site, in the shortest form (content 6.2), as "SCA, sickle-beta thal., beta
+// thal. · population and newborn"; for Our work's sites table (5.11).
 export function chip(site) {
   const conditions = CONDITIONS.filter((c) => KINDS.some((kind) => site.screened.includes(`${c.column} ${kind}`)));
   const kinds = KINDS.filter((kind) => conditionsOf(site, kind).length);
   return [site.laboratory ? 'Laboratory' : '', conditions.map((c) => c.short).join(', '), list(kinds)].filter(Boolean).join(' · ');
+}
+
+// A state's chip on the map (content 6.2): its name, then what was screened at its sites taken
+// together, as "Maharashtra · SCA, sickle-beta thal., beta thal. · population and newborn".
+export function stateChip(id) {
+  const sites = WORK.filter((site) => site.state === id);
+  if (!sites.length) return '';
+  const all = { screened: [...new Set(sites.flatMap((site) => site.screened))], laboratory: sites.some((site) => site.laboratory) };
+  return `${STATES.find((state) => state.id === id).n} · ${chip(all)}`;
 }
 
 // The same in full, for a screen reader: "Udaipur, Rajasthan: population and newborn screening for
@@ -114,17 +124,18 @@ export function said(site) {
   return `${state === site.name ? site.name : `${site.name}, ${state}`}: ${words}.`;
 }
 
-// The places the film names in chips as the camera comes to rest: Hyderabad, where the open card
-// lies, and four sites at the country's edges, north, west, east and south, so the chips stand apart
-// and say what the caption says, "at the scale of a nation" ("from Delhi to Gudalur"). The other ten
-// glow on the map but are not named. Every chip sits to the right of its place, clear of the text
-// beside the film (a `side: 'left'` would put one to the left).
+// The states the film names in chips as the camera comes to rest (content 5.1, R2): Delhi, and four
+// states at the country's edges, west, east and south, with Telangana, where our laboratory is and
+// where the open card lies; so the chips stand apart and say what the caption says, "at the scale of
+// a nation". Each chip sits to the right of a point on its state, chosen so that no two chips meet:
+// Maharashtra's is north of the state's middle and Telangana's south of it, since the two states
+// are neighbours and the chips run east.
 export const FILM_PLACES = [
-  { id: 'hyderabad', note: 'Laboratory and office' },
-  { id: 'delhi', note: 'Screening' },
-  { id: 'nandurbar', note: 'Screening' },
-  { id: 'jamshedpur', note: 'Screening' },
-  { id: 'gudalur', note: 'Screening' },
+  { id: 'DL', lat: 28.61, lon: 77.21, note: 'Screening' },
+  { id: 'MH', lat: 20.3, lon: 75.4, note: 'Screening', shortSide: 'left' }, // west on a short screen: see site.css
+  { id: 'JH', lat: 23.55, lon: 85.3, note: 'Screening' },
+  { id: 'TS', lat: 17.05, lon: 78.9, note: 'Our laboratory, and screening' },
+  { id: 'TN', lat: 11.1, lon: 78.4, note: 'Screening' },
 ];
 
 // For each layer:
@@ -132,7 +143,8 @@ export const FILM_PLACES = [
 //   level   how strongly a state's cards are marked, 0 to 1 (a state at 1 is also named on the map)
 //   note    what is said about a state when it is pointed at or tapped ('' = nothing to say)
 //   key     the legend: a tone (strong, pale or faint, matching the levels) and what it means
-//   places  1 pins the places we have worked to the map, and lights the cards round them
+//   chip    a picked state's line on the map itself, under its name (Our work only)
+//   places  0: no layer pins towns (R2); the film's labels name states
 export const LAYER_ORDER = ['sickle', 'thal', 'work'];
 export const LAYERS = {
   sickle: {
@@ -160,13 +172,14 @@ export const LAYERS = {
   },
   work: {
     name: 'Our work',
-    level: (id) => (WORK_STATES[id] ? 0.3 : 0),
+    level: (id) => (WORK_STATES[id] ? 1 : 0),
     note: (id) => WORK_STATES[id] || '',
+    chip: stateChip,
     states: WORK_STATES,
-    sentence: 'Our laboratory is in Hyderabad. We have run population and newborn screening at 15 sites across India, from Delhi to Gudalur.',
+    sentence: 'Our laboratory is in Hyderabad, Telangana. We have run population and newborn screening at 15 sites in nine states and Delhi.',
     key: [
       { tone: 'strong', text: 'Our laboratory and our field work' },
     ],
-    places: 1,
+    places: 0,
   },
 };

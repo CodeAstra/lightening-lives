@@ -33,10 +33,11 @@ test('the sections are the approved page\'s, in its order, with "Who we are" bef
 test('the opening film: heading, lead, buttons, note and captions', () => {
   assert.equal(text('h1'), 'Genetic testing from a spot of blood on a card.');
   assert.equal($('h1').closest('section').attr('id'), 'top');
-  assert.equal(text('.hero-lead'), 'Lightening Lives is an innovation-driven healthcare technology company in Hyderabad. We develop molecular diagnostics for inherited blood and muscle conditions that are designed to work where the patients are, and build them into solutions that hospitals, laboratories and public health programmes can run.');
+  assert.equal(text('.hero-lead'), 'We develop genetic tests for inherited blood and muscle conditions, built for hospitals, laboratories and public health programmes.');
   assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/partnerships/'], ['See our solutions', '/solutions/']]);
   assert.ok($('.hero-actions a').first().is('.btn-solid') && $('.hero-actions a').last().is('.btn-line'));
-  assert.equal(text('.hero-note'), 'Our sickle cell test is approved by ICMR and patented in India and Japan. We work with institutions and public health programmes.');
+  assert.equal(text('.hero-note'), 'Our sickle cell test: approved by ICMR, patented in India and Japan.');
+  assert.match(text('.hero-note'), /approved by ICMR, patented in India and Japan/);
   assert.deepEqual(texts('.hero [data-film-caption]'), ['A spot of blood, dried on a card.', 'From card to result without a DNA extraction step.', 'Built for screening at the scale of a nation.']);
   // The captions are hidden from screen readers: "How it works" says the same with more to say.
   assert.equal($('.film-captions').attr('aria-hidden'), 'true');
@@ -65,22 +66,23 @@ test('How it works: the three steps, in the film\'s words', () => {
   assert.deepEqual(texts('#how .steps .label'), ['One card', 'One batch', 'One programme']);
   assert.deepEqual(texts('#how h3'), ['A spot of blood, dried on a card.', 'From card to result without a DNA extraction step.', 'Built for screening at the scale of a nation.']);
   assert.deepEqual(texts('#how .steps p:not(.label)'), [
-    'That is the whole sample: a finger prick, a card, and no needle, no tube and no cold chain. Collection is simple and minimally invasive, and the card travels at room temperature to the nearest testing centre.',
-    'A small punch from the dried spot goes straight into the reaction. The assay runs on standard PCR equipment in a modest laboratory, many cards at a time, and screens and confirms in the same test.',
-    'We have run population and newborn screening at 15 sites across India, and developed a test for the National Sickle Cell Anaemia Elimination Mission. Test details are captured on a mobile app, so a programme can follow its screening as it happens.']);
+    'That is the whole sample: a finger prick and a card. No needle, no tube, no cold chain on the way to the testing centre.',
+    'A small punch from the spot goes straight into the reaction. Many cards run at once, on standard PCR equipment.',
+    'Population and newborn screening at 15 sites in nine states and Delhi, with test details captured on a mobile app as it happens.']);
   assert.equal($('#how .steps img').length, 3);
   assert.deepEqual(links('#how a.link'), [['How the technology works', '/technology/']]);
 });
 
-test('Why: five words and eight rows', () => {
-  assert.equal(text('#why .lead'), 'Conventional genetic tests need venous blood, a cold chain, a specialist laboratory and, for screening, a second test to confirm. So they rarely reach the people who need them most. We design ours the other way round.');
-  assert.equal(text('#better-h'), 'Genetic diagnosis, made');
-  assert.deepEqual(texts('#why .better li'), ['Faster', 'Simpler', 'More affordable', 'More accessible', 'More scalable']);
+test('Why: eight rows, and no line of adjectives', () => {
+  assert.equal(text('#why .lead'), 'Conventional genetic tests need venous blood, a cold chain, a specialist laboratory and a second test to confirm. So they rarely reach the people who need them most.');
+  // "Genetic diagnosis, made: Faster · Simpler · …" is removed (content 5.1, R1).
+  assert.equal($('#why .better').length, 0);
+  assert.equal($('#better-h').length, 0);
   assert.deepEqual($('#why .why > li').map((i, li) => [[text($(li).find('h3')), text($(li).find('p'))]]).get(), [
     ['A spot of blood, not a tube', 'A finger prick onto a card. No venepuncture, no EDTA tube, no pre-processing.'],
     ['Room temperature, not a cold chain', 'Cards keep and travel at room temperature, so samples can come from anywhere a health worker can reach.'],
     ['Screening and confirmation in one', 'One test does both, so a positive result needs no second test and no second visit.*'],
-    ['Extraction-free molecular diagnostics', 'No separate DNA extraction step.*'],
+    ['Extraction-free molecular diagnostics', 'No separate DNA extraction step, which saves a laboratory time and reagents.*'],
     ['From birth', 'Newborns can be tested at birth. Conventional confirmatory tests wait 72 hours.*'],
     ['Minimal laboratory infrastructure', 'Standard PCR equipment and a gel tank. No specialised laboratory.'],
     ['High-throughput, automation-friendly', 'Many cards in one run, on a workflow that can be automated.'],
@@ -93,7 +95,7 @@ test('the portfolio: four kinds, then seven tests ending with the open place', (
   assert.deepEqual($('#tests .kinds > li').map((i, li) => [[text($(li).find('h3')), text($(li).find('p'))]]).get(), [
     ['Monogenic disorders', 'Haemoglobinopathies and musculopathies: inherited disorders of haemoglobin, and inherited conditions that weaken the muscles. The two families we have developed tests for so far.'],
     ['Pharmacogenetic variants', 'How a person\'s genes change their response to a medicine, for personalised therapy. In development.'],
-    ['Rare genetic disorders', 'Testing for rare and inherited conditions.'],
+    ['Rare genetic disorders', 'Tests for rare inherited conditions, developed when an institution needs one.'],
     ['Custom molecular diagnostic assays', 'Assays designed for a research study or a clinical service.']]);
   assert.equal(text('#tests .sofar h3'), 'Developed so far');
   assert.equal(text('#tests .sofar p'), 'Each of these began with an institution that needed it. The next can begin with yours.');
@@ -106,13 +108,13 @@ test('the portfolio: four kinds, then seven tests ending with the open place', (
     ['Spinal muscular atrophy', 'Musculopathy'], ['Duchenne muscular dystrophy', 'Musculopathy'],
     ['Limb-girdle muscular dystrophy', 'Musculopathy'], ['In development', 'Coming soon'], ['The condition you need next', '']]);
   assert.deepEqual(rows.map((i, li) => text($(li).find('.test-what > p'))).get(), [
-    'LitLife™-SCA screens for and confirms sickle cell anaemia in one test from a dried blood spot. Developed with CSIR-CCMB know-how for the National Sickle Cell Anaemia Elimination Mission.',
+    'LitLife™-SCA screens for and confirms sickle cell anaemia in one test. Developed with CSIR-CCMB know-how for the National Sickle Cell Anaemia Elimination Mission.',
     'LitLife™-BThal and LitLife™-AlphaThal for beta and alpha thalassaemia, LitLife™-SiBThal217 for sickle cell anaemia and beta thalassaemia together, and testing for HbD and HbE.',
     'LitLife™-SMA screens for and confirms SMA from a dried blood spot. Designed for newborn screening, where finding SMA before symptoms changes what treatment can do.',
     'A genetic test for DMD: an earlier diagnosis for a boy losing strength, and carrier testing for his mother and sisters.',
     'A genetic test for LGMD, where the first symptom and a diagnosis are often years apart, and the subtype decides the care.',
     'A blood coagulation panel for inherited bleeding disorders, and pharmacogenomics testing.',
-    'Tell us what your programme or laboratory needs to detect. We develop the test, to the same REASSURED standard as the ones above.']);
+    'Tell us what your programme or laboratory needs to detect. We develop the test to the same REASSURED standard.']);
   // Tags: proof tags filled; a row whose tags are only a bracket has none.
   assert.deepEqual(row(0).find('.tag').map((i, t) => [[text(t), $(t).is('.tag-proof')]]).get(),
     [['Approved by ICMR', true], ['Patented in India and Japan', true], ['Dried blood spot', false]]);
@@ -134,7 +136,7 @@ test('Evidence: four proof names in DNA blue', () => {
     ['Approved by ICMR', 'LitLife™-SCA, our sickle cell test, is approved by the Indian Council of Medical Research.'],
     ['Patented in India and Japan', 'The technology behind our tests holds patents granted in India and Japan, and a patent published internationally.'],
     ['Working with CSIR-CCMB', 'An MOU with the CSIR-Centre for Cellular and Molecular Biology, Hyderabad, covers developing and commercialising the sickle cell assay.'],
-    ['Proven at 15 sites', 'Population and newborn screening in nine states and Delhi, from Udaipur to Gudalur, and a test developed for the National Sickle Cell Anaemia Elimination Mission.']]);
+    ['Proven at 15 sites', 'Population and newborn screening in nine states and Delhi, and a test built for the National Sickle Cell Anaemia Elimination Mission.']]);
 });
 
 test('the map: three layers, each with its sentence, and a still without script', () => {
@@ -143,13 +145,15 @@ test('the map: three layers, each with its sentence, and a still without script'
   assert.deepEqual($('#map input[name=map-layer]').map((i, el) => el.attribs['data-readout']).get(), [
     'Sickle cell disease is most common in a belt across central India, from Gujarat to Odisha.',
     'Thalassaemia is found across India: on average, 3 to 4 people in 100 are carriers. Higher frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal.',
-    'Our laboratory is in Hyderabad. We have run population and newborn screening at 15 sites across India, from Delhi to Gudalur.']);
+    'Our laboratory is in Hyderabad, Telangana. We have run population and newborn screening at 15 sites in nine states and Delhi.']);
   assert.equal($('#map input[name=map-layer]:checked').val(), 'sickle');
   assert.equal(text('[data-map-readout]'), 'Sickle cell disease is most common in a belt across central India, from Gujarat to Odisha.');
   assert.equal(text('#map .hint-point'), 'Point at a state to see what the map says about it.');
   assert.equal(text('#map .hint-tap'), 'Tap a state to see what the map says about it.');
+  // With a remote or a keyboard and no pointer, as on a television (content 5.1, R3).
+  assert.equal(text('#map .hint-select'), 'Select a state to see what the map says about it.');
   assert.equal($('#map [data-map] img.map-still').length, 1);
-  assert.match(text('#map .sr-only:not(legend)'), /Where we have worked: population and newborn screening at 15 sites across India: Delhi; Udaipur; Bhopal; Jamshedpur; Bilaspur; Nandurbar, Nagpur, Dhule, Chandrapur and Mumbai; Valsad; Kothagudem and Hyderabad; Mysore; and Gudalur\.$/);
+  assert.match(text('#map .sr-only:not(legend)'), /Where we have worked: population and newborn screening at 15 sites in nine states and Delhi: Delhi, Rajasthan, Madhya Pradesh, Jharkhand, Chhattisgarh, Maharashtra, Gujarat, Telangana, Karnataka and Tamil Nadu\.$/);
   assert.equal($('#map [aria-live=polite]').length, 1);
 });
 
@@ -162,8 +166,8 @@ test('REASSURED: nine letters as buttons and nine criteria in the company\'s wor
     [names[0], 'Test details are captured on a mobile app, so a programme can follow its screening as it happens.'],
     [names[1], 'A spot of blood from a finger prick, dried on a card. Minimally invasive.'],
     [names[2], 'Priced for programmes that test whole populations, and for the health system that pays.'],
-    [names[3], 'Few false negatives.'],
-    [names[4], 'Few false positives.'],
+    [names[3], 'Few false negatives. Our validation data is shared with institutions on request.'],
+    [names[4], 'Few false positives, which is what lets one test both screen and confirm.'],
     [names[5], 'Extraction-free, with an automation-friendly workflow and minimal training.'],
     [names[6], 'Quick turnaround and high-throughput screening. Cards keep at room temperature.'],
     [names[7], 'Minimal laboratory infrastructure: standard PCR equipment, no specialised laboratory.'],
@@ -172,7 +176,7 @@ test('REASSURED: nine letters as buttons and nine criteria in the company\'s wor
 });
 
 test('Who we work with: three audiences, a link and the notice', () => {
-  assert.equal(text('#partners .lead'), 'Hospitals, laboratories and public health programmes come to us with a condition they need to screen for or diagnose. Most of that work begins as a collaboration.');
+  assert.equal(text('#partners .lead'), 'Hospitals, laboratories and public health programmes bring us a condition to screen for or diagnose. Most of that work begins as a collaboration.');
   assert.deepEqual($('#partners .audiences > li').map((i, li) => [[text($(li).find('h3')), text($(li).find('p'))]]).get(), [
     ['Hospitals, laboratories and clinicians', 'Genetic tests for inherited blood and muscle conditions, designed to run with minimal laboratory infrastructure. We help set the method up and train your staff.'],
     ['District health officers and government programmes', 'Tests developed for national health programmes, for screening at population scale, with counselling and follow-up alongside.'],
@@ -187,12 +191,14 @@ test('Programmes: the story after the test, and the three place photographs labe
   assert.match(text('#programmes'), /Sample collection, transport, testing, reporting, treatment with counselling, follow-up: our testing model covers all six, so that a result leads somewhere\./);
   assert.deepEqual(links('#programmes a.link'), [['See our programmes', '/programmes/']]);
   assert.equal($('#programmes h3, #programmes .label').filter((i, e) => /Where our field work has taken us/.test(text(e))).length, 1);
-  assert.deepEqual(texts('#programmes figcaption'), ['Nandurbar, Maharashtra', 'Kothagudem, Telangana', 'Patratu Valley, Jharkhand']);
+  // Labelled by state (R2); the alt text may still describe the exact place.
+  assert.deepEqual(texts('#programmes figcaption'), ['Maharashtra', 'Telangana', 'Jharkhand']);
+  assert.equal(text('#programmes h3.label'), 'Where our field work has taken us');
 });
 
 test('Who we are: the founders, in text only, with two links', () => {
   assert.equal(text('#who .label'), 'Who we are');
-  assert.equal(text('#who p:not(.label):not(:has(a))'), 'Lightening Lives was founded by Dr. Giriraj Ratan Chandak, formerly Chief Scientist at the CSIR-Centre for Cellular and Molecular Biology and a former Director of the Centre for DNA Fingerprinting and Diagnostics, with Mrs. Nidhi Chandak. The company draws on more than 25 years of work in genetic and molecular diagnostics.');
+  assert.equal(text('#who p:not(.label):not(:has(a))'), 'Dr. Giriraj Ratan Chandak, formerly Chief Scientist at CSIR-CCMB and a Director of CDFD, founded the company with Mrs. Nidhi Chandak. He brings more than 25 years in genetic diagnostics.');
   assert.deepEqual(links('#who a'), [['About the company', '/about/'], ['Meet the team', '/about/team/']]);
   assert.equal($('#who img').length, 0, 'the founders\' portrait belongs on About and Team');
 });
@@ -211,5 +217,6 @@ test('Contact: four actions that open an email with the subject filled in', () =
     ['Talk to sales', 'mailto:admin@lighteninglives.in?subject=Sales']]);
   assert.match(text('#contact'), /Write or call admin@lighteninglives\.in \+91 91825 88191/);
   assert.equal($('#contact a[href="tel:+919182588191"]').length, 1);
-  assert.match(text('#contact'), /We work with institutions\. Each request is discussed on its own terms, based on your institutional or regulatory requirements\./);
+  assert.match(text('#contact'), /Each request is discussed on its own terms, based on your institutional or regulatory requirements\./);
+  assert.doesNotMatch(text('#contact'), /We work with institutions/);
 });

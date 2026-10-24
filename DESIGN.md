@@ -517,14 +517,16 @@ The film is the one orchestrated moment. Everything else moves only in answer to
 | What | Motion |
 | --- | --- |
 | Hero text on load | Rises 14px and fades in over 0.8s, `cubic-bezier(0.2, 0.7, 0.2, 1)`, each item 90ms after the last |
-| Hover and selection colour | 0.14s to 0.16s, `ease` |
-| Link arrow, contact row | 0.2s |
+| Hover and selection colour | 0.14s to 0.16s, `ease` (the stylesheet's transitions) |
+| A press (buttons, nav links, tags, test rows, contact rows) | Scales to 0.985 on the way down and back on release, 0.18s, `power2.out` |
+| Link arrow, contact row | The arrow moves 0.25rem, the row slides in 0.75rem, 0.2s, on pointing or keyboard focus |
 | Film caption change | 0.45s fade, rising 6px |
+| A section's opening, the first time it comes into view | Rises 10px and fades in over 0.5s, once, never again (decision D1, B, 24 October 2026) |
 | Map layer change | 0.5s per state, spreading outward |
-| Map names and pins | 0.35s to 0.4s fade |
+| Map names | 0.35s fade |
 | Anchor links | Smooth scrolling |
 
-There are no scroll-triggered reveals, no parallax and nothing that loops. With reduced motion requested, the hero text does not rise, scrolling is not smoothed, the map's colours change at once and the film waits for its button.
+What moves outside the film is `src/js/site/motion.js` (GSAP): every tween starts from where the thing is on screen, so it can be taken up again at any instant, and the keyboard's focus gets what the pointer gets. Colour stays in the stylesheet. The one motion tied to scrolling is the settle-in, and it plays once: nothing is scrubbed with the scroll, there is no parallax and nothing loops. With reduced motion requested, `motion.js` binds nothing, the hero text does not rise, scrolling is not smoothed, the map's colours change at once and the film waits for its button.
 
 ## Imagery
 
@@ -592,7 +594,7 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 - Don't restyle the logo. Its colours stay in the logo; none of them is used in the interface.
 - Don't use partner logos without permission, or photos with identifiable people.
 - Don't add a cookie or consent banner. Say what analytics the site uses in the privacy policy.
-- Don't add scroll-triggered animation, parallax or anything that loops.
+- Don't add scroll-scrubbed animation, parallax or anything that loops. The one scroll-linked motion is a section's opening settling in, once (see Motion).
 
 ## Where things live
 

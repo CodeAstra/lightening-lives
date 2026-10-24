@@ -2,7 +2,7 @@
 title: "Lightening Lives | Genetic testing from a spot of blood on a card"
 description: "Molecular diagnostics for inherited blood and muscle conditions, from a dried blood spot. Approved by ICMR, patented in India and Japan, screened at 15 sites. Hyderabad."
 film: true
-socialAlt: "Genetic testing from a spot of blood on a card. A map of India made of dried blood spot cards, with Hyderabad, Delhi, Nandurbar, Jamshedpur and Gudalur named."
+socialAlt: "Genetic testing from a spot of blood on a card. A map of India made of dried blood spot cards, with Delhi, Maharashtra, Jharkhand, Telangana and Tamil Nadu named."
 ---
 {#- The home page: the approved page (designs/lumen.html) section for section, in its order, with the
     content file's revised copy (content/website-content.md 5.1) and its one new section, "Who we are",
@@ -16,7 +16,7 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
       <img class="film-poster" src="/assets/img/site-drop.webp" width="1000" height="1000" alt="A dried blood spot card held open, with a drop of blood falling towards its dashed collection circle. Rows of closed cards fade into the distance behind it." decoding="async">
       <ol class="places" data-places aria-hidden="true">
         {%- for place in work.film %}
-        <li data-place="{{ place.id }}"{% if place.side %} data-side="{{ place.side }}"{% endif %}><b>{{ place.name }} <small>{{ place.note }}</small></b></li>
+        <li data-place="{{ place.id }}"{% if place.side %} data-side="{{ place.side }}"{% endif %}{% if place.shortSide %} data-short-side="{{ place.shortSide }}"{% endif %}><b>{{ place.name }} <small>{{ place.note }}</small></b></li>
         {%- endfor %}
       </ol>
       <button type="button" class="btn btn-solid film-play" data-film-play hidden>
@@ -27,14 +27,14 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
     <div class="hero-veil"></div>
     <div class="hero-frame" data-frame></div>
 
-    <div class="hero-text">
+    <div class="hero-text" data-hero-text>
       <h1 id="hero-h" class="display rise" style="--i:0">Genetic testing from a spot of blood on a card.</h1>
-      <p class="hero-lead lead rise" style="--i:1">Lightening Lives is an innovation-driven healthcare technology company in Hyderabad. We develop molecular diagnostics for inherited blood and muscle conditions that are designed to work where the patients are, and build them into solutions that hospitals, laboratories and public health programmes can run.</p>
+      <p class="hero-lead lead rise" style="--i:1">We develop genetic tests for inherited blood and muscle conditions, built for hospitals, laboratories and public health programmes.</p>
       <div class="hero-actions rise" style="--i:2">
         <a class="btn btn-solid" href="{{ site.cta.href }}">{{ site.cta.text }}</a>
         <a class="btn btn-line" href="/solutions/">See our solutions</a>
       </div>
-      <p class="hero-note rise" style="--i:3">Our sickle cell test is approved by ICMR and patented in India and Japan. We work with institutions and public health programmes.</p>
+      <p class="hero-note rise" style="--i:3">Our sickle cell test: approved by ICMR, patented in India and Japan.</p>
     </div>
 
     <div class="film-foot">
@@ -64,19 +64,19 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
           <img src="/assets/img/site-sample.webp" width="1000" height="1000" alt="The open card seen from above: a dried blood spot inside its dashed collection circle, above a barcode and sample code." loading="lazy" decoding="async">
           <p class="label">One card</p>
           <h3 class="h3">A spot of blood, dried on a card.</h3>
-          <p>That is the whole sample: a finger prick, a card, and no needle, no tube and no cold chain. Collection is simple and minimally invasive, and the card travels at room temperature to the nearest testing centre.</p>
+          <p>That is the whole sample: a finger prick and a card. No needle, no tube, no cold chain on the way to the testing centre.</p>
         </li>
         <li>
           <img src="/assets/img/site-batch.webp" width="1000" height="1000" alt="The same card, now closed, set down in a grid of many others that each carry the Lightening Lives logo and a barcode." loading="lazy" decoding="async">
           <p class="label">One batch</p>
           <h3 class="h3">From card to result without a DNA extraction step.</h3>
-          <p>A small punch from the dried spot goes straight into the reaction. The assay runs on standard PCR equipment in a modest laboratory, many cards at a time, and screens and confirms in the same test.</p>
+          <p>A small punch from the spot goes straight into the reaction. Many cards run at once, on standard PCR equipment.</p>
         </li>
         <li>
-          <img src="/assets/img/site-map.webp" width="1000" height="1000" alt="Thousands of cards laid out in the shape of India, seen from straight above. The places we have worked are marked in amber, and Hyderabad, Delhi, Nandurbar, Jamshedpur and Gudalur are named." loading="lazy" decoding="async">
+          <img src="/assets/img/site-map.webp" width="1000" height="1000" alt="Thousands of cards laid out in the shape of India, seen from straight above. The states we have worked in are marked in green, and Delhi, Maharashtra, Jharkhand, Telangana and Tamil Nadu are named." loading="lazy" decoding="async">
           <p class="label">One programme</p>
           <h3 class="h3">Built for screening at the scale of a nation.</h3>
-          <p>We have run population and newborn screening at 15 sites across India, and developed a test for the National Sickle Cell Anaemia Elimination Mission. Test details are captured on a mobile app, so a programme can follow its screening as it happens.</p>
+          <p>Population and newborn screening at 15 sites in nine states and Delhi, with test details captured on a mobile app as it happens.</p>
         </li>
       </ol>
       <a class="link mt-10" href="/technology/">How the technology works
@@ -90,21 +90,13 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
     <div class="wrap">
       <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
         <h2 id="why-h" class="h2 lg:col-span-7">Molecular diagnostics without the limits of conventional testing</h2>
-        <p class="lead lg:col-span-5">Conventional genetic tests need venous blood, a cold chain, a specialist laboratory and, for screening, a second test to confirm. So they rarely reach the people who need them most. We design ours the other way round.</p>
+        <p class="lead lg:col-span-5">Conventional genetic tests need venous blood, a cold chain, a specialist laboratory and a second test to confirm. So they rarely reach the people who need them most.</p>
       </div>
-      <p class="label mt-12" id="better-h">Genetic diagnosis, made</p>
-      <ul class="better mt-3">
-        <li>Faster</li>
-        <li>Simpler</li>
-        <li>More affordable</li>
-        <li>More accessible</li>
-        <li>More scalable</li>
-      </ul>
       <ul class="why mt-12">
         <li><h3>A spot of blood, not a tube</h3><p>A finger prick onto a card. No venepuncture, no EDTA tube, no pre-processing.</p></li>
         <li><h3>Room temperature, not a cold chain</h3><p>Cards keep and travel at room temperature, so samples can come from anywhere a health worker can reach.</p></li>
         <li><h3>Screening and confirmation in one</h3><p>One test does both, so a positive result needs no second test and no second visit.*</p></li>
-        <li><h3>Extraction-free molecular diagnostics</h3><p>No separate DNA extraction step.*</p></li>
+        <li><h3>Extraction-free molecular diagnostics</h3><p>No separate DNA extraction step, which saves a laboratory time and reagents.*</p></li>
         <li><h3>From birth</h3><p>Newborns can be tested at birth. Conventional confirmatory tests wait 72 hours.*</p></li>
         <li><h3>Minimal laboratory infrastructure</h3><p>Standard PCR equipment and a gel tank. No specialised laboratory.</p></li>
         <li><h3>High-throughput, automation-friendly</h3><p>Many cards in one run, on a workflow that can be automated.</p></li>
@@ -132,7 +124,7 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
         </li>
         <li>
           <h3 class="h3">Rare genetic disorders</h3>
-          <p>Testing for rare and inherited conditions.</p>
+          <p>Tests for rare inherited conditions, developed when an institution needs one.</p>
         </li>
         <li>
           <h3 class="h3">Custom molecular diagnostic assays</h3>
@@ -151,7 +143,7 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
             <p class="label mt-2">Haemoglobinopathy</p>
           </div>
           <div class="test-what">
-            <p><span class="whitespace-nowrap">LitLife™-SCA</span> screens for and confirms sickle cell anaemia in one test from a dried blood spot. Developed with CSIR-CCMB know-how for the National Sickle Cell Anaemia Elimination Mission.</p>
+            <p><span class="whitespace-nowrap">LitLife™-SCA</span> screens for and confirms sickle cell anaemia in one test. Developed with CSIR-CCMB know-how for the National Sickle Cell Anaemia Elimination Mission.</p>
             <ul class="tags">
               <li class="tag tag-proof">Approved by ICMR</li>
               <li class="tag tag-proof">Patented in India and Japan</li>
@@ -240,7 +232,7 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
             <h4 class="h3">The condition you need next</h4>
           </div>
           <div class="test-what">
-            <p>Tell us what your programme or laboratory needs to detect. We develop the test, to the same REASSURED standard as the ones above.</p>
+            <p>Tell us what your programme or laboratory needs to detect. We develop the test to the same REASSURED standard.</p>
             <a class="link mt-1" href="/solutions/develop-a-test/">Talk to us about a new test
               {{ arrow | safe }}
             </a>
@@ -269,7 +261,7 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
         </li>
         <li>
           <h3 class="h3">Proven at <span class="hl">15 sites</span></h3>
-          <p>Population and newborn screening in nine states and Delhi, from Udaipur to Gudalur, and a test developed for the National Sickle Cell Anaemia Elimination Mission.</p>
+          <p>Population and newborn screening in nine states and Delhi, and a test built for the National Sickle Cell Anaemia Elimination Mission.</p>
         </li>
       </ul>
     </div>
@@ -304,15 +296,20 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
           </div>
         </div>
 
-        <p class="map-hint"><span class="hint-point">Point at a state to see what the map says about it.</span><span class="hint-tap">Tap a state to see what the map says about it.</span></p>
+        <p class="map-hint"><span class="hint-point">Point at a state to see what the map says about it.</span><span class="hint-tap">Tap a state to see what the map says about it.</span><span class="hint-select">Select a state to see what the map says about it.</span></p>
         <details class="map-sources">
           <summary class="label">Sources</summary>
-          <p>Sickle cell: Hockham et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6283872/" rel="noopener">Scientific Reports (2018)</a>; National Sickle Cell Anaemia Elimination Mission, Ministry of Health and Family Welfare. Thalassaemia: National Health Mission, Guidelines for Prevention and Control of Hemoglobinopathies in India (2016); Mohanty et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3537975/" rel="noopener">Journal of Community Genetics (2013)</a>; Madan et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2927789/" rel="noopener">Indian Journal of Human Genetics (2010)</a>. Indicative only, shown by state: frequencies differ more between communities than between states.</p>
+          <p>Sickle cell: Hockham et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6283872/" rel="noopener">Scientific Reports (2018)</a>; National Sickle Cell Anaemia Elimination Mission, Ministry of Health and Family Welfare.</p>
+          <p>Thalassaemia: National Health Mission, Guidelines for Prevention and Control of Hemoglobinopathies in India (2016); Mohanty et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3537975/" rel="noopener">Journal of Community Genetics (2013)</a>; Madan et al., <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2927789/" rel="noopener">Indian Journal of Human Genetics (2010)</a>.</p>
+          <p>Indicative only, shown by state: frequencies differ more between communities than between states.</p>
         </details>
-        <p class="sr-only">Map summary. Sickle cell disease is most common in a belt across central India, running from south-eastern Gujarat through Madhya Pradesh, Maharashtra and Chhattisgarh to south-western Odisha. The National Sickle Cell Anaemia Elimination Mission covers 17 focus states: Gujarat, Maharashtra, Rajasthan, Madhya Pradesh, Jharkhand, Chhattisgarh, West Bengal, Odisha, Tamil Nadu, Telangana, Andhra Pradesh, Karnataka, Assam, Uttar Pradesh, Kerala, Bihar and Uttarakhand. Thalassaemia: found across India, where on average 3 to 4 people in 100 are carriers; higher carrier frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal. Where we have worked: population and newborn screening at 15 sites across India: Delhi; Udaipur; Bhopal; Jamshedpur; Bilaspur; Nandurbar, Nagpur, Dhule, Chandrapur and Mumbai; Valsad; Kothagudem and Hyderabad; Mysore; and Gudalur.</p>
+        <p class="sr-only">Map summary. Sickle cell disease is most common in a belt across central India, running from south-eastern Gujarat through Madhya Pradesh, Maharashtra and Chhattisgarh to south-western Odisha.</p>
+        <p class="sr-only">The National Sickle Cell Anaemia Elimination Mission covers 17 focus states: Gujarat, Maharashtra, Rajasthan, Madhya Pradesh, Jharkhand, Chhattisgarh, West Bengal, Odisha, Tamil Nadu, Telangana, Andhra Pradesh, Karnataka, Assam, Uttar Pradesh, Kerala, Bihar and Uttarakhand.</p>
+        <p class="sr-only">Thalassaemia: found across India, where on average 3 to 4 people in 100 are carriers; higher carrier frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal.</p>
+        <p class="sr-only">{{ work.summary }}</p>
       </div>
       <div class="map-figure" data-map>
-        <img class="map-still" data-map-still src="/assets/img/site-map-sickle.webp" width="1000" height="1000" alt="A map of India with state borders drawn on it. The states the chosen layer marks are shown in amber and named." loading="lazy" decoding="async">
+        <img class="map-still" data-map-still src="/assets/img/site-map-sickle.webp" width="1000" height="1000" alt="A map of India with state borders drawn on it. The states the chosen layer marks are shown in green and named." loading="lazy" decoding="async">
       </div>
     </div>
   </section>
@@ -341,8 +338,8 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
         <li><span class="crit-letter" aria-hidden="true">R</span><div><h3><span>Real-time connectivity</span></h3><p>Test details are captured on a mobile app, so a programme can follow its screening as it happens.</p></div></li>
         <li><span class="crit-letter" aria-hidden="true">E</span><div><h3><span>Ease of specimen collection</span></h3><p>A spot of blood from a finger prick, dried on a card. Minimally invasive.</p></div></li>
         <li><span class="crit-letter" aria-hidden="true">A</span><div><h3><span>Affordable</span></h3><p>Priced for programmes that test whole populations, and for the health system that pays.</p></div></li>
-        <li><span class="crit-letter" aria-hidden="true">S</span><div><h3><span>Sensitive</span></h3><p>Few false negatives.</p></div></li>
-        <li><span class="crit-letter" aria-hidden="true">S</span><div><h3><span>Specific</span></h3><p>Few false positives.</p></div></li>
+        <li><span class="crit-letter" aria-hidden="true">S</span><div><h3><span>Sensitive</span></h3><p>Few false negatives. Our validation data is shared with institutions on request.</p></div></li>
+        <li><span class="crit-letter" aria-hidden="true">S</span><div><h3><span>Specific</span></h3><p>Few false positives, which is what lets one test both screen and confirm.</p></div></li>
         <li><span class="crit-letter" aria-hidden="true">U</span><div><h3><span>User-friendly</span></h3><p>Extraction-free, with an automation-friendly workflow and minimal training.</p></div></li>
         <li><span class="crit-letter" aria-hidden="true">R</span><div><h3><span>Rapid and robust</span></h3><p>Quick turnaround and high-throughput screening. Cards keep at room temperature.</p></div></li>
         <li><span class="crit-letter" aria-hidden="true">E</span><div><h3><span>Equipment-free or simple</span></h3><p>Minimal laboratory infrastructure: standard PCR equipment, no specialised laboratory.</p></div></li>
@@ -357,7 +354,7 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
     <div class="wrap">
       <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
         <h2 id="partners-h" class="h2 lg:col-span-7">We work with institutions</h2>
-        <p class="lead lg:col-span-5">Hospitals, laboratories and public health programmes come to us with a condition they need to screen for or diagnose. Most of that work begins as a collaboration.</p>
+        <p class="lead lg:col-span-5">Hospitals, laboratories and public health programmes bring us a condition to screen for or diagnose. Most of that work begins as a collaboration.</p>
       </div>
       <ul class="audiences mt-12">
         <li>
@@ -394,19 +391,19 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
         </a>
       </div>
       <div class="lg:col-span-7">
-        <p class="label mb-4">Where our field work has taken us</p>
+        <h3 class="label mb-4">Where our field work has taken us</h3>
         <div class="fieldwork">
           <figure>
             <img src="/assets/img/place-nandurbar-640.webp" srcset="/assets/img/place-nandurbar-640.webp 640w, /assets/img/place-nandurbar-1280.webp 1280w" sizes="(min-width: 1024px) 22vw, 30vw" width="640" height="399" style="object-position: 62% 50%" alt="A monsoon-green gorge with a thin waterfall dropping down red basalt cliffs at Toranmal, Nandurbar district, Maharashtra." loading="lazy" decoding="async">
-            <figcaption class="label">Nandurbar, Maharashtra</figcaption>
+            <figcaption class="label">Maharashtra</figcaption>
           </figure>
           <figure>
             <img src="/assets/img/place-kothagudem-640.webp" srcset="/assets/img/place-kothagudem-640.webp 640w, /assets/img/place-kothagudem-1280.webp 1280w" sizes="(min-width: 1024px) 22vw, 30vw" width="640" height="400" style="object-position: 58% 50%" alt="Still water of the Kinnerasani reservoir with a forested island, Bhadradri Kothagudem district, Telangana." loading="lazy" decoding="async">
-            <figcaption class="label">Kothagudem, Telangana</figcaption>
+            <figcaption class="label">Telangana</figcaption>
           </figure>
           <figure>
             <img src="/assets/img/place-jharkhand-640.webp" srcset="/assets/img/place-jharkhand-640.webp 640w, /assets/img/place-jharkhand-1280.webp 1280w" sizes="(min-width: 1024px) 22vw, 30vw" width="640" height="400" style="object-position: 36% 50%" alt="A hill road winding through forest above the Patratu reservoir, Patratu Valley, Jharkhand." loading="lazy" decoding="async">
-            <figcaption class="label">Patratu Valley, Jharkhand</figcaption>
+            <figcaption class="label">Jharkhand</figcaption>
           </figure>
         </div>
       </div>
@@ -422,7 +419,7 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
           <h2 id="who-h" class="h2">Founded by a physician and scientist</h2>
         </div>
         <div class="lg:col-span-5">
-          <p class="lead">Lightening Lives was founded by Dr.&nbsp;Giriraj Ratan Chandak, formerly Chief Scientist at the CSIR-Centre for Cellular and Molecular Biology and a former Director of the Centre for DNA Fingerprinting and Diagnostics, with Mrs.&nbsp;Nidhi Chandak. The company draws on more than 25 years of work in genetic and molecular diagnostics.</p>
+          <p class="lead">Dr.&nbsp;Giriraj Ratan Chandak, formerly Chief Scientist at CSIR-CCMB and a Director of CDFD, founded the company with Mrs.&nbsp;Nidhi Chandak. He brings more than 25 years in genetic diagnostics.</p>
           <p class="mt-4 flex flex-wrap gap-x-8">
             <a class="link" href="/about/">About the company
               {{ arrow | safe }}
@@ -461,7 +458,7 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
           <a class="link" href="mailto:{{ site.email }}">{{ site.email }}</a>
           <a class="link" href="tel:{{ site.tel }}">{{ site.phone | replace(" ", "&nbsp;") | safe }}</a>
         </p>
-        <p class="mt-3 max-w-[38rem] text-[1rem] text-moss">We work with institutions. Each request is discussed on its own terms, based on your institutional or regulatory requirements.</p>
+        <p class="mt-3 max-w-[38rem] text-[1rem] text-moss">Each request is discussed on its own terms, based on your institutional or regulatory requirements.</p>
       </div>
       <div class="lg:col-span-5">
         <div class="blank-card" aria-hidden="true">

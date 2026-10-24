@@ -2,11 +2,11 @@
 // REASSURED, the map, and loading the opening film. Each part does nothing on a page without its
 // markup. The film is a separate bundle (it carries three.js) and is only fetched when it will play.
 
-// The map's data: one list of states, places, and what each layer marks.
-import { PLACES } from '../map/india-cells.js';
+// The map's data: one list of states, their outlines, and what each layer marks.
 import { STATES } from '../map/india-states.js';
 import { BORDERS } from '../map/india-borders.js';
-import { LAYERS, LAYER_ORDER, WORK, chip, said } from '../map/map-layers.js';
+import { LAYERS, LAYER_ORDER } from '../map/map-layers.js';
+import { initMotion } from './motion.js';
 
 // This file is loaded as a module, where document.currentScript is null: the film's bundle is found
 // beside this one through import.meta.url.
@@ -97,19 +97,16 @@ const SVG = 'http://www.w3.org/2000/svg';
 const PAD = 1.5; // map units of clear space round the country
 const VIEW = { x: -44.1 - PAD, y: -50 - PAD, w: 88.2 + PAD * 2, h: 100 + PAD * 2 }; // the borders' own extent
 const CARD = { w: 1.12, h: 2.36, x0: -44.52, z0: -50.74 }; // the film's cards, two by two, for the grid drawn over the map
-const MARK = 0.9; // how far a fully marked state goes to sun amber
-const PALE = 0.45; // the half-way colour: this far from paper towards sun amber
+const MARK = 0.9; // how far a fully marked state goes to life green (--sun)
+const PALE = 0.45; // the half-way colour: this far from paper towards life green, a pale mint
 const TONE = { strong: 1, pale: 0.42, faint: 0.1 }; // the key's swatches, as the levels in map-layers.js
 // A name sits at the middle of its state. Where neighbours' names would run into each other, or a
 // name would cover a place too small to be seen under it, these move it, in map units east and south.
-const NAME_NUDGE = { MP: [-4.2, -0.6], CG: [0.3, 2.4], OD: [3.2, 0.9], DL: [5.4, 0.3] };
+const NAME_NUDGE = { MP: [-4.2, -0.6], CG: [0.3, 2.4], OD: [4.2, 2.6], DL: [5.4, 0.3] };
 // On a small map the names are no smaller, so they need moving further.
 const NAME_NUDGE_SMALL = { GJ: [-4.5, -0.6], MP: [-1.5, -4.2], MH: [1.5, 1.5], CG: [-1.2, 3.4], OD: [7.2, 4.4], DL: [8.2, 0.4], PB: [-1.5, -1], WB: [5.5, 3] };
 const SMALL_MAP = 430; // pixels across, below which the names use the second set
 const NAMES_FROM = 235; // and below which the map is too small to carry more than one name
-// A pin's chip sits to the right of its place, or to the left east of the map's middle, so that it
-// stays on the map.
-const PIN_LEFT_FROM = 0;
 
 function hexToRgb(css) {
   const probe = hexToRgb.ctx || (hexToRgb.ctx = document.createElement('canvas').getContext('2d'));
@@ -167,56 +164,33 @@ function initMap() {
   const names = document.createElement('ol');
   names.className = 'map-names';
   names.setAttribute('aria-hidden', 'true');
+  // Under Our work a picked state's name becomes its chip: the name, then what was screened there
+  // (content 6.2). States, not towns, are marked: there are no pins (R2).
   const nameItems = STATES.map((state) => {
     const item = document.createElement('li');
     const name = document.createElement('b');
-    name.textContent = state.n;
+    const line = document.createElement('small');
+    name.append(state.n, line);
     item.appendChild(name);
     names.appendChild(item);
     return item;
   });
-  // The places we have worked: a dot for each of the fifteen sites. A site's chip, its name and
-  // what was screened there, shows only while its pin is pointed at, focused or tapped, so that
-  // fifteen names never crowd the map. Each pin is a button whose name says it all in full.
-  const pins = document.createElement('ol');
-  pins.className = 'map-pins';
-  const pinItems = PLACES.map((place) => {
-    const site = WORK.find((entry) => entry.id === place.id);
-    const item = document.createElement('li');
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'pin';
-    button.setAttribute('aria-label', said(site));
-    const name = document.createElement('b');
-    const note = document.createElement('small');
-    note.textContent = chip(site);
-    name.append(`${place.name} `, note);
-    name.setAttribute('aria-hidden', 'true');
-    item.append(button, name);
-    if (place.x > PIN_LEFT_FROM) item.dataset.side = 'left';
-    [item.style.left, item.style.top] = at(place.x, place.z);
-    pins.appendChild(item);
-    return item;
-  });
-  figure.append(svg, names, pins);
+  figure.append(svg, names);
   figure.classList.add('is-live');
   figure.tabIndex = 0;
   figure.setAttribute('role', 'group');
-  figure.setAttribute('aria-label', 'Map of India. Use the arrow keys to step through the states; Escape lets go.');
   if (layout) layout.classList.add('is-live');
 
   // --- What it shows ---
   let hovered = -1; // the state under the pointer
   let pinned = -1; // the state chosen by a click, a tap or the arrow keys
-  let pointedPin = -1; // the site whose pin is pointed at or has the keyboard's focus
-  let keptPin = -1; // and the one a click or a tap keeps open
   let small = false;
   let tiny = false;
   const picked = () => (hovered !== -1 ? hovered : pinned);
   const level = (index) => LAYERS[layer()].level(STATES[index].id);
 
-  // A state's colour: meadow blue, lightened towards paper and then warmed to sun amber by as much
-  // as the layer marks it (a warm colour mixed straight into a blue one goes through khaki), and
+  // A state's colour: meadow blue, lightened towards paper and then moved to life green by as much
+  // as the layer marks it (through paper, so half-way is a pale mint, not a third blue-green), and
   // lightened further while it is picked out. The key's swatches are painted the same way.
   let colours = null;
   const markedColour = (mark, light = 0) => {
@@ -247,45 +221,23 @@ function initMap() {
   }
 
   // Which names and outlines stand out: the states the layer marks fully are named, and so is a
-  // picked state, except while our places are pinned on the map, where its name would sit on theirs.
+  // picked state; under Our work a picked state's name carries its chip line.
   function showMarks() {
-    const places = LAYERS[layer()].places === 1;
     const chosen = picked();
+    const chipOf = LAYERS[layer()].chip;
     paths.forEach((path, index) => path.classList.toggle('is-on', index === chosen));
-    if (chosen !== -1) states.appendChild(paths[chosen]); // drawn last, so its heavier outline is not overlapped
+    // Drawn last, so its heavier outline is not overlapped; but a state that has the focus (a
+    // television's spatial navigation) stays where it is, since moving it would drop the focus.
+    if (chosen !== -1 && document.activeElement !== paths[chosen]) states.appendChild(paths[chosen]);
     nameItems.forEach((item, index) => {
       const marked = level(index) >= 0.9 && !tiny;
-      item.classList.toggle('is-shown', !places && (index === chosen || marked));
+      const line = index === chosen && chipOf ? chipOf(STATES[index].id).replace(`${STATES[index].n} · `, '') : '';
+      item.querySelector('small').textContent = line;
+      item.classList.toggle('has-chip', Boolean(line));
+      item.classList.toggle('is-shown', index === chosen || marked);
       item.classList.toggle('is-on', index === chosen);
     });
-    pins.classList.toggle('is-shown', places);
-    // Pins that cannot be seen cannot be reached.
-    pins.inert = !places;
-    if (!places) pointedPin = keptPin = -1;
-    showPin();
   }
-
-  function showPin() {
-    const open = pointedPin !== -1 ? pointedPin : keptPin;
-    pinItems.forEach((item, index) => item.classList.toggle('is-on', index === open));
-  }
-  // A pin also picks out its state, so the panel beside the map says what was done there while the
-  // chip names the site: pointing at a pin is pointing at its state; focusing or tapping one keeps it.
-  pinItems.forEach((item, index) => {
-    const button = item.querySelector('button');
-    const state = STATES.findIndex((entry) => entry.id === WORK.find((site) => site.id === PLACES[index].id).state);
-    const point = (to) => { pointedPin = to; showPin(); };
-    button.addEventListener('pointerenter', (event) => { if (event.pointerType !== 'touch') { point(index); hover(state); } });
-    button.addEventListener('pointerleave', (event) => { point(-1); hover(stateOf(event.relatedTarget)); });
-    // A mouse click focuses the button too; only the keyboard's focus opens the chip by itself.
-    button.addEventListener('focus', () => { if (button.matches(':focus-visible')) { point(index); keep(state); } });
-    button.addEventListener('blur', () => point(-1));
-    button.addEventListener('click', () => {
-      keptPin = keptPin === index ? -1 : index;
-      if (keptPin === index) keep(state);
-      showPin();
-    });
-  });
 
   // A change of layer spreads across the map from the middle of what the new layer marks.
   function paint(spread) {
@@ -294,7 +246,7 @@ function initMap() {
       const marked = STATES.filter((state) => LAYERS[layer()].level(state.id) >= 0.9);
       from = marked.length
         ? { x: marked.reduce((sum, state) => sum + state.x, 0) / marked.length, z: marked.reduce((sum, state) => sum + state.z, 0) / marked.length }
-        : PLACES.find((place) => place.id === 'hyderabad');
+        : null;
     }
     paths.forEach((path, index) => {
       const wait = from ? Math.round(Math.hypot(STATES[index].x - from.x, STATES[index].z - from.z) * 11) : 0;
@@ -358,29 +310,54 @@ function initMap() {
 
   // Pointing at a state picks it out for as long as the pointer is on it. A click or a tap keeps it
   // picked out; a click or tap on the same state, or off the country, lets it go.
-  svg.addEventListener('pointerover', (event) => { if (event.pointerType !== 'touch') hover(stateOf(event.target)); });
-  svg.addEventListener('pointerout', (event) => {
-    // Moving from a state onto one of the pins over it keeps the state picked out (the pin says so).
-    if (event.relatedTarget && event.relatedTarget.closest && event.relatedTarget.closest('.map-pins')) return;
-    if (stateOf(event.relatedTarget) === -1) hover(-1);
-  });
+  // With no pointer (a television), the browser's own hover follows its focus a step behind; the
+  // focus picks the state there (see focusin below), so hover is not listened to.
+  const pointless = () => window.matchMedia('(pointer: none)').matches;
+  svg.addEventListener('pointerover', (event) => { if (event.pointerType !== 'touch' && !pointless()) hover(stateOf(event.target)); });
+  svg.addEventListener('pointerout', (event) => { if (!pointless() && stateOf(event.relatedTarget) === -1) hover(-1); });
   svg.addEventListener('click', (event) => {
     const index = stateOf(event.target);
     keep(index === pinned ? -1 : index);
-    if (keptPin !== -1) { keptPin = -1; showPin(); }
   });
-  // The arrow keys step through the states in the order of their names.
+  // The arrow keys step through the states in the order of their names, while the map holds them.
+  // With a keyboard it holds them as soon as it has the focus. With a remote and no pointer, as on a
+  // television, the arrow keys are how the reader moves about the page, so the map holds them only
+  // after Enter ("Select a state", the hint says). Escape lets go, and so does moving on (R3).
   const byName = STATES.map((state, index) => index).sort((a, b) => STATES[a].n.localeCompare(STATES[b].n));
+  const remote = pointless;
+  let holding = false; // whether the arrow keys are the map's
+  let keyed = false; // whether the picked state was picked with the keys
+  const label = () => figure.setAttribute('aria-label', remote()
+    ? 'Map of India. Press Enter, then use the arrow keys to step through the states; Escape lets go.'
+    : 'Map of India. Use the arrow keys to step through the states; Escape lets go.');
+  label();
+  const letGo = () => { holding = false; if (keyed) { keyed = false; keep(-1); } };
+  figure.addEventListener('focus', () => { label(); holding = !remote(); });
+  // A television's browser moves its focus over the states themselves with the arrow keys (spatial
+  // navigation treats each state as a target, since the map answers to clicks): the state with the
+  // focus is the picked one, as a state pointed at is.
+  figure.addEventListener('focusin', (event) => {
+    const index = stateOf(event.target);
+    if (index !== -1) { keyed = true; keep(index); }
+  });
+  figure.addEventListener('focusout', (event) => { if (!figure.contains(event.relatedTarget)) letGo(); });
   figure.addEventListener('keydown', (event) => {
     const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
-    if (step) {
+    if (step && holding) {
       event.preventDefault();
       const here = byName.indexOf(pinned);
+      keyed = true;
       keep(byName[(here === -1 ? (step > 0 ? 0 : byName.length - 1) : here + step + byName.length) % byName.length]);
-    } else if (event.key === 'Escape' && (pinned !== -1 || keptPin !== -1)) {
+    } else if ((event.key === 'Enter' || event.key === ' ') && !holding) {
+      event.preventDefault();
+      holding = true;
+      keyed = true;
+      if (pinned === -1) keep(byName[0]);
+    } else if (event.key === 'Escape' && (holding || pinned !== -1)) {
+      event.preventDefault();
+      holding = false;
+      keyed = false;
       keep(-1);
-      keptPin = -1;
-      showPin();
     }
   });
 
@@ -410,4 +387,5 @@ ready(() => {
   initReassured();
   initMap();
   initFilm();
+  initMotion();
 });

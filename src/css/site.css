@@ -2,8 +2,8 @@
    (DESIGN.md). This is designs/src/css/lumen.css with DESIGN.md's "Making the chosen design the
    page's own" edits 1 and 3 made: Quicksand and Nunito are the type, and a name that is proof is set
    in DNA blue with nothing drawn under it. Every other rule is lumen.css's, unchanged. The page is
-   ice white, each white band is lit from one side by a soft pool of DNA blue or sunlight, and what
-   stands on the page is frosted glass. DNA blue for every action and label, sun amber for what is
+   ice white, each white band is lit from one side by a soft pool of DNA blue or life green, and what
+   stands on the page is frosted glass. DNA blue for every action and label, life green for what is
    being pointed out, and blood red for the sample and nothing else. */
 
 @import "tailwindcss" source(none);
@@ -36,13 +36,13 @@
     --leaf: #0369A1;    /* DNA blue: labels, links, actions, the print on the cards */
     --canopy: #0C4A6E;  /* text */
     --moss: #475569;    /* secondary text */
-    --sun: #FFC53D;     /* sun amber, the logo's own sun a shade softer: the one warm colour, for what is pointed out */
+    --sun: #6EE7B7;     /* life green, the Lumen theme's own highlight (24 October 2026; it was sun amber, and keeps the name): what is pointed out */
     --blood: #6A2A20;   /* the sample once it has dried into the paper */
     --drop: #A61B18;    /* and while it is still a falling drop */
     --line: rgba(12, 74, 110, 0.18);
     /* The material: the light behind the page, and the glass standing on it. */
     --pool-blue: rgba(3, 105, 161, 0.16);
-    --pool-sun: rgba(255, 197, 61, 0.2);
+    --pool-sun: rgba(110, 231, 183, 0.2);
     --glass: rgba(255, 255, 255, 0.62);        /* a white the light shows through */
     --glass-strong: rgba(255, 255, 255, 0.86); /* where what is on it must stay readable over the film */
     --shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 22px 44px -26px rgba(12, 74, 110, 0.3), 0 2px 6px -3px rgba(12, 74, 110, 0.1);
@@ -61,7 +61,9 @@
     --pad: clamp(1.25rem, 5vw, 4.5rem);
     /* The page keeps to a centred column. --gutter is the distance from the window's edge to that
        column's content, for the full-width parts (header, story) that have to line up with it. */
-    --frame: 82rem;
+    /* 82rem, until half the window plus the column's padding is wider (from about 3500 px), up to
+       96rem: on a 32:9 screen the page is not a strip down the middle (R3, 24 October 2026). */
+    --frame: clamp(82rem, 50vw + 9rem, 96rem);
     --gutter: max(var(--pad), calc((100% - var(--frame)) / 2 + var(--pad)));
     --text-w: min(38rem, 44vw); /* the opening's text column, beside the film */
     --stage-h: calc(100vh - var(--compare-h, 0px));
@@ -85,9 +87,10 @@
   }
 
   html {
-    /* On screens wider than a laptop's the whole page grows with the window, up to about a third
-       larger, so a big monitor gets a bigger page and not a small one in a wide margin. */
-    font-size: clamp(100%, 0.5vw + 0.55rem, 137.5%);
+    /* On screens wider than a laptop's the whole page grows with the window, up to half as large
+       again (24 px, from 3040 px; it stopped at 22 px before R3), so a big monitor gets a bigger page
+       and not a small one in a wide margin. */
+    font-size: clamp(100%, 0.5vw + 0.55rem, 150%);
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: var(--compare-h, 0px);
   }
@@ -182,7 +185,7 @@
     transition: text-decoration-color 0.16s ease, color 0.16s ease;
   }
   .link:hover { color: var(--leaf); text-decoration-thickness: 3px; }
-  .link svg { flex: none; transition: translate 0.2s ease; }
+  .link svg { flex: none; } /* its 0.25rem travel is motion.js's; without it, the hover state alone */
   .link:hover svg { translate: 4px 0; }
 
   .skip {
@@ -296,8 +299,11 @@
      screen, with its caption and its one button beneath. */
   html.film-live .film-poster { display: none; }
   html.film-live .film-play { display: none; }
-  html.film-live .film-screen { max-width: none; width: auto; margin: 1.25rem calc(var(--gutter) * -1) 0; aspect-ratio: auto; height: min(100vw, 58vh); }
-  @supports (height: 100svh) { html.film-live .film-screen { height: min(100vw, 58svh); } }
+  /* On a short phone the frame gives way, so that the first button is within a screen and a quarter
+     (R3, defect 4): 30rem is what the heading, the caption, the lead and the space between them take. */
+  html.film-live .film-screen { max-width: none; width: auto; margin: 1.25rem calc(var(--gutter) * -1) 0; aspect-ratio: auto; height: min(100vw, 58vh, calc(125vh - 30rem)); }
+  @supports (height: 100svh) { html.film-live .film-screen { height: min(100vw, 58svh, calc(125svh - 30rem)); } }
+  @media (max-width: 30rem) { .hero { padding-top: 5.5rem; } }
   html.film-live .film-foot { margin-top: 0.5rem; }
   /* Its top and bottom edges fade into the page, so the field of cards has no hard edge. */
   html.film-live .film-screen::after {
@@ -306,6 +312,23 @@
     inset: 0;
     pointer-events: none;
     background: linear-gradient(180deg, var(--mist) 0, transparent 3rem, transparent calc(100% - 3rem), var(--mist) 100%);
+  }
+  /* A phone held sideways (short, wider than tall, too narrow for the film to fill the opening): the
+     film keeps a frame of its own, beside the text rather than under the heading, so that it and its
+     labels are whole on the first screen (R3, defect 2). */
+  @media (max-width: 56.2499rem) and (max-height: 30rem) and (min-aspect-ratio: 21/20) {
+    html.film-live .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: repeat(4, auto) 1fr; column-gap: 2rem; align-items: start; padding-top: 5.25rem; }
+    html.film-live .hero .display { grid-column: 1; grid-row: 1; font-size: clamp(1.7rem, 4.4vw, 2.35rem); }
+    html.film-live .hero-lead { grid-column: 1; grid-row: 2; margin-top: 0.9rem; }
+    html.film-live .hero-actions { grid-column: 1; grid-row: 3; margin-top: 1.1rem; }
+    html.film-live .hero-note { grid-column: 1; grid-row: 4; }
+    html.film-live .film-screen { grid-column: 2; grid-row: 1 / span 4; margin: 0; height: max(12rem, calc(100vh - 9rem)); }
+    html.film-live .film-foot { grid-column: 2; grid-row: 5; }
+  }
+  @supports (height: 100svh) {
+    @media (max-width: 56.2499rem) and (max-height: 30rem) and (min-aspect-ratio: 21/20) {
+      html.film-live .film-screen { height: max(12rem, calc(100svh - 9rem)); }
+    }
   }
   /* On a wide screen it fills the whole opening, with the text over its left side and the caption
      and the bar along its foot. */
@@ -316,15 +339,17 @@
     html.film-live .hero-text { position: relative; z-index: 2; max-width: var(--text-w); }
     html.film-live .hero-text > :not(.display) { max-width: calc(var(--text-w) * 0.82); }
     html.film-live .film-foot { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 1.75rem; z-index: 3; margin: 0; }
-    /* Keeps the text readable whatever the film is showing behind it; it ends where the text column does. */
+    /* Keeps the text readable whatever the film is showing behind it. It stays solid until 3rem past
+       the text's widest line, which the film measures and sets as --text-edge (until it does, the
+       widest the heading can be), and is gone 2rem later, where the film's subject begins (R3). */
     html.film-live .hero-veil {
       display: block;
       position: absolute;
       inset: 0;
       z-index: 1;
       pointer-events: none;
-      --veil-from: calc(var(--gutter) + var(--text-w) * 0.82);
-      --veil-to: calc(var(--gutter) + var(--text-w) + 2.5rem);
+      --veil-from: calc(var(--text-edge, calc(var(--gutter) + var(--text-w))) + 3rem);
+      --veil-to: calc(var(--text-edge, calc(var(--gutter) + var(--text-w))) + 5rem);
       background: linear-gradient(90deg, var(--mist) 0, var(--mist) var(--veil-from), transparent var(--veil-to));
     }
     @supports (color: color-mix(in srgb, red, red)) {
@@ -347,7 +372,7 @@
 
   /* What the film is showing, in words: one line for each of its three parts. */
   .film-captions { display: grid; flex: 1; min-width: 0; }
-  .film-caption { grid-area: 1 / 1; align-self: end; opacity: 0; translate: 0 6px; transition: opacity 0.45s ease, translate 0.45s ease; }
+  .film-caption { grid-area: 1 / 1; align-self: end; opacity: 0; translate: 0 6px; } /* the change is motion.js's */
   .film-caption.is-on { opacity: 1; translate: none; }
   .film-line { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.2rem, 1.75vw, 1.55rem); line-height: 1.15; letter-spacing: var(--display-tracking); text-wrap: balance; }
   @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
@@ -389,6 +414,13 @@
   .places small { display: none; font-size: 0.75rem; font-weight: 600; color: var(--moss); }
   .places li[data-side="left"]::before { left: auto; right: 0; }
   .places li[data-side="left"] b { left: auto; right: var(--lead); }
+  /* A short screen (a phone held sideways, a television's browser at 960 by 540): the map is small,
+     and Maharashtra's chip, run east, would meet Telangana's and Jharkhand's; it turns west, over the
+     sea. In the wide layout that still leaves it 4.5rem clear of the text (scene.js, GAP). */
+  @media (max-height: 36rem) {
+    .places li[data-short-side="left"]::before { left: auto; right: 0; }
+    .places li[data-short-side="left"] b { left: auto; right: var(--lead); }
+  }
   /* On the smallest phones the western pin's chip would touch the edge of the screen. */
   @media (max-width: 22.5rem) {
     .places { --lead: 0.7rem; }
@@ -418,14 +450,8 @@
   }
 
   /* ---------- Why: what the tests are made to be ---------- */
-  /* Five words from the company's own description, set large; between them the card's dashed circle. */
-  .better { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.1rem; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 2.9vw, 2.5rem); line-height: 1.15; letter-spacing: var(--display-tracking); }
-  .better li { display: inline-flex; align-items: center; gap: 1.1rem; }
-  .better li:not(:last-child)::after { content: ""; flex: none; width: 0.5em; height: 0.5em; border: 2px dashed var(--leaf); border-radius: 50%; }
-  @media (max-width: 39.99rem) {
-    .better { display: grid; gap: 0.15rem; }
-    .better li:not(:last-child)::after { content: none; }
-  }
+  /* The five words that stood above the rows ("Genetic diagnosis, made: Faster · Simpler …") were
+     removed with the R1 review (content 5.1): the rows carry the contrasts. */
   .why { display: grid; gap: 0 2.5rem; border-bottom: 1px solid var(--line); }
   .why > li { padding: 1.2rem 0 1.3rem; border-top: 1px solid var(--line); }
   .why h3 { font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.008em; }
@@ -508,10 +534,15 @@
   /* Only the drawn map can be pointed at, so only then is the reader told that it can. */
   .map-hint { display: none; margin-top: 0.5rem; font-size: 0.9375rem; line-height: 1.4; color: var(--moss); }
   .map-layout.is-live .map-hint { display: block; }
-  .hint-tap { display: none; }
+  .hint-tap, .hint-select { display: none; }
   @media (hover: none) {
     .hint-point { display: none; }
     .hint-tap { display: inline; }
+  }
+  /* No pointer at all, as on a television with its remote: the reader selects (content 5.1, R3). */
+  @media (pointer: none) {
+    .hint-point, .hint-tap { display: none; }
+    .hint-select { display: inline; }
   }
   .map-sources { margin-top: 0.3rem; }
   .map-sources > summary { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; cursor: pointer; list-style: none; }
@@ -544,8 +575,8 @@
   .map-figure .state { fill: var(--meadow); stroke: var(--canopy); stroke-width: 1; stroke-opacity: 0.4; stroke-linejoin: round; vector-effect: non-scaling-stroke; cursor: pointer; transition: fill 0.5s ease, stroke-opacity 0.15s ease, stroke-width 0.15s ease; }
   .map-figure .state.is-on { stroke-width: 2.5; stroke-opacity: 1; }
   .map-figure .weave { fill: none; stroke: var(--paper); stroke-opacity: 0.5; pointer-events: none; }
-  .map-names, .map-pins { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; pointer-events: none; }
-  .map-names li, .map-pins li { position: absolute; width: 0; height: 0; }
+  .map-names { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; pointer-events: none; }
+  .map-names li { position: absolute; width: 0; height: 0; }
   .map-names li { opacity: 0; transition: opacity 0.35s ease; }
   .map-names li.is-shown { opacity: 1; }
   .map-names b {
@@ -568,19 +599,6 @@
   }
   .map-names li.is-on { z-index: 1; }
   .map-names li.is-on b { background: var(--paper); border-color: var(--canopy); text-shadow: none; }
-  .map-pins { z-index: 2; opacity: 0; transition: opacity 0.4s ease; --lead: 1.1rem; }
-  .map-pins.is-shown { opacity: 1; }
-  .map-pins li::before { content: ""; position: absolute; left: 0; top: -1px; width: var(--lead); height: 2px; background: var(--canopy); }
-  .map-pins li::after { content: ""; position: absolute; left: -0.3rem; top: -0.3rem; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--sun); border: 2px solid var(--canopy); }
-  .map-pins b { position: absolute; left: var(--lead); top: 0; translate: 0 -50%; padding: 0.14rem 0.5rem; white-space: nowrap; font-size: 0.75rem; font-weight: 800; line-height: 1.25; color: var(--canopy); background: var(--paper); border: 1.5px solid var(--canopy); border-radius: var(--round); }
-  .map-pins small { display: none; font-size: 0.75rem; font-weight: 600; color: var(--moss); }
-  .map-pins li[data-side="left"]::before { left: auto; right: 0; }
-  .map-pins li[data-side="left"] b { left: auto; right: var(--lead); }
-  @media (min-width: 40rem) {
-    .map-pins { --lead: 1.6rem; }
-    .map-pins b { padding: 0.3rem 0.7rem 0.36rem; font-size: 0.875rem; border-radius: 0.85rem; }
-    .map-pins small { display: block; }
-  }
   @media (max-width: 39.99rem) {
     .map-names b { padding: 0.06rem 0.35rem; font-size: 0.6875rem; line-height: 1.2; }
   }
@@ -714,6 +732,13 @@
     .fieldwork { gap: 1.25rem; }
     .fieldwork img { aspect-ratio: 5 / 6; }
   }
+  /* On the smallest phones three in a row leave a photo narrower than "MAHARASHTRA" in the label
+     voice: two go side by side and the third runs the width under them (R3, defect 5). */
+  @media (max-width: 24rem) {
+    .fieldwork { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fieldwork figure:nth-child(3) { grid-column: 1 / -1; }
+    .fieldwork figure:nth-child(3) img { aspect-ratio: 2 / 1; }
+  }
 
   /* ---------- Contact ---------- */
   .actions { border-bottom: 1px solid var(--line); }
@@ -731,7 +756,7 @@
     font-stretch: 106%;
     letter-spacing: -0.012em;
     line-height: 1.15;
-    transition: background-color 0.16s ease, padding-left 0.2s ease;
+    transition: background-color 0.16s ease; /* the slide is motion.js's */
   }
   .actions li:first-child a { border-top: 2px solid var(--canopy); }
   .actions a:hover { background: var(--sprout); padding-left: 0.75rem; }
@@ -755,7 +780,7 @@
   /* Everything above is Design 10's page. What follows changes only what things are made of, never
      where they stand or how big they are. */
 
-  /* The light. Each white band is lit by one soft pool, DNA blue from the left or sunlight from the right,
+  /* The light. Each white band is lit by one soft pool, DNA blue from the left or life green from the right,
      and the vision by both. The pools are clipped to their band, so nothing widens the page. */
   .section.bg-paper, .vision { position: relative; isolation: isolate; overflow: clip; }
   .section.bg-paper::before, .vision::before, .vision::after {
@@ -777,18 +802,18 @@
 
   /* The glass. What Design 10 raises in flat paper is a white the light shows through, with a soft
      shadow; the chips over the film and the menu's panel are a stronger white, to stay readable. */
-  .btn-line, .film-toggle, .seg, .kinds > li, .notice, .menu-panel, .places b, .map-pins b {
+  .btn-line, .film-toggle, .seg, .kinds > li, .notice, .menu-panel, .places b {
     background: var(--glass);
     -webkit-backdrop-filter: var(--blur);
     backdrop-filter: var(--blur);
     box-shadow: var(--shadow);
   }
-  .menu-panel, .places b, .map-pins b { background: var(--glass-strong); }
+  .menu-panel, .places b { background: var(--glass-strong); }
   .steps img, .map-still, .fieldwork img, .blank-card, .film-poster { box-shadow: var(--shadow); }
 
   /* The label voice, in Nunito 800: the small capitals, the chips on the film and the map, the tags
      on the tests and the facts about a state. Sizes and casing are Design 10's. */
-  .label, .brand-line, .state-facts dt, .places b, .map-pins b, .tag { font-family: var(--font-mono); font-weight: var(--label-weight); }
+  .label, .brand-line, .state-facts dt, .places b, .tag { font-family: var(--font-mono); font-weight: var(--label-weight); }
   .label, .brand-line, .state-facts dt { letter-spacing: var(--label-tracking); }
 
   /* DNA blue for every action: the solid button and the chosen layer, deepening to the ink on hover. */
@@ -827,8 +852,8 @@
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
   }
-  /* The map's key. A blue state is lightened towards paper before it is warmed to amber, because the
-     two mixed straight give khaki; the script paints the map and these swatches the same way. */
+  /* The map's key. A blue state is lightened towards paper before it is moved to green, so that a
+     partly marked state reads as a paler green, not a third blue-green; the script paints the map and these swatches the same way. */
   .key-pale { background: color-mix(in srgb, var(--sun) 45%, var(--paper)); }
   .key-faint { background: color-mix(in srgb, var(--sun) 12%, var(--paper)); }
 }
@@ -859,29 +884,50 @@
     html.film-live .film-screen { justify-self: stretch; }
   }
 
-  /* The map's fifteen sites (content file 6.1). Each is lumen.css's dot; its leader and chip show
-     only for the pin pointed at, focused or tapped, so fifteen names never crowd the map (DESIGN.md,
-     "The map"). The pin is a 1.5rem button centred on its dot: the sites lie closer together than a
-     larger target would allow, and the state panel and the summary say the same in words. */
-  .map-pins .pin {
-    position: absolute;
-    left: -0.75rem;
-    top: -0.75rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: none;
-    cursor: pointer;
-    pointer-events: auto;
+  /* Under Our work, a picked state's name is its chip: the name, then what was screened there
+     (content 6.2), on a line of its own that wraps rather than leave the map. No towns are pinned (R2). */
+  .map-names small { display: none; }
+  .map-names li.has-chip b { max-width: 14rem; }
+  .map-names li.has-chip small { display: block; margin-top: 0.1rem; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; line-height: 1.25; color: var(--moss); text-wrap: balance; }
+
+  /* Nothing depends on hover (R3, television use): what a pointer brings out, the keyboard's focus
+     and a remote's bring out too, alongside the focus ring. */
+  .btn-solid:focus-visible { background: var(--canopy); border-color: var(--canopy); }
+  .btn-line:focus-visible, .nav-link:focus-visible, .film-toggle:focus-visible, .actions a:focus-visible { background: var(--sprout); }
+  .seg input:focus-visible:not(:checked) + span { background: var(--sprout); }
+  .link:focus-visible { color: var(--leaf); text-decoration-thickness: 3px; }
+  .link:focus-visible svg { translate: 0.25rem 0; }
+  .actions a:focus-visible { padding-left: 0.75rem; }
+  .foot-link:focus-visible { color: var(--leaf); text-decoration-color: var(--leaf); }
+  .about > summary:focus-visible { color: var(--canopy); }
+
+  /* While motion.js moves them (html.motion-on), the stylesheet's own movement for the same things is
+     off, so that nothing moves twice; without script, or with less motion asked for, the states
+     below and above apply at once. */
+  .motion-on .link:hover svg, .motion-on .link:focus-visible svg { translate: none; }
+  .motion-on .actions a:hover, .motion-on .actions a:focus-visible { padding-left: 0; }
+  .motion-on .film-caption, .motion-on .film-caption.is-on { translate: none; }
+  /* The map's choices: motion.js lays a pill under the chosen one and slides it (the chosen span's
+     own fill is then the pill's); the chosen text turns white as the pill arrives. */
+  .seg-thumb { display: none; }
+  .motion-on .seg { position: relative; }
+  .motion-on .seg-thumb { display: block; position: absolute; left: 0; top: 0; border-radius: var(--round); background: var(--leaf); pointer-events: none; }
+  .motion-on .seg label { z-index: 1; }
+  .motion-on .seg input:checked + span { background: transparent; transition: color 0.16s ease 0.1s; }
+  /* A disclosure's plus turns half a turn as its upright stroke folds away, and back. */
+  .motion-on .map-sources > summary::before, .motion-on .about > summary::before { transition: rotate 0.2s ease, background-size 0.2s ease; }
+  .motion-on .map-sources[open] > summary::before, .motion-on .about[open] > summary::before { rotate: 180deg; }
+
+  /* Every control is at least 2.75rem tall, and text that is read is never under 16 px on a phone
+     (R3, item 7): the map's three choices and REASSURED's letters gain the height; the fine print
+     (the map's key, hint and sources) is set at 1rem under 30rem. The label voice (labels, tags and
+     chips, a few words in capitals) keeps the design's sizes. */
+  .seg span { min-height: 2.75rem; }
+  .word button { min-height: 2.75rem; }
+  @media (max-width: 30rem) {
+    .map-key, .map-hint, .map-sources > p { font-size: 1rem; }
   }
-  .map-pins:not(.is-shown) .pin { pointer-events: none; }
-  .map-pins .pin:focus-visible { border-radius: 50%; }
-  .map-pins li::before, .map-pins b { opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
-  .map-pins li.is-on { z-index: 1; }
-  .map-pins li.is-on::before, .map-pins li.is-on b { opacity: 1; }
-  /* What was screened can run long ("SCA, sickle-beta thal., beta thal. · population and newborn"):
-     it wraps rather than leave the map. */
-  .map-pins small { width: max-content; max-width: 14rem; white-space: normal; }
+  @media (min-width: 24rem) and (max-width: 30rem) {
+    .seg span { font-size: 1rem; }
+  }
 }

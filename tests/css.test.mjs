@@ -9,8 +9,14 @@ const built = () => readFileSync('dist/assets/css/site.css', 'utf8');
 
 test('tokens carry the chosen variation', () => {
   const css = built().replace(/\s+/g, '').toLowerCase();
-  for (const s of ['--ff-display:"Quicksand"', '--ff-body:"Nunito"', '--ff-mono:"Nunito"', '--display-weight:700', '--display-tracking:-.02em', '--label-weight:800', '--label-tracking:.08em', '--sun:#ffc53d', '--leaf:#0369a1'])
+  for (const s of ['--ff-display:"Quicksand"', '--ff-body:"Nunito"', '--ff-mono:"Nunito"', '--display-weight:700', '--display-tracking:-.02em', '--label-weight:800', '--label-tracking:.08em', '--sun:#6ee7b7', '--leaf:#0369a1'])
     assert.ok(css.includes(s.toLowerCase()), s);
+});
+
+test('the highlight is life green, and no amber is left (DESIGN.md, 24 October 2026)', () => {
+  const css = built().replace(/\s+/g, '').toLowerCase();
+  assert.doesNotMatch(css, /#ffc53d/);
+  assert.doesNotMatch(css, /255,197,61/);
 });
 
 test('a proof name is set in DNA blue with nothing drawn under it', () => {
@@ -47,10 +53,13 @@ test('the type is self-hosted, in the six weights the design names and no others
   assert.deepEqual([...loaded].sort(), ['Nunito 400', 'Nunito 600', 'Nunito 700', 'Nunito 800', 'Quicksand 600', 'Quicksand 700']);
 });
 
-test('the page scales with the window and the column is capped', () => {
+test('the page scales with the window, and on very large screens it keeps growing (R3, Step 6)', () => {
+  // 16 px to 1440 px, then with the window to 24 px (150%, reached at 3040 px; it stopped at 22 px
+  // before). The column is 82rem until half the window plus its padding is wider, up to 96rem: the
+  // content spans at least half the window to 3840 px and 40% at 5120 px (DESIGN.md, Layout).
   const css = built().replace(/\s+/g, '');
-  assert.match(css, /html\{[^}]*font-size:clamp\(100%,\.5vw\+\.55rem,137\.5%\)/);
-  assert.match(css, /--frame:82rem/);
+  assert.match(css, /html\{[^}]*font-size:clamp\(100%,\.5vw\+\.55rem,150%\)/);
+  assert.match(css, /--frame:clamp\(82rem,50vw\+9rem,96rem\)/);
 });
 
 // px tokens in declarations that set a size: borders, outlines, shadows, blur and the keyframes
@@ -65,10 +74,12 @@ function pxSizes(source) {
 }
 
 test('no px sizes beyond those the design already has', () => {
+  // Rules the site no longer needs (the map's town pins, R2) take their px with them, so the site may
+  // have fewer than lumen.css, never more.
   const site = pxSizes(readFileSync('src/css/site.css', 'utf8'));
   const design = pxSizes(readFileSync('designs/src/css/lumen.css', 'utf8'));
   assert.ok(design > 0, 'the counter finds the design\'s own px sizes');
-  assert.equal(site, design);
+  assert.ok(site <= design, `site.css has ${site} px sizes, lumen.css ${design}`);
 });
 
 test('on wide windows the film\'s frame stretches across the opening, at any shape', () => {
