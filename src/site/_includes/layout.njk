@@ -36,7 +36,8 @@
 <meta property="og:title" content="{{ title }}">
 <meta property="og:description" content="{{ description }}">
 <meta property="og:url" content="{{ url }}">
-<meta property="og:image" content="{{ site.domain }}{{ social or '/assets/img/social.png' }}">
+{#- Every page but the home page has a card of its own (npm run social); the home page's is the film's end. #}
+<meta property="og:image" content="{{ site.domain }}{{ social or ('/assets/img/social.png' if page.url == '/' else '/assets/img/social/' + (page.url | socialSlug) + '.png') }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 {%- if socialAlt %}

@@ -531,8 +531,10 @@ What moves outside the film is `src/js/site/motion.js` (GSAP): every tween start
 ## Imagery
 
 - **The card is drawn, not photographed.** The stills (`designs/assets/img/lumen-*.webp`) are rendered from the same model as the film, in this design's own colours. They were captured with Roboto Mono on the cards and the larger drop; capture them again once the chosen type and drop are the page's defaults (the README says how). The map's two stills come from the drawn map, and show the key's colours.
-- **The preview card** for links shared on social networks and in chat (`designs/assets/img/lumen-social.png`, 1200 by 630) is the opening at the film's end, captured from the page. It is named in the page's `og:image`, which must be an absolute address on the site's domain. Capture it again with the chosen type.
-- **Field photos** are of the places the company has worked. Nobody in a photo may be identifiable. The current three are representative images from Wikimedia Commons and need the client's own before launch; their credits are in the footer and in `designs/assets/img/CREDITS.md`. They are labelled as places, never captioned as the company's work.
+- **The preview card** for links shared on social networks and in chat (`designs/assets/img/lumen-social.png`, 1200 by 630) is the opening at the film's end, captured from the page. It is named in the page's `og:image`, which must be an absolute address on the site's domain. Capture it again with the chosen type. On the site it is `src/assets/img/social.png` (`npm run stills`).
+- **Every other page's preview card** (added in Phase 3) is made of this file's materials and nothing new: the `mist` page lit by the blue pool from the left and the green from the right, the emblem at 6rem with "Lightening Lives" in Quicksand 700 beside it, the page's label in the label voice, its title (`og_title`, or the `h1`) in Quicksand 700 at 4rem in `canopy`, at most three lines, and "lighteninglives.in" in the label voice in `leaf` at the foot. Built at `/_social/<slug>/` (`src/site/_social/card.njk`, never indexed) and photographed by `npm run social` into `src/assets/img/social/<slug>.png`.
+- **Field photos** are of the places the company has worked. Nobody in a photo may be identifiable. The current three are representative images from Wikimedia Commons and need the client's own before launch; their credits are in the footer and in `src/assets/img/CREDITS.md`. They are labelled as places, never captioned as the company's work.
+- **Representative photographs** on the inner pages (places, laboratory equipment, the material of the method, care settings) are stand-ins until the company's own arrive (decision D4): captioned by place or subject, never as the company's work or as a patient. Their originals are in `src/images-src/`; `npm run images` writes each at 640, 1280 and, when wide enough, 1920 px, and the `picture()` include (`src/site/_includes/picture.njk`) offers every width. The footer's "Photo and map credits" lists only what its page shows, from the table in `src/assets/img/CREDITS.md`, with one line saying the photographs are representative.
 - **Photographs of the work** (the six steps of the method, the boxes, the field) belong on the inner pages, as the content file says. They are the company's own photographs, never stock.
 - **No stock illustrations, no icon sets, no decorative shapes.** If a section seems to need a picture, it gets a still of the card or none.
 - **Partner names are typeset.** No ICMR, CSIR-CCMB or other partner logos without written permission.
@@ -605,7 +607,8 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 | Menu, REASSURED, the map, loading the film | `designs/src/js/lumen/main.js` |
 | The film: `TAKE`, `TIMING`, `DROP`, the card | `designs/src/js/lumen/scene.js` |
 | The map's facts and wording | `designs/src/js/drop/map-layers.js` (Designs 01 and 07 keep a copy in `designs/src/js/sample-card/india-data.js`) |
-| Stills and the preview card | `designs/assets/img/lumen-*.webp`, `designs/assets/img/lumen-social.png` |
+| Stills and the preview card | `designs/assets/img/lumen-*.webp`, `designs/assets/img/lumen-social.png`; on the site `src/assets/img/site-*.webp`, `social.png` and `social/*.png` |
+| Photographs and their credits | `src/images-src/` (originals), `src/assets/img/CREDITS.md`, `scripts/images.mjs` |
 | Logo | `designs/assets/logo/` |
 | The site's copy, strategy and open facts | `content/website-content.md` |
 | Steps for going live | `designs/README.md` |

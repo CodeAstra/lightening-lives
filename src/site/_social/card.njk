@@ -1,0 +1,34 @@
+---
+# One 1200 x 630 card per page but the home page (which keeps the film's end, social.png), for
+# scripts/social.mjs to photograph into src/assets/img/social/<slug>.png. Not a page of the site:
+# noindex, outside the collections, the sitemap and pages().
+pagination:
+  data: collections.cardable
+  size: 1
+  alias: target
+permalink: "/_social/{{ target.url | socialSlug }}/"
+eleventyExcludeFromCollections: true
+layout: false
+---
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1200">
+<meta name="robots" content="noindex, nofollow">
+<title>Preview card: {{ target.data.title }}</title>
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body class="social-body">
+<div class="social-card">
+  <p class="social-brand"><img src="/assets/logo/lightening-lives-emblem.svg" width="96" height="96" alt=""><span>{{ site.name }}</span></p>
+  <div class="social-text">
+    {%- if target.data.label %}
+    <p class="label">{{ target.data.label }}</p>
+    {%- endif %}
+    <h1>{{ target.data.og_title or target.data.h1 }}</h1>
+  </div>
+  <p class="social-domain">{{ site.domain | replace("https://", "") }}</p>
+</div>
+</body>
+</html>

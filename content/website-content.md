@@ -361,6 +361,9 @@ The current site's pages end in `.php`. People and search engines hold those add
 - **Disclaimer:** We work with hospitals, laboratories, clinicians, NGOs, CSR funders and government health programmes. We don't offer testing to individuals. Information on this website is general and is not medical advice.
 - **Trade mark line:** LitLife™ is a trade mark of Lightening Lives LLP. `[TBC: ™ or ®]`
 - **Disclosure:** Photo and map credits
+- **Representative line:** These photographs are representative images, not pictures of our own work.
+
+> The disclosure lists only what its page shows (the photographs it places, and the map's outline where the map is drawn), from `src/assets/img/CREDITS.md`; a page with neither has no disclosure. The representative line opens it on pages that show a photograph, until the company's own photographs replace the stand-ins. Added on 24 October 2026 in the build's Phase 3, for the rule that stand-in images are labelled as representative; the company may reword it.
 - **Last line:** © 2026 Lightening Lives LLP · Privacy · Terms
 
 ### 4.3 Proof chips (*tag*, *proof tag*)

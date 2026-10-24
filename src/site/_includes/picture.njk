@@ -1,0 +1,9 @@
+{#- picture(name, alt, sizes, opts): a photograph from src/images-src, at every width npm run images
+    wrote for it (images.json), lazy. sizes defaults to half the window on wide screens; opts takes
+    position (object-position, for a picture its frame crops) and class. Import it with context:
+    {% from "picture.njk" import picture with context %}. An unknown name stops the build. -#}
+{%- macro picture(name, alt, sizes, opts) -%}
+{%- set entry = images[name] -%}
+{%- if not entry %}{{ name | unknownImage }}{% endif -%}
+<img src="/assets/img/{{ name }}-640.webp" srcset="{% for w in entry.widths %}/assets/img/{{ name }}-{{ w }}.webp {{ w }}w{% if not loop.last %}, {% endif %}{% endfor %}" sizes="{{ sizes or '(min-width: 60rem) 50vw, 100vw' }}" width="640" height="{{ entry.height640 }}"{% if opts.class %} class="{{ opts.class }}"{% endif %}{% if opts.position %} style="object-position: {{ opts.position }}"{% endif %} alt="{{ alt }}" loading="lazy" decoding="async">
+{%- endmacro -%}

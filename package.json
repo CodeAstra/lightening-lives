@@ -13,6 +13,7 @@
     "pages": "node scripts/build.mjs --pages",
     "images": "node scripts/images.mjs",
     "stills": "node scripts/stills.mjs",
+    "social": "node scripts/social.mjs",
     "sweep": "node scripts/sweep.mjs",
     "pretest": "npm run build",
     "test": "node --test --test-concurrency=1 \"tests/*.test.mjs\""

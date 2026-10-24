@@ -1,0 +1,52 @@
+# Image credits
+
+The photographs here are representative images, chosen under the plan's selection rules (`docs/superpowers/plans/2026-10-24-website-build.md`, Phase 3): places the company has worked, laboratory work, the material of the method and care settings, with nobody identifiable. They are labelled as places or subjects and never captioned as the company's work. Replace them with Lightening Lives' own photographs as they arrive (`content/website-content.md`, Part 7.2 and 5.11 "The photographs").
+
+The stills of the card, the batch and the map (`site-*.webp`) and the preview card (`social.png`, `social/*.png`) are not photographs and need no credit: they are rendered from the company's own card and map in `src/js/site/scene.js` and the page itself.
+
+The originals are in `src/images-src/` (at most 2400 px on the long side). `npm run images` writes each at three widths, `{basename}-640.webp`, `{basename}-1280.webp` and, when the picture is at least 1920 px wide, `{basename}-1920.webp`, and turns the table below into `src/site/_data/credits.json`, from which the footer's "Photo and map credits" lists the rows its page shows. Keep the table's seven columns: the script reads them. "Footer label" is the short name the footer gives the picture; "Changes" is shown after the credit in brackets (`-` for none beyond resizing).
+
+| File basename | What it shows | Footer label | Author | Licence | Source | Changes |
+| --- | --- | --- | --- | --- | --- | --- |
+| `place-nandurbar` | Monsoon gorge and waterfall at Toranmal, Nandurbar district, Maharashtra | Toranmal, Nandurbar | HongYu HenzaiSuru | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Toranmal-Nandurbar.jpg) | - |
+| `place-kothagudem` | Kinnerasani reservoir with a forested island, Bhadradri Kothagudem district, Telangana | Kinnerasani reservoir, Kothagudem | [Pranayraj1985](https://commons.wikimedia.org/wiki/User:Pranayraj1985) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Kinnarsani_Dam_02.JPG) | cropped |
+| `place-jharkhand` | Patratu Valley, Jharkhand: a winding hill road above forest and the Patratu reservoir | Patratu Valley, Jharkhand | TribhuwanKumar | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Patratu_valley.jpg) | cropped |
+| `place-hyderabad` | The domed tomb of Muhammad Quli Qutb Shah on its arcaded plinth at the Qutb Shahi Tombs, Hyderabad, Telangana | Qutb Shahi Tombs, Hyderabad | [Bernard Gagnon](https://commons.wikimedia.org/wiki/User:Bgag) | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tomb_of_Muhammad_Quli_Qutb_Shah.jpg) | - |
+| `place-udaipur` | The City Palace and the Mohan Temple pavilion across Lake Pichola, Udaipur, Rajasthan | Lake Pichola, Udaipur | [Jakub Hałun](https://commons.wikimedia.org/wiki/User:Jakubhal) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:20191207_City_Palace,_Mohan_Temple_and_Lake_Pichola,_Udaipur,_1523_7262.jpg) | - |
+| `place-mysore` | The central towers and red dome of Mysore Palace (Amba Vilas), Mysuru, Karnataka | Mysore Palace, Mysuru | [Ingo Mehling](https://commons.wikimedia.org/wiki/User:Imehling) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mysuru_Palace_-_Central_Towers.jpg) | - |
+| `place-gudalur` | Rows of tea bushes on an estate near Gudalur, with a few tall trees on the skyline, Nilgiris district, Tamil Nadu | Tea estate, Gudalur | LakshmiNaresh | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Gudalur_teaestate.jpg) | - |
+| `place-valsad` | The Par river running over flat rocks past green banks in the monsoon, at Panchlai near Pardi, Valsad district, Gujarat | Par river, Valsad | Raman Patel | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:River_Par,Panchlai,_Pardi,_Valsad_-_panoramio.jpg) | - |
+| `lab-pipette` | Multichannel pipetting into a 96-well plate at a CSIR-CCMB laboratory (LaCONES), Hyderabad | Pipetting at CSIR-CCMB | Somdattakarak | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:RMP2093.jpg) | - |
+| `lab-thermal-cycler` | A benchtop PCR thermal cycler with its lid open and a full 96-well rack of tubes in its block | A thermal cycler | [Microrao](https://commons.wikimedia.org/wiki/User:Microrao) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:96_well_PCR_thermocycler.JPG) | - |
+| `lab-gel` | Gloved hands at a horizontal agarose gel electrophoresis tank, its leads running to a power supply | Agarose gel electrophoresis | [School of Natural Resources, Ann Arbor](https://www.flickr.com/people/26835854@N07) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:DNA_Agarose_gel_electrophoresis.jpg) | - |
+| `lab-bench` | A gloved hand steadying a rack of open tubes while a pipette dispenses into one, seen over a shoulder | Pipetting at a bench | [Marta D](https://commons.wikimedia.org/wiki/User:Marti_diepi) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Behind_the_lab_work.jpg) | - |
+| `method-paper` | Gloved hands holding a newborn's foot to a filter-paper screening card, two of its circles filled with dried blood spots | A blood spot card | Staff Sgt Eric T. Sheler, U.S. Air Force | Public domain | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Phenylketonuria_testing.jpg) | cropped |
+| `method-fingerprick` | A health worker's gloved hands pressing a small lancet against a fingertip | A fingerprick | Margrette Dorn, U.S. Marine Corps | Public domain | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Armed_Services_Blood_Program_120727-M-PM738-033.jpg) | - |
+| `care-newborn` | An adult's hands cradling a newborn's bare feet | A newborn's feet | [Bonnie Kittle](https://unsplash.com/@bonniekdesign) | CC0 1.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Baby%27s_feet_(Unsplash).jpg) | - |
+| `care-phc` | The Government Primary Health Centre at Masinagudi, Nilgiris district, Tamil Nadu, seen from the road | Primary Health Centre, Masinagudi | [Timothy A. Gonsalves](https://commons.wikimedia.org/wiki/User:Tagooty) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Public_Health_Centre_Masinagudi_Jun23_A7C_05219.jpg) | - |
+| `care-anganwadi` | A small anganwadi centre at Budhibili, Dhenkanal district, Odisha, its walls painted with fish, a rainbow and animals | Anganwadi centre, Dhenkanal | [Biswarup Ganguly](https://commons.wikimedia.org/wiki/User:Gangulybiswarup) | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Anganwadi_Centre_-_Budhibili_-_Dandadhar_Road_-_Dhenkanal_2018-01-25_9601.JPG) | - |
+| `map-india` | The outline of India and its state boundaries, under the film's map and the map section | Map outline and state boundaries | [DataMeet India community](https://github.com/datameet/maps) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | [DataMeet maps](https://github.com/datameet/maps) | simplified to a grid |
+
+## Changes made to the originals
+
+- All photographs: resized to at most 2400 px on the long side for `src/images-src/`, then to the published widths, and converted to WebP; metadata removed.
+- `place-kothagudem`: cropped to 16:10 (part of the foreground shore and sky removed), as in `designs/assets/img/`.
+- `place-jharkhand`: cropped to 16:10 (the roadside kerb at the bottom edge removed), as in `designs/assets/img/`.
+- `method-paper`: the left 16% cut away, which carried part of the screening card's printed serial number (a sample code; content file 5.11).
+- The crops are made by `scripts/images.mjs` (`CROPS`), so the originals in `src/images-src/` are uncropped.
+
+## Licence notes
+
+- CC BY and CC BY-SA images need a visible credit (author, licence, link to the source) wherever they are published, and a note of changes. The footer's "Photo and map credits", on every page that shows them, meets that.
+- The edited CC BY-SA files above remain under their CC BY-SA licence. This applies to the image files only, not to the rest of the website.
+- Public domain images need no credit; they are credited anyway, with the agency that published them where it asks for that.
+- Unsplash Licence: free to use without permission; credited here as a courtesy. (No picture here is from Unsplash yet: its site refused the automated search on 24 October 2026, so every picture was found on Wikimedia Commons.)
+- No picture here is under a licence that forbids commercial use or changes.
+- `place-hyderabad` and `care-anganwadi` are offered on Commons under the GFDL as well; they are used under their Creative Commons licence.
+- `care-phc`: the photographer's credit box asks to be contacted before commercial use (his Commons user page gives the address). That is a request, not a condition of CC BY-SA 4.0; the company may want to write to him before launch.
+- `method-fingerprick` is a work of the U.S. federal government (Defense Visual Information Distribution Service, 778399), in the public domain. Its Commons description names the person whose finger it is; nothing in the picture identifies him, and that description is never reused as a caption.
+- `care-newborn` was published on Unsplash in 2016 under CC0, and is used from its Commons copy under CC0.
+
+## What each picture is not
+
+Each picture stands for a place or a subject, never for the company's work. None shows a patient or a programme of the company's; the place photographs show a district or a city the company has worked in, and are labelled with the place's name only. `care-newborn` was taken in the USA, `care-anganwadi` in Odisha and `care-phc` in the Nilgiris: they show a kind of place, and are captioned by what they show, not as the company's sites.

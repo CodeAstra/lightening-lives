@@ -9,6 +9,7 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
     before the vision. The film's markup is the approved page's; the film itself is src/js/site/scene.js. -#}
 {%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' -%}
 {%- set actionArrow = '<svg aria-hidden="true" width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 8h22M16 1l7 7-7 7"/></svg>' %}
+{%- from "picture.njk" import picture with context %}
 
   <!-- The opening film: a drop falls into one card's circle, the card joins a batch, and the batch becomes a map of India -->
   <section class="hero" id="top" data-film data-film-state="playing" aria-labelledby="hero-h">
@@ -393,16 +394,19 @@ socialAlt: "Genetic testing from a spot of blood on a card. A map of India made 
       <div class="lg:col-span-7">
         <h3 class="label mb-4">Where our field work has taken us</h3>
         <div class="fieldwork">
+          {#- The frames are portrait (5:6, 4:5) and the pictures 16:10, so a picture is drawn about
+              1.9 times as wide as its frame: sizes gives that drawn width, not the frame's. #}
+          {%- set fieldSizes = "(min-width: 64rem) 28vw, (min-width: 24rem) 58vw, 90vw" %}
           <figure>
-            <img src="/assets/img/place-nandurbar-640.webp" srcset="/assets/img/place-nandurbar-640.webp 640w, /assets/img/place-nandurbar-1280.webp 1280w" sizes="(min-width: 1024px) 22vw, 30vw" width="640" height="399" style="object-position: 62% 50%" alt="A monsoon-green gorge with a thin waterfall dropping down red basalt cliffs at Toranmal, Nandurbar district, Maharashtra." loading="lazy" decoding="async">
+            {{ picture("place-nandurbar", "A monsoon-green gorge with a thin waterfall dropping down red basalt cliffs at Toranmal, Nandurbar district, Maharashtra.", fieldSizes, { position: "62% 50%" }) }}
             <figcaption class="label">Maharashtra</figcaption>
           </figure>
           <figure>
-            <img src="/assets/img/place-kothagudem-640.webp" srcset="/assets/img/place-kothagudem-640.webp 640w, /assets/img/place-kothagudem-1280.webp 1280w" sizes="(min-width: 1024px) 22vw, 30vw" width="640" height="400" style="object-position: 58% 50%" alt="Still water of the Kinnerasani reservoir with a forested island, Bhadradri Kothagudem district, Telangana." loading="lazy" decoding="async">
+            {{ picture("place-kothagudem", "Still water of the Kinnerasani reservoir with a forested island, Bhadradri Kothagudem district, Telangana.", fieldSizes, { position: "58% 50%" }) }}
             <figcaption class="label">Telangana</figcaption>
           </figure>
           <figure>
-            <img src="/assets/img/place-jharkhand-640.webp" srcset="/assets/img/place-jharkhand-640.webp 640w, /assets/img/place-jharkhand-1280.webp 1280w" sizes="(min-width: 1024px) 22vw, 30vw" width="640" height="400" style="object-position: 36% 50%" alt="A hill road winding through forest above the Patratu reservoir, Patratu Valley, Jharkhand." loading="lazy" decoding="async">
+            {{ picture("place-jharkhand", "A hill road winding through forest above the Patratu reservoir, Patratu Valley, Jharkhand.", fieldSizes, { position: "36% 50%" }) }}
             <figcaption class="label">Jharkhand</figcaption>
           </figure>
         </div>

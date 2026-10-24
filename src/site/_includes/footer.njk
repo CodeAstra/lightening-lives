@@ -47,15 +47,20 @@
       <div class="lg:col-span-7">
         <p>{{ site.footer.disclaimer }}</p>
         <p class="mt-2">{{ site.footer.trademark }}</p>
+        {%- set shown = credits | creditsFor(content) %}
+        {%- if shown.length %}
         <details class="credits mt-2">
           <summary class="foot-link text-canopy">Photo and map credits</summary>
+          {%- if shown | photographs | length %}
+          <p class="mt-1">{{ site.footer.representative }}</p>
+          {%- endif %}
           <ul class="mt-1 grid gap-1 text-base sm:text-[0.9375rem]">
-            <li>Toranmal, Nandurbar: <a href="https://commons.wikimedia.org/wiki/File:Toranmal-Nandurbar.jpg" rel="noopener">HongYu HenzaiSuru</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener license">CC BY-SA 4.0</a>.</li>
-            <li>Kinnerasani reservoir, Kothagudem: <a href="https://commons.wikimedia.org/wiki/File:Kinnarsani_Dam_02.JPG" rel="noopener">Pranayraj1985</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener license">CC BY-SA 4.0</a> (cropped).</li>
-            <li>Patratu Valley, Jharkhand: <a href="https://commons.wikimedia.org/wiki/File:Patratu_valley.jpg" rel="noopener">TribhuwanKumar</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener license">CC BY-SA 4.0</a> (cropped).</li>
-            <li>Map outline and state boundaries: <a href="https://github.com/datameet/maps" rel="noopener">DataMeet India community</a>, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener license">CC BY 4.0</a> (simplified to a grid).</li>
+            {%- for row in shown %}
+            <li data-credit="{{ row.basename }}">{{ row.label }}: {% if row.authorUrl %}<a href="{{ row.authorUrl }}" rel="noopener">{{ row.author }}</a>{% else %}{{ row.author }}{% endif %}, {% if row.licenceUrl %}<a href="{{ row.licenceUrl }}" rel="noopener">{{ row.licence }}</a>{% else %}{{ row.licence }}{% endif %}, <a href="{{ row.sourceUrl }}" rel="noopener">{{ row.source }}</a>{% if row.changes %} ({{ row.changes }}){% endif %}.</li>
+            {%- endfor %}
           </ul>
         </details>
+        {%- endif %}
       </div>
       <div class="lg:col-span-5 lg:text-right">
         <p>© 2026 {{ site.legalName }}</p>
