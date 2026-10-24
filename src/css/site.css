@@ -766,7 +766,7 @@
 
   /* ---------- Footer ---------- */
   .site-footer { background: var(--paper); border-top: 2px solid var(--canopy); }
-  .foot-link { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 500; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .foot-link { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 400; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 2px; text-underline-offset: 4px; }
   .foot-link:hover { color: var(--leaf); text-decoration-color: var(--leaf); }
   .credits > summary { cursor: pointer; list-style: none; }
   .credits > summary::-webkit-details-marker { display: none; }
@@ -874,6 +874,9 @@
   @media (min-width: 56.25rem) { .page-open { padding-top: 8.5rem; } }
   /* Long words in a heading at display size ("haemoglobinopathies") break rather than widen the page;
      a short one ("be-gins", Partnerships at 5120 px) never does. */
+  /* The opening's columns may be narrower than a word: a heading's word too long for the window then
+     breaks (overflow-wrap, after hyphenation) instead of widening the column past the window. */
+  .page-open .section-head > * { min-width: 0; }
   .page-open .display { hyphens: auto; hyphenate-limit-chars: 10 4 4; -webkit-hyphenate-limit-before: 4; -webkit-hyphenate-limit-after: 4; overflow-wrap: break-word; }
   @media (max-width: 30rem) { .page-open .display { font-size: clamp(1.95rem, 9.4vw, 2.6rem); } }
 
@@ -1442,4 +1445,35 @@
     letter-spacing: var(--label-tracking);
     color: var(--leaf);
   }
+
+  /* Privacy and Terms (content 5.16, 5.17; policy.njk): a policy read part by part, drawn as the rows
+     are: a 2px canopy rule opens it, hairlines divide the parts, a hairline closes it. Each part's
+     heading takes five columns of twelve from 56rem and its words seven, on one baseline; the words
+     are in ink, since here they are the page, not a note on it. */
+  .policy-band { padding-top: 0; }
+  .policy-updated { margin-bottom: 1.5rem; color: var(--moss); }
+  .policy { border-top: 2px solid var(--canopy); border-bottom: 1px solid var(--line); }
+  .policy-part { display: grid; gap: 0.6rem 3rem; padding: 1.5rem 0 1.7rem; scroll-margin-top: 1.5rem; }
+  .policy-part + .policy-part { border-top: 1px solid var(--line); }
+  .policy-h { font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.008em; color: var(--canopy); }
+  .policy-body { max-width: 40rem; line-height: 1.6; }
+  .policy-body > * + * { margin-top: 0.9rem; }
+  .policy-list li + li { margin-top: 0.6rem; }
+  /* A link inside a sentence stays in the line (WCAG 2.5.8's inline exception), rather than the
+     standalone link's 2.75rem box, which would open a gap in the paragraph. */
+  .policy-body p:not(.policy-reach) .link { display: inline; min-height: 0; overflow-wrap: anywhere; }
+  @media (min-width: 56rem) {
+    .policy-part { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: baseline; padding: 1.8rem 0 2rem; }
+  }
+
+  /* Not found (content 5.18; 404.njk): the sentence, then the six pages as the contact actions' rows,
+     in the opening's seven columns. For an old address, the one line not-found.js adds above them is
+     the thing pointed out, so it sits on life green lightened through paper, as the comparison
+     table's own column does. */
+  .not-found { padding-top: 0; }
+  .not-found .wrap > * { max-width: 44rem; }
+  .not-found-lead { font-size: 1.125rem; line-height: 1.55; color: var(--moss); }
+  .not-found-hint { margin-top: 1.75rem; padding: 0.9rem 1.25rem; border-radius: 1rem; background: color-mix(in srgb, var(--sun) 22%, var(--paper)); font-size: 1.125rem; line-height: 1.5; }
+  .not-found-hint .link { display: inline; min-height: 0; overflow-wrap: anywhere; }
+  .not-found .actions { margin-top: 2rem; }
 }

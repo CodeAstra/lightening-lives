@@ -22,6 +22,15 @@
 //              on a phone the first button is within 1.25 screens; on a landscape phone the film and
 //              its labels are whole on the first screen, or set beside the text
 //   5 strip    from 2560 px wide the content spans at least half the window, to 3840 px, and 40% beyond
+//   6 controls on a phone held upright, every link, button, summary and field a reader can see is at
+//              least 44 px tall (R3 item 7; plan Task 6.4 Step 4), but a link inside a sentence
+//              (WCAG 2.5.8's inline exception)
+//   7 type     at 390 px wide, no text a reader can see is under 16 px (R3 item 7); each size under it
+//              is listed with where it is. The label voice (labels, tags, chips, the tagline) is
+//              counted in the notes, not failed: it keeps DESIGN.md's sizes until the user decides
+//              (Task 2.0 Step 7 ruling)
+// --reduced-motion runs every page as a reader who has asked for reduced motion (the film is then
+// the still with "Play the film").
 // Writes a picture of each page at each size (its first screen, and the whole page scaled down) to
 // the output folder (default: a folder in the system's temporary directory, printed at the end), and
 // a table to the console. Exits with 1 if anything fails.
@@ -58,6 +67,7 @@ const option = (name, fallback) => {
   const [value] = args.splice(at, 2).slice(1);
   return value;
 };
+const reduced = args.includes('--reduced-motion');
 const sizesArg = option('sizes', '');
 const out = path.resolve(option('out', '') || mkdtempSync(path.join(tmpdir(), 'll-sweep-')));
 const jobs = Math.max(1, Number(option('jobs', '3')));
@@ -154,6 +164,10 @@ for (let i = 0; i < live.length; i += 1) {
   for (let j = i + 1; j < live.length; j += 1) {
     const a = live[i]; const b = live[j];
     if (a.el === b.el || a.el.contains(b.el) || b.el.contains(a.el)) continue;
+    // The film's own button stands on its still by design (DESIGN.md: reduced motion, "a solid Play
+    // the film button on it").
+    const onStill = (p, q) => p.el.matches('img.film-poster') && q.el.closest('[data-film] button');
+    if (onStill(a, b) || onStill(b, a)) continue;
     const dx = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
     const dy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
     if (dx > 2 && dy > 2) hits.push(label(a.el) + ' x ' + label(b.el) + ' (' + Math.round(dx) + 'x' + Math.round(dy) + ')');
@@ -162,9 +176,10 @@ for (let i = 0; i < live.length; i += 1) {
 `;
 
 async function sweepOne(page, [kind, width, height], url) {
-  const tag = `${url.replace(/\//g, '_') || '_'}-${width}x${height}`;
+  const tag = `${url.replace(/\//g, '_') || '_'}-${width}x${height}${reduced ? '-rm' : ''}`;
   const result = { url, size: `${width}x${height}`, kind, fails: [], notes: [] };
   await page.call('set', 'viewport', String(width), String(height));
+  if (reduced) await page.call('set', 'media', 'light', 'reduced-motion');
   await page.call('open', `${base}${url}`);
   // The type, and the film's end (or that it will not play here).
   const film = await page.evaluate(`
@@ -176,6 +191,8 @@ async function sweepOne(page, [kind, width, height], url) {
       const c = document.documentElement.classList;
       if (f.dataset.filmState === 'ended' && c.contains('film-ready')) break;
       if (!c.contains('film-can') && Date.now() - t0 > 1500) return 'still';
+      // Reduced motion: the still with "Play the film"; the film waits to be asked.
+      if (c.contains('film-can') && !c.contains('film-live') && Date.now() - t0 > 1500) return 'still';
       await new Promise((r) => setTimeout(r, 200));
     }
     await new Promise((r) => setTimeout(r, 900)); // the hero's text has risen in, the chips have faded up
@@ -204,6 +221,54 @@ async function sweepOne(page, [kind, width, height], url) {
   const share = page1.content / width;
   if (width >= 2560 && share < (width <= 3840 ? 0.5 : 0.4) - 0.001) result.fails.push(`strip: the content spans ${Math.round(share * 100)}% of the window`);
   result.notes.push(`root ${page1.fs}px`, `content ${Math.round(page1.content)}px (${Math.round(share * 100)}%)`);
+
+  // 6 and 7: controls on a phone held upright, and type at 390 px.
+  if (width <= 430 && width < height) {
+    const sizes = await page.evaluate(`
+      const SCOPE = 'body';
+      const seen = (el) => {
+        for (let e = el; e && e.nodeType === 1; e = e.parentElement) {
+          const s = getComputedStyle(e);
+          if (s.visibility === 'hidden' || s.display === 'none' || Number(s.opacity) < 0.05) return false;
+          if (e.matches('.sr-only') || s.clipPath === 'inset(50%)') return false;
+          const shut = e.parentElement && e.parentElement.matches('details:not([open])');
+          if (shut && e.tagName !== 'SUMMARY') return false;
+        }
+        return true;
+      };
+      const where = (el) => (el.closest('[id]') ? '#' + el.closest('[id]').id + ' ' : '') + el.tagName.toLowerCase() + (typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\\s+/).slice(0, 2).join('.') : '');
+      const small = [];
+      for (const el of document.querySelectorAll('a[href], button, summary, input, select, textarea')) {
+        if (!seen(el)) continue;
+        const r = el.getBoundingClientRect();
+        if (r.width < 1 || r.height < 1) continue;
+        // A link inside a sentence: drawn inline, among other words of its block.
+        const block = el.parentElement.closest('p, li, td, dd, address');
+        const inline = getComputedStyle(el).display === 'inline' && block && block.textContent.trim().length > el.textContent.trim().length;
+        if (!inline && r.height < 43.5) small.push(where(el) + ' "' + el.textContent.replace(/\\s+/g, ' ').trim().slice(0, 24) + '" ' + Math.round(r.height) + 'px');
+      }
+      const type = new Map();
+      const VOICE = '.label, .tag, .brand-line, .places, .map-names, .state-facts, [class*="label"]';
+      let voice = 0;
+      if (innerWidth === 390) {
+        const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        for (let n = w.nextNode(); n; n = w.nextNode()) {
+          if (!n.textContent.trim() || !seen(n.parentElement) || n.parentElement.closest('svg, script, style, noscript, template')) continue;
+          const px = parseFloat(getComputedStyle(n.parentElement).fontSize);
+          if (px < 15.95) {
+            // The label voice (labels, tags, chips, the tagline beside the emblem) keeps DESIGN.md's
+            // sizes until the user decides (Task 2.0 Step 7 ruling): counted, not failed.
+            if (n.parentElement.closest(VOICE)) { voice += 1; continue; }
+            const k = where(n.parentElement) + ' ' + px + 'px'; type.set(k, (type.get(k) || 0) + 1);
+          }
+        }
+      }
+      return { small, voice, type: [...type].map(([k, c]) => k + (c > 1 ? ' x' + c : '')) };
+    `);
+    for (const c of sizes.small) result.fails.push(`controls: ${c}`);
+    for (const t of sizes.type) result.fails.push(`type: ${t}`);
+    if (sizes.voice) result.notes.push(`label voice under 16px: ${sizes.voice} (exempt)`);
+  }
 
   // 4, the first screen.
   const first = await page.evaluate(`

@@ -3,7 +3,8 @@
     and the layout opens it and closes it with the closing band (closing: false leaves the band out;
     closing: { h2, body, solid, line } replaces its words). The home page sets film: true and writes
     all of its own sections. notice: true adds the notice for individuals. leadLine is a line under
-    the lead (SMA's, content 5.6). Brackets never render: a chip that is only a bracket is left out. -#}
+    the lead (SMA's, content 5.6). notFound: true (the 404 page) has no canonical, og:url or breadcrumbs
+    and is noindex. Brackets never render: a chip that is only a bracket is left out. -#}
 {%- set url = site.domain + page.url -%}
 {%- set addresses = [] -%}
 {%- for key, a in site.addresses -%}
@@ -29,14 +30,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ title | unbracket }}</title>
 <meta name="description" content="{{ description | unbracket }}">
+{%- if notFound %}
+{#- The Not found page is served at whatever address was asked for: it claims none, and is not indexed. #}
+<meta name="robots" content="noindex">
+{%- else %}
 <link rel="canonical" href="{{ url }}">
+{%- endif %}
 <meta name="theme-color" content="#F0F9FF">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ site.name }}">
 <meta property="og:locale" content="en_IN">
 <meta property="og:title" content="{{ title | unbracket }}">
 <meta property="og:description" content="{{ description | unbracket }}">
+{%- if not notFound %}
 <meta property="og:url" content="{{ url }}">
+{%- endif %}
 {#- Every page but the home page has a card of its own (npm run social); the home page's is the film's end. #}
 <meta property="og:image" content="{{ site.domain }}{{ social or ('/assets/img/social.png' if page.url == '/' else '/assets/img/social/' + (page.url | socialSlug) + '.png') }}">
 <meta property="og:image:width" content="1200">
@@ -49,6 +57,10 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/icons/icon-32.png">
 <link rel="apple-touch-icon" href="/assets/logo/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
+{#- The two latin type files (src/css/fonts.css), fetched with the stylesheet rather than after it, so
+    the text is set once in its own type and does not move when the type arrives. #}
+<link rel="preload" href="/assets/fonts/quicksand-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/nunito-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
 {%- if film %}
 <script>
@@ -66,7 +78,16 @@
 </script>
 {%- endif %}
 <script src="/assets/js/site.js" type="module" defer></script>
+{%- set beacon = site.analytics | analytics %}
+{%- if beacon %}
+<script defer src="{{ beacon.src }}"{% for name, value in beacon.attrs %} {{ name }}='{{ value }}'{% endfor %}></script>
+{%- endif %}
 <script type="application/ld+json">{{ organization | dump | safe }}</script>
+{%- if page.url == "/" %}
+<script type="application/ld+json">{{ { "@context": "https://schema.org", "@type": "WebSite", "name": site.name, "url": site.domain, "inLanguage": "en-IN" } | dump | safe }}</script>
+{%- elif not notFound %}
+{% include "breadcrumbs.njk" %}
+{%- endif %}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>

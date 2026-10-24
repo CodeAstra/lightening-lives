@@ -1,0 +1,10 @@
+---
+permalink: /robots.txt
+layout: false
+eleventyExcludeFromCollections: true
+---
+{#- Open to every crawler, AI crawlers included (decision D5); only the preview cards are kept out. -#}
+User-agent: *
+Allow: /
+Disallow: /_social/
+Sitemap: {{ site.domain }}/sitemap.xml

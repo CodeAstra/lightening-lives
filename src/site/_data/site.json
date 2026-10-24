@@ -9,6 +9,7 @@
   "phone": "+91 91825 88191",
   "tel": "+919182588191",
   "whatsapp": true,
+  "analytics": null,
   "social": [
     { "text": "LinkedIn", "href": "https://www.linkedin.com/in/lightening-lives-llp-32a12b392/" },
     { "text": "X", "href": "https://x.com/LivesLlp85686" }

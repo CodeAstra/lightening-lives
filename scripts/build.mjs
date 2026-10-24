@@ -1,10 +1,10 @@
 // Builds the site into dist/: the stylesheet (Tailwind), the scripts (esbuild), then the pages (Eleventy).
 //   npm run build   one-off build
 //   npm run dev     rebuild on change and serve the site at http://localhost:8080
-//   npm run pages   build, then add CNAME and .nojekyll so dist/ can be published to GitHub Pages
+//   npm run pages   build, then add CNAME (site.json's domain) and .nojekyll for GitHub Pages
 // The stylesheet and scripts are compiled into src/assets, which Eleventy copies to dist/assets.
 import { spawn } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as esbuild from 'esbuild';
@@ -31,14 +31,16 @@ function tailwind(watching) {
   });
 }
 
-// The type is self-hosted: copy each font file src/css/fonts.css names out of @fontsource.
+// The type is self-hosted: copy each font file src/css/fonts.css names out of @fontsource-variable,
+// into an emptied folder, so that a face no longer named is not published.
 function fonts() {
   const sheet = at('src/css/fonts.css');
   if (!existsSync(sheet)) return;
+  rmSync(at('src/assets/fonts'), { recursive: true, force: true });
   mkdirSync(at('src/assets/fonts'), { recursive: true });
   for (const [, file] of readFileSync(sheet, 'utf8').matchAll(/url\(\.\.\/fonts\/([\w-]+\.woff2)\)/g)) {
-    const family = file.split('-')[0]; // quicksand-latin-600-normal.woff2 → quicksand
-    copyFileSync(at(`node_modules/@fontsource/${family}/files/${file}`), at(`src/assets/fonts/${file}`));
+    const family = file.split('-')[0]; // quicksand-latin-wght-normal.woff2 → quicksand
+    copyFileSync(at(`node_modules/@fontsource-variable/${family}/files/${file}`), at(`src/assets/fonts/${file}`));
   }
 }
 
@@ -91,6 +93,11 @@ if (watch) {
 }
 
 if (pages) {
-  for (const file of ['CNAME', '.nojekyll']) copyFileSync(at(file), at(path.join('dist', file)));
-  console.log('\n  dist/ is ready for GitHub Pages, with CNAME and .nojekyll.\n');
+  // The custom domain is the production one, site.json's domain (lighteninglives.in). The repo's own
+  // CNAME file names the current preview of the designs and is left to it.
+  const site = JSON.parse(readFileSync(at('src/site/_data/site.json'), 'utf8'));
+  const domain = new URL(site.domain).host;
+  writeFileSync(at('dist/CNAME'), `${domain}\n`);
+  copyFileSync(at('.nojekyll'), at('dist/.nojekyll'));
+  console.log(`\n  dist/ is ready for GitHub Pages, with CNAME (${domain}) and .nojekyll.\n`);
 }

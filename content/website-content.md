@@ -1713,6 +1713,8 @@ You can ask what we hold about you, ask us to correct or delete it, or tell us t
 
 If this page changes, the date at the top changes with it.
 
+> As built (Phase 6, 24 October 2026): until the facts arrive, "Your choices" reads "Write to our Grievance Officer at admin@lighteninglives.in or at the address above." (the commas return with the name), "We will reply within … days." is left out whole, "How long we keep it" is left out with its heading, and the typefaces line is gone (the type is self-hosted). The "Last updated" line appears on Privacy and Terms once a date is supplied. Neither page has a closing band or the notice.
+
 ---
 
 ### 5.17 Terms

@@ -280,3 +280,20 @@ test('images.mjs is idempotent', () => {
   execSync('npm run images', { stdio: 'ignore' });
   assert.deepEqual(probe.map((f) => statSync(f).mtimeMs), a);
 });
+
+// Phase 6, Task 6.4 Step 3b: image weight. Every published picture within its budget: a 1280-wide
+// WebP 200 KB, a 640-wide 80 KB; each preview card (assets/img/social/) 300 KB; the film's stills
+// (site-*) 120 KB.
+test('every published picture is within its weight budget', () => {
+  const KB = 1024;
+  const dir = 'dist/assets/img';
+  const over = [];
+  const check = (file, limit) => { const size = statSync(`${dir}/${file}`).size; if (size > limit * KB) over.push(`${file} ${Math.round(size / KB)} KB > ${limit} KB`); };
+  const names = readdirSync(dir);
+  for (const f of names.filter((n) => n.endsWith('-1280.webp'))) check(f, 200);
+  for (const f of names.filter((n) => n.endsWith('-640.webp'))) check(f, 80);
+  for (const f of names.filter((n) => /^site-.*\.(webp|png|jpg)$/.test(n))) check(f, 120);
+  for (const f of readdirSync(`${dir}/social`).filter((n) => n.endsWith('.png'))) check(`social/${f}`, 300);
+  assert.ok(names.filter((n) => n.endsWith('-1280.webp')).length > 10);
+  assert.deepEqual(over, []);
+});

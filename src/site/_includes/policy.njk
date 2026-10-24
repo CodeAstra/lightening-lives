@@ -1,0 +1,56 @@
+{#- Privacy and Terms (content file 5.16, 5.17): a plain-language policy, one part after another,
+    each part a section named by its heading. A page sets updated (the "Last updated" date) and parts:
+      parts: [{ h2, id, paras: [[sentence, …], …], items: [{ term, text }], analytics: true, reach: true }]
+    A paragraph is a list of sentences, so that a sentence which only makes sense with its missing fact
+    is written whole inside its bracket and is left out with it (the bracket rule); the sentences that
+    remain are joined. A part with nothing left is left out, heading and all. The site's email address,
+    where a sentence names it, is a link. items is a list with a run-in term (What we collect);
+    analytics: true adds the analytics item from site.analytics (Task 6.5); reach: true adds the email
+    and the phone as links (Terms' Contact). -#}
+{%- macro linked(words) -%}
+{{ words | escape | replace(site.email, '<a class="link" href="mailto:' + site.email + '">' + site.email + '</a>') | safe }}
+{%- endmacro -%}
+{%- macro policy(parts, updated) %}
+<div class="section policy-band">
+  <div class="wrap">
+    {%- if updated | unbracket %}
+    <p class="policy-updated">Last updated {{ updated | unbracket }}</p>
+    {%- endif %}
+    <div class="policy">
+      {%- for part in parts %}
+      {%- set paras = [] %}
+      {%- for p in part.paras or [] %}
+        {%- set words = p | bracketless | join(" ") %}
+        {%- if words %}{% set paras = (paras.push(words), paras) %}{% endif %}
+      {%- endfor %}
+      {%- set items = part.items | bracketless("text") %}
+      {%- if paras.length or items.length or part.analytics or part.reach %}
+      {%- set id = part.id or (part.h2 | slugify) %}
+      <section id="{{ id }}" class="policy-part" aria-labelledby="{{ id }}-h">
+        <h2 id="{{ id }}-h" class="policy-h">{{ part.h2 }}</h2>
+        <div class="policy-body">
+          {%- for words in paras %}
+          <p>{{ linked(words) }}</p>
+          {%- endfor %}
+          {%- if items.length or part.analytics %}
+          <ul class="policy-list">
+            {%- for item in items %}
+            <li><b class="run-in">{{ item.term }}.</b> {{ linked(item.text) }}</li>
+            {%- endfor %}
+            {%- if part.analytics %}
+            {%- set beacon = site.analytics | analytics %}
+            <li><b class="run-in">Analytics.</b> {% if beacon %}We use {{ beacon.name }}, which counts visits without cookies and without collecting personal information.{% else %}We do not use analytics or advertising trackers.{% endif %}</li>
+            {%- endif %}
+          </ul>
+          {%- endif %}
+          {%- if part.reach %}
+          <p class="policy-reach"><a class="link" href="mailto:{{ site.email }}">{{ site.email }}</a> · <a class="link" href="tel:{{ site.tel }}">{{ site.phone | replace(" ", "&nbsp;") | safe }}</a></p>
+          {%- endif %}
+        </div>
+      </section>
+      {%- endif %}
+      {%- endfor %}
+    </div>
+  </div>
+</div>
+{%- endmacro %}

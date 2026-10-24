@@ -1,7 +1,7 @@
 {#- How an inner page opens (content file 4.6, DESIGN.md "Other pages"): on mist, a label, the h1 and a
     lead in the seven-and-five split of a section's opening, the lead aligned to the heading's last
     line, with the page's tags under it. line, where a page has one, sits between the lead and the
-    tags (SMA, content 5.6). .section-head is the part that settles in on first view. -#}
+    tags (SMA, content 5.6). A page without a lead (Terms) has no lead paragraph. .section-head is the part that settles in on first view. -#}
 {%- macro opening(label, h1, lead, chips, line) %}
 <section class="section page-open" aria-labelledby="page-h">
   <div class="wrap">
@@ -13,7 +13,9 @@
         <h1 id="page-h" class="display">{{ h1 | unbracket }}</h1>
       </div>
       <div class="lg:col-span-5">
+        {%- if lead | unbracket %}
         <p class="lead">{{ lead | unbracket }}</p>
+        {%- endif %}
         {%- if line %}
         <p class="lead-line">{{ line | unbracket }}</p>
         {%- endif %}

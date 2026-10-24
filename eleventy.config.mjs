@@ -87,6 +87,39 @@ export default function (eleventyConfig) {
     return value;
   });
 
+  // The site's public pages, in address order: what the sitemap and llms.txt list and breadcrumbs
+  // name. Drafts are never built; the 404 page (/404.html) and the preview cards are not pages of
+  // their own address.
+  eleventyConfig.addCollection('publicPages', (api) =>
+    api.getAll().filter((item) => item.url && item.url.endsWith('/') && !item.url.startsWith('/_social/')).sort((a, b) => a.url.localeCompare(b.url)));
+  // An inner page's BreadcrumbList items: Home, then each step of its own path that is a page with a
+  // name (content 3.1, its front matter name). tests/seo.test.mjs pins every public page's name.
+  eleventyConfig.addFilter('breadcrumbs', (items, url, domain) => {
+    const crumbs = [{ url: '/', name: 'Home' }];
+    let path = '/';
+    for (const step of url.split('/').filter(Boolean)) {
+      path += `${step}/`;
+      const name = items.find((item) => item.url === path)?.data.name;
+      if (name) crumbs.push({ url: path, name });
+    }
+    return crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: domain + c.url }));
+  });
+  // A sitemap's lastmod: the day, as YYYY-MM-DD.
+  eleventyConfig.addFilter('isoDay', (date) => new Date(date).toISOString().slice(0, 10));
+
+  // Analytics (decision D5): site.json's analytics is null, or { provider, token }. A provider is used
+  // only once its token is set; it must count visits without cookies, since the site has no consent
+  // banner. Cloudflare Web Analytics is the one provider so far; another name stops the build.
+  const ANALYTICS = {
+    cloudflare: { name: 'Cloudflare Web Analytics', src: 'https://static.cloudflareinsights.com/beacon.min.js', attrs: (token) => ({ 'data-cf-beacon': JSON.stringify({ token }) }) },
+  };
+  eleventyConfig.addFilter('analytics', (config) => {
+    if (!config || !config.token) return null;
+    const provider = ANALYTICS[config.provider];
+    if (!provider) throw new Error(`site.json analytics: no provider "${config.provider}" (known: ${Object.keys(ANALYTICS).join(', ')})`);
+    return { name: provider.name, src: provider.src, attrs: provider.attrs(config.token) };
+  });
+
   eleventyConfig.setServerOptions({ port: 8080 });
 
   return {

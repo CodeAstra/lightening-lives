@@ -33,24 +33,34 @@ test('no font is loaded from Google', () => {
   assert.doesNotMatch(built(), /fonts\.googleapis|fonts\.gstatic/);
 });
 
-test('the type is self-hosted, in the six weights the design names and no others', () => {
+test('the type is self-hosted: Quicksand 600 to 700 and Nunito 400 to 800, one variable file a family and subset', () => {
+  // Variable faces (Task 6.4 Step 2: four font files or fewer a page): each family is one file for
+  // latin, and one for latin-ext, which a browser fetches only for a character outside latin. The
+  // weights each face offers are the design's range and no wider (DESIGN.md: Quicksand 600 and 700;
+  // Nunito 400, 600, 700 and 800).
   const faces = built().match(/@font-face\{[^}]*\}/g) ?? [];
-  const loaded = new Set();
+  const ranges = new Map();
+  const files = new Set();
   for (const face of faces) {
     const family = face.match(/font-family:\s*"?'?([A-Za-z]+)/)[1];
-    const weight = face.match(/font-weight:\s*(\d+)/)[1];
-    loaded.add(`${family} ${weight}`);
+    const weight = face.match(/font-weight:\s*(\d+(?:\s+\d+)?)/)[1].replace(/\s+/, ' ');
+    ranges.set(family, [...(ranges.get(family) ?? []), weight]);
     assert.match(face, /font-display:\s*swap/, `${family} ${weight} swaps`);
     const urls = [...face.matchAll(/url\(["']?([^)"']+)["']?\)/g)].map((m) => m[1]);
-    assert.ok(urls.length > 0, `${family} ${weight} has a source`);
+    assert.equal(urls.length, 1, `${family} ${weight} has one source`);
     for (const url of urls) {
       assert.doesNotMatch(url, /^(https?:)?\/\//, `${url} is not external`);
       // Relative to the stylesheet at /assets/css/site.css.
       const file = path.join('dist/assets/css', url);
       assert.ok(file.startsWith('dist/assets/fonts/') && existsSync(file), `${url} resolves to a file in dist/assets/fonts`);
+      files.add(file);
     }
   }
-  assert.deepEqual([...loaded].sort(), ['Nunito 400', 'Nunito 600', 'Nunito 700', 'Nunito 800', 'Quicksand 600', 'Quicksand 700']);
+  assert.deepEqual(Object.fromEntries(ranges), { Quicksand: ['600 700', '600 700'], Nunito: ['400 800', '400 800'] });
+  // Latin text needs two files; a page with a latin-ext character, four at most.
+  assert.equal(files.size, 4);
+  // The minifier writes latin's U+0000-00FF as U+??.
+  assert.equal(faces.filter((f) => /unicode-range:\s*U\+(\?\?|0+-0*FF)(,|;|$)/i.test(f)).length, 2);
 });
 
 test('the page scales with the window, and on very large screens it keeps growing (R3, Step 6)', () => {
@@ -131,4 +141,26 @@ test('the drawn carton has rem sizes for a browser without container units (M8)'
   assert.match(fallback, /\.carton\{[^}]*width:[\d.]+rem[^}]*height:[\d.]+rem/);
   assert.match(fallback, /\.carton:before\{[^}]*height:[\d.]+rem/);
   assert.match(fallback, /\.carton:after\{[^}]*width:[\d.]+rem/);
+});
+
+test('every page preloads the two latin type files, so the text is not set twice (Task 6.4: CLS)', async () => {
+  const { pages, load } = await import('./helpers.mjs');
+  const latin = [...readFileSync('src/css/fonts.css', 'utf8').matchAll(/url\(\.\.\/fonts\/([\w-]+\.woff2)\)/g)].map((m) => m[1]).filter((f) => !f.includes('-ext-'));
+  assert.equal(latin.length, 2);
+  for (const url of pages({ include404: true })) {
+    const $ = load(url);
+    const preloads = $('link[rel=preload][as=font]');
+    assert.deepEqual(preloads.map((i, l) => l.attribs.href).get().sort(), latin.map((f) => `/assets/fonts/${f}`).sort(), url);
+    preloads.each((i, l) => {
+      assert.equal(l.attribs.type, 'font/woff2', url);
+      assert.ok('crossorigin' in l.attribs, `${url}: a font preload needs crossorigin`);
+      assert.ok(existsSync(`dist${l.attribs.href}`), l.attribs.href);
+    });
+  }
+});
+
+test('every weight the stylesheet asks for is one the design names (a variable face draws any weight in its range)', () => {
+  const asked = [...built().matchAll(/font-weight:\s*(\d+)(?=[;}\s!])(?!\s+\d)/g)].map((m) => Number(m[1]));
+  assert.ok(asked.length > 20);
+  assert.deepEqual([...new Set(asked)].filter((w) => ![400, 600, 700, 800].includes(w)), []);
 });

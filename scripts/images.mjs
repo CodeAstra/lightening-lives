@@ -3,7 +3,8 @@
 //      32 and 48 px icons in the logo kit, designs/assets/logo (the logo is never redrawn).
 //   2. Every photograph in src/images-src (jpg or png, at most 2400 px on its long side) is cropped
 //      where CROPS says, then written to src/assets/img as <name>-640.webp, <name>-1280.webp and,
-//      when the picture is at least 1920 px wide, <name>-1920.webp: quality 80, metadata stripped.
+//      when the picture is at least 1920 px wide, <name>-1920.webp: quality 80 (lower, to 60, where a 640 or 1280 would pass its
+//      weight budget: 80 and 200 KB), metadata stripped.
 //      The company's own pictures (names starting box- or person-: the boxes, the portraits) are
 //      small, and are never upscaled: each is written at the widths above that it is wide enough
 //      for and, below 1280, at its own width as the widest, so that a source under 640 px is written
@@ -42,6 +43,8 @@ const CROPS = {
   'method-paper': { left: 0.16 }, // part of the card's printed serial number, a sample code
 };
 const WIDTHS = [640, 1280, 1920];
+// The weight each width may reach (Task 6.4 Step 3b); the 1920 is for very large screens and has none.
+const BUDGET = { 640: 80 * 1024, 1280: 200 * 1024 };
 const OWN = /^(box|person)-/; // the company's own pictures, not stand-ins
 
 // The widths a picture of a given width is written at.
@@ -79,7 +82,15 @@ for (const file of sources) {
     let image = sharp(input).rotate();
     if (region) image = image.extract(region);
     if (w < width) image = image.resize({ width: w }); // at its own width it is written as it is
-    const { data, info } = await image.webp({ quality: 80, effort: 5 }).toBuffer({ resolveWithObject: true });
+    // Quality 80, or less where that would pass the width's weight budget (plan Task 6.4 Step 3b):
+    // down in steps of 5, no lower than 60.
+    let quality = 80;
+    let { data, info } = await image.clone().webp({ quality, effort: 5 }).toBuffer({ resolveWithObject: true });
+    while (BUDGET[w] && data.length > BUDGET[w] && quality > 60) {
+      quality -= 5;
+      ({ data, info } = await image.clone().webp({ quality, effort: 5 }).toBuffer({ resolveWithObject: true }));
+    }
+    if (BUDGET[w] && data.length > BUDGET[w]) throw new Error(`${name}-${w}.webp is ${Math.round(data.length / 1024)} KB at quality 60, over its budget`);
     if (info.width !== w) throw new Error(`${name}-${w}.webp came out ${info.width} px wide`);
     put(`src/assets/img/${name}-${w}.webp`, data);
     if (w === widths[0]) firstHeight = info.height; // what was written, not a sum that can round the other way

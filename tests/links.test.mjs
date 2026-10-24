@@ -12,8 +12,6 @@ const DOMAIN = 'https://lighteninglives.in';
 // Addresses the site already links to whose pages or files later phases build (content 3.1). Each
 // leaves this list in the task that builds it; the last test fails if one is built and still listed.
 const PENDING = new Map([
-  ['/privacy/', 'Phase 6, Task 6.1'],
-  ['/terms/', 'Phase 6, Task 6.1'],
 ]);
 
 // The file in dist/ that serves an address's path, or null.
