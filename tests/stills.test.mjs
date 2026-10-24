@@ -1,5 +1,5 @@
-// The film's stills and the preview card, captured from this site's own film and map (Quicksand and
-// Nunito on the cards, the drop at 0.027, fifteen sites), not copied from the approved page, whose
+// The film's stills and the preview card, captured from this site's own film and map (Archivo on the
+// cards since 25 October 2026, the drop at 0.027, fifteen sites), not copied from the approved page, whose
 // stills were taken with Roboto Mono and the larger drop (DESIGN.md, Imagery).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';

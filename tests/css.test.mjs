@@ -9,7 +9,7 @@ const built = () => readFileSync('dist/assets/css/site.css', 'utf8');
 
 test('tokens carry the chosen variation', () => {
   const css = built().replace(/\s+/g, '').toLowerCase();
-  for (const s of ['--ff-display:"Quicksand"', '--ff-body:"Nunito"', '--ff-mono:"Nunito"', '--display-weight:700', '--display-tracking:-.02em', '--label-weight:800', '--label-tracking:.08em', '--sun:#6ee7b7', '--leaf:#0369a1'])
+  for (const s of ['--ff-display:"Archivo"', '--ff-body:"Archivo"', '--ff-mono:"Archivo"', '--display-stretch:112%', '--display-weight:700', '--display-tracking:-.03em', '--label-weight:700', '--label-tracking:.07em', '--sun:#6ee7b7', '--leaf:#0369a1'])
     assert.ok(css.includes(s.toLowerCase()), s);
 });
 
@@ -33,11 +33,11 @@ test('no font is loaded from Google', () => {
   assert.doesNotMatch(built(), /fonts\.googleapis|fonts\.gstatic/);
 });
 
-test('the type is self-hosted: Quicksand 600 to 700 and Nunito 400 to 800, one variable file a family and subset', () => {
+test('the type is self-hosted: Archivo 400 to 800, one variable file a subset', () => {
   // Variable faces (Task 6.4 Step 2: four font files or fewer a page): each family is one file for
   // latin, and one for latin-ext, which a browser fetches only for a character outside latin. The
-  // weights each face offers are the design's range and no wider (DESIGN.md: Quicksand 600 and 700;
-  // Nunito 400, 600, 700 and 800).
+  // weights the face offers are the design's range and no wider (DESIGN.md: Archivo 400, 600, 700 and
+  // 800, chosen 25 October 2026).
   const faces = built().match(/@font-face\{[^}]*\}/g) ?? [];
   const ranges = new Map();
   const files = new Set();
@@ -56,11 +56,11 @@ test('the type is self-hosted: Quicksand 600 to 700 and Nunito 400 to 800, one v
       files.add(file);
     }
   }
-  assert.deepEqual(Object.fromEntries(ranges), { Quicksand: ['600 700', '600 700'], Nunito: ['400 800', '400 800'] });
+  assert.deepEqual(Object.fromEntries(ranges), { Archivo: ['400 800', '400 800'] });
   // Latin text needs two files; a page with a latin-ext character, four at most.
-  assert.equal(files.size, 4);
+  assert.equal(files.size, 2);
   // The minifier writes latin's U+0000-00FF as U+??.
-  assert.equal(faces.filter((f) => /unicode-range:\s*U\+(\?\?|0+-0*FF)(,|;|$)/i.test(f)).length, 2);
+  assert.equal(faces.filter((f) => /unicode-range:\s*U\+(\?\?|0+-0*FF)(,|;|$)/i.test(f)).length, 1);
 });
 
 test('the page scales with the window, and on very large screens it keeps growing (R3, Step 6)', () => {
@@ -143,10 +143,10 @@ test('the drawn carton has rem sizes for a browser without container units (M8)'
   assert.match(fallback, /\.carton:after\{[^}]*width:[\d.]+rem/);
 });
 
-test('every page preloads the two latin type files, so the text is not set twice (Task 6.4: CLS)', async () => {
+test('every page preloads the latin type file, so the text is not set twice (Task 6.4: CLS)', async () => {
   const { pages, load } = await import('./helpers.mjs');
   const latin = [...readFileSync('src/css/fonts.css', 'utf8').matchAll(/url\(\.\.\/fonts\/([\w-]+\.woff2)\)/g)].map((m) => m[1]).filter((f) => !f.includes('-ext-'));
-  assert.equal(latin.length, 2);
+  assert.equal(latin.length, 1);
   for (const url of pages({ include404: true })) {
     const $ = load(url);
     const preloads = $('link[rel=preload][as=font]');

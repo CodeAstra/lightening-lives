@@ -56,7 +56,7 @@ try {
       return JSON.stringify({ w: card.width, h: card.height, lines, over: document.documentElement.scrollHeight > 630 || document.documentElement.scrollWidth > 1200, fonts })`);
     if (m.w !== 1200 || m.h !== 630 || m.over) failures.push(`${slug}: the card is ${m.w} by ${m.h}${m.over ? ' and overflows the window' : ''}`);
     if (m.lines > 3) failures.push(`${slug}: the title runs to ${m.lines} lines (three at most: shorten og_title)`);
-    if (!/Quicksand/.test(m.fonts) || !/Nunito/.test(m.fonts)) failures.push(`${slug}: the type did not load (${m.fonts})`);
+    if (!/Archivo/.test(m.fonts)) failures.push(`${slug}: the type did not load (${m.fonts})`);
     const shot = path.join(scratch, `${slug}.png`);
     await browser('screenshot', shot);
     const png = await sharp(shot).resize(1200, 630, { fit: 'cover', position: 'left top' }).png({ compressionLevel: 9, palette: true, quality: 92, effort: 10 }).toBuffer();

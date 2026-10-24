@@ -1,9 +1,7 @@
-/* The Lightening Lives site: Design 11, Lumen, in the variation the client chose on 23 October 2026
-   (DESIGN.md). This is designs/src/css/lumen.css with DESIGN.md's "Making the chosen design the
-   page's own" edits 1 and 3 made: Quicksand and Nunito are the type, and a name that is proof is set
-   in DNA blue with nothing drawn under it. Every other rule is lumen.css's, unchanged. The page is
-   ice white, each white band is lit from one side by a soft pool of DNA blue or life green, and what
-   stands on the page is frosted glass. DNA blue for every action and label, life green for what is
+/* The Lightening Lives site (DESIGN.md). It began as designs/src/css/lumen.css (Design 11, Lumen) and
+   was refined on 25 October 2026: Archivo for every voice, a tighter scale and spacing, and flat paper
+   with hairline edges in place of the glass and the pools of light (the "Refinement" block at the end
+   of this file). The page is ice white; DNA blue for every action and label, life green for what is
    being pointed out, and blood red for the sample and nothing else. */
 
 @import "tailwindcss" source(none);
@@ -48,15 +46,15 @@
     --shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 22px 44px -26px rgba(12, 74, 110, 0.3), 0 2px 6px -3px rgba(12, 74, 110, 0.1);
     --blur: blur(16px) saturate(150%);
 
-    --ff-display: "Quicksand";
-    --ff-body: "Nunito";
-    --ff-mono: "Nunito"; /* the label voice, and the codes printed on the cards in the film */
-    --display-stretch: 100%;
+    --ff-display: "Archivo";
+    --ff-body: "Archivo";
+    --ff-mono: "Archivo"; /* the label voice, and the codes printed on the cards in the film */
+    --display-stretch: 112%;
     --display-weight: 700;
-    --display-tracking: -0.02em;
-    --label-weight: 800;      /* the label voice's weight and tracking */
-    --label-tracking: 0.08em;
-    --round: 999px;     /* buttons, chips and labels are pills, to go with the rounded type */
+    --display-tracking: -0.03em;
+    --label-weight: 700;      /* the label voice's weight and tracking */
+    --label-tracking: 0.07em;
+    --round: 0.5rem;
 
     --pad: clamp(1.25rem, 5vw, 4.5rem);
     /* The page keeps to a centred column. --gutter is the distance from the window's edge to that
@@ -811,7 +809,7 @@
   .menu-panel, .places b { background: var(--glass-strong); }
   .steps img, .map-still, .fieldwork img, .blank-card, .film-poster { box-shadow: var(--shadow); }
 
-  /* The label voice, in Nunito 800: the small capitals, the chips on the film and the map, the tags
+  /* The label voice, in the body face at --label-weight: the small capitals, the chips on the film and the map, the tags
      on the tests and the facts about a state. Sizes and casing are Design 10's. */
   .label, .brand-line, .state-facts dt, .places b, .tag { font-family: var(--font-mono); font-weight: var(--label-weight); }
   .label, .brand-line, .state-facts dt { letter-spacing: var(--label-tracking); }
@@ -1386,8 +1384,8 @@
 
   /* ---------- Preview cards (src/site/_social/card.njk, photographed by npm run social) ----------
      75rem by 39.375rem, which is 1200 by 630 at the 16 px root a 1200 px window has. DESIGN.md's
-     materials and nothing new: the mist page lit by the blue pool from the left and the green from
-     the right, as the vision band is; the emblem and the name; the page's label and title (at most
+     materials and nothing new: the flat mist page (its pools of light are switched off in the
+     refinement block); the emblem and the name; the page's label and title (at most
      three lines, which the script checks); the domain in the label voice. */
   .social-body { margin: 0; background: var(--mist); }
   .social-card {
@@ -1477,3 +1475,155 @@
   .not-found-hint .link { display: inline; min-height: 0; overflow-wrap: anywhere; }
   .not-found .actions { margin-top: 2rem; }
 }
+
+/* ---------- Refinement, 25 October 2026 ---------- */
+/* The user's review of the built site: "it has too much space"; the glass and the rounded type read
+   as dated. This block tightens the whole system and changes only what it names. Archivo was chosen
+   the same day (the tokens at the top of the file), replacing Quicksand and Nunito.
+   What it does:
+   - Type: Archivo, a precise grotesque with a width axis, for every voice (headings wide, text at
+     normal width), on a tighter scale.
+   - Space: sections about a third shorter (88 px of padding at a laptop's width, was 128); smaller
+     gaps between a heading and what follows; pictures cropped landscape instead of square or portrait.
+   - Material: no glass, no blur, no pools of light, no soft shadows. Surfaces are paper on ice white,
+     edged with a 1 px line; corners are 8 px, not pills. DESIGN.md's colours are unchanged. */
+@layer components {
+  :root {
+    --radius: 0.5rem;
+    --glass: var(--paper);
+    --glass-strong: var(--paper);
+    --shadow: none;
+    --blur: none;
+    --edge: 0.0625rem solid var(--line);
+    --section-y: clamp(2.75rem, 4.8vw, 4.25rem);
+    --header-h: 4.75rem;
+    --head-gap: clamp(1.75rem, 2.8vw, 2.5rem);
+  }
+
+  /* Type scale: one step smaller everywhere, tighter leading on headings. */
+  body { font-size: 1rem; line-height: 1.6; }
+  .display { font-size: clamp(2.4rem, 4.3vw, 4.1rem); line-height: 1.02; }
+  .h2 { font-size: clamp(1.7rem, 2.6vw, 2.4rem); line-height: 1.08; }
+  .h3 { font-size: clamp(1.15rem, 1.4vw, 1.35rem); line-height: 1.22; font-stretch: var(--display-stretch); letter-spacing: -0.015em; }
+  .lead { font-size: clamp(1.125rem, 1.4vw, 1.3125rem); line-height: 1.45; max-width: 38rem; }
+  @media (min-width: 64rem) { .grid.lg\:grid-cols-12 > .lead, .grid.lg\:grid-cols-12 > div > .lead:first-child { padding-top: 0.4em; } }
+  .label { font-size: 0.75rem; }
+  .why h3, .criteria h3, .person-name, .policy-h { font-size: 1.125rem; line-height: 1.25; font-stretch: var(--display-stretch); }
+  .why p, .criteria p, .about > p { font-size: 1rem; line-height: 1.5; }
+  .vision-line { font-size: clamp(1.5rem, 2.6vw, 2.35rem); line-height: 1.16; max-width: 56rem; }
+  .film-line { font-size: clamp(1.05rem, 1.4vw, 1.3rem); }
+  .brand-name { font-size: 1.25rem; }
+
+  /* Space. */
+  .section { padding-block: var(--section-y); }
+  .vision { padding-block: clamp(2.75rem, 4.5vw, 4rem); }
+  .hero { padding-top: 6rem; padding-bottom: 2.5rem; }
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .hero { padding-top: 7rem; padding-bottom: 3.5rem; gap: 2rem 3.5rem; }
+  }
+  .page-open { padding-top: 6rem; }
+  @media (min-width: 56.25rem) { .page-open { padding-top: 7rem; } }
+  .sofar { margin-top: 2.75rem; }
+  .why > li { padding: 1rem 0 1.1rem; }
+  .test { padding: 1.4rem 0; }
+  .criteria > li { padding: 0.95rem 0 1rem; }
+  .proof > li { padding-block: 1.2rem 1.4rem; }
+  @media (min-width: 75rem) { .proof > li { padding: 1.25rem 1.5rem 0.25rem 0; } .proof > li + li { padding-left: 1.5rem; } }
+  .audiences > li { padding-top: 1.1rem; }
+  .steps { gap: 2rem; }
+  @media (min-width: 60rem) { .steps { gap: 2rem; } }
+  .steps img { aspect-ratio: 4 / 3; margin-bottom: 0.6rem; }
+  .word button { font-size: clamp(2.4rem, 8.4vw, 7.25rem); line-height: 0.95; }
+
+  /* Material: flat paper, a hairline edge, 8 px corners. */
+  .section.bg-paper::before, .vision::before, .vision::after { content: none; }
+  .btn-line, .film-toggle, .seg, .kinds > li, .notice, .menu-panel, .places b {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+  .btn-line { background: var(--paper); }
+  .kinds > li { background: var(--paper); border: var(--edge); border-radius: var(--radius); padding: 1.25rem 1.35rem 1.4rem; }
+  .section.bg-paper .kinds > li { background: var(--mist); }
+  .notice { border-width: 0.0625rem; border-radius: var(--radius); }
+  .menu-panel { border-width: 0.0625rem; border-radius: var(--radius); box-shadow: 0 0.75rem 1.75rem -1.125rem rgba(12, 74, 110, 0.35); }
+  .steps img, .map-still, .fieldwork img, .blank-card, .film-poster, .person-photo { box-shadow: none; border-radius: var(--radius); }
+  .steps img, .fieldwork img, .person-photo { outline: var(--edge); outline-offset: -0.0625rem; }
+  .btn { min-height: 3rem; padding: 0 1.3rem; font-size: 1rem; font-weight: 600; }
+  .tag { font-weight: 600; }
+  .nav-link { font-size: 1rem; font-weight: 600; padding: 0 0.8rem; }
+
+  /* One display voice: everything set in the display face takes its width, weight and tracking. */
+  .word button, .vision-line, .film-line, .actions a, .crit-letter, .criteria .crit-letter, .brand-name, .state-title, .run-in, .lead-line, .boxes figcaption, .boxes .open-name {
+    font-stretch: var(--display-stretch);
+    font-weight: var(--display-weight);
+    letter-spacing: var(--display-tracking);
+  }
+  .hero-note { color: var(--canopy); }
+  .social-card::before, .social-card::after { content: none; }
+  .social-card { border-top: 0.5rem solid var(--leaf); }
+  /* The four kinds of test as rows, the grammar of "Why", not as boxes of unequal fill. */
+  .kinds > li, .section.bg-paper .kinds > li { background: none; border: 0; border-top: 0.125rem solid var(--canopy); border-radius: 0; padding: 1rem 1.5rem 0 0; }
+  .kinds { gap: 1.75rem 0; }
+  .fieldwork figure picture, .fieldwork figure img { aspect-ratio: 5 / 4 !important; }
+  .notice { max-width: 48rem; }
+  .notice p { font-size: 1rem; color: var(--moss); }
+  .map-hint { font-size: 0.875rem; }
+  @media (min-width: 22rem) and (max-width: 39.99rem) { .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .foot-grid > :first-child { grid-column: 1 / -1; } }
+
+  /* Header: stays with the reader, on a solid ground once the page moves under it; the page it is
+     on is marked. It keeps its place over the film (the negative margin), as before. */
+  .site-header { position: sticky; top: var(--compare-h, 0rem); height: var(--header-h); margin-bottom: calc(var(--header-h) * -1); padding-block: 0; transition: background-color 0.2s ease, border-color 0.2s ease; border-bottom: 0.0625rem solid transparent; }
+  .site-header.is-stuck { background: var(--mist); border-bottom-color: var(--line); }
+  .nav-link[aria-current="page"] { color: var(--leaf); box-shadow: inset 0 -0.125rem 0 var(--leaf); border-radius: 0; }
+  .nav-link[aria-current="page"]:hover { background: none; }
+  .menu-panel .nav-link[aria-current="page"] { box-shadow: inset 0.1875rem 0 0 var(--leaf); }
+  @media (min-width: 64rem) and (max-width: 72.99rem) { .brand-text { display: grid; } .brand-line { display: none; } .nav-link { padding: 0 0.55rem; } }
+  @media (min-width: 73rem) and (max-width: 77.99rem) { .brand-text { display: grid; } .brand-line { display: none; } }
+  .menu-panel { left: 0; right: 0; top: 100%; border-width: 0 0 0.0625rem; border-color: var(--line); border-radius: 0 0 var(--radius) var(--radius); padding: 0.5rem var(--gutter) 1rem; box-shadow: 0 1rem 1.5rem -1.25rem rgba(12, 74, 110, 0.35); }
+  .site-header:has(details[open]) { background: var(--mist); }
+
+  /* Inner pages: the same room under the opening whatever the next band is. */
+  .page-open { padding-bottom: 2.5rem; }
+  .page-open + .section, .page-open + .section:not(.bg-paper) { padding-top: 2.5rem; }
+  .page-open .display { font-size: clamp(2.2rem, 3.8vw, 3.5rem); text-wrap: balance; }
+
+  /* Text that is the substance reads in the ink; the moss grey is kept for leads, captions and small print. */
+  .pair p, .rows p, .accounts p, .audiences p, .person-bio p, .facts td, .steps-numbered p, .addresses address, .why p, .criteria p, .kinds p, .test-what, .proof p { color: var(--canopy); }
+
+  /* Rows: a narrower title column, so short titles do not leave a void beside them. */
+  @media (min-width: 64rem) { .rows > :is(li, div) { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } }
+  .rows p { max-width: 46rem; }
+  .rows > li { padding-block: 1.1rem 1.2rem; }
+
+  /* One corner, one edge, for every picture and panel. */
+  .steps-numbered img, .boxes img, .boxes .tile, .aside-picture img, .blank-card img, .compare-table .is-ours, .compare-table thead .is-ours, .compare-table tbody tr:last-child .is-ours { border-radius: var(--radius); box-shadow: none; }
+  .steps-numbered img, .aside-picture img { outline: var(--edge); outline-offset: -0.0625rem; filter: saturate(0.88); }
+  .blank-card img { aspect-ratio: 4 / 3; object-position: 50% 62%; }
+  .steps-numbered > li::before { font-size: 1.55rem; line-height: 1.22; min-width: 2.1rem; }
+
+  .hl:where(span) { white-space: nowrap; }
+  .collaborators { columns: auto; display: grid; column-gap: 3.5rem; }
+  @media (min-width: 48rem) { .collaborators { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 64rem) { .collaborators { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+  /* Team: the bio beside the portrait, not under it. */
+  .person.has-photo .person-head { align-self: start; }
+  @media (min-width: 48rem) { .people-team .person.has-photo { grid-template-rows: auto 1fr; } .people-team .person.has-photo .person-photo { grid-row: 1 / span 2; } .people-team .person-bio { grid-column: 2; margin-top: 0.7rem; } }
+  html { scroll-padding-top: calc(var(--compare-h, 0rem) + var(--header-h) + 0.5rem); }
+
+  /* Our work's table: a screened site is a small filled mark, not a blank pill. */
+  .sites .tag-proof { width: 0.875rem; min-height: 0.875rem; padding: 0; border-radius: 50%; border: 0.0938rem solid var(--canopy); font-size: 0; }
+  .sites-col-site { width: 22%; }
+  .sites { max-width: 64rem; }
+
+  /* Footer: shorter and quieter. */
+  .site-footer .wrap { padding-block: 2.75rem 2rem; }
+  .foot-link { min-height: 2.25rem; text-decoration: none; }
+  .foot-link:hover, .foot-link:focus-visible { text-decoration: underline; text-decoration-color: var(--leaf); }
+  .site-footer address { font-size: 0.9375rem; color: var(--moss); }
+
+}
+
+/* Outside the layers, so it outweighs the utility it adjusts: the gap under a section's heading. */
+.section .mt-12 { margin-top: var(--head-gap); }

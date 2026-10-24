@@ -39,7 +39,7 @@ function fonts() {
   rmSync(at('src/assets/fonts'), { recursive: true, force: true });
   mkdirSync(at('src/assets/fonts'), { recursive: true });
   for (const [, file] of readFileSync(sheet, 'utf8').matchAll(/url\(\.\.\/fonts\/([\w-]+\.woff2)\)/g)) {
-    const family = file.split('-')[0]; // quicksand-latin-wght-normal.woff2 → quicksand
+    const family = file.replace(/-latin.*$/, ''); // instrument-sans-latin-standard-normal.woff2 → instrument-sans
     copyFileSync(at(`node_modules/@fontsource-variable/${family}/files/${file}`), at(`src/assets/fonts/${file}`));
   }
 }

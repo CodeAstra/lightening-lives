@@ -5,11 +5,11 @@
 {%- macro opening(label, h1, lead, chips, line) %}
 <section class="section page-open" aria-labelledby="page-h">
   <div class="wrap">
-    <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-end">
+    <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
+      {%- if label %}
+      <p class="label lg:col-span-12 -mb-2">{{ label | unbracket }}</p>
+      {%- endif %}
       <div class="lg:col-span-7">
-        {%- if label %}
-        <p class="label mb-4">{{ label | unbracket }}</p>
-        {%- endif %}
         <h1 id="page-h" class="display">{{ h1 | unbracket }}</h1>
       </div>
       <div class="lg:col-span-5">
