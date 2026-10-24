@@ -1,0 +1,123 @@
+---
+title: "Develop a genetic test with us | Lightening Lives"
+description: "Tell us the inherited condition your programme or laboratory needs to detect. Lightening Lives develops and validates the test. A coagulation panel and pharmacogenomics are in development now."
+label: The condition you need next
+h1: Tell us the condition. We develop the test
+lead: "Every test we have developed so far began with an institution that needed it. Yours can be next: any inherited condition, to the same REASSURED standard. [TBC: \"any inherited condition\", with the scientific and regulatory teams]"
+alsoDeveloped:
+  h2: Two tests whose pages are on their way
+  body: We have developed tests for Duchenne muscular dystrophy and limb-girdle muscular dystrophy, alongside LitLife™-SMA. Their pages are being prepared. Until then, write to us with your clinic or laboratory and the numbers you see, and we will send the details.
+  link: { text: Ask about DMD or LGMD testing, href: "mailto:admin@lighteninglives.in?subject=Request%20tests" }
+inDevelopment:
+  h2: What we are developing now
+  rows:
+    - { title: Blood coagulation panel, body: "Genetic testing for inherited bleeding disorders such as haemophilia A and B. The panel will confirm a diagnosis, identify carriers and support family counselling. [TBC: which disorders and genes; when]" }
+    - { title: Pharmacogenomics, body: "Testing for the genetic differences that change how a person responds to a medicine, so that the drug and the dose can be chosen for the person. [TBC: which genes and drugs; when]" }
+  link: { text: Ask about a test in development, href: /contact/ }
+kinds:
+  - { title: Monogenic disorders, body: "Conditions caused by a change in a single gene, such as the haemoglobinopathies and musculopathies we already test for." }
+  - { title: Pharmacogenetic variants, body: Tests for the genetic differences that change how a person responds to a medicine. }
+  - { title: Rare genetic disorders, body: "Tests for rare inherited conditions, developed when an institution needs one. [TBC: available now, or in development]" }
+  - { title: Custom molecular diagnostic assays, body: Assays designed for a research study or a clinical service. }
+tellUs:
+  - The condition, and the genes or variants if you know them
+  - Who will be tested, and roughly how many
+  - Where samples will be collected, and which laboratory will run the tests
+  - Whether the test is for screening, for diagnosis or for research
+  - Any regulatory or programme requirements it has to meet
+steps:
+  - { title: We agree what the test must do., body: "What it detects, on what sample, in what kind of laboratory." }
+  - { title: We develop it., body: "The assay, and the method for running it." }
+  - { title: We validate it., body: "[TBC: how validation is done and with whom]" }
+  - { title: We help you put it to work., body: "Training for your staff, the app for monitoring, and awareness and counselling where the programme calls for them." }
+stepsNote: "[TBC: these four steps are a draft of how an engagement runs. Correct them to match what happens.]"
+closing:
+  h2: Start with the condition
+  body: Write to us with the five points above, or as many of them as you have.
+  solid: { text: Talk to us about a new test, href: /contact/ }
+  line: { text: See what we have developed, href: "/solutions/#developed" }
+---
+{#- Develop a test (content file 5.9), the open place: what has been developed besides the published
+    tests, what is in development, and how an institution asks for a new test. Its own page, not a
+    test's (the controller's Phase 5 ruling 8): no notice, its asks go to /contact/, "Ask about DMD or
+    LGMD testing" is the email asking for tests, and the closing line button goes to Solutions'
+    "Developed so far" (#developed). The copy is the front matter above, as written, brackets and all:
+    a "[TBC: …]" never renders (the sentence before it is kept), so step 3 keeps its title alone and
+    the note under the steps, only a bracket, is left out (stepsNote). Built from the inner pages'
+    parts: the prose split (a test's page), rows (Solutions), the kinds of test (home), lines (a
+    test's page) and the numbered steps in words (Programmes, Partnerships' four-up). The bands
+    alternate back from the closing band's paper, so the kinds stand on a lit paper band, as on the
+    home page; "What to tell us" and "How it goes" share the last band before the closing, which
+    asks for "the five points above". -#}
+{%- from "links.njk" import pageLink %}
+
+  <!-- Also developed: DMD and LGMD, until their pages open (content 3.1) -->
+  <section id="musculopathies" class="section bg-paper" aria-labelledby="musculopathies-h">
+    <div class="wrap">
+      <div class="beside grid gap-8 lg:grid-cols-12 lg:gap-x-16">
+        <h2 id="musculopathies-h" class="h2 lg:col-span-5">{{ alsoDeveloped.h2 }}</h2>
+        <div class="story lg:col-span-7">
+          <p>{{ alsoDeveloped.body }}</p>
+          <p class="mt-6">{{ pageLink(alsoDeveloped.link.href, alsoDeveloped.link.text) }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- In development -->
+  <section id="in-development" class="section" aria-labelledby="in-development-h">
+    <div class="wrap">
+      <h2 id="in-development-h" class="h2 max-w-[44rem]">{{ inDevelopment.h2 }}</h2>
+      <ul class="rows mt-10">
+        {%- for row in inDevelopment.rows | bracketless("body") %}
+        <li>
+          <h3>{{ row.title }}</h3>
+          <p>{{ row.body }}</p>
+        </li>
+        {%- endfor %}
+      </ul>
+      <p class="mt-6">{{ pageLink(inDevelopment.link.href, inDevelopment.link.text) }}</p>
+    </div>
+  </section>
+
+  <!-- What we take on: the home page's four kinds of test, glass on a lit paper band -->
+  <section id="what-we-take-on" class="section bg-paper" aria-labelledby="what-we-take-on-h">
+    <div class="wrap">
+      <h2 id="what-we-take-on-h" class="h2 max-w-[44rem]">What we take on</h2>
+      <ul class="kinds mt-12">
+        {%- for kind in kinds | bracketless("body") %}
+        <li>
+          <h3 class="h3">{{ kind.title }}</h3>
+          <p>{{ kind.body }}</p>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <!-- What to tell us, then how it goes: one band, the five points the closing band asks for -->
+  <section id="how-to-begin" class="section" aria-labelledby="what-to-tell-us-h how-it-goes-h">
+    <div class="wrap">
+      <div id="what-to-tell-us" class="grid gap-8 lg:grid-cols-12 lg:gap-x-16">
+        <h2 id="what-to-tell-us-h" class="h2 lg:col-span-5">What to tell us</h2>
+        <ul class="lines lg:col-span-7">
+          {%- for item in tellUs | bracketless %}
+          <li>{{ item }}</li>
+          {%- endfor %}
+        </ul>
+      </div>
+      <div id="how-it-goes" class="mt-20 lg:mt-24">
+        <h2 id="how-it-goes-h" class="h2 max-w-[44rem]">How it goes</h2>
+        <!-- [html-validate-disable-next no-redundant-role, prefer-native-element: preflight's list-style: none drops the list role in Safari/VoiceOver] -->
+        <ol role="list" class="steps-numbered steps-text four-up mt-12">
+          {#- A step keeps its title when its body is only a bracket (step 3): the plan counts four. #}
+          {%- for step in steps %}
+          <li><p><b class="run-in">{{ step.title }}</b>{% if step.body | unbracket %} {{ step.body | unbracket }}{% endif %}</p></li>
+          {%- endfor %}
+        </ol>
+        {%- if stepsNote | unbracket %}
+        <p class="steps-note">{{ stepsNote | unbracket }}</p>
+        {%- endif %}
+      </div>
+    </div>
+  </section>

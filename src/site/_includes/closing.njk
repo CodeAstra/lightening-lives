@@ -2,22 +2,25 @@
     and the words and two buttons in five, on a lit paper band. A page's closing front matter replaces
     any of the four parts; closing.actions: true sets the four contact actions in the buttons' place
     (Partnerships, content 5.14), under the words in the same five columns, the heading then standing
-    level with the words' first line. The notice for individuals follows when the page asks for it. -#}
+    level with the words' first line. The notice for individuals follows when the page asks for it.
+    A solid button given a condition's slug in place of an href (solid: { text, condition }, a test's
+    page) is the email asking for that test, the condition named in its body (askAbout). -#}
 {%- from "actions.njk" import actionList with context -%}
 {%- set ask = closing or {} -%}
 {%- set solid = ask.solid or site.closing.solid -%}
+{%- if solid.condition %}{% set solid = { text: solid.text, href: solid.condition | askAbout(site.email) } %}{% endif -%}
 {%- set line = ask.line or site.closing.line -%}
 <section class="section bg-paper closing" aria-labelledby="closing-h">
   <div class="wrap">
     <div class="section-head grid gap-6 lg:grid-cols-12 {{ 'lg:items-start' if ask.actions else 'lg:items-end' }}">
-      <h2 id="closing-h" class="h2 lg:col-span-7">{{ ask.h2 or site.closing.h2 }}</h2>
+      <h2 id="closing-h" class="h2 lg:col-span-7">{{ (ask.h2 or site.closing.h2) | unbracket }}</h2>
       <div class="lg:col-span-5">
-        <p class="lead">{{ ask.body or site.closing.body }}</p>
+        <p class="lead">{{ (ask.body or site.closing.body) | unbracket }}</p>
         {%- if ask.actions %}
         {{ actionList("mt-6") }}
         {%- else %}
         <div class="mt-6 flex flex-wrap gap-3">
-          <a class="btn btn-solid" href="{{ solid.href }}">{{ solid.text }}</a>
+          <a class="btn btn-solid" href="{{ solid.href }}">{{ solid.text | unbracket }}</a>
           <a class="btn btn-line" href="{{ line.href }}">{{ line.text }}</a>
         </div>
         {%- endif %}

@@ -1,5 +1,7 @@
 // Eleventy builds the pages from src/site into dist/. Everything in src/assets (the logo, pictures,
 // type, and the stylesheet and scripts that scripts/build.mjs compiles) is copied to dist/assets.
+import { CONDITIONS } from './src/js/site/contact.js';
+
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ 'src/assets': 'assets' });
   // The browser looks for these at the site's root.
@@ -55,6 +57,35 @@ export default function (eleventyConfig) {
     }
     return best ? [p.slice(0, best.at), p.slice(best.next)] : [p];
   }));
+
+  // The bracket rule (Global Constraints): a "[TBC: …]" or "[PLACEHOLDER: …]" note never renders.
+  // unbracket strips it from a string and keeps the sentence before it; bracketless does that to
+  // each entry of a list (to the entry's own key, when the entries are objects: a row's "body", a
+  // chip's "text") and leaves out an entry that was only a bracket.
+  const BRACKET = /\s*\[(?:TBC|PLACEHOLDER)\b[^\]]*\]/g;
+  const unbracket = (s) => (typeof s === 'string' ? s.replace(BRACKET, '').trim() : s);
+  eleventyConfig.addFilter('unbracket', unbracket);
+  eleventyConfig.addFilter('bracketless', (list, key) => (list || [])
+    .map((entry) => (key ? { ...entry, [key]: unbracket(entry[key]) } : unbracket(entry)))
+    .filter((entry) => (key ? entry[key] : entry)));
+
+  // A test page's closing ask (the controller's Phase 5 ruling 3): the email itself, so the
+  // condition reaches the company with script off (Review Focus 5). The condition is named as
+  // src/js/site/contact.js names it for the slug; an unknown slug stops the build.
+  eleventyConfig.addFilter('askAbout', (slug, email) => {
+    const name = CONDITIONS.get(slug);
+    if (!name) throw new Error(`closing.solid.condition: no condition "${slug}" in src/js/site/contact.js`);
+    return `mailto:${email}?subject=${encodeURIComponent('Request tests')}&body=${encodeURIComponent(`Condition: ${name}`)}`;
+  });
+
+  // A test page's required front matter (condition, test, who, closing): a page missing one stops
+  // the build, naming the page and the key, instead of printing an empty heading or list.
+  eleventyConfig.addFilter('required', (value, key, inputPath) => {
+    if (value === undefined || value === null || value === '' || (typeof value === 'object' && !Object.keys(value).length)) {
+      throw new Error(`${inputPath}: front matter "${key}" is required by test-page.njk`);
+    }
+    return value;
+  });
 
   eleventyConfig.setServerOptions({ port: 8080 });
 

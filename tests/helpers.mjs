@@ -22,3 +22,6 @@ export function pages({ include404 = false } = {}) {
   if (include404 && existsSync('dist/404.html')) urls.push('/404.html');
   return urls;
 }
+
+// Town names the company's pages keep out of their words (R2: places are named by state).
+export const TOWNS = ['Udaipur', 'Bhopal', 'Jamshedpur', 'Bilaspur', 'Nandurbar', 'Nagpur', 'Dhule', 'Chandrapur', 'Mumbai', 'Valsad', 'Kothagudem', 'Hyderabad', 'Mysore', 'Gudalur'];

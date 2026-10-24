@@ -2,7 +2,8 @@
 {#- Every page. An inner page sets title, description, label, h1, lead and chips in its front matter,
     and the layout opens it and closes it with the closing band (closing: false leaves the band out;
     closing: { h2, body, solid, line } replaces its words). The home page sets film: true and writes
-    all of its own sections. notice: true adds the notice for individuals. -#}
+    all of its own sections. notice: true adds the notice for individuals. leadLine is a line under
+    the lead (SMA's, content 5.6). Brackets never render: a chip that is only a bracket is left out. -#}
 {%- set url = site.domain + page.url -%}
 {%- set addresses = [] -%}
 {%- for key, a in site.addresses -%}
@@ -26,15 +27,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ title }}</title>
-<meta name="description" content="{{ description }}">
+<title>{{ title | unbracket }}</title>
+<meta name="description" content="{{ description | unbracket }}">
 <link rel="canonical" href="{{ url }}">
 <meta name="theme-color" content="#F0F9FF">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ site.name }}">
 <meta property="og:locale" content="en_IN">
-<meta property="og:title" content="{{ title }}">
-<meta property="og:description" content="{{ description }}">
+<meta property="og:title" content="{{ title | unbracket }}">
+<meta property="og:description" content="{{ description | unbracket }}">
 <meta property="og:url" content="{{ url }}">
 {#- Every page but the home page has a card of its own (npm run social); the home page's is the film's end. #}
 <meta property="og:image" content="{{ site.domain }}{{ social or ('/assets/img/social.png' if page.url == '/' else '/assets/img/social/' + (page.url | socialSlug) + '.png') }}">
@@ -72,7 +73,7 @@
 {% include "header.njk" %}
 <main id="main">
 {%- if not film %}
-{{ opening(label, h1, lead, chips) }}
+{{ opening(label, h1, lead | unbracket, chips | bracketless("text"), leadLine | unbracket) }}
 {%- endif %}
 {{ content | safe }}
 {%- if not film %}

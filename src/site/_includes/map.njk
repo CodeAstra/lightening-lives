@@ -3,22 +3,30 @@
     page's, unless a page names another), its heading, and a paragraph under the heading where a page
     has one (Our work, 5.11). Whatever it opens on, the checked choice, the sentence, the key and the
     still agree, so the page says the same thing before the script runs, after it, and without it;
-    the script (src/js/site/main.js, initMap) reads the checked choice. Import it with context: it
-    reads work (src/site/_data/work.js). -#}
+    the script (src/js/site/main.js, initMap) reads the checked choice. A test's page (test-page.njk)
+    also gives the band its id (map unless named), its surface (paper unless named; "" for mist, so
+    the bands keep alternating) and a link under the words ({ text, href }). Import it with context:
+    it reads work (src/site/_data/work.js). -#}
+{%- from "links.njk" import pageLink %}
 {%- macro mapSection(options = {}) %}
 {%- set opened = options.layer or "sickle" %}
+{%- set band = options.id or "map" %}
+{%- set surface = options.surface if options.surface is defined else "bg-paper" %}
 {%- set readouts = {
   sickle: "Sickle cell disease is most common in a belt across central India, from Gujarat to Odisha.",
   thal: "Thalassaemia is found across India: on average, 3 to 4 people in 100 are carriers. Higher frequencies are reported in Punjab, Delhi, Gujarat, Maharashtra and West Bengal.",
   work: work.sentence
 } %}
 {%- set layers = [["sickle", "Sickle cell"], ["thal", "Thalassaemia"], ["work", "Our work"]] -%}
-  <section id="map" class="section bg-paper" aria-labelledby="map-h">
+  <section id="{{ band }}" class="section map-band{{ ' ' + surface if surface }}" aria-labelledby="{{ band }}-h">
     <div class="wrap map-layout" data-map-layout>
       <div class="map-words">
-        <h2 id="map-h" class="h2">{{ options.h2 or "Where the need is, and where we work" }}</h2>
+        <h2 id="{{ band }}-h" class="h2">{{ options.h2 or "Where the need is, and where we work" }}</h2>
         {%- if options.body %}
         <p class="map-body">{{ options.body }}</p>
+        {%- endif %}
+        {%- if options.link %}
+        <p class="map-link">{{ pageLink(options.link.href, options.link.text) }}</p>
         {%- endif %}
         <fieldset class="mt-6">
           <legend class="sr-only">Show on the map</legend>

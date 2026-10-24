@@ -1,0 +1,12 @@
+{#- Text links with the arrow (DESIGN.md, Buttons and links), from one source. Import with
+    {% from "links.njk" import arrow, pageLink %}.
+    arrow: the 18 by 12 right arrow a text link ends with, as markup ({{ arrow | safe }}).
+    pageLink(href, name): a text link to a page whose arrow stays with the last word when the name
+    wraps on a phone (.link-name: the link is set inline, its last word and the arrow kept together).
+    Solutions' family links, a test page's family, Develop a test and "Where it has been used", the
+    map's link. -#}
+{%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' -%}
+{%- macro pageLink(href, name) -%}
+{%- set words = name.split(" ") -%}
+<a class="link link-name" href="{{ href }}">{{ words.slice(0, -1).join(" ") }}{% if words.length > 1 %} {% endif %}<span class="whitespace-nowrap">{{ words | last }}{{ arrow | safe }}</span></a>
+{%- endmacro -%}

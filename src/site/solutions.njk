@@ -14,15 +14,10 @@ notice: true
     row of boxes: its pictures carry the CSIR-CCMB logo and printed claims still to be confirmed
     (content 7.1, Part 8 items 4 and 25). The bands alternate back from the closing
     band's paper, so the first section is a paper band of its own. -#}
-{%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' %}
+{%- from "links.njk" import arrow, pageLink %}
 {%- from "picture.njk" import picture with context %}
 {%- from "faq.njk" import faq %}
 {%- set boxSizes = "(min-width: 64rem) 15vw, (min-width: 40rem) 30vw, 46vw" %}
-{#- A family's link to a page: the arrow stays with the last word when the name wraps on a phone. -#}
-{%- macro pageLink(href, name) -%}
-{%- set words = name.split(" ") -%}
-<a class="link" href="{{ href }}">{{ words.slice(0, -1).join(" ") }}{% if words.length > 1 %} {% endif %}<span class="whitespace-nowrap">{{ words | last }}{{ arrow | safe }}</span></a>
-{%- endmacro %}
 
   <!-- Two families of conditions -->
   <section id="families" class="section bg-paper" aria-labelledby="families-h">
@@ -96,9 +91,7 @@ notice: true
         </li>
       </ul>
       <p class="mt-6">
-        <a class="link" href="/solutions/develop-a-test/#in-development">Ask about a test in development
-          {{ arrow | safe }}
-        </a>
+        {{ pageLink("/solutions/develop-a-test/#in-development", "Ask about a test in development") }}
       </p>
     </div>
   </section>

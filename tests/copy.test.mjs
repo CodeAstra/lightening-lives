@@ -3,12 +3,16 @@
 // Counted on the built pages, not by eye.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { load as cheerio } from 'cheerio';
 import { load, pages } from './helpers.mjs';
 
 // A word is a run of characters with a letter or a digit in it: "•" and "·" between words are not words.
 const words = (s) => s.replace(/\s+/g, ' ').trim().split(' ').filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
 const text = ($, el) => $(el).text().replace(/\s+/g, ' ').trim();
 const PROOF_TAGS = ['Approved by ICMR', 'Patented in India and Japan'];
+// The open place's name, which the content file gives Develop a test's opening label (5.9) and the
+// last row and carton on the home page and Solutions: five words, its own wording, kept as written.
+const OPEN_PLACE = 'The condition you need next';
 
 test('the home lead and note are short', () => {
   const $ = load('/');
@@ -16,25 +20,45 @@ test('the home lead and note are short', () => {
   assert.ok(words(text($, '.hero-note')) <= 12, `note: ${words(text($, '.hero-note'))} words`);
 });
 
+// Every place on a page whose words run over R1's limit, as "<what> (<n> words): <text>". The bodies
+// under a test page's "The condition(s)" (#the-condition) may run to 60 words, as FAQ answers do
+// (R1; the controller's Phase 5 ruling 2): Thalassaemia's four conditions are up to 57.
+function overLimits($, url) {
+  const home = url === '/';
+  const found = [];
+  const over = (selector, limit, what, except) => $(selector).each((i, e) => {
+    if (except && $(e).closest(except).length) return;
+    const n = words(text($, e));
+    if (n > limit) found.push(`${url} ${what} (${n} words): ${text($, e).slice(0, 60)}`);
+  });
+  over('.page-open .lead, section .lead', 30, 'lead');
+  over('.steps li > p:not(.label), .why p, .kinds p, .test-what > p, .proof p, .audiences p, .steps-numbered li p, .rows > :is(li, div) p, .families p:not(.label), .pair p', home ? 25 : 35, 'body', '#the-condition');
+  over('#the-condition .rows > :is(li, div) p', 60, 'condition body');
+  over('main p', 60, 'paragraph');
+  // A heading set in the label voice is a heading, not a label. The two proof tags are the content
+  // file's own wording (4.3), which its R1 revision kept: "Patented in India and Japan" is five; so
+  // is Develop a test's opening label, the open place's name (5.9), on that page's opening only.
+  $('.label:not(h1, h2, h3, h4), .tag, .places b').each((i, e) => {
+    const t = $(e).clone().children('small').remove().end().text().replace(/\s+/g, ' ').trim();
+    if ($(e).is('.tag-proof') && PROOF_TAGS.includes(t)) return;
+    if (url === '/solutions/develop-a-test/' && $(e).closest('.page-open').length && t === OPEN_PLACE) return;
+    if (words(t) > 4) found.push(`${url} label (${words(t)} words): ${t}`);
+  });
+  return found;
+}
+
 test('leads, bodies, paragraphs and labels keep to the limits on every page', () => {
-  for (const url of pages()) {
-    const $ = load(url);
-    const home = url === '/';
-    const over = (selector, limit, what) => $(selector).each((i, e) => {
-      const n = words(text($, e));
-      assert.ok(n <= limit, `${url} ${what} (${n} words): ${text($, e).slice(0, 60)}`);
-    });
-    over('.page-open .lead, section .lead', 30, 'lead');
-    over('.steps li > p:not(.label), .why p, .kinds p, .test-what > p, .proof p, .audiences p, .steps-numbered li p, .rows > :is(li, div) p, .families p:not(.label), .pair p', home ? 25 : 35, 'body');
-    over('main p', 60, 'paragraph');
-    // A heading set in the label voice is a heading, not a label. The two proof tags are the content
-    // file's own wording (4.3), which its R1 revision kept: "Patented in India and Japan" is five.
-    $('.label:not(h1, h2, h3, h4), .tag, .places b').each((i, e) => {
-      const t = $(e).clone().children('small').remove().end().text().replace(/\s+/g, ' ').trim();
-      if ($(e).is('.tag-proof') && PROOF_TAGS.includes(t)) return;
-      assert.ok(words(t) <= 4, `${url} label (${words(t)} words): ${t}`);
-    });
-  }
+  for (const url of pages()) assert.deepEqual(overLimits(load(url), url), [], url);
+});
+
+test('a body under a test page\'s "The condition(s)" may run to 60 words; anywhere else a row body stops at 35', () => {
+  const body = (n) => Array.from({ length: n }, (_, i) => `word${i}`).join(' ');
+  const rows = (id, n) => `<section id="${id}"><ul class="rows"><li><h3>Beta thalassaemia</h3><p>${body(n)}</p></li></ul></section>`;
+  const $ = cheerio(`<main>${rows('the-condition', 57)}${rows('the-test', 36)}</main>`);
+  assert.deepEqual(overLimits($, '/solutions/thalassaemia/').map((f) => f.split(':')[0]), ['/solutions/thalassaemia/ body (36 words)']);
+  const $$ = cheerio(`<main>${rows('the-condition', 61)}</main>`);
+  assert.deepEqual(overLimits($$, '/solutions/thalassaemia/').map((f) => f.split(':')[0]),
+    ['/solutions/thalassaemia/ condition body (61 words)', '/solutions/thalassaemia/ paragraph (61 words)']);
 });
 
 // Sentences in the visible copy of main. Left out: the film's three captions and How it works' three

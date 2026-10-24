@@ -1,0 +1,235 @@
+---
+layout: layout.njk
+notice: true
+closing:
+  line: { text: Partner with us, href: /partnerships/ }
+---
+{#- A test's page (content file 5.4 to 5.8; plan, Task 5.0; the controller's Phase 5 rulings 1, 3, 7
+    and 9). The sickle cell, thalassaemia, SMA, DMD and LGMD pages select it with
+    layout: test-page.njk and differ only in their front matter, which is the content file's copy as
+    written, brackets and all: a "[TBC: …]" or "[PLACEHOLDER: …]" never renders (the sentence before
+    it is kept; a chip, row, list item or source that is only a bracket is left out).
+
+    layout.njk opens the page (label, h1, lead, chips, leadLine) and closes it with the closing band
+    and the notice for individuals (notice: true, set here). This layout writes the sections between,
+    in ruling 1's order. Front matter:
+
+      title, description, label, h1, lead   as every inner page (layout.njk)
+      chips      [{ text, proof }]           the proof chips under the lead (proof: true fills one)
+      leadLine   "…"                         optional: a line under the lead (SMA, 5.6)
+      condition  { h2, paragraphs | rows, source, picture }
+                 #the-condition: "The condition" in paragraphs, or "The conditions" as rows
+                 [{ title, body }] (Thalassaemia), then an optional source line
+      why        { h2, paragraphs, source, picture }   optional, #why: its own h2 ("Why it needs testing
+                 at scale"); Thalassaemia (5.5) has none
+      test       { h2, rows, boxes }         #the-test: h2 "LitLife™-SCA", "The tests" or "The test";
+                 rows [{ title, body }]; with no row left after the bracket rule, the line
+                 "Details on request." stands in their place (the drafts, ruling 9); boxes, optional,
+                 a row of box stills after the rows (Thalassaemia, ruling 5)
+      where      { h2, body, link, map }     optional, #where-used: words beside the heading, or with
+                 map: true the map opened on Our work (sickle cell only, ruling 6); link { text, href }
+      box        { h2, body, lists, boxes }  optional, #in-the-box: h2 defaults to "In the box";
+                 lists [{ title, items }], a title only where the box comes in parts (SMA)
+      who        { h2, items }               #who-it-is-for: h2 defaults to "Who it is for"
+      family     [{ text, href, note }]      #also-in-this-family: a link to each test in the family
+                 (a draft's page by /solutions/develop-a-test/#musculopathies, ruling 7) with an
+                 optional note under it; Develop a test always follows (content 3.3)
+      closing    { h2, body, solid: { text, condition } }   the solid button is the email asking for
+                 the test, condition being contact.js's slug (ruling 3); the line button is
+                 Partner with us (set here)
+      draft      true leaves the page out of the build (eleventy.config.mjs)
+
+    picture is { name, alt }, a photograph through picture() beside the section's words; boxes are
+    [{ name, alt, caption }], the company's own box stills. Who it is for and Also in this family
+    share one band as a pair. The bands alternate back from the closing band's paper, whichever
+    optional sections a page has, so the one before the closing band is always mist. -#}
+{%- from "picture.njk" import picture with context %}
+{%- from "map.njk" import mapSection with context %}
+{%- from "links.njk" import pageLink %}
+{%- set boxSizes = "(min-width: 64rem) 15vw, (min-width: 40rem) 30vw, 46vw" %}
+{%- set asideSizes = "(min-width: 64rem) 34vw, 92vw" %}
+
+{#- The keys a test page cannot do without stop the build when they are missing. -#}
+{%- set condition = condition | required("condition", page.inputPath) %}
+{%- set test = test | required("test", page.inputPath) %}
+{%- set who = who | required("who", page.inputPath) %}
+{#- test-page.njk gives closing its line button; the heading and the solid button are the page's own. -#}
+{%- set closingH2 = closing.h2 | required("closing.h2", page.inputPath) %}
+{%- set closingSolid = closing.solid | required("closing.solid", page.inputPath) %}
+
+{#- The company's box stills: a row under a section (boxes-few), or beside its words (boxes-aside). -#}
+{%- macro boxRow(boxes, classes = "boxes-few mt-12") -%}
+<ul class="boxes {{ classes }}">
+        {%- for b in boxes %}
+        <li>
+          <figure>
+            {{ picture(b.name, b.alt, boxSizes) }}
+            <figcaption>{{ b.caption | unbracket }}</figcaption>
+          </figure>
+        </li>
+        {%- endfor %}
+      </ul>
+{%- endmacro %}
+
+{#- A section's heading in five columns and its words in seven; a picture, where it has one, under
+    the heading on a wide screen and after the words on a phone (.beside's grid). -#}
+{%- macro prose(id, h2, paragraphs, source, aside, surface) %}
+  <section id="{{ id }}" class="section{{ surface }}" aria-labelledby="{{ id }}-h">
+    <div class="wrap">
+      <div class="beside grid gap-8 lg:grid-cols-12 lg:gap-x-16">
+        <h2 id="{{ id }}-h" class="h2 lg:col-span-5">{{ h2 | unbracket }}</h2>
+        <div class="story lg:col-span-7 lg:row-span-2">
+          {%- for p in paragraphs | bracketless | paragraphs %}
+          <p>{{ p }}</p>
+          {%- endfor %}
+          {%- if source | unbracket %}
+          <p class="footnote source">{{ source | unbracket }}</p>
+          {%- endif %}
+          {{- caller() if caller }}
+        </div>
+        {%- if aside %}
+        <div class="aside-picture lg:col-span-5">{{ picture(aside.name, aside.alt, asideSizes) }}</div>
+        {%- endif %}
+      </div>
+    </div>
+  </section>
+{%- endmacro %}
+
+{#- Which sections this page has, so each knows its surface: counted back from the closing band. -#}
+{%- set order = ["the-condition"] %}
+{%- if why %}{% set order = order.concat(["why"]) %}{% endif %}
+{%- set order = order.concat(["the-test"]) %}
+{%- if where %}{% set order = order.concat(["where-used"]) %}{% endif %}
+{%- if box %}{% set order = order.concat(["in-the-box"]) %}{% endif %}
+{%- set order = order.concat(["who-and-family"]) %}
+{%- macro surface(id) %}{{ " bg-paper" if (order.length - order.indexOf(id)) % 2 == 0 else "" }}{% endmacro %}
+
+{#- The condition(s): paragraphs, or rows (Thalassaemia), then the source. -#}
+{%- if condition.rows %}
+  <section id="the-condition" class="section{{ surface('the-condition') }}" aria-labelledby="the-condition-h">
+    <div class="wrap">
+      <h2 id="the-condition-h" class="h2 max-w-[44rem]">{{ condition.h2 | unbracket }}</h2>
+      <ul class="rows mt-10">
+        {%- for row in condition.rows | bracketless("body") %}
+        <li>
+          <h3>{{ row.title | unbracket }}</h3>
+          <p>{{ row.body }}</p>
+        </li>
+        {%- endfor %}
+      </ul>
+      {%- if condition.source | unbracket %}
+      <p class="footnote source">{{ condition.source | unbracket }}</p>
+      {%- endif %}
+    </div>
+  </section>
+{%- else %}
+{{ prose("the-condition", condition.h2, condition.paragraphs, condition.source, condition.picture, surface("the-condition")) }}
+{%- endif %}
+
+{#- Why: the case for testing, under its own heading. -#}
+{%- if why %}
+{{ prose("why", why.h2, why.paragraphs, why.source, why.picture, surface("why")) }}
+{%- endif %}
+
+{#- The test(s): rows, or "Details on request." while every row is a bracket; then any boxes. -#}
+{%- set testRows = test.rows | bracketless("body") %}
+  <section id="the-test" class="section{{ surface('the-test') }}" aria-labelledby="the-test-h">
+    <div class="wrap">
+      <h2 id="the-test-h" class="h2 max-w-[44rem]">{{ test.h2 | unbracket }}</h2>
+      {%- if testRows.length %}
+      <ul class="rows mt-10">
+        {%- for row in testRows %}
+        <li>
+          <h3>{{ row.title | unbracket }}</h3>
+          <p>{{ row.body }}</p>
+        </li>
+        {%- endfor %}
+      </ul>
+      {%- else %}
+      <p class="mt-6 text-moss">Details on request.</p>
+      {%- endif %}
+      {%- if test.boxes and test.boxes.length %}
+      {{ boxRow(test.boxes) }}
+      {%- endif %}
+    </div>
+  </section>
+
+{#- Where it has been used: the map opened on Our work, or words beside the heading. -#}
+{%- if where %}
+{%- if where.map %}
+  {{ mapSection({ layer: "work", h2: where.h2 | unbracket, body: where.body | unbracket, id: "where-used", surface: surface("where-used") | trim, link: where.link }) }}
+{%- else %}
+{%- call prose("where-used", where.h2, [where.body], none, none, surface("where-used")) %}
+          {%- if where.link %}
+          <p class="mt-6">{{ pageLink(where.link.href, where.link.text | unbracket) }}</p>
+          {%- endif %}
+{%- endcall %}
+{%- endif %}
+{%- endif %}
+
+{#- In the box: the words, the list or lists, then the box. -#}
+{%- if box %}
+  <section id="in-the-box" class="section{{ surface('in-the-box') }}" aria-labelledby="in-the-box-h">
+    <div class="wrap">
+      <div class="beside grid gap-8 lg:grid-cols-12 lg:gap-x-16">
+        <h2 id="in-the-box-h" class="h2 lg:col-span-5">{{ (box.h2 or "In the box") | unbracket }}</h2>
+        <div class="story lg:col-span-7 lg:row-span-2">
+          {%- if box.body | unbracket %}
+          <p>{{ box.body | unbracket }}</p>
+          {%- endif %}
+          <div class="kit">
+            {%- for list in box.lists %}
+            {%- set items = list.items | bracketless %}
+            {%- if items.length %}
+            <div>
+              {%- if list.title %}
+              <h3 class="label">{{ list.title | unbracket }}</h3>
+              {%- endif %}
+              <ul class="lines">
+                {%- for item in items %}
+                <li>{{ item }}</li>
+                {%- endfor %}
+              </ul>
+            </div>
+            {%- endif %}
+            {%- endfor %}
+          </div>
+        </div>
+        {%- if box.boxes and box.boxes.length %}
+        {{ boxRow(box.boxes, "boxes-aside lg:col-span-5") }}
+        {%- endif %}
+      </div>
+    </div>
+  </section>
+{%- endif %}
+
+{#- Who it is for, and the rest of the family, side by side. -#}
+  <section id="who-and-family" class="section{{ surface('who-and-family') }}" aria-labelledby="who-it-is-for-h also-in-this-family-h">
+    <div class="wrap">
+      <div class="pair">
+        <div id="who-it-is-for">
+          <h2 id="who-it-is-for-h" class="h2">{{ (who.h2 or "Who it is for") | unbracket }}</h2>
+          <ul class="lines mt-6">
+            {%- for item in who.items | bracketless %}
+            <li>{{ item }}</li>
+            {%- endfor %}
+          </ul>
+        </div>
+        <div id="also-in-this-family">
+          <h2 id="also-in-this-family-h" class="h2">Also in this family</h2>
+          <ul class="family-links family-of-test mt-4">
+            {%- for member in family %}
+            <li>
+              {{ pageLink(member.href, member.text | unbracket) }}
+              {%- if member.note | unbracket %}
+              <p>{{ member.note | unbracket }}</p>
+              {%- endif %}
+            </li>
+            {%- endfor %}
+          </ul>
+          <p class="family-next">{{ pageLink("/solutions/develop-a-test/", "Develop a test with us") }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{{ content | safe }}
