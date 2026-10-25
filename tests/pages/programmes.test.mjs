@@ -17,7 +17,7 @@ const sectionOf = (h2) => $('main h2').filter((i, h) => text(h) === h2).closest(
 test('title, description, label, h1 and lead (5.10, 4.6)', () => {
   assert.equal($('title').text(), 'Screening, counselling and follow-up programmes | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'Lightening Lives runs its tests inside a six-step model: sample collection, transport, testing, reporting, treatment with counselling, and follow-up. Awareness programmes, genetic counselling, support groups and training.');
-  assert.equal(text('.page-open .label'), 'Transform lives');
+  assert.equal(text('.page-open .label'), 'Programmes');
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'A test is the middle of the story');
   assert.equal(text('.page-open .lead'), 'A result only transforms a life if something happens next. Our testing model goes from finger prick to follow-up, and we run awareness and counselling programmes, mostly for the government.');

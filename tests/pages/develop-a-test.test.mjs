@@ -22,7 +22,7 @@ test('the route is built', () => {
 test('title, description, label, h1 and lead, the bracket stripped (5.9, 4.6)', () => {
   assert.equal($('title').text(), 'Develop a genetic test with us | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'Tell us the inherited condition your programme or laboratory needs to detect. Lightening Lives develops and validates the test. A coagulation panel and pharmacogenomics are in development now.');
-  assert.equal(text('.page-open .label'), 'The condition you need next');
+  assert.equal(text('.page-open .label'), 'Develop a test');
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'Tell us the condition. We develop the test');
   assert.equal(text('.page-open .lead'), 'Every test we have developed so far began with an institution that needed it. Yours can be next: any inherited condition, to the same REASSURED standard.');
@@ -31,14 +31,14 @@ test('title, description, label, h1 and lead, the bracket stripped (5.9, 4.6)', 
 
 test('the h2s are 5.9\'s, in its order, and 3.2\'s anchors exist', () => {
   assert.deepEqual(texts('main h2'), [
-    'Two tests whose pages are on their way', 'What we are developing now', 'What we take on', 'What to tell us',
+    'Duchenne and limb-girdle muscular dystrophy', 'What we are developing now', 'What we take on', 'What to tell us',
     'How it goes', 'Start with the condition']);
   for (const id of ['musculopathies', 'in-development']) assert.equal($(`[id="${id}"]`).length, 1, id);
 });
 
 test('also developed (#musculopathies): the words, and the email asking for tests (ruling 8)', () => {
-  assert.equal(text('#musculopathies h2'), 'Two tests whose pages are on their way');
-  assert.equal(text('#musculopathies .story > p:not(:has(a))'), 'We have developed tests for Duchenne muscular dystrophy and limb-girdle muscular dystrophy, alongside LitLife™-SMA. Their pages are being prepared. Until then, write to us with your clinic or laboratory and the numbers you see, and we will send the details.');
+  assert.equal(text('#musculopathies h2'), 'Duchenne and limb-girdle muscular dystrophy');
+  assert.equal(text('#musculopathies .story > p:not(:has(a))'), 'We have developed tests for Duchenne muscular dystrophy and limb-girdle muscular dystrophy, alongside LitLife™-SMA. Write to us with your clinic or laboratory and the numbers you see, and we will send the details.');
   assert.deepEqual(links('#musculopathies a'), [['Ask about DMD or LGMD testing', 'mailto:admin@lighteninglives.in?subject=Request%20tests']]);
 });
 

@@ -1613,8 +1613,10 @@
   html { scroll-padding-top: calc(var(--compare-h, 0rem) + var(--header-h) + 0.5rem); }
 
   /* Our work's table: a screened site is a small filled mark, not a blank pill. */
-  .sites .tag-proof { width: 0.875rem; min-height: 0.875rem; padding: 0; border-radius: 50%; border: 0.0938rem solid var(--canopy); font-size: 0; }
+  @media (min-width: 64rem) { .sites .tag-proof { width: 0.875rem; min-height: 0.875rem; padding: 0; border-radius: 50%; border: 0.0938rem solid var(--canopy); font-size: 0; } }
   .sites-col-site { width: 22%; }
+  .sites-count { display: block; margin-top: 0.15rem; font-family: var(--font-sans); font-size: 0.8125rem; font-weight: 400; letter-spacing: 0; color: var(--moss); }
+  .sites-states tbody th { padding-block: 0.85rem; }
   .sites { max-width: 64rem; }
 
   /* Footer: shorter and quieter. */

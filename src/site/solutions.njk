@@ -2,7 +2,7 @@
 name: "Solutions"
 title: "Diagnostic solutions | Lightening Lives"
 description: "Molecular tests for sickle cell anaemia, thalassaemia, HbD and HbE, spinal muscular atrophy, Duchenne and limb-girdle muscular dystrophy, from a dried blood spot, for hospitals, laboratories and health programmes."
-label: Diagnose
+label: Solutions
 h1: Diagnostic solutions for inherited conditions
 lead: "We develop tests for inherited blood and muscle conditions, and make each one something an institution can run: assay, card, method, training and counselling."
 notice: true
@@ -21,7 +21,7 @@ notice: true
 {%- set boxSizes = "(min-width: 64rem) 15vw, (min-width: 40rem) 30vw, 46vw" %}
 
   <!-- Two families of conditions -->
-  <section id="families" class="section bg-paper" aria-labelledby="families-h">
+  <section id="families" class="section" aria-labelledby="families-h">
     <div class="wrap">
       <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
         <h2 id="families-h" class="h2 lg:col-span-7">Two families of conditions, one way of testing</h2>
@@ -66,7 +66,7 @@ notice: true
   </section>
 
   <!-- Developed so far: the home page's rows -->
-  <section id="developed" class="section" aria-labelledby="developed-h">
+  <section id="developed" class="section bg-paper" aria-labelledby="developed-h">
     <div class="wrap">
       <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
         <h2 id="developed-h" class="h2 lg:col-span-7">Developed so far</h2>
@@ -74,26 +74,6 @@ notice: true
       </div>
       {%- set testRows = { heading: "h3" } %}
       {%- include "test-rows.njk" %}
-    </div>
-  </section>
-
-  <!-- In development -->
-  <section id="in-development" class="section bg-paper" aria-labelledby="in-development-h">
-    <div class="wrap">
-      <h2 id="in-development-h" class="h2 max-w-[44rem]">In development</h2>
-      <ul class="rows mt-10">
-        <li>
-          <h3>Blood coagulation panel</h3>
-          <p>Genetic testing for inherited bleeding disorders such as haemophilia: confirming a diagnosis, identifying carriers, and supporting family counselling and care planning.</p>
-        </li>
-        <li>
-          <h3>Pharmacogenomics</h3>
-          <p>How a person's genes change their response to a medicine, so that the drug and the dose can be chosen for the person.</p>
-        </li>
-      </ul>
-      <p class="mt-6">
-        {{ pageLink("/solutions/develop-a-test/#in-development", "Ask about a test in development") }}
-      </p>
     </div>
   </section>
 

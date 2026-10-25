@@ -89,12 +89,14 @@
     {
       "name": "Prof Kalyanaraman Kumaran",
       "slug": "kalyanaraman-kumaran",
-      "photo": "prof-kalyanaraman.png"
+      "photo": "prof-kalyanaraman.png",
+      "role": "Adviser"
     },
     {
       "name": "Prof GV Krishnaveni",
       "slug": "gv-krishnaveni",
-      "photo": "prof-krishnaveni.png"
+      "photo": "prof-krishnaveni.png",
+      "role": "Adviser"
     }
   ]
 }

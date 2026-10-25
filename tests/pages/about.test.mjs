@@ -171,15 +171,14 @@ test('Team: eleven entries, each with its slug as its id (3.2) and its portrait 
   });
 });
 
-test('Team: the founders by name and role, and the way to their entries on About', () => {
+test('Team: the founders lead with their portrait, names, credentials and roles, and the way to their bios on About (25 October 2026)', () => {
   const { $, text, links } = team;
   const section = $('h2').filter((i, h) => text(h) === 'Founders').closest('section');
   assert.deepEqual(section.find('.person').map((i, p) => [[team.name(p), text($(p).find('.person-role'))]]).get(), [
     ['Dr. Giriraj Ratan Chandak', 'Founder and CEO'], ['Mrs. Nidhi Chandak', 'Co-Founder']]);
-  // 5.13's founders line is name and role: the credentials stay on About (M4).
-  assert.equal(section.find('.person-credentials').length, 0);
-  assert.deepEqual(section.find('.person h3').map((i, h) => text(h)).get(), ['Dr. Giriraj Ratan Chandak', 'Mrs. Nidhi Chandak']);
-  assert.equal(section.find('img').length, 0);
+  // The founders lead the page (design review, 25 October 2026): their joint portrait and credentials; bios stay on About.
+  assert.deepEqual(section.find('.person-credentials').map((i, c) => text(c)).get(), ['MD, PhD, DNB']);
+  assert.equal(section.find('.founders-photo img').length, 1);
   assert.equal(section.find('.person p:not(.person-role)').length, 0);
   assert.deepEqual(links(section.find('a.link')), [['Read about the founders', '/about/#founders']]);
 });
@@ -204,7 +203,7 @@ test('Team: the patron with his role, the advisers by name; their blurbs wait fo
     assert.equal($(`#${slug} img`).length, 1, slug);
     assert.equal($(`#${slug} p:not(.person-role)`).length, 0, slug);
   }
-  for (const slug of ['kalyanaraman-kumaran', 'gv-krishnaveni']) assert.equal($(`#${slug} .person-role`).length, 0, slug);
+  for (const slug of ['kalyanaraman-kumaran', 'gv-krishnaveni']) assert.equal(text($(`#${slug} .person-role`)), 'Adviser', slug);
 });
 
 test('Team: the closing band is 5.13\'s; no bracket; no credits', () => {

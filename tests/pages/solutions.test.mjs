@@ -17,7 +17,7 @@ const ASK = '/solutions/develop-a-test/#musculopathies';
 test('title, description, label, h1 and lead (5.3, 4.6)', () => {
   assert.equal($('title').text(), 'Diagnostic solutions | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'Molecular tests for sickle cell anaemia, thalassaemia, HbD and HbE, spinal muscular atrophy, Duchenne and limb-girdle muscular dystrophy, from a dried blood spot, for hospitals, laboratories and health programmes.');
-  assert.equal(text('.page-open .label'), 'Diagnose');
+  assert.equal(text('.page-open .label'), 'Solutions');
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'Diagnostic solutions for inherited conditions');
   assert.equal(text('.page-open .lead'), 'We develop tests for inherited blood and muscle conditions, and make each one something an institution can run: assay, card, method, training and counselling.');
@@ -25,13 +25,15 @@ test('title, description, label, h1 and lead (5.3, 4.6)', () => {
 
 test('the h2s are 5.3\'s, in its order, each labelling its own section', () => {
   assert.deepEqual(texts('main h2'), [
-    'Two families of conditions, one way of testing', 'Developed so far', 'In development', 'What you get when we work together',
+    'Two families of conditions, one way of testing', 'Developed so far', 'What you get when we work together',
     'How a test arrives', 'Questions we are asked', 'Tell us what your programme needs']);
   $('main > section').each((i, s) => assert.equal($(`#${$(s).attr('aria-labelledby')}`).closest('section')[0], s));
 });
 
 test('the anchors 3.2 names exist', () => {
-  for (const id of ['haemoglobinopathies', 'musculopathies', 'in-development', 'faq']) assert.equal($(`#${id}`).length, 1, id);
+  for (const id of ['haemoglobinopathies', 'musculopathies', 'faq']) assert.equal($(`#${id}`).length, 1, id);
+  // The "In development" band was cut on 25 October 2026: it repeated the last row of "Developed so far".
+  assert.equal($('#in-development').length, 0);
 });
 
 test('two families: two columns, their words, their tests and their links', () => {
@@ -73,14 +75,6 @@ test('developed so far: the home page\'s seven rows, headed one level under the 
   const home = load('/');
   const strip = (html) => html.replace(/<(\/?)h[34]\b/g, '<$1h').replace(/\s+/g, ' ');
   assert.equal(strip($('#developed ul.tests').html()), strip(home('#tests ul.tests').html()));
-});
-
-test('in development: two rows and the link to ask', () => {
-  assert.equal($('#in-development .rows li').length, 2);
-  assert.deepEqual($('#in-development .rows > li').map((i, li) => [[text($(li).find('h3')), text($(li).find('p'))]]).get(), [
-    ['Blood coagulation panel', 'Genetic testing for inherited bleeding disorders such as haemophilia: confirming a diagnosis, identifying carriers, and supporting family counselling and care planning.'],
-    ['Pharmacogenomics', 'How a person\'s genes change their response to a medicine, so that the drug and the dose can be chosen for the person.']]);
-  assert.deepEqual(links('#in-development a.link'), [['Ask about a test in development', '/solutions/develop-a-test/#in-development']]);
 });
 
 test('what you get: six rows, each keeping its sentence, no brackets, and the footnote', () => {

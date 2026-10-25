@@ -15,7 +15,7 @@ const links = (selector) => $(selector).map((i, a) => [[text(a), $(a).attr('href
 test('title, description, label, h1, lead and the three chips (4.3, 4.6)', () => {
   assert.equal($('title').text(), 'Technology | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'How Lightening Lives runs a genetic test from a dried blood spot: no DNA extraction, room temperature transport, screening and confirmation in one, on standard PCR equipment. Patented in India and Japan.');
-  assert.equal(text('.page-open .label'), 'Innovate');
+  assert.equal(text('.page-open .label'), 'Technology');
   assert.equal(text('h1'), 'How a spot of blood on a card becomes a genetic diagnosis');
   assert.equal($('h1').length, 1);
   assert.equal(text('.page-open .lead'), 'Conventional genetic testing was designed for the laboratory. We designed ours for where testing has to happen: a primary health centre, or a maternity ward far from any genetics laboratory.');
@@ -26,8 +26,8 @@ test('title, description, label, h1, lead and the three chips (4.3, 4.6)', () =>
 test('the h2s are 5.2\'s, in its order', () => {
   assert.deepEqual(texts('main h2'), [
     'Where conventional testing stops', 'The same question, three ways of answering it', 'From card to result in six steps',
-    'What a laboratory needs', 'Seeing the programme as it happens', 'Patented, approved, published', 'A card made for the field',
-    'The standard we design to, letter by letter', 'What we are working on', 'Have a condition in mind?']);
+    'What a laboratory needs', 'Patented, approved, published', 'A card made for the field',
+    'The standard we design to, letter by letter', 'Have a condition in mind?']);
   // Every section is labelled by its own heading.
   $('main > section').each((i, s) => assert.equal($(`#${$(s).attr('aria-labelledby')}`).closest('section')[0], s));
 });
@@ -90,8 +90,9 @@ test('the method: the stand-ins are labelled representative where they are seen 
   assert.notEqual(footerLine, LINE);
 });
 
-test('what a laboratory needs: three rows, the Time row omitted', () => {
-  assert.deepEqual(texts('#laboratory .rows > li h3'), ['Equipment', 'Space and storage', 'People']);
+test('what a laboratory needs: four rows, monitoring folded in (25 October 2026), the Time row omitted', () => {
+  assert.deepEqual(texts('#laboratory .rows > li h3'), ['Equipment', 'Space and storage', 'People', 'Monitoring']);
+  assert.match(text('#monitoring'), /mobile app at the point of collection/);
   assert.match(text('#laboratory'), /not a genetics institute\./);
 });
 
@@ -114,13 +115,6 @@ test('REASSURED from the shared partial, with the sentence under it', () => {
   assert.equal($('#reassured .criteria > li').length, 9);
   assert.equal($('#reassured [data-word] button').length, 9);
   assert.match(text('#reassured'), /The criteria were published in 2019 as an update to ASSURED, the list the World Health Organization's tropical disease research programme drew up for diagnostic tests in places with few resources\./);
-});
-
-test('research and development: the nine conditions and the two links', () => {
-  assert.match(text('main'), /Tests for nine conditions have been developed so far, across two families of inherited conditions/);
-  assert.match(text('main'), /write laboratory methods for hospitals and laboratories with limited resources\./);
-  const rd = $('h2').filter((i, h) => text(h) === 'What we are working on').closest('section');
-  assert.deepEqual(links(rd.find('a.link')), [['See our solutions', '/solutions/'], ['Develop a test with us', '/solutions/develop-a-test/']]);
 });
 
 test('no bracket renders; the notice is absent; the closing band asks its own question', () => {

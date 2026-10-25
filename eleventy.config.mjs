@@ -21,6 +21,7 @@ export default function (eleventyConfig) {
 
   // picture.njk names a photograph npm run images has not written: stop the build rather than
   // publish an empty srcset.
+  eleventyConfig.addFilter('where', (list, key, value) => (list ?? []).filter((item) => item[key] === value)); // the items whose key has the value (Our work's sites by state)
   eleventyConfig.addFilter('unknownImage', (name) => {
     throw new Error(`picture(): no image "${name}" in src/site/_data/images.json (run npm run images)`);
   });

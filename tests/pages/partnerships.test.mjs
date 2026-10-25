@@ -18,7 +18,7 @@ const COLLABORATORS = JSON.parse(readFileSync('src/site/_data/collaborators.json
 test('title, description, label, h1 and lead (5.14, 4.6)', () => {
   assert.equal($('title').text(), 'Partner with us | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'How hospitals, laboratories, government programmes, NGOs and CSR funders work with Lightening Lives on genetic screening and diagnosis, and who it already works with.');
-  assert.equal(text('.page-open .label'), 'Partner with us');
+  assert.equal(text('.page-open .label'), 'Partnerships');
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'Most of our work begins as a collaboration');
   assert.equal(text('.page-open .lead'), 'You bring the condition you need to screen for or diagnose. We bring the test, the method, the training and the counselling that follows a result.');

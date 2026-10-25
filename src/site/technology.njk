@@ -2,7 +2,7 @@
 name: "Technology"
 title: "Technology | Lightening Lives"
 description: "How Lightening Lives runs a genetic test from a dried blood spot: no DNA extraction, room temperature transport, screening and confirmation in one, on standard PCR equipment. Patented in India and Japan."
-label: Innovate
+label: Technology
 h1: How a spot of blood on a card becomes a genetic diagnosis
 lead: "Conventional genetic testing was designed for the laboratory. We designed ours for where testing has to happen: a primary health centre, or a maternity ward far from any genetics laboratory."
 chips:
@@ -144,22 +144,16 @@ closing:
           <h3>People</h3>
           <p>Laboratory staff who have run PCR before, or who have been trained. We train them.</p>
         </li>
+        <li id="monitoring">
+          <h3>Monitoring</h3>
+          <p>Test details are captured on a mobile app at the point of collection, so a programme can follow its screening as it happens: how many samples, from where, and what came back.</p>
+        </li>
       </ul>
     </div>
   </section>
 
-  <!-- Monitoring -->
-  <section id="monitoring" class="section" aria-labelledby="monitoring-h">
-    <div class="wrap">
-      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
-        <h2 id="monitoring-h" class="h2 lg:col-span-7">Seeing the programme as it happens</h2>
-        <p class="text-moss lg:col-span-5">Test details are captured on a mobile app at the point of collection, so a programme can follow its screening in real time: how many samples, from where, and what came back.</p>
-      </div>
-    </div>
-  </section>
-
   <!-- Patents and approvals -->
-  <section id="patents" class="section bg-paper" aria-labelledby="patents-h">
+  <section id="patents" class="section" aria-labelledby="patents-h">
     <div class="wrap">
       <h2 id="patents-h" class="h2 max-w-[44rem]">Patented, approved, published</h2>
       <ul class="proof mt-10">
@@ -183,7 +177,7 @@ closing:
   </section>
 
   <!-- The card: the drawn card (the photographs in content/assets/kit-reference-* are internal) -->
-  <section id="card" class="section" aria-labelledby="card-h">
+  <section id="card" class="section bg-paper" aria-labelledby="card-h">
     <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
       <div class="lg:col-span-7">
         <h2 id="card-h" class="h2">A card made for the field</h2>
@@ -198,24 +192,5 @@ closing:
   </section>
 
   <!-- REASSURED, as on the home page, with 5.2's sentence under it -->
-  {%- set reassured = { surface: "bg-paper", after: "The criteria were published in 2019 as an update to ASSURED, the list the World Health Organization's tropical disease research programme drew up for diagnostic tests in places with few resources." } %}
+  {%- set reassured = { surface: "", after: "The criteria were published in 2019 as an update to ASSURED, the list the World Health Organization's tropical disease research programme drew up for diagnostic tests in places with few resources." } %}
   {% include "reassured.njk" %}
-
-  <!-- Research and development -->
-  <section id="research" class="section" aria-labelledby="research-h">
-    <div class="wrap grid gap-6 lg:grid-cols-12 lg:gap-16">
-      <h2 id="research-h" class="h2 lg:col-span-5">What we are working on</h2>
-      <div class="lg:col-span-7">
-        <p class="text-moss">Our portfolio covers four kinds of genetic test: monogenic disorders, pharmacogenetic variants, rare genetic disorders and custom molecular diagnostic assays. Tests for nine conditions have been developed so far, across two families of inherited conditions, and more assays are under development: a blood coagulation panel and pharmacogenomics testing among them.</p>
-        <p class="mt-4 text-moss">We also develop and validate assays for other organisations, and write laboratory methods for hospitals and laboratories with limited resources.</p>
-        <p class="mt-6 flex flex-wrap gap-x-8">
-          <a class="link" href="/solutions/">See our solutions
-            {{ arrow | safe }}
-          </a>
-          <a class="link" href="/solutions/develop-a-test/">Develop a test with us
-            {{ arrow | safe }}
-          </a>
-        </p>
-      </div>
-    </div>
-  </section>

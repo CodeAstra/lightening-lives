@@ -34,15 +34,15 @@ closing:
   <!-- The sites: 6.1 grouped by state (R2). A table on a wide screen; on a phone, one entry per state -->
   <section id="sites" class="section" aria-labelledby="sites-h">
     <div class="wrap">
-      <h2 id="sites-h" class="h2 max-w-[44rem]">Population and newborn screening, by site</h2>
-      <table class="sites mt-12" aria-labelledby="sites-h">
+      <h2 id="sites-h" class="h2 max-w-[44rem]">Population and newborn screening, by state</h2>
+      <table class="sites sites-states mt-12" aria-labelledby="sites-h">
         <colgroup><col class="sites-col-site"></colgroup>
         <colgroup span="2"></colgroup>
         <colgroup span="2"></colgroup>
         <colgroup span="1"></colgroup>
         <thead>
           <tr>
-            <th scope="col" rowspan="2" class="sites-site-h">Site</th>
+            <th scope="col" rowspan="2" class="sites-site-h">State</th>
             <th scope="colgroup" colspan="2">Sickle cell anaemia</th>
             <th scope="colgroup" colspan="2">Sickle-beta thalassaemia</th>
             <th scope="colgroup">Beta thalassaemia</th>
@@ -57,17 +57,13 @@ closing:
         </thead>
         {%- for state in work.states %}
         <tbody>
-          <tr class="sites-group">
-            <th scope="rowgroup" colspan="6">{{ state.name }}</th>
-          </tr>
-          {%- for site in sites %}{% if site.state == state.name %}
+          {%- set here = sites | where("state", state.name) %}
           <tr>
-            <th scope="row">{{ site.name }}</th>
+            <th scope="row">{{ state.name }} <span class="sites-count">{{ here | length }} {{ "site" if (here | length) == 1 else "sites" }}</span></th>
             {%- for column in columns %}
-            <td>{% if site[column.key] %}<span class="tag tag-proof"><span class="mark-name">{{ column.name }}</span></span>{% endif %}</td>
+            <td>{% if here | selectattr(column.key) | length %}<span class="tag tag-proof"><span class="mark-name">{{ column.name }}</span></span>{% endif %}</td>
             {%- endfor %}
           </tr>
-          {%- endif %}{% endfor %}
         </tbody>
         {%- endfor %}
       </table>

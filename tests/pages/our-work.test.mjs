@@ -34,54 +34,42 @@ test('title, description, label, h1 and lead (5.11, 4.6)', () => {
 });
 
 test('the h2s are 5.11\'s, in its order', () => {
-  assert.deepEqual(texts('main h2'), ['Population and newborn screening, by site', 'On the map', 'Recent work', 'Planning work like this?']);
+  assert.deepEqual(texts('main h2'), ['Population and newborn screening, by state', 'On the map', 'Recent work', 'Planning work like this?']);
 });
 
-test('the sites: a real table, ten groups in 6.2\'s order, each headed by its state alone', () => {
+// By state, never by town (the user, 24 October 2026: "mention the state name rather than city names
+// for marketing purpose"): one row for each of the nine states and Delhi, with how many sites it has
+// and a mark for each screening done at any of them.
+test('the sites: a real table, one row a state, in 6.2\'s order, headed by the state and its number of sites', () => {
   const table = $('#sites table.sites');
   assert.equal(table.length, 1);
   assert.equal(table.attr('aria-labelledby'), $('#sites h2').attr('id'));
-  // Five columns under three conditions, each header scoped.
   assert.deepEqual(table.find('thead th[scope=colgroup]').map((i, th) => text(th)).get(),
     ['Sickle cell anaemia', 'Sickle-beta thalassaemia', 'Beta thalassaemia']);
   assert.deepEqual(table.find('thead th[scope=col]').map((i, th) => text(th)).get(),
-    ['Site', 'Population', 'Newborn', 'Population', 'Newborn', 'Population']);
-  const groups = table.find('tbody');
-  assert.equal(groups.length, 10);
-  groups.each((i, tbody) => {
-    const [code, state] = STATES[i];
-    const head = $(tbody).find('th[scope=rowgroup]');
-    assert.equal(head.length, 1, state);
-    assert.equal(text(head), state);
-    // 6.2's line stays on the map: six states share one, which a table would repeat (R1). In the
-    // list form the marks, which name their columns, say what was screened in each state.
-    assert.ok(!text(tbody).includes(LAYERS.work.states[code]), `${state}: 6.2's line`);
-  });
-});
-
-test('the sites: 15 rows, each under its state in 6.1\'s order, with a mark for each screening done', () => {
-  const rows = $('#sites tbody tr:has(th[scope=row])');
-  assert.equal(rows.length, 15);
-  const grouped = STATES.flatMap(([, state]) => SITES.filter((site) => site.state === state));
+    ['State', 'Population', 'Newborn', 'Population', 'Newborn', 'Population']);
+  const rows = table.find('tbody tr');
+  assert.equal(rows.length, 10);
   rows.each((i, tr) => {
-    const site = grouped[i];
-    assert.equal(text($(tr).find('th[scope=row]')), site.name);
-    assert.equal(text($(tr).closest('tbody').find('th[scope=rowgroup]')), site.state);
+    const [code, state] = STATES[i];
+    const here = SITES.filter((site) => site.state === state);
+    assert.equal(text($(tr).find('th[scope=row]')), `${state} ${here.length} ${here.length === 1 ? 'site' : 'sites'}`);
     const cells = $(tr).find('td');
-    assert.equal(cells.length, 5, site.name);
-    cells.each((k, td) => assert.equal($(td).find('.tag-proof').length, site[COLUMNS[k]] ? 1 : 0, `${site.name} ${COLUMNS[k]}`));
+    assert.equal(cells.length, 5, state);
+    cells.each((k, td) => assert.equal($(td).find('.tag-proof').length, here.some((site) => site[COLUMNS[k]]) ? 1 : 0, `${state} ${COLUMNS[k]}`));
+    assert.ok(!text(tr).includes(LAYERS.work.states[code]), `${state}: 6.2's line stays on the map`);
   });
-  const marks = (name) => rows.filter((i, tr) => text($(tr).find('th')) === name).find('.tag-proof').length;
-  assert.equal(marks('Nandurbar'), 4);
-  assert.equal(marks('Dhule'), 1);
+  assert.equal(SITES.length, 15);
+  // No town is named in the table.
+  for (const site of SITES) if (site.name !== site.state) assert.ok(!text(table).includes(site.name), site.name);
   // A mark says what it marks to assistive technology (and on a phone, to everyone): its column's name.
   const names = ['Sickle cell anaemia, population', 'Sickle cell anaemia, newborn', 'Sickle-beta thalassaemia, population', 'Sickle-beta thalassaemia, newborn', 'Beta thalassaemia, population'];
   rows.find('td').each((i, td) => {
     const mark = $(td).find('.tag-proof');
     if (mark.length) assert.equal(text(mark), names[$(td).index() - 1]);
   });
-  // No numbers of people screened (5.11's note): no figure in the table but the heading's none.
-  assert.doesNotMatch(text('#sites table'), /\d/);
+  // No numbers of people screened (5.11's note): the only figures are the number of sites a state has.
+  assert.doesNotMatch(text(table.clone().find('.sites-count').remove().end()), /\d/);
 });
 
 test('the sites: the line under the table, and no placeholder', () => {
