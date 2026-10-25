@@ -6,6 +6,10 @@ import { CONDITIONS } from './src/js/site/contact.js';
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ 'src/assets': 'assets' });
+  // The stylesheet and scripts are rebuilt into src/assets while `npm run dev` runs; watch them, so the
+  // copy in dist/ (which the dev server serves) follows without a restart.
+  eleventyConfig.addWatchTarget('src/assets/css/');
+  eleventyConfig.addWatchTarget('src/assets/js/');
   // The browser looks for these at the site's root.
   eleventyConfig.addPassthroughCopy({
     'src/site/favicon.svg': 'favicon.svg',

@@ -1695,18 +1695,20 @@
      pointed at (the logo under the pointer stays bright, the rest dim), while it holds the focus, and
      on a tap (main.js, initMarquee). For a reader who has asked for less motion it is a still row that
      scrolls by hand. Each moving row has the opening's ground of its own (the fade and the movement each
-     isolate it), so the logos' white grounds multiply away into it. */
+     isolate it), so the logos' white grounds multiply away into it. Sized for legibility (26 October 2026, the user:
+     some logos "not properly visible"): the square and tall emblems, whose names are small print inside
+     them, run up to 5.5rem; the long wordmarks are held by width (12rem), so the row stays even. */
   .hero-foot { margin: 2.25rem calc(var(--gutter) * -1) 0; padding-top: 1.25rem; border-top: 0.0625rem solid var(--line); }
   .marquee { display: flex; overflow: hidden; background: var(--mist); outline-offset: -0.1875rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4rem, #000 calc(100% - 4rem), transparent); mask-image: linear-gradient(90deg, transparent, #000 4rem, #000 calc(100% - 4rem), transparent); }
   .marquee:focus-visible { outline: 0.1875rem solid var(--canopy); }
   .marquee-track { display: flex; flex: none; align-items: center; background: var(--mist); gap: clamp(2.5rem, 4vw, 4rem); margin: 0; padding: 0.375rem clamp(2.5rem, 4vw, 4rem) 0.375rem 0; list-style: none; animation: marquee 80s linear infinite; }
   .marquee-track li { flex: none; }
-  .marquee-track img { display: block; max-width: none; width: auto; height: 3rem; height: min(clamp(1.875rem, calc(3.25rem * sqrt(1.6 / var(--ratio, 1.6))), 4rem), calc(10.5rem / var(--ratio, 1.6))); mix-blend-mode: multiply; transition: opacity 0.2s ease; }
+  .marquee-track img { display: block; max-width: none; width: auto; height: 3rem; height: min(clamp(1.75rem, calc(4.25rem * sqrt(1.6 / var(--ratio, 1.6))), 5.5rem), calc(12rem / var(--ratio, 1.6))); mix-blend-mode: multiply; transition: opacity 0.2s ease; }
   .marquee:hover .marquee-track, .marquee:focus-within .marquee-track, .hero-foot.is-paused .marquee-track { animation-play-state: paused; }
   .marquee:has(li:hover) li:not(:hover) img { opacity: 0.45; }
   @keyframes marquee { to { transform: translateX(-100%); } }
   @media (max-width: 39.99rem) {
-    .marquee-track img { height: min(clamp(1.625rem, calc(2.75rem * sqrt(1.6 / var(--ratio, 1.6))), 3.25rem), calc(8.5rem / var(--ratio, 1.6))); }
+    .marquee-track img { height: min(clamp(1.5rem, calc(3.1rem * sqrt(1.6 / var(--ratio, 1.6))), 4rem), calc(9rem / var(--ratio, 1.6))); }
   }
   @media (prefers-reduced-motion: reduce) {
     .marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
