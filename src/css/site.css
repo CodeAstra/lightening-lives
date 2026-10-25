@@ -1771,17 +1771,19 @@
   /* 3. Innovate: the gel. */
   .split-gel { display: grid; gap: 2.5rem; align-items: center; }
   @media (min-width: 64rem) { .split-gel { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 4.5rem; } }
+  /* The gel, lit (25 October 2026): one dark agarose slab, bands glowing life green where the poster
+     has them (stained DNA under blue light), the marker's ladder fainter, the lane names above. */
   .gel { margin: 0; }
-  .gel-lanes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(0.5rem, 1.2vw, 1rem); }
-  .lane { display: grid; gap: 0.6rem; justify-items: stretch; }
-  .lane-track { position: relative; height: clamp(14rem, 24vw, 19rem); background: var(--paper); border: 0.0625rem solid var(--meadow); border-radius: 0.375rem; }
-  .lane-well { position: absolute; top: 0.7rem; left: 20%; right: 20%; height: 0.6rem; border: 0.094rem solid var(--meadow); border-radius: 0.15rem; background: var(--stone); }
-  .lane-band { position: absolute; left: 15%; right: 15%; top: var(--y); height: 0.55rem; border-radius: 1rem; background: var(--leaf); }
-  .lane-marker .lane-band { height: 0.25rem; background: var(--canopy); opacity: 0.35; }
-  .lane.is-on .lane-track { border-color: var(--leaf); outline: 0.1875rem solid var(--sun); outline-offset: 0.125rem; }
-  .lane-name { font-size: 0.8125rem; font-weight: 600; text-align: center; color: var(--moss); line-height: 1.25; }
-  .lane.is-on .lane-name { color: var(--canopy); font-weight: 700; }
-  .gel figcaption { margin-top: 1.1rem; font-size: 0.875rem; color: var(--moss); max-width: 36rem; }
+  .gel-slab { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 0 0.5rem 1.25rem; background: linear-gradient(180deg, #0f557c 0%, var(--canopy) 55%, #0a3d5b 100%); border-radius: var(--radius); box-shadow: inset 0 0 0 0.0625rem rgba(255, 255, 255, 0.08); }
+  .lane { display: grid; grid-template-rows: auto 1fr; gap: 0.5rem; }
+  .lane-name { padding: 0.9rem 0.25rem 0; font-size: 0.8125rem; font-weight: 700; text-align: center; color: rgba(240, 249, 255, 0.92); line-height: 1.2; }
+  .lane-track { position: relative; height: clamp(15rem, 25vw, 20rem); }
+  .lane-well { position: absolute; top: 3%; left: 18%; right: 18%; height: 0.5rem; border: 0.0625rem solid rgba(186, 230, 253, 0.45); border-radius: 0.15rem; background: rgba(240, 249, 255, 0.08); }
+  .lane-band { position: absolute; left: 14%; right: 14%; top: var(--y); height: 0.6rem; border-radius: 0.15rem; background: var(--sun); box-shadow: 0 0 0.6rem rgba(110, 231, 183, 0.55); }
+  .lane-marker .lane-band { height: 0.22rem; background: rgba(186, 230, 253, 0.7); box-shadow: none; }
+  .lane-marker .lane-band.is-heavy { height: 0.4rem; background: var(--meadow); }
+  @media (max-width: 29.99rem) { .lane-name { font-size: 0.6875rem; } .lane-track { height: clamp(13rem, 60vw, 16rem); } }
+  .gel figcaption { margin-top: 1rem; font-size: 0.875rem; color: var(--moss); max-width: 36rem; }
 
   /* 5. REASSURED's criteria, each with its icon; the tile fills green with its letter. */
   .criteria > li { grid-template-columns: 2.75rem minmax(0, 1fr); column-gap: 1rem; align-items: start; }
@@ -2555,4 +2557,97 @@
     .tcard-role { font-size: 0.75rem; }
     .tcard-open { right: 0.5rem; bottom: 0.6rem; width: 1.75rem; height: 1.75rem; }
   }
+}
+
+/* REASSURED, each criterion led by its letter (25 October 2026, the user): the letter large in the
+   display voice beside the name and line; it turns life green with its letter in the word above. */
+@layer components {
+  .criteria > li { grid-template-columns: 3.75rem minmax(0, 1fr) !important; column-gap: 1rem; align-items: start; }
+  .criteria > li > .crit-letter { display: block; margin: -0.35rem 0 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 800; font-size: clamp(3rem, 4.4vw, 3.75rem); line-height: 1; letter-spacing: -0.04em; color: var(--leaf); text-align: center; transition: color 0.2s ease, -webkit-text-stroke 0.2s ease; }
+  .criteria li.is-on > .crit-letter { color: var(--canopy); text-shadow: 0.06em 0.06em 0 var(--sun); }
+  .criteria h3 { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin: 0.15rem 0 0; }
+  .criteria h3 .crit-name { background: none !important; box-shadow: none !important; }
+  .criteria h3 .crit-icon { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: var(--radius); background: var(--sprout); color: var(--leaf); transition: background-color 0.14s ease, color 0.14s ease; }
+  .criteria h3 .crit-icon .icon { width: 1.05rem; height: 1.05rem; }
+  .criteria li.is-on h3 .crit-icon { background: var(--sun); color: var(--canopy); }
+}
+
+/* The map's card, beside the state it describes (25 October 2026). */
+@layer components {
+  .map-tip { position: absolute; z-index: 4; width: min(18rem, calc(100% - 1rem)); padding: 0.85rem 1rem 0.95rem; background: var(--paper); border: 0.0625rem solid var(--canopy); border-top: 0.1875rem solid var(--sun); border-radius: var(--radius); pointer-events: none; opacity: 0; translate: 0 0.25rem; transition: opacity 0.14s ease, translate 0.14s ease, left 0.16s ease-out, top 0.16s ease-out; box-shadow: 0 1rem 2rem -1.25rem rgba(12, 74, 110, 0.45); }
+  .map-tip.is-shown { opacity: 1; translate: 0 0; }
+  .map-tip[hidden] { display: none; }
+  .map-tip-layer { margin: 0; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--leaf); }
+  .map-tip-name { margin: 0.2rem 0 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.125rem; line-height: 1.2; color: var(--canopy); }
+  .map-tip-note { margin: 0.35rem 0 0; font-size: 0.875rem; font-weight: 600; line-height: 1.4; color: var(--canopy); }
+  .map-tip-rest { display: grid; gap: 0.35rem; margin: 0.6rem 0 0; padding-top: 0.55rem; border-top: 0.0625rem solid var(--line); }
+  .map-tip-rest:empty { display: none; }
+  .map-tip-rest div { display: grid; gap: 0.05rem; }
+  .map-tip-rest dt { font-size: 0.75rem; font-weight: 700; color: var(--moss); }
+  .map-tip-rest dd { margin: 0; font-size: 0.8125rem; line-height: 1.35; color: var(--moss); }
+  .map-tip.is-docked { position: relative; left: auto !important; top: auto !important; width: auto; margin-top: 0.75rem; translate: none; }
+  @media (prefers-reduced-motion: reduce) { .map-tip { transition: opacity 0.14s ease; translate: none; } }
+}
+/* REASSURED: lighting a criterion never changes its size (25 October 2026: hovering a letter made the
+   rows re-wrap and the page jump). The older title fill is off; only colours change. */
+@layer components {
+  .criteria li.is-on h3 span.crit-name, .criteria li.is-on h3 span.crit-icon { padding: 0; margin: 0; border-radius: var(--radius); }
+  .criteria li.is-on h3 span.crit-name { background: none; box-shadow: none; border-radius: 0; }
+  .criteria h3 .crit-icon { width: 2rem; height: 2rem; }
+}
+
+/* Sweep, 25 October 2026: the fixes the full screen sweep called for. */
+/* Headings break evenly, with no word alone on the last line; paragraphs avoid a lone last word. */
+.h2, .page-open .display, .display, h3 { text-wrap: balance; }
+main p { text-wrap: pretty; }
+@layer components {
+  /* 1. The home comparison on a phone: each answer a full-width row under its column's name, as on Technology. */
+  @media (max-width: 47.99rem) {
+    .compare-compact tbody tr, .compare-compact tbody tr + tr, .compare-compact tbody tr:last-child { grid-template-columns: minmax(0, 1fr); row-gap: 0.35rem; }
+    .compare-compact td, .compare-compact td + td { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); align-items: baseline; gap: 0.75rem; padding: 0.4rem 0.5rem; }
+    .compare-compact td::before { margin: 0; font-size: 0.6875rem; }
+  }
+  /* 3. The gel's lane names on a narrow phone. */
+  @media (max-width: 23.99rem) {
+    .gel-slab { padding-inline: 0.2rem; }
+    .lane-name { padding-inline: 0.1rem; font-size: 0.5625rem; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+  }
+  /* 5. The map's names and key readable on a phone. */
+  @media (max-width: 39.99rem) {
+    .map-names b { font-size: 0.75rem; }
+    .map-key, .map-key-emblem { font-size: 0.9375rem; }
+  }
+  /* 6. About: names stay readable over any photograph. */
+  .tcard-face::after { background: linear-gradient(180deg, transparent 38%, rgba(6, 28, 42, 0.55) 62%, rgba(6, 28, 42, 0.9) 100%); }
+  .tcard-name, .tcard-role { text-shadow: 0 0.0625rem 0.25rem rgba(6, 28, 42, 0.6); }
+  @media (max-width: 47.99rem) { .tcard-name { font-size: 0.9375rem; } .tcard-role { font-size: 0.75rem; } }
+  .tgroup-h { text-wrap: balance; }
+  /* 8, 9. Cards beside a taller panel fill its height instead of leaving a hole. */
+  .detects, .audience { align-items: stretch; }
+  .detects .spec-cards { align-content: stretch; }
+  .audience > .audience-card, .audience > .who { align-self: stretch; }
+  /* 10. Muscle disorders: three across, the ask cards centred, not stretched empty. */
+  @media (min-width: 72rem) { #musculopathies .kit-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .kit-ask .kit-body { justify-content: center; }
+  .kit-ask .kit-more { margin-top: 0.4rem; }
+  /* 11. HbD · HbE together. */
+  .kit-also { align-items: baseline; }
+  .kit-also .icon { align-self: center; margin-top: 0; }
+  .kit-also-links { white-space: nowrap; }
+  /* 12, 14. Long words and big headings on the narrowest phones. */
+  @media (max-width: 25.99rem) {
+    .h2 { hyphens: auto; -webkit-hyphens: auto; }
+    .family-icon { width: 2rem; height: 2rem; margin-right: 0.5rem; }
+    .page-open .display { font-size: clamp(1.75rem, 8.6vw, 2.15rem); }
+  }
+  /* 26, 27. Our work: even card heads; patent rows that stack their tag on a phone. */
+  .field-story-tags span { white-space: nowrap; }
+  @media (max-width: 29.99rem) {
+    .patents li { grid-template-columns: auto minmax(0, 1fr); }
+    .patent-state { grid-column: 2; justify-self: start; }
+  }
+}
+@layer components {
+  @media (max-width: 25.99rem) { .h2 { font-size: clamp(1.4rem, 7.2vw, 1.85rem); } }
+  @media (min-width: 64rem) { .detects .spec-cards:has(> li:nth-child(2):last-child) { grid-template-columns: minmax(0, 1fr); } }
 }

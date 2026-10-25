@@ -105,22 +105,22 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
         </a>
       </div>
       <figure class="gel" data-gel>
-        <div class="gel-lanes" role="img" aria-label="An illustration of a gel read-out: a size marker; an unaffected sample with one band high in its lane; a carrier with two bands; a patient with one band lower down; and an empty control lane.">
+        <div class="gel-slab" role="img" aria-label="Illustration of a LitLife™ gel, after our conference poster: a size marker, then a patient, an unaffected sample and a carrier, each with its own pattern of bands, and an empty no-DNA control.">
           {%- set lanes = [
-            { name: "Marker", kind: "marker", bands: [18, 30, 42, 54, 66, 78] },
-            { name: "Unaffected", bands: [38] },
-            { name: "Carrier", bands: [38, 60], on: true },
-            { name: "Patient", bands: [60] },
-            { name: "Control", bands: [] }
+            { name: "Marker", kind: "marker", bands: [17.7, 24.6, 30, 35.8, 42.5, 48.3, 54.2, 61.3, 67.3, 73.8, 80.6, 94.2], heavy: [42.5, 67.3] },
+            { name: "Patient", bands: [48.5, 80] },
+            { name: "Unaffected", bands: [48.5, 65] },
+            { name: "Carrier", bands: [48.5, 65, 80] },
+            { name: "Control", note: "No DNA", bands: [] }
           ] %}
           {%- for lane in lanes %}
-          <div class="lane{% if lane.kind %} lane-{{ lane.kind }}{% endif %}{% if lane.on %} is-on{% endif %}">
-            <div class="lane-track"><span class="lane-well"></span>{% for y in lane.bands %}<span class="lane-band" style="--y: {{ y }}%"></span>{% endfor %}</div>
+          <div class="lane{% if lane.kind %} lane-{{ lane.kind }}{% endif %}">
             <span class="lane-name">{{ lane.name }}</span>
+            <div class="lane-track"><span class="lane-well"></span>{% for y in lane.bands %}<span class="lane-band{% if lane.heavy and y in lane.heavy %} is-heavy{% endif %}" style="--y: {{ y }}%"></span>{% endfor %}</div>
           </div>
           {%- endfor %}
         </div>
-        <figcaption>An illustration of how a LitLife™ gel reads. One band high: unaffected. Both bands: carrier. One band low: patient.</figcaption>
+        <figcaption>How a LitLife™ gel reads, after our conference poster: a patient, an unaffected person and a carrier each show their own pattern of bands, read against a size marker, in one run. The control, with no DNA, stays empty.</figcaption>
       </figure>
     </div>
   </section>

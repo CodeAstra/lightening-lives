@@ -493,10 +493,10 @@ function initMap() {
     nameItems.forEach((item, index) => {
       // On a small map a state with the emblem is marked by it alone; its name comes with a pick.
       const marked = level(index) >= 0.9 && !tiny && !(small && LAYERS.work.states[STATES[index].id]);
-      const line = index === chosen && chipOf ? chipOf(STATES[index].id).replace(`${STATES[index].n} · `, '') : '';
-      item.querySelector('small').textContent = line;
-      item.classList.toggle('has-chip', Boolean(line));
-      item.classList.toggle('is-shown', index === chosen || marked);
+      // The picked state's card carries its name and line, so its own label steps aside.
+      item.querySelector('small').textContent = '';
+      item.classList.remove('has-chip');
+      item.classList.toggle('is-shown', index !== chosen && marked);
       item.classList.toggle('is-on', index === chosen);
     });
   }
@@ -518,24 +518,70 @@ function initMap() {
     });
   }
 
+  // What the map knows about the picked state, in a card beside the state itself (25 October 2026):
+  // the current layer's line first, the others under it. It sits to the state's right, or its left
+  // near the edge, or above or below where neither side fits; on a small map, or where there is no
+  // hover, it docks under the map. The text column keeps the country's sentence and key; a pick by
+  // click, tap or keys is also said to screen readers there.
+  const tip = document.createElement('div');
+  tip.className = 'map-tip';
+  tip.hidden = true;
+  tip.setAttribute('aria-hidden', 'true');
+  const tipLayer = document.createElement('p'); tipLayer.className = 'map-tip-layer';
+  const tipName = document.createElement('p'); tipName.className = 'map-tip-name';
+  const tipNote = document.createElement('p'); tipNote.className = 'map-tip-note';
+  const tipRest = document.createElement('dl'); tipRest.className = 'map-tip-rest';
+  tip.append(tipLayer, tipName, tipNote, tipRest);
+  figure.appendChild(tip);
+  const said = document.createElement('p');
+  said.className = 'sr-only';
+  country.appendChild(said);
+  card.hidden = true;
+  const docked = () => figure.clientWidth < 448 || window.matchMedia('(hover: none)').matches;
+
+  function placeTip(index) {
+    const fig = figure.getBoundingClientRect();
+    const box = paths[index].getBoundingClientRect();
+    const b = { left: box.left - fig.left, right: box.right - fig.left, top: box.top - fig.top, bottom: box.bottom - fig.top };
+    const w = tip.offsetWidth; const h = tip.offsetHeight; const W = fig.width; const H = fig.height; const gap = 12;
+    const cy = (b.top + b.bottom) / 2; const cx = (b.left + b.right) / 2;
+    const clampY = (y) => Math.min(Math.max(8, y), H - h - 8);
+    const clampX = (x) => Math.min(Math.max(8, x), W - w - 8);
+    let x; let y;
+    if (b.right + gap + w <= W - 4) { x = b.right + gap; y = clampY(cy - h / 2); }
+    else if (b.left - gap - w >= 4) { x = b.left - gap - w; y = clampY(cy - h / 2); }
+    else if (b.top - gap - h >= 4) { x = clampX(cx - w / 2); y = b.top - gap - h; }
+    else { x = clampX(cx - w / 2); y = Math.min(b.bottom + gap, H - h - 4); }
+    tip.style.left = `${Math.round(x)}px`;
+    tip.style.top = `${Math.round(y)}px`;
+  }
+
   function showState() {
     const index = picked();
     const state = index === -1 ? null : STATES[index];
-    country.hidden = Boolean(state);
-    card.hidden = !state;
-    if (!state) return;
-    title.textContent = state.n;
+    country.hidden = false;
+    if (!state) { tip.hidden = true; tip.classList.remove('is-shown'); return; }
     const current = layer();
-    facts.replaceChildren(...LAYER_ORDER.filter((name) => LAYERS[name].note(state.id)).map((name) => {
+    tipLayer.textContent = LAYERS[current].name;
+    tipName.textContent = state.n;
+    const chipOf = LAYERS[current].chip;
+    const chip = chipOf ? chipOf(state.id).replace(`${state.n} · `, '') : '';
+    tipNote.textContent = LAYERS[current].note(state.id) || chip || 'Nothing marked here on this layer.';
+    tipRest.replaceChildren(...LAYER_ORDER.filter((name) => name !== current && LAYERS[name].note(state.id)).map((name) => {
       const row = document.createElement('div');
       const term = document.createElement('dt');
       const detail = document.createElement('dd');
       term.textContent = LAYERS[name].name;
       detail.textContent = LAYERS[name].note(state.id);
-      if (name === current) row.className = 'is-showing';
       row.append(term, detail);
       return row;
     }));
+    tip.hidden = false;
+    tip.classList.toggle('is-docked', docked());
+    if (!docked()) placeTip(index);
+    else { tip.style.left = ''; tip.style.top = ''; }
+    requestAnimationFrame(() => tip.classList.add('is-shown'));
+    if (index === pinned && hovered === -1) said.textContent = `${state.n}. ${LAYERS[current].name}: ${tipNote.textContent}`;
   }
 
   function showLayer(spread) {

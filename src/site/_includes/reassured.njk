@@ -1,6 +1,6 @@
 {#- REASSURED (content file 5.1): the word as nine buttons over the nine criteria, each with its icon,
-    in the poster's words (src/site/_data/reassured.json; 25 October 2026, "one drop of blood" reworded),
-    and the source. A page that includes it may set, before the
+    in the poster's words (src/site/_data/reassuredCopy.json; 25 October 2026, "one drop of blood" reworded).
+    Each criterion is led by its letter, large; the source line went at the user's request (25 October 2026). A page that includes it may set, before the
     include, reassured = { surface: "bg-paper", after: "a sentence under it" }: the band's surface,
     where the page's order of bands needs paper (DESIGN.md, Layout), and 5.2's body under it. -#}
 <section id="reassured" class="section{% if reassured and reassured.surface %} {{ reassured.surface }}{% endif %}" aria-labelledby="reassured-h">
@@ -18,10 +18,9 @@
 
     <ol class="criteria mt-10" data-criteria>
       {%- for c in reassuredCopy.items %}
-      <li><span class="icon-tile crit-icon">{% icon c.icon %}</span><div><h3><span class="crit-letter" aria-hidden="true">{{ c.letter }}</span> <span>{{ c.name }}</span></h3><p>{{ c.line }}</p></div></li>
+      <li><span class="crit-letter" aria-hidden="true">{{ c.letter }}</span><div><h3><span class="crit-name">{{ c.name | replace("-", "‑") }}</span><span class="crit-icon">{% icon c.icon %}</span></h3><p>{{ c.line }}</p></div></li>
       {%- endfor %}
     </ol>
-    <p class="mt-6 text-[0.9375rem] text-moss"><a class="underline decoration-leaf decoration-2 underline-offset-4 hover:text-leaf focus-visible:text-leaf" href="{{ reassuredCopy.sourceHref }}" rel="noopener">{{ reassuredCopy.source }}</a></p>
     {%- if reassured and reassured.after %}
     <p class="reassured-after">{{ reassured.after }}</p>
     {%- endif %}

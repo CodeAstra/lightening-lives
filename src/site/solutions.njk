@@ -110,7 +110,7 @@ closing:
         {%- endfor %}
       </ul>
       {%- if family.also %}
-      <p class="kit-also">{% icon "plus" %}<span>{{ family.also.text }} {% for l in family.also.links %}<a class="link" href="{{ l.href }}">{{ l.text }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</span></p>
+      <p class="kit-also">{% icon "plus" %}<span>{{ family.also.text }} <span class="kit-also-links">{% for l in family.also.links %}<a class="link" href="{{ l.href }}">{{ l.text }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</span></span></p>
       {%- endif %}
     </div>
   </section>

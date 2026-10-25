@@ -149,10 +149,10 @@ test('who works with us: all thirteen logos sliding the full width of the openin
   assert.match(readFileSync('src/js/site/main.js', 'utf8'), /strip\.addEventListener\('click'/);
 });
 
-test('Innovate: the gel, five lanes with the carrier pointed out, four icon-led points, and the way to the method', () => {
-  assert.deepEqual(texts('#innovate .lane-name'), ['Marker', 'Unaffected', 'Carrier', 'Patient', 'Control']);
-  assert.equal($('#innovate .lane.is-on .lane-name').text(), 'Carrier');
-  assert.deepEqual($('#innovate .lane').map((i, l) => $(l).find('.lane-band').length).get(), [6, 1, 2, 1, 0]);
+test('Innovate: the gel as the poster draws it, four icon-led points, and the way to the method', () => {
+  // The poster's gel (25 October 2026): its lanes and bands, the control empty.
+  assert.deepEqual(texts('#innovate .lane-name'), ['Marker', 'Patient', 'Unaffected', 'Carrier', 'Control']);
+  assert.deepEqual($('#innovate .lane').map((i, l) => $(l).find('.lane-band').length).get(), [12, 2, 2, 3, 0]);
   assert.ok($('#innovate [role=img]').attr('aria-label').length > 60);
   assert.deepEqual(texts('#innovate .ticks strong'), ['Screening cum confirmatory.', 'From birth.', 'No cold chain.', 'No DNA extraction.']);
   assert.equal($('#innovate .ticks svg.icon').length, 4);
@@ -173,14 +173,16 @@ test('REASSURED: nine letters as buttons over nine criteria in the poster\'s wor
   assert.equal(rows.length, 9);
   rows.each((i, li) => {
     const c = CRIT.items[i];
-    assert.equal(text($(li).find('h3 span').last()), c.name, c.name);
+    // Led by its letter, large (25 October 2026); the name keeps its hyphens from breaking.
+    assert.equal(text($(li).children('.crit-letter')), c.letter, c.name);
+    assert.equal(text($(li).find('.crit-name')).replace(/\u2011/g, '-'), c.name, c.name);
     assert.equal(text($(li).find('p')), c.line, c.name);
-    assert.equal($(li).find('.icon-tile svg.icon').length, 1, c.name);
+    assert.equal($(li).find('.crit-icon svg.icon').length, 1, c.name);
   });
   assert.equal(text('#reassured .lead'), 'We are an innovation-driven company developing REASSURED genetic tests, making molecular diagnosis accessible to all.');
   // The user, 25 October 2026: "Avoid one drop of blood and everything else can be used".
   assert.doesNotMatch(text('#reassured'), /drop of blood|single drop|one drop/i);
-  assert.match(text('#reassured'), /Land et al\., Nature Microbiology \(2019\)/);
+  assert.doesNotMatch(text('#reassured'), /^Criteria:|Criteria: Land/, 'the source line went at the user\'s request');
 });
 
 test('Transform lives: the poster\'s six steps, testing then care, each with its icon', () => {
