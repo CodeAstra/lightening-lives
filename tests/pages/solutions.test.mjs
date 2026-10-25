@@ -98,3 +98,26 @@ test('the kits in 3D: their own script, loaded by Solutions only; nothing turns 
   assert.match(viewer, /e\.pointerType !== 'mouse' \|\| reduced\.matches/, 'the lean towards the pointer is for a mouse, and not for reduced motion');
   assert.match(viewer, /ArrowLeft/, 'the keyboard turns it');
 });
+
+test('the kits in 3D: the print is seen at its own colour and drawn sharp (26 October 2026, the user: the text "is not properly visible")', () => {
+  const viewer = readFileSync('src/js/kits/viewer.js', 'utf8');
+  const number = (re) => Number(viewer.match(re)[1]);
+  const ambient = number(/new AmbientLight\(0xffffff, ([\d.]+)\)/);
+  const key = number(/new DirectionalLight\(0xffffff, ([\d.]+)\)/);
+  const [lx, ly, lz] = viewer.match(/key\.position\.set\(([-\d.]+), ([-\d.]+), ([-\d.]+)\)/).slice(1).map(Number);
+  const yaw = number(/const REST = \{ yaw: ([-\d.]+),/);
+  // three.js's Lambert: albedo × (ambient + key × cos) ÷ π. The front face, turned by the resting yaw,
+  // shows the paper at its own white (it was 0.75, a grey); the shaded side stays darker, so the box reads.
+  const len = Math.hypot(lx, ly, lz);
+  const cosFront = Math.max(0, (Math.sin(yaw) * lx + Math.cos(yaw) * lz) / len);
+  const cosSide = Math.max(0, (Math.cos(yaw) * lx - Math.sin(yaw) * lz) / len);
+  const front = (ambient + key * cosFront) / Math.PI;
+  const side = (ambient + key * cosSide) / Math.PI;
+  assert.ok(front >= 0.95 && front <= 1.05, `front face at ${front.toFixed(2)} of the print`);
+  assert.ok(side >= 0.7 && side < front - 0.1, `shaded side at ${side.toFixed(2)}`);
+  // Drawn at more than the screen's pixels, with the sharpest filtering the screen offers.
+  assert.match(viewer, /setPixelRatio\(Math\.min\(3, Math\.max\(2,/);
+  assert.match(viewer, /anisotropy = renderer\.capabilities\.getMaxAnisotropy\(\)/);
+  // The camera is fitted to the stage from the box's corners, so the box fills it at any size.
+  assert.match(viewer, /function fit\(\)/);
+});

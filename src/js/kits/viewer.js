@@ -9,11 +9,14 @@
 import {
   AmbientLight, CanvasTexture, Color, DirectionalLight, Group, LinearMipmapLinearFilter, Mesh,
   MeshBasicMaterial, MeshLambertMaterial, NoToneMapping, PerspectiveCamera, PlaneGeometry, Scene,
-  SRGBColorSpace, TextureLoader, WebGLRenderer,
+  SRGBColorSpace, TextureLoader, Vector3, WebGLRenderer,
 } from 'three';
+const UP = new Vector3(0, 1, 0);
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 
-const REST = { yaw: -0.62, pitch: 0.36 }; // the resting turn: front, top and right side in view
+// The resting turn: the front, which carries the kit's name, nearly face-on, with the top and right side
+// in view (26 October 2026: turned 0.2 rad towards the reader, and lower, so the print is legible).
+const REST = { yaw: -0.42, pitch: 0.26 };
 const PITCH = [-0.15, 1.05];
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 const loader = new TextureLoader();
@@ -38,7 +41,7 @@ function contactShadow() {
 function texture(url, renderer) {
   return new Promise((resolve, reject) => loader.load(url, (t) => {
     t.colorSpace = SRGBColorSpace;
-    t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+    t.anisotropy = renderer.capabilities.getMaxAnisotropy(); // a face turned away stays sharp
     t.minFilter = LinearMipmapLinearFilter;
     resolve(t);
   }, undefined, reject));
@@ -52,13 +55,17 @@ async function mount(stage) {
   const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'low-power' });
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.toneMapping = NoToneMapping;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  // Drawn at 1.5 times the screen's pixels (at least twice, at most three times) and shown at the
+  // screen's: the print is sampled from a sharper level of its texture and smoothed down by the browser,
+  // so small type on a small box stays legible. Five small canvases, drawn only while one moves.
+  renderer.setPixelRatio(Math.min(3, Math.max(2, (window.devicePixelRatio || 1) * 1.5)));
 
   const scene = new Scene();
-  // Matte card under soft light: printed colour stays true where a face looks at the light, and each
-  // face of the box is a shade apart, the top lightest, so its shape reads.
-  scene.add(new AmbientLight(0xffffff, 1.55));
-  const key = new DirectionalLight(0xffffff, 1.35);
+  // Matte card under soft light, set so the print is seen at its own colour: three.js's Lambert gives a
+  // face albedo × (ambient + key × cos) ÷ π, so at rest the front (cos ≈ 0.6) comes to 1.0, the top to
+  // about 1.05 and the shaded side to 0.8: the paper is white, not grey, and the box's shape still reads.
+  scene.add(new AmbientLight(0xffffff, 2.5));
+  const key = new DirectionalLight(0xffffff, 1.05);
   key.position.set(-1.6, 4, 2.6);
   scene.add(key);
 
@@ -89,9 +96,37 @@ async function mount(stage) {
   const camera = new PerspectiveCamera(28, 1, 0.1, 50);
   const state = { yaw: REST.yaw, pitch: REST.pitch, tyaw: REST.yaw, tpitch: REST.pitch, vyaw: 0, dragging: false, visible: true, raf: 0 };
 
+  // The camera stands as close as lets the box, turned anywhere a pointer turns it, fill 95% of the
+  // stage's width and 86% of its height (measured from the box's corners when the stage is sized).
+  let reach = 5.6;
+  const corners = [];
+  for (const x of [-1, 1]) for (const y of [-1, 1]) for (const z of [-1, 1]) corners.push(new Vector3((x * w * s) / 2, (y * h * s) / 2, (z * d * s) / 2));
+  const seen = new Vector3();
+  function fit() {
+    // The corners are seen from the camera at a guessed distance; the share of the view they reach
+    // shrinks as the distance grows, so the distance is scaled by how far off that share is, and again.
+    const tanV = Math.tan((camera.fov * Math.PI) / 360);
+    let r = 6;
+    for (let k = 0; k < 5; k += 1) {
+      let need = 0;
+      for (const yaw of [REST.yaw - 0.55, REST.yaw, REST.yaw + 0.55]) {
+        for (const pitch of [REST.pitch - 0.2, REST.pitch + 0.2]) {
+          camera.position.set(0, Math.sin(pitch) * r, Math.cos(pitch) * r);
+          camera.lookAt(0, -0.05, 0);
+          camera.updateMatrixWorld();
+          for (const c of corners) {
+            seen.copy(c).applyAxisAngle(UP, yaw).applyMatrix4(camera.matrixWorldInverse);
+            const depth = -seen.z;
+            need = Math.max(need, Math.abs(seen.x) / (depth * tanV * camera.aspect) / 0.95, Math.abs(seen.y) / (depth * tanV) / 0.86);
+          }
+        }
+      }
+      r *= need;
+    }
+    reach = Math.max(3.2, r);
+  }
   function place() {
-    // The camera looks down at the pitch, from far enough that the box fills about three quarters of the stage.
-    const r = 5.6;
+    const r = reach;
     camera.position.set(0, Math.sin(state.pitch) * r, Math.cos(state.pitch) * r);
     camera.lookAt(0, -0.05, 0);
     turn.rotation.y = state.yaw;
@@ -103,6 +138,7 @@ async function mount(stage) {
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    fit();
     draw();
   }
   function draw() { place(); renderer.render(scene, camera); }
@@ -191,7 +227,7 @@ async function mount(stage) {
   window.llKits = window.llKits || {};
   window.llKits[model.kit] = (width = 960, height = 768) => {
     renderer.setSize(width, height, false);
-    camera.aspect = width / height; camera.updateProjectionMatrix();
+    camera.aspect = width / height; camera.updateProjectionMatrix(); fit();
     state.yaw = state.tyaw = REST.yaw; state.pitch = state.tpitch = REST.pitch;
     shadow.visible = true; draw();
     const url = canvas.toDataURL('image/png');

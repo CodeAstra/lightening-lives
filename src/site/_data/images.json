@@ -14,70 +14,75 @@
   "box-lineup-alphathal": {
     "widths": [
       640,
-      835
+      1280
     ],
-    "height": 513
+    "height": 433
   },
   "box-lineup-bthal": {
     "widths": [
       640,
-      835
+      1280
     ],
-    "height": 513
+    "height": 433
   },
   "box-lineup-sca": {
     "widths": [
       640,
-      829
+      1280
     ],
-    "height": 442
+    "height": 363
   },
   "box-lineup-sibthal217": {
     "widths": [
       640,
-      835
+      1280
     ],
-    "height": 513
+    "height": 433
   },
   "box-lineup-sma": {
     "widths": [
       640,
-      829
+      1280
     ],
-    "height": 442
+    "height": 363
   },
   "box-render-alphathal": {
     "widths": [
       640,
-      960
+      1280,
+      1920
     ],
     "height": 512
   },
   "box-render-bthal": {
     "widths": [
       640,
-      960
+      1280,
+      1920
     ],
     "height": 512
   },
   "box-render-sca": {
     "widths": [
       640,
-      960
+      1280,
+      1920
     ],
     "height": 512
   },
   "box-render-sibthal217": {
     "widths": [
       640,
-      960
+      1280,
+      1920
     ],
     "height": 512
   },
   "box-render-sma": {
     "widths": [
       640,
-      960
+      1280,
+      1920
     ],
     "height": 512
   },
