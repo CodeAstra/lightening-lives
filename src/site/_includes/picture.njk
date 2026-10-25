@@ -6,5 +6,5 @@
 {%- macro picture(name, alt, sizes, opts) -%}
 {%- set entry = images[name] -%}
 {%- if not entry %}{{ name | unknownImage }}{% endif -%}
-<img src="/assets/img/{{ name }}-{{ entry.widths[0] }}.webp" srcset="{% for w in entry.widths %}/assets/img/{{ name }}-{{ w }}.webp {{ w }}w{% if not loop.last %}, {% endif %}{% endfor %}" sizes="{{ sizes or '(min-width: 60rem) 50vw, 100vw' }}" width="{{ entry.widths[0] }}" height="{{ entry.height }}"{% if opts.class %} class="{{ opts.class }}"{% endif %}{% if opts.position %} style="object-position: {{ opts.position }}"{% endif %} alt="{{ alt }}" loading="lazy" decoding="async">
+<img src="/assets/img/{{ name }}-{{ entry.widths[0] }}.webp" srcset="{% for w in entry.widths %}/assets/img/{{ name }}-{{ w }}.webp {{ w }}w{% if not loop.last %}, {% endif %}{% endfor %}" sizes="{{ sizes or '(min-width: 60rem) 50vw, 100vw' }}" width="{{ entry.widths[0] }}" height="{{ entry.height }}"{% if opts.class %} class="{{ opts.class }}"{% endif %}{% if opts.position %} style="object-position: {{ opts.position }}"{% endif %} alt="{{ alt }}" loading="{{ 'eager' if opts.eager else 'lazy' }}" decoding="async">
 {%- endmacro -%}

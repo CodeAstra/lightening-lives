@@ -3,6 +3,7 @@ name: "Terms"
 title: "Terms of use | Lightening Lives"
 description: "The terms on which Lightening Lives LLP publishes this website."
 h1: Terms of use
+lead: "The terms on which Lightening Lives LLP publishes this website."
 closing: false
 updated: "[PLACEHOLDER: date]"
 parts:
@@ -23,7 +24,7 @@ parts:
       - ["Lightening Lives, the Lightening Lives logo and LitLife are trade marks of Lightening Lives LLP. [TBC: registration status]", "Other names and logos belong to their owners and appear with their permission."]
   - h2: Using what is here
     paras:
-      - ["The text and images on this website belong to Lightening Lives LLP unless a credit says otherwise.", "You may quote from it with a link to the page.", "Where a page shows a photograph or the map by someone else, its credit is in that page's footer."]
+      - ["The text and images on this website belong to Lightening Lives LLP unless a credit says otherwise.", "You may quote from it with a link to the page.", "Photographs and the map by others are credited at the end of this page."]
   - h2: Links to other websites
     paras:
       - ["We link to other websites where they are useful.", "We are not responsible for what they say."]
@@ -37,6 +38,20 @@ parts:
     reach: true
 ---
 {#- Terms of use (content file 5.17), a plain-language draft for a lawyer to review. The parts are
-    policy.njk's. 5.17 gives the page no lead and lists no closing band or notice. -#}
+    policy.njk's, then the credits for photographs and the map by others. -#}
 {%- from "policy.njk" import policy with context %}
 {{ policy(parts, updated) }}
+
+  <!-- Credits: the photographs and the map by others, with their licences (moved here from every
+       page's footer at the user's request, 25 October 2026; the licences ask for a credit). -->
+  <section id="credits" class="section" aria-labelledby="credits-h">
+    <div class="wrap">
+      <h2 id="credits-h" class="h2">Photo and map credits</h2>
+      <p class="mt-4 text-moss">{{ site.footer.representative }}</p>
+      <ul class="credit-list mt-6">
+        {%- for row in credits | photographsAndMap %}
+        <li data-credit="{{ row.basename }}">{{ row.label }}: {% if row.authorUrl %}<a href="{{ row.authorUrl }}" rel="noopener">{{ row.author }}</a>{% else %}{{ row.author }}{% endif %}, {% if row.licenceUrl %}<a href="{{ row.licenceUrl }}" rel="noopener">{{ row.licence }}</a>{% else %}{{ row.licence }}{% endif %}, <a href="{{ row.sourceUrl }}" rel="noopener">{{ row.source }}</a>{% if row.changes %} ({{ row.changes }}){% endif %}.</li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </section>

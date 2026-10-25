@@ -51,20 +51,6 @@
     <div class="foot-bar">
       <p class="foot-fine">© 2026 {{ site.legalName }}. {{ site.footer.trademark }} {{ site.footer.disclaimer }}</p>
       <div class="foot-legal">
-        {%- set shown = credits | creditsFor(content) %}
-        {%- if shown.length %}
-        <details class="credits">
-          <summary class="foot-link">Photo and map credits</summary>
-          {%- if shown | photographs | length %}
-          <p class="mt-1">{{ site.footer.representative }}</p>
-          {%- endif %}
-          <ul class="mt-1 grid gap-1">
-            {%- for row in shown %}
-            <li data-credit="{{ row.basename }}">{{ row.label }}: {% if row.authorUrl %}<a href="{{ row.authorUrl }}" rel="noopener">{{ row.author }}</a>{% else %}{{ row.author }}{% endif %}, {% if row.licenceUrl %}<a href="{{ row.licenceUrl }}" rel="noopener">{{ row.licence }}</a>{% else %}{{ row.licence }}{% endif %}, <a href="{{ row.sourceUrl }}" rel="noopener">{{ row.source }}</a>{% if row.changes %} ({{ row.changes }}){% endif %}.</li>
-            {%- endfor %}
-          </ul>
-        </details>
-        {%- endif %}
         {%- for link in site.footer.policies %}
         <a class="foot-link" href="{{ link.href }}">{{ link.text }}</a>
         {%- endfor %}

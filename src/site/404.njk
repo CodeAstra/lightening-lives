@@ -2,19 +2,20 @@
 permalink: /404.html
 eleventyExcludeFromCollections: true
 notFound: true
+ownOpening: true
 title: "Page not found | Lightening Lives"
 description: "This page is not here. The address may be from our old website, or the page may have moved."
 social: /assets/img/social.png
-h1: This page is not here
 closing: false
 ---
-{#- Not found (content file 5.18; old addresses 3.4). GitHub Pages serves this file at any address it
-    has no page for, so every link and asset on it is root-relative. Without script it is the heading,
-    the sentence and the six links, drawn as the contact actions are (one row each, the whole row a
-    link). With script, src/js/site/not-found.js finds an old .php address of the current site and
-    adds one line above the links naming the new page (Review Focus 4). It has no closing band (5.18
-    lists none) and, as no page of its own address, no canonical and no preview card of its own: it
-    shares the home page's. -#}
+{#- Not found (content file 5.18; old addresses 3.4), redone 25 October 2026 (the user: "funny or
+    funky"). The page reads as a test result in the company's own language: a gel where the expected
+    lane shows its band at 404 and the visitor's address shows none, stamped NOT DETECTED. With script
+    the bands run down the gel on arrival, the visitor's address is printed as the sample, and "Run it
+    again" re-runs the gel (the result never changes, the line under it does). Without script, or with
+    reduced motion, the gel is still. GitHub Pages serves this file at any address it has no page for,
+    so every link and asset is root-relative. For an old .php address not-found.js adds one line above
+    the links naming the new page (Review Focus 4). No closing band; no canonical or card of its own. -#}
 {%- set arrow = '<svg aria-hidden="true" width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 8h22M16 1l7 7-7 7"/></svg>' %}
 {%- set links = [
   { text: "Home", href: "/" },
@@ -25,13 +26,43 @@ closing: false
   { text: "Contact", href: "/contact/" }
 ] %}
 
-  <div class="section not-found" data-not-found>
-    <div class="wrap">
-      <p class="not-found-lead">The address may be from our old website, or the page may have moved. These lead to the same things:</p>
-      <ul class="actions">
-        {%- for link in links %}
-        <li><a class="action" href="{{ link.href }}">{{ link.text }}{{ arrow | safe }}</a></li>
-        {%- endfor %}
-      </ul>
+  <section class="section page-open lost" aria-labelledby="page-h" data-not-found>
+    <div class="wrap lost-grid">
+      <div class="lost-head">
+        <h1 id="page-h" class="display">We ran the test. <span class="h-mark">No page detected.</span></h1>
+        <p class="lead lost-lead">The address may be from our old website, or the page may have moved.</p>
+      </div>
+      <div class="lost-ways">
+        <p class="lost-to">These lead to the same things:</p>
+        <ul class="actions">
+          {%- for link in links %}
+          <li><a class="action" href="{{ link.href }}">{{ link.text }}{{ arrow | safe }}</a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+
+      <figure class="lost-gel" data-lost-gel>
+        <div class="gel-slab lost-slab" role="img" aria-label="A gel, for fun: the expected lane shows a band at 404; the lane for your address shows no band, stamped not detected.">
+          {%- set ladder = [14, 22, 30, 38, 46, 54, 62, 70, 78, 86] %}
+          <div class="lane lane-marker">
+            <span class="lane-name">Marker</span>
+            <div class="lane-track"><span class="lane-well"></span>{% for y in ladder %}<span class="lane-band{% if y == 46 %} is-heavy{% endif %}" style="--y: {{ y }}%"></span>{% endfor %}</div>
+          </div>
+          <div class="lane lane-expected">
+            <span class="lane-name">Expected</span>
+            <div class="lane-track"><span class="lane-well"></span><span class="lane-band" style="--y: 46%"></span><span class="lost-size" style="--y: 46%">404</span></div>
+          </div>
+          <div class="lane lane-yours">
+            <span class="lane-name">Your address</span>
+            <div class="lane-track"><span class="lane-well"></span><span class="lost-ghost" style="--y: 46%"></span></div>
+          </div>
+          <span class="lost-stamp" aria-hidden="true">Not detected</span>
+        </div>
+        <figcaption class="lost-slip">
+          <span class="lost-sample" data-lost-sample hidden>Sample: <code></code></span>
+          <span class="lost-line" data-lost-line aria-live="polite">Result: no band where the page should be.</span>
+          <button type="button" class="lost-rerun" data-lost-rerun hidden>{% icon "rotate-ccw" %}Run it again</button>
+        </figcaption>
+      </figure>
     </div>
-  </div>
+  </section>

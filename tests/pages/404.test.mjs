@@ -14,8 +14,20 @@ const text = (el) => $(el).text().replace(/\s+/g, ' ').trim();
 test('the page: title, h1 and the sentence (5.18)', () => {
   assert.equal($('title').text(), 'Page not found | Lightening Lives');
   assert.equal($('h1').length, 1);
-  assert.equal(text('h1'), 'This page is not here');
-  assert.equal(text('[data-not-found] p'), 'The address may be from our old website, or the page may have moved. These lead to the same things:');
+  assert.equal(text('h1'), 'We ran the test. No page detected.');
+  assert.equal(text('.lost-lead'), 'The address may be from our old website, or the page may have moved.');
+  assert.equal(text('.lost-to'), 'These lead to the same things:');
+});
+
+test('the gel: the expected band at 404, none for the address, the stamp, a still image for a reader', () => {
+  const gel = $('[data-lost-gel] [role=img]');
+  assert.equal(gel.length, 1);
+  assert.match(gel.attr('aria-label'), /404/);
+  assert.equal(text('.lost-size'), '404');
+  assert.equal($('.lane-yours .lane-band').length, 0);
+  assert.equal($('.lane-yours .lost-ghost').length, 1);
+  assert.equal($('.lost-stamp').attr('aria-hidden'), 'true');
+  assert.equal($('[data-lost-rerun]').attr('hidden'), 'hidden');
 });
 
 test('the six links, in 5.18\'s order', () => {

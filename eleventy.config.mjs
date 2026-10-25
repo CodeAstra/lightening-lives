@@ -46,6 +46,8 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter('creditsFor', (rows, html = '') =>
     rows.filter((row) => !own(row) && (row.basename === 'map-india' ? /\sdata-map[\s>]/.test(html) : html.includes(`/assets/img/${row.basename}-`))));
 
+  // Every credit but the company's own pictures: the Terms page's list.
+  eleventyConfig.addFilter('photographsAndMap', (rows) => rows.filter((row) => !own(row)));
   // The rows that are representative photographs (the map's outline is data, not a photograph).
   eleventyConfig.addFilter('photographs', (rows) => rows.filter((row) => row.basename !== 'map-india' && !own(row)));
 

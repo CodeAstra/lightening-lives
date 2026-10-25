@@ -100,7 +100,7 @@
       1280,
       1920
     ],
-    "height": 425
+    "height": 426
   },
   "care-newborn": {
     "widths": [
@@ -109,14 +109,6 @@
       1920
     ],
     "height": 479
-  },
-  "care-phc": {
-    "widths": [
-      640,
-      1280,
-      1920
-    ],
-    "height": 427
   },
   "gallery-camp": {
     "widths": [
@@ -172,7 +164,7 @@
       1280,
       1920
     ],
-    "height": 423
+    "height": 426
   },
   "lab-gel": {
     "widths": [
@@ -180,7 +172,7 @@
       1280,
       1920
     ],
-    "height": 425
+    "height": 400
   },
   "lab-pipette": {
     "widths": [
@@ -189,14 +181,6 @@
       1920
     ],
     "height": 427
-  },
-  "lab-thermal-cycler": {
-    "widths": [
-      640,
-      1280,
-      1920
-    ],
-    "height": 360
   },
   "method-fingerprick": {
     "widths": [
@@ -281,7 +265,7 @@
       1280,
       1920
     ],
-    "height": 480
+    "height": 427
   },
   "place-hyderabad": {
     "widths": [
@@ -289,7 +273,7 @@
       1280,
       1920
     ],
-    "height": 443
+    "height": 427
   },
   "place-jharkhand": {
     "widths": [
@@ -297,7 +281,7 @@
       1280,
       1920
     ],
-    "height": 400
+    "height": 360
   },
   "place-kothagudem": {
     "widths": [
@@ -305,7 +289,7 @@
       1280,
       1920
     ],
-    "height": 400
+    "height": 427
   },
   "place-mysore": {
     "widths": [
@@ -313,7 +297,7 @@
       1280,
       1920
     ],
-    "height": 433
+    "height": 427
   },
   "place-nandurbar": {
     "widths": [
@@ -321,7 +305,7 @@
       1280,
       1920
     ],
-    "height": 399
+    "height": 427
   },
   "place-udaipur": {
     "widths": [
@@ -329,7 +313,7 @@
       1280,
       1920
     ],
-    "height": 425
+    "height": 360
   },
   "place-valsad": {
     "widths": [
@@ -337,7 +321,7 @@
       1280,
       1920
     ],
-    "height": 428
+    "height": 360
   },
   "work-fullposter-v9": {
     "widths": [

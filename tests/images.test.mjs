@@ -21,9 +21,9 @@ import { load, pages } from './helpers.mjs';
 const SHORTLIST = [
   'place-nandurbar', 'place-kothagudem', 'place-jharkhand', 'place-hyderabad',
   'place-udaipur', 'place-mysore', 'place-gudalur', 'place-valsad',
-  'lab-thermal-cycler', 'lab-gel', 'lab-pipette', 'lab-bench',
+  'lab-gel', 'lab-pipette', 'lab-bench',
   'method-fingerprick', 'method-paper',
-  'care-newborn', 'care-phc', 'care-anganwadi',
+  'care-newborn', 'care-anganwadi',
 ];
 const LICENCES = /^(CC0 1\.0|Public domain|CC BY(-SA)? [1-4]\.0|Unsplash Licence)$/;
 const SRC = 'src/images-src';
@@ -153,7 +153,8 @@ test('every placed photograph comes through the picture include: every width, si
       assert.equal(el.attribs.src, `/assets/img/${base}-${entry.widths[0]}.webp`, `${url}: ${base} src`);
       assert.equal(el.attribs.srcset, entry.widths.map((w) => `/assets/img/${base}-${w}.webp ${w}w`).join(', '), `${url}: ${base} srcset`);
       assert.ok(el.attribs.sizes, `${url}: ${base} sizes`);
-      assert.equal(el.attribs.loading, 'lazy', `${url}: ${base} loading`);
+      // Lazy, but for the first slides of Our work's photographs, which are seen at once.
+      if (!$(el).closest('[data-gallery-slide]').length || $(el).closest('li').index() > 1) assert.equal(el.attribs.loading, 'lazy', `${url}: ${base} loading`);
       assert.equal(el.attribs.decoding, 'async', `${url}: ${base} decoding`);
       assert.deepEqual([Number(el.attribs.width), Number(el.attribs.height)], [entry.widths[0], entry.height], `${url}: ${base} dimensions`);
       // A photograph's alt describes it; a portrait's (person-, Task 4.5) is the person's name, which
@@ -173,25 +174,20 @@ test('the home page shows one place photograph, for the field programmes, named 
   assert.equal($('#map .work-card img').first().attr('alt'), 'A monsoon-green gorge in Maharashtra.');
 });
 
-test('the footer credits what its page shows, and says the photographs are representative', () => {
-  const $ = load('/');
-  const items = $('.credits li[data-credit]');
-  const shown = new Set(placed($).map((i, el) => baseOf(el.attribs.src)).get().filter((base) => !OWN.test(base)));
-  assert.deepEqual(new Set(items.map((i, li) => li.attribs['data-credit']).get()), new Set([...shown, 'map-india']));
-  for (const row of credits().filter((r) => shown.has(r.basename))) {
-    const li = $(`.credits li[data-credit="${row.basename}"]`);
+test('the credits: none in any footer; every photograph and the map by others credited on Terms (25 October 2026)', () => {
+  assert.equal(load('/')('footer .credits, footer [data-credit]').length, 0);
+  const $ = load('/terms/');
+  const others = credits().filter((r) => !OWN.test(r.basename));
+  assert.deepEqual($('#credits li[data-credit]').map((i, li) => li.attribs['data-credit']).get().sort(), others.map((r) => r.basename).sort());
+  for (const row of others) {
+    const li = $(`#credits li[data-credit="${row.basename}"]`);
     assert.ok(li.text().includes(row.label), `${row.basename}: label`);
     assert.ok(li.text().includes(row.author), `${row.basename}: author`);
-    assert.equal(li.find(`a[href="${row.sourceUrl}"]`).length, 1, `${row.basename}: source link`);
-    if (row.licenceUrl) assert.equal(li.find(`a[href="${row.licenceUrl}"]`).length, 1, `${row.basename}: licence link`);
+    assert.ok(li.find(`a[href="${row.sourceUrl}"]`).length >= 1, `${row.basename}: source link`);
+    if (row.licenceUrl) assert.ok(li.find(`a[href="${row.licenceUrl}"]`).length >= 1, `${row.basename}: licence link`);
   }
-  // rel="license" would declare the licence of the page itself, and the page is the company's
-  // (content 5.17): a photograph's licence is linked plainly.
   assert.equal($('[rel~="license"]').length, 0, 'a link declares the page\'s own licence');
-  assert.match($('.credits').text(), /representative/i);
-  // The line is the site's own (site.json, footer.representative).
-  const line = $('.credits > p').first().text().trim();
-  assert.equal(line, JSON.parse(readFileSync('src/site/_data/site.json', 'utf8')).footer.representative);
+  assert.equal($('#credits > .wrap > p').first().text().trim(), JSON.parse(readFileSync('src/site/_data/site.json', 'utf8')).footer.representative);
 });
 
 // Fixture pages, rendered through the real config, layout and data, test the include and the
@@ -253,11 +249,6 @@ test('picture() defaults sizes to half the window on wide screens, and offers th
   assert.equal(img.attr('loading'), 'lazy');
 });
 
-test('a page credits only its own pictures; a page with none has no credits disclosure', () => {
-  const lab = fixture('/lab/')('.credits li[data-credit]').map((i, li) => li.attribs['data-credit']).get();
-  assert.deepEqual(lab, ['lab-gel']);
-  assert.equal(fixture('/bare/')('.credits').length, 0);
-});
 
 test('picture() gives a small picture of the company\'s own its true size: the one width, and its height', () => {
   const img = fixture('/own/')('main img');
@@ -267,13 +258,11 @@ test('picture() gives a small picture of the company\'s own its true size: the o
   assert.deepEqual([Number(img.attr('width')), Number(img.attr('height'))], [entry.widths[0], entry.height]);
 });
 
-test('the company\'s own pictures are neither credited nor called representative', () => {
-  assert.equal(fixture('/own/')('.credits').length, 0, 'a page with only its own pictures has no credits');
-  const mixed = fixture('/mixed/');
-  assert.deepEqual(mixed('.credits li[data-credit]').map((i, li) => li.attribs['data-credit']).get(), ['lab-gel']);
-  assert.match(mixed('.credits > p').first().text(), /representative/);
+test('the company\'s own pictures are never in the credits', () => {
+  const listed = load('/terms/')('#credits li[data-credit]').map((i, li) => li.attribs['data-credit']).get();
+  assert.ok(listed.length > 0);
+  for (const base of listed) assert.doesNotMatch(base, OWN, base);
 });
-
 test('images.mjs is idempotent', () => {
   execSync('npm run images', { stdio: 'ignore' });
   const probe = ['src/assets/img/place-hyderabad-640.webp', 'src/site/_data/credits.json', 'src/site/_data/images.json', 'src/site/favicon.ico'];

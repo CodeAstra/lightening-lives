@@ -9,7 +9,7 @@ import { BORDERS } from '../map/india-borders.js';
 import { LAYERS, LAYER_ORDER } from '../map/map-layers.js';
 import { initMotion } from './motion.js';
 import { initContact } from './contact.js';
-import { initNotFound } from './not-found.js';
+import { initNotFound, initLostGel } from './not-found.js';
 
 // This file is loaded as a module, where document.currentScript is null: the film's bundle is found
 // beside this one through import.meta.url.
@@ -711,4 +711,5 @@ ready(() => {
   initMotion();
   initContact();
   initNotFound();
+  initLostGel();
 });

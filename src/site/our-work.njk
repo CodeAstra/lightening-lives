@@ -35,7 +35,7 @@ closing:
         <ul class="gallery-track" data-gallery-track>
           {%- for slide in gallery.slides %}
           <li class="gallery-slide{% if slide.title %} has-story{% endif %}" data-gallery-slide role="group" aria-roledescription="slide" aria-label="{{ loop.index }} of {{ gallery.slides | length }}">
-            {{ picture(slide.image, slide.alt, "(min-width: 82rem) 80rem, 100vw", { class: "gallery-img" }) }}
+            {{ picture(slide.image, slide.alt, "(min-width: 82rem) 80rem, 100vw", { class: "gallery-img", eager: loop.index <= 2 }) }}
             {%- if slide.title %}
             <div class="gallery-story">
               <span class="gallery-kind">{% icon slide.icon or "camera" %}{{ slide.kind }}</span>

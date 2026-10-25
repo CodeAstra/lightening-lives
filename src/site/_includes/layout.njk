@@ -92,7 +92,7 @@
 <a class="skip" href="#main">Skip to content</a>
 {% include "header.njk" %}
 <main id="main">
-{%- if not film %}
+{%- if not film and not ownOpening %}
 {{ opening(label, h1, lead | unbracket, chips | bracketless("text"), leadLine | unbracket, proof, openingActions, openingWide) }}
 {%- endif %}
 {{ content | safe }}
@@ -100,7 +100,7 @@
 {%- if closing !== false %}
 {% include "closing.njk" %}
 {%- elif notice %}
-<section class="section" aria-label="{{ site.notice.label }}">
+<section class="section notice-band" aria-label="{{ site.notice.label }}">
   <div class="wrap">
     {% include "notice.njk" %}
   </div>

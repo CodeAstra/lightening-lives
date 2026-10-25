@@ -38,8 +38,6 @@ put('src/site/favicon.ico', await pngToIco(icons));
 // the rest to `ratio` (width over height); `y` places that cut as object-position does: 0 keeps the
 // top, 1 the bottom. CREDITS.md, "Changes made to the originals", says why each is made.
 const CROPS = {
-  'place-kothagudem': { ratio: 16 / 10, y: 0.375 }, // part of the foreground shore and sky removed
-  'place-jharkhand': { ratio: 16 / 10, y: 0 }, // the roadside kerb at the bottom edge removed
   'method-paper': { left: 0.16 }, // part of the card's printed serial number, a sample code
 };
 const WIDTHS = [640, 1280, 1920];

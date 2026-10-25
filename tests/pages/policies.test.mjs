@@ -59,17 +59,17 @@ test('privacy: sentences that need their missing facts are left out, the rest re
   assert.equal(text($, '#who-we-are p'), 'This website is published by Lightening Lives LLP, D-306, Sy. No. 117, Indu Aranya Pallavi, GSI (SR), Bandlaguda, Hayathnagar, Hyderabad, Telangana 500068, India.');
 });
 
-test('terms: title, description, h1, no lead (5.17)', () => {
+test('terms: title, description, h1 and its lead', () => {
   const $ = load('/terms/');
   assert.equal($('title').text(), 'Terms of use | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'The terms on which Lightening Lives LLP publishes this website.');
   assert.equal(text($, 'h1'), 'Terms of use');
-  assert.equal($('.page-open .lead').length, 0);
+  assert.equal(text($, '.page-open .lead'), 'The terms on which Lightening Lives LLP publishes this website.');
 });
 
 test('terms: the headings in 5.17\'s order, each naming its section', () => {
   const $ = load('/terms/');
-  assert.deepEqual(texts($, 'main h2'), ['About this website', 'Not medical advice', 'Our tests', 'No offer', 'Names and marks', 'Using what is here', 'Links to other websites', 'Accuracy', 'Law', 'Contact']);
+  assert.deepEqual(texts($, 'main h2'), ['About this website', 'Not medical advice', 'Our tests', 'No offer', 'Names and marks', 'Using what is here', 'Links to other websites', 'Accuracy', 'Law', 'Contact', 'Photo and map credits']);
   $('main h2').each((i, h) => assert.equal($(h).closest('section').attr('aria-labelledby'), $(h).attr('id')));
 });
 
