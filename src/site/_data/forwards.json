@@ -10,6 +10,11 @@
     "name": "For public health programmes, on our Partners page"
   },
   {
+    "from": "/about/team/",
+    "to": "/about/#team",
+    "name": "Our people, on our About page"
+  },
+  {
     "from": "/solutions/develop-a-test/",
     "to": "/solutions/#develop",
     "name": "Develop a test with us, on our Solutions page"
@@ -46,38 +51,38 @@
   },
   {
     "from": "/our-team.php",
-    "to": "/about/team/",
-    "name": "Team"
+    "to": "/about/#team",
+    "name": "Our people, on our About page"
   },
   {
     "from": "/abhishek-chandak-details.php",
-    "to": "/about/team/#abhishek-chandak",
-    "name": "Mr. Abhishek Chandak, on our team page"
+    "to": "/about/#abhishek-chandak",
+    "name": "Mr. Abhishek Chandak, on our About page"
   },
   {
     "from": "/manisha-arumalla-details.php",
-    "to": "/about/team/#manisha-arumalla",
-    "name": "Ms. Manisha Arumalla, on our team page"
+    "to": "/about/#manisha-arumalla",
+    "name": "Ms. Manisha Arumalla, on our About page"
   },
   {
     "from": "/punyasri-pskdb-details.php",
-    "to": "/about/team/#punyasri-pskdb",
-    "name": "Ms. Punyasri PSKDB, on our team page"
+    "to": "/about/#punyasri-pskdb",
+    "name": "Ms. Punyasri PSKDB, on our About page"
   },
   {
     "from": "/mehraj-begum-details.php",
-    "to": "/about/team/#mehraj-begum",
-    "name": "Ms. Mehraj Begum, on our team page"
+    "to": "/about/#mehraj-begum",
+    "name": "Ms. Mehraj Begum, on our About page"
   },
   {
     "from": "/pruthvi-details.php",
-    "to": "/about/team/#pruthvi-bellamkonda",
-    "name": "Mr. Pruthvi Bellamkonda, on our team page"
+    "to": "/about/#pruthvi-bellamkonda",
+    "name": "Mr. Pruthvi Bellamkonda, on our About page"
   },
   {
     "from": "/jyothi-details.php",
-    "to": "/about/team/#jyothi-vislavath",
-    "name": "Jyothi Vislavath, on our team page"
+    "to": "/about/#jyothi-vislavath",
+    "name": "Jyothi Vislavath, on our About page"
   },
   {
     "from": "/partnerships.php",

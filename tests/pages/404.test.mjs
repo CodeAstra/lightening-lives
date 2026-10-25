@@ -46,13 +46,13 @@ test('every old address in 3.4 has its new page', () => {
     '/about-us.php': '/about/',
     '/services.php': '/solutions/',
     '/impact-stories.php': '/our-work/',
-    '/our-team.php': '/about/team/',
-    '/abhishek-chandak-details.php': '/about/team/#abhishek-chandak',
-    '/manisha-arumalla-details.php': '/about/team/#manisha-arumalla',
-    '/punyasri-pskdb-details.php': '/about/team/#punyasri-pskdb',
-    '/mehraj-begum-details.php': '/about/team/#mehraj-begum',
-    '/pruthvi-details.php': '/about/team/#pruthvi-bellamkonda',
-    '/jyothi-details.php': '/about/team/#jyothi-vislavath',
+    '/our-team.php': '/about/#team',
+    '/abhishek-chandak-details.php': '/about/#abhishek-chandak',
+    '/manisha-arumalla-details.php': '/about/#manisha-arumalla',
+    '/punyasri-pskdb-details.php': '/about/#punyasri-pskdb',
+    '/mehraj-begum-details.php': '/about/#mehraj-begum',
+    '/pruthvi-details.php': '/about/#pruthvi-bellamkonda',
+    '/jyothi-details.php': '/about/#jyothi-vislavath',
     '/partnerships.php': '/partners/',
     '/contact-us.php': '/contact/',
   });
@@ -66,14 +66,14 @@ test('each new page is named, and each exists in the build', () => {
     if (hash) assert.equal(page(`[id="${hash}"]`).length, 1, to.href);
   }
   assert.equal(OLD.get('/services.php').name, 'Solutions');
-  assert.equal(OLD.get('/our-team.php').name, 'Team');
-  assert.equal(OLD.get('/abhishek-chandak-details.php').name, 'Mr. Abhishek Chandak, on our team page');
+  assert.equal(OLD.get('/our-team.php').name, 'Our people, on our About page');
+  assert.equal(OLD.get('/abhishek-chandak-details.php').name, 'Mr. Abhishek Chandak, on our About page');
 });
 
 test('suggest: an old address, whatever its case or a trailing slash; nothing for any other', () => {
   assert.equal(suggest('/services.php').href, '/solutions/');
   assert.equal(suggest('/Services.PHP').href, '/solutions/');
-  assert.equal(suggest('/our-team.php/').href, '/about/team/');
+  assert.equal(suggest('/our-team.php/').href, '/about/#team');
   assert.equal(suggest('/services'), null);
   assert.equal(suggest('/solutions/nothing-here/'), null);
   assert.equal(suggest('/'), null);

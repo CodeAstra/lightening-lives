@@ -1,105 +1,132 @@
 ---
 name: "About"
-title: About Lightening Lives
-description: "Lightening Lives LLP is a Hyderabad healthcare technology company founded by Dr. Giriraj Ratan Chandak, formerly of CSIR-CCMB, to make genetic diagnosis reach everyone. Patented in India and Japan; approved by ICMR."
+title: "About us: healthcare technology from Hyderabad | Lightening Lives"
+description: "Lightening Lives LLP is a Hyderabad healthcare technology company developing REASSURED genetic tests, founded by Dr. Giriraj Ratan Chandak, formerly Chief Scientist at CSIR-CCMB. ICMR approved; patents in India and Japan."
 label: About
-h1: A genetic diagnosis should not depend on where you live
-lead: "Lightening Lives is an innovation-driven healthcare technology company in Hyderabad. We develop genetic tests that work outside specialised laboratories, so that diagnosis can reach everyone."
+h1: 'We invent genetic tests <span class="h-mark">that change what happens next.</span>'
+lead: "Lightening Lives is a Hyderabad healthcare technology company. We develop REASSURED genetic tests so inherited disorders are found early, confirmed once and cared for."
+leadLine: "Our mission: to develop genetic tests that let every hospital, laboratory and programme screen and confirm inherited disorders, early and close to the patient."
+closing:
+  h2: 'Work with us. <span class="h-mark">Most of our work begins as a collaboration.</span>'
+  body: "Tell us the condition you need to test for and where the testing will happen."
+  solid: { text: "Partner with us", href: "/partners/" }
+  line: { text: "Contact us", href: "/contact/" }
 ---
-{#- About (content file 5.12). The layout opens the page (label, h1, lead) and closes it with 4.5's
-    closing band; About has no notice. [TBC] brackets are stripped and the sentence before each kept;
-    the [PLACEHOLDER] lines (the founding year, the LLP identification number) are left out. The
-    founders have one joint portrait, shown once beside their two entries; their bios are team.json's,
-    Dr. Chandak's first paragraph split at a sentence (R1). The evidence is the home page's own
-    include. The vision keeps the company's words, "a single drop of blood", its one permitted use
-    (5.1). The bands alternate back from the closing band's paper, so the first section stays on the
-    opening's mist and continues its sheet; the mission and vision are the sprout band, as on home. -#}
+{#- About (content file 5.8; one page since 25 October 2026, the reviewer's site map, 3.1): the founder
+    in full, everyone else by a tap. The opening with the mission under the lead; the company at a
+    glance, a fact block written for people and for AI systems alike; the founders (their one joint
+    portrait, Dr. Chandak's record and bio in full, the co-founder beside him); and the people (#team):
+    the patron, the advisers and the team in one grid of portrait, name and role, where a tap opens
+    a bio wherever team.json has one. Nothing is invented: the patron's and advisers' entries have no
+    bio, so they do not open. Each person keeps the anchor of their slug, which the old team pages
+    forward to. Cut: the story, the why-how-what and the mission and vision bands (the mission stays
+    in the opening), and the evidence row. -#}
 {%- from "picture.njk" import picture with context %}
-{%- from "person.njk" import person with context %}
-{%- from "proof.njk" import evidence %}
+{%- set ff = team.founders[0] %}
+{%- set co = team.founders[1] %}
 
-  <!-- How the company began: three paragraphs; the founding year waits for the company -->
-  <section id="how-it-began" class="section" aria-labelledby="began-h">
-    <div class="wrap grid gap-8 lg:grid-cols-12 lg:gap-16">
-      <h2 id="began-h" class="h2 lg:col-span-5">How the company began</h2>
-      <div class="story lg:col-span-7">
-        <p>Lightening Lives grew out of more than 25 years of work in genetic and molecular diagnostics, alongside clinicians, the health ministry and its district health authorities, NGOs, universities and companies.</p>
-        <p>Over those years one thing kept showing. The people who most need a genetic diagnosis are often the least likely to get one, because the test needs a laboratory, equipment and specialists that their district does not have.</p>
-        <p>We started the company to develop tests that do not need them. The first, for sickle cell anaemia, was built for the National Sickle Cell Anaemia Elimination Mission, approved by ICMR, and patented in India and Japan. More have followed, for the other haemoglobinopathies and for the musculopathies.</p>
+  <!-- The company at a glance -->
+  <section id="facts" class="section on-mist about-facts" aria-labelledby="facts-h">
+    <div class="wrap">
+      <h2 id="facts-h" class="sr-only">At a glance</h2>
+      <dl class="facts-grid">
+        {%- for row in [
+          { icon: "building-2", term: "Legal name", def: site.legalName },
+          { icon: "map-pin", term: "Headquarters", def: "Hyderabad, Telangana, India" },
+          { icon: "user-round", term: "Founder and CEO", def: "Dr. Giriraj Ratan Chandak" },
+          { icon: "dna", term: "What we do", def: "Develop REASSURED genetic tests for inherited disorders" },
+          { icon: "package", term: "Tests", def: "LitLife™-SCA, -SiBThal217, -BThal, -AlphaThal and -SMA; HbD and HbE testing" },
+          { icon: "hourglass", term: "In development", def: "A blood coagulation panel; pharmacogenomics" },
+          { icon: "badge-check", term: "Approvals", def: "LitLife™-SCA, ICMR approved" },
+          { icon: "award", term: "Patents", def: "Granted in India and Japan; published internationally" }
+        ] %}
+        <div>
+          <dt>{% icon row.icon %}<span>{{ row.term }}</span></dt>
+          <dd>{{ row.def }}</dd>
+        </div>
+        {%- endfor %}
+      </dl>
+    </div>
+  </section>
+
+  <!-- The founders: Dr. Chandak in full, the co-founder beside him -->
+  <section id="founder" class="section bg-paper" aria-labelledby="founder-h">
+    <div class="wrap">
+      <h2 id="founder-h" class="h2 max-w-[44rem]">Founded by a scientist <span class="h-mark">who spent 25 years on inherited disorders.</span></h2>
+      <div class="founder mt-12" id="founders">
+        <figure class="founder-photo">
+          {{ picture("person-founders", "Dr. Giriraj Ratan Chandak and Mrs. Nidhi Chandak", "(min-width: 64rem) 26rem, 90vw") }}
+          <figcaption>Dr. Giriraj Ratan Chandak and Mrs. Nidhi Chandak, the founders.</figcaption>
+        </figure>
+        <div class="founder-body">
+          <div id="{{ ff.slug }}" class="founder-lead">
+            <h3 class="founder-name">{{ ff.name }} <span class="person-credentials">{{ ff.credentials }}</span></h3>
+            <p class="founder-role">{{ ff.role }}</p>
+            <ul class="founder-record">
+              <li>{% icon "landmark" %}<span>Former Chief Scientist, CSIR-Centre for Cellular and Molecular Biology (CCMB), Hyderabad</span></li>
+              <li>{% icon "graduation-cap" %}<span>Founding faculty member and former Director, Centre for DNA Fingerprinting and Diagnostics (CDFD)</span></li>
+              <li>{% icon "award" %}<span>Sir J.C. Bose Fellow</span></li>
+              <li>{% icon "users" %}<span>Fellow of all four Indian national science academies and of The World Academy of Sciences</span></li>
+            </ul>
+            <div class="founder-bio">
+              <p>A physician and scientist who works on molecular diagnostics and genetic disorders. His research includes work on sickle cell anaemia among populations in several states that have had little access to testing.</p>
+              <p>He founded Lightening Lives to develop affordable diagnostic tests that reduce the burden of disease.</p>
+            </div>
+          </div>
+          <div id="{{ co.slug }}" class="founder-co">
+            <h3 class="founder-name founder-name-co">{{ co.name }}</h3>
+            <p class="founder-role">{{ co.role }}</p>
+            {%- for para in co.bio %}
+            <p>{{ para }}</p>
+            {%- endfor %}
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Why, how and what: three columns -->
-  <section id="why-how-what" class="section bg-paper" aria-labelledby="why-how-what-h">
+  <!-- The people: patron, advisers and team in one grid; a tap opens a bio where there is one -->
+  <section id="team" class="section" aria-labelledby="team-h">
     <div class="wrap">
-      <h2 id="why-how-what-h" class="h2 max-w-[44rem]">Why, how and what, in that order</h2>
-      <ul class="audiences mt-12">
-        <li>
-          <h3 class="h3">Why</h3>
-          <p>The burden of genetic disorders is large, and testing is hard to reach: too far, too slow, too costly, too dependent on infrastructure. A different kind of test can change that.</p>
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="team-h" class="h2 lg:col-span-7">The people <span class="h-mark">behind the tests.</span></h2>
+        <p class="lead lg:col-span-5">Scientists, laboratory specialists and operations staff, guided by a patron and an advisory board.</p>
+      </div>
+      <ul class="people-grid mt-12">
+        {%- set everyone = [] %}
+        {%- for p in team.patron %}{% set everyone = (everyone.push({ p: p, group: "Patron" }), everyone) %}{% endfor %}
+        {%- for p in team.advisers %}{% set everyone = (everyone.push({ p: p, group: "Advisory board" }), everyone) %}{% endfor %}
+        {%- for p in team.team %}{% set everyone = (everyone.push({ p: p, group: "Team" }), everyone) %}{% endfor %}
+        {%- for e in everyone %}
+        {%- set p = e.p %}
+        <li id="{{ p.slug }}" class="pcard">
+          {%- if p.bio %}
+          <details class="pcard-details">
+            <summary class="pcard-face">
+              {{ picture("person-" + p.slug, p.name, "(min-width: 64rem) 14rem, (min-width: 40rem) 30vw, 44vw", { class: "pcard-photo" }) }}
+              <span class="pcard-group">{{ e.group }}</span>
+              <span class="pcard-name">{{ p.name }}</span>
+              <span class="pcard-role">{{ p.role }}</span>
+              <span class="pcard-more"><span class="pcard-open">Read bio</span><span class="pcard-close">Close</span>{% icon "chevron-down" %}</span>
+            </summary>
+            <div class="pcard-bio">
+              {%- for para in p.bio | paragraphs %}
+              <p>{{ para }}</p>
+              {%- endfor %}
+            </div>
+          </details>
+          {%- else %}
+          <div class="pcard-face">
+            {{ picture("person-" + p.slug, p.name, "(min-width: 64rem) 14rem, (min-width: 40rem) 30vw, 44vw", { class: "pcard-photo" }) }}
+            <span class="pcard-group">{{ e.group }}</span>
+            <span class="pcard-name">{{ p.name }}</span>
+            {%- if p.role and p.role != "Adviser" %}
+            <span class="pcard-role">{{ p.role }}</span>
+            {%- endif %}
+          </div>
+          {%- endif %}
         </li>
-        <li>
-          <h3 class="h3">How</h3>
-          <p>By making genetic and molecular tests robust, simple, affordable and easy to use, with a sample that is easy to take, a result that needs no second test, and results that come back quickly.</p>
-        </li>
-        <li>
-          <h3 class="h3">What</h3>
-          <p>Tests that make early diagnosis practical, newborn screening above all, so that treatment starts on time. And tests that make carrier screening and counselling routine, so that fewer families meet a genetic disorder unprepared.</p>
-        </li>
+        {%- endfor %}
       </ul>
     </div>
   </section>
-
-  <!-- Mission and vision: the home page's vision band, with the mission above the vision -->
-  <section id="mission-and-vision" class="vision" aria-labelledby="mission-h vision-h">
-    <div class="wrap">
-      <div>
-        <h2 id="mission-h" class="label">Our mission</h2>
-        <p class="vision-line">To make molecular diagnosis accessible to all by developing innovative REASSURED genetic tests, with simple, affordable, minimally invasive sample collection and a quick turnaround for results.</p>
-      </div>
-      <div class="mt-12 lg:mt-16">
-        <h2 id="vision-h" class="label">Our vision</h2>
-        <p class="vision-line">To make precision genetic diagnosis accessible to every individual, through innovative technologies that need only a single drop of blood.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Founders: one portrait of both, beside their two entries -->
-  <section id="founders" class="section" aria-labelledby="founders-h">
-    <div class="wrap">
-      <h2 id="founders-h" class="h2">Founders</h2>
-      <div class="founders mt-12">
-        <div class="founders-photo">
-          {{ picture("person-founders", "Dr. Giriraj Ratan Chandak and Mrs. Nidhi Chandak", "(min-width: 40rem) 20rem, 90vw") }}
-        </div>
-        <ul class="people people-one">
-          {{ person(team.founders[0], { bio: true }) }}
-          {{ person(team.founders[1], { bio: true }) }}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- The company in brief: a table; the registration row waits for the LLP number -->
-  <section id="in-brief" class="section bg-paper" aria-labelledby="in-brief-h">
-    <div class="wrap">
-      <h2 id="in-brief-h" class="h2 max-w-[44rem]">The company in brief</h2>
-      <table class="facts mt-10" aria-labelledby="in-brief-h">
-        <tbody>
-          <tr><th scope="row">Name</th><td>{{ site.legalName }}</td></tr>
-          <tr><th scope="row">What it is</th><td>A limited liability partnership. An innovation-driven healthcare technology company</td></tr>
-          <tr><th scope="row">What it does</th><td>Develops molecular diagnostics for inherited conditions, and builds them into solutions for institutions</td></tr>
-          <tr><th scope="row">Who it works with</th><td>Hospitals, laboratories, clinicians, government health programmes, NGOs and CSR funders</td></tr>
-          <tr><th scope="row">Approvals and patents</th><td><span class="whitespace-nowrap">LitLife™-SCA</span> approved by ICMR. Patents granted in India and Japan; a patent published internationally</td></tr>
-          <tr><th scope="row">Where its tests are made</th><td>In India, by a third-party manufacturer that holds a quality certification</td></tr>
-          {%- for key, a in site.addresses %}
-          <tr><th scope="row">{{ a.label }}</th><td>{{ a.street }}, {{ a.locality }}, {{ a.region }} {{ a.postcode }}</td></tr>
-          {%- endfor %}
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Evidence and links: the home page's four items, then Meet the team and Who we work with -->
-  {{ evidence([{ text: "Meet the team", href: "/about/team/" }, { text: "Who we work with", href: "/partners/#partners" }]) }}

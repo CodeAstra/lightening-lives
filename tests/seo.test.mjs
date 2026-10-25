@@ -22,7 +22,7 @@ const NAMES = {
   '/solutions/thalassaemia/': 'Thalassaemia',
   '/solutions/spinal-muscular-atrophy/': 'Spinal muscular atrophy',
   '/our-work/': 'Our work',
-  '/about/': 'About', '/about/team/': 'Team', '/partners/': 'Partners', '/contact/': 'Contact',
+  '/about/': 'About', '/partners/': 'Partners', '/contact/': 'Contact',
   '/privacy/': 'Privacy', '/terms/': 'Terms',
 };
 
@@ -84,8 +84,6 @@ test('every inner page has one BreadcrumbList from Home to the page, through its
     const steps = url.split('/').filter(Boolean);
     assert.deepEqual(items.map((i) => i.item), ['/', ...steps.map((s, n) => `/${steps.slice(0, n + 1).join('/')}/`)].map((p) => DOMAIN + p), url);
   }
-  const team = ofType(load('/about/team/'), 'BreadcrumbList')[0].itemListElement.map((i) => i.name);
-  assert.deepEqual(team, ['Home', 'About', 'Team']);
   const sca = ofType(load('/solutions/sickle-cell-anaemia/'), 'BreadcrumbList')[0].itemListElement.map((i) => i.name);
   assert.deepEqual(sca, ['Home', 'Solutions', 'Sickle cell anaemia']);
 });
@@ -108,11 +106,10 @@ test('llms.txt: the company in one paragraph, every public page, then the facts 
   }
   assert.equal(blocks[4], '## Facts');
   const facts = blocks.slice(5).join('\n');
-  // The proof is "What stands behind the tests" (proof.njk, shown on About), word for word.
-  const home = load('/about/');
-  const proof = home('#proof li').map((i, li) => `- ${home(li).find('h3').text().trim()}: ${home(li).find('p').text().trim()}`).get();
-  assert.deepEqual(proof.map((l) => l.split(':')[0]), ['- Approved by ICMR', '- Patented in India and Japan', '- Working with CSIR-CCMB', '- Proven at 15 sites']);
-  for (const line of proof) assert.ok(facts.split('\n').includes(line), line);
+  // The proof (proof.njk's four items; About shows the company at a glance since 25 October 2026).
+  for (const head of ['- Approved by ICMR', '- Patented in India and Japan', '- Working with CSIR-CCMB', '- Proven at 15 sites']) {
+    assert.ok(facts.split('\n').some((l) => l.startsWith(`${head}: `)), head);
+  }
   assert.ok(!/&#|&amp;|&quot;/.test(llms), 'llms.txt is text, not escaped HTML');
   assert.ok(facts.includes(site.notice.body));
   for (const bad of [...DRAFTS, '/_social/', '404']) assert.ok(!llms.includes(bad), bad);
