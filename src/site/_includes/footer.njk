@@ -1,74 +1,73 @@
-{#- The full logo once, at 11rem; the company in a line; its pages in two columns; how to reach it; its
-    two addresses; then, under a hairline, the small print. On a wide screen the logo's column spans
-    both rows, so the addresses sit under the links. -#}
+{#- The footer (25 October 2026, "big and ugly" redone): one compact band. The brand, a line on the
+    company and the social marks; three short link groups (solutions, the company's pages, how to
+    reach it, with icons); then one bar of small print. The addresses live on Contact. -#}
 <footer class="site-footer">
-  <div class="wrap py-14">
-    <div class="grid gap-10 foot-grid sm:grid-cols-2 lg:grid-cols-12">
-      <div class="sm:col-span-2 lg:col-span-4 lg:row-span-2">
-        <img src="/assets/logo/lightening-lives-logo.svg" alt="{{ site.name }}, {{ site.tagline }}" width="176" height="176" class="h-28 w-28" loading="lazy">
-        <p class="mt-3 max-w-[22rem] text-moss">{{ site.about }}</p>
-        <p class="label mt-4">{{ site.words }}</p>
-      </div>
-      <nav class="lg:col-span-2" aria-label="What we do">
-        <p class="label">What we do</p>
-        <ul class="mt-1">
-          {%- for link in site.footer.whatWeDo %}
-          <li><a class="foot-link" href="{{ link.href }}">{{ link.text }}</a></li>
-          {%- endfor %}
-        </ul>
-      </nav>
-      <nav class="lg:col-span-2" aria-label="Company">
-        <p class="label">Company</p>
-        <ul class="mt-1">
-          {%- for link in site.footer.company %}
-          <li><a class="foot-link" href="{{ link.href }}">{{ link.text }}</a></li>
-          {%- endfor %}
-        </ul>
-      </nav>
-      <div class="sm:col-span-2 lg:col-span-4">
-        <p class="label">Contact</p>
-        <ul class="mt-1">
-          <li><a class="foot-link break-all" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-          <li><a class="foot-link" href="tel:{{ site.tel }}">{{ site.phone | replace(" ", "&nbsp;") | safe }}</a>{% if site.whatsapp %} <span class="text-moss">(call or WhatsApp)</span>{% endif %}</li>
+  <div class="wrap foot-wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="/" class="brand" aria-label="{{ site.name }} home">
+          <img class="brand-mark" src="/assets/logo/lightening-lives-emblem.svg" alt="" width="60" height="60" loading="lazy">
+          <span class="brand-text"><span class="brand-name">{{ site.name }}</span><span class="brand-line">{{ site.tagline }}</span></span>
+        </a>
+        <p class="foot-about">{{ site.about }}</p>
+        <ul class="foot-social">
           {%- for account in site.social %}
-          <li><a class="foot-link" href="{{ account.href }}" rel="noopener">{{ account.text }}</a></li>
+          <li><a href="{{ account.href }}" rel="noopener" aria-label="{{ site.name }} on {{ account.text }}">{% brand account.icon %}</a></li>
           {%- endfor %}
         </ul>
       </div>
-      {%- for key, address in site.addresses %}
-      <div class="lg:col-span-4">
-        <p class="label">{{ address.label }}</p>
-        <address class="mt-2 not-italic">{{ address.street }}, {{ address.locality }}, {{ address.region }} {{ address.postcode }}</address>
+      <nav class="foot-group" aria-label="Solutions">
+        <p class="foot-h">Solutions</p>
+        <ul>
+          {%- for link in site.footer.solutions %}
+          <li><a class="foot-link" href="{{ link.href }}">{{ link.text }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+      <nav class="foot-group" aria-label="Company">
+        <p class="foot-h">Company</p>
+        <ul>
+          {%- for link in site.footer.whatWeDo %}{% if link.href != "/solutions/" %}
+          <li><a class="foot-link" href="{{ link.href }}">{{ link.text }}</a></li>
+          {%- endif %}{% endfor %}
+          {%- for link in site.footer.company %}{% if link.href != "/contact/" %}
+          <li><a class="foot-link" href="{{ link.href }}">{{ link.text }}</a></li>
+          {%- endif %}{% endfor %}
+        </ul>
+      </nav>
+      <div class="foot-group foot-contact">
+        <p class="foot-h">Contact</p>
+        <ul>
+          <li><a class="foot-link" href="mailto:{{ site.email }}">{% icon "mail" %}<span class="break-all">{{ site.email }}</span></a></li>
+          <li><a class="foot-link" href="tel:{{ site.tel }}">{% icon "phone" %}<span>{{ site.phone | replace(" ", "&nbsp;") | safe }}</span></a></li>
+          {%- if site.whatsapp %}
+          <li><a class="foot-link" href="https://wa.me/{{ site.tel | replace('+', '') }}" rel="noopener">{% icon "message-circle" %}<span>WhatsApp</span></a></li>
+          {%- endif %}
+          <li><a class="foot-link" href="/contact/">{% icon "map-pin" %}<span>{{ site.addresses.lab.locality }}, {{ site.addresses.lab.region }}</span></a></li>
+        </ul>
       </div>
-      {%- endfor %}
     </div>
 
-    <div class="mt-12 grid gap-6 border-t border-line pt-6 text-[1rem] text-moss lg:grid-cols-12">
-      <div class="lg:col-span-7">
-        <p>{{ site.footer.disclaimer }}</p>
-        <p class="mt-2">{{ site.footer.trademark }}</p>
+    <div class="foot-bar">
+      <p class="foot-fine">© 2026 {{ site.legalName }}. {{ site.footer.trademark }} {{ site.footer.disclaimer }}</p>
+      <div class="foot-legal">
         {%- set shown = credits | creditsFor(content) %}
         {%- if shown.length %}
-        <details class="credits mt-2">
-          <summary class="foot-link text-canopy">Photo and map credits</summary>
+        <details class="credits">
+          <summary class="foot-link">Photo and map credits</summary>
           {%- if shown | photographs | length %}
           <p class="mt-1">{{ site.footer.representative }}</p>
           {%- endif %}
-          <ul class="mt-1 grid gap-1 text-base sm:text-[0.9375rem]">
+          <ul class="mt-1 grid gap-1">
             {%- for row in shown %}
             <li data-credit="{{ row.basename }}">{{ row.label }}: {% if row.authorUrl %}<a href="{{ row.authorUrl }}" rel="noopener">{{ row.author }}</a>{% else %}{{ row.author }}{% endif %}, {% if row.licenceUrl %}<a href="{{ row.licenceUrl }}" rel="noopener">{{ row.licence }}</a>{% else %}{{ row.licence }}{% endif %}, <a href="{{ row.sourceUrl }}" rel="noopener">{{ row.source }}</a>{% if row.changes %} ({{ row.changes }}){% endif %}.</li>
             {%- endfor %}
           </ul>
         </details>
         {%- endif %}
-      </div>
-      <div class="lg:col-span-5 lg:text-right">
-        <p>© 2026 {{ site.legalName }}</p>
-        <p class="flex items-center gap-x-2 lg:justify-end">
-          {%- for link in site.footer.policies %}
-          {%- if not loop.first %}<span aria-hidden="true">·</span>{% endif %}<a class="foot-link text-canopy" href="{{ link.href }}">{{ link.text }}</a>
-          {%- endfor %}
-        </p>
+        {%- for link in site.footer.policies %}
+        <a class="foot-link" href="{{ link.href }}">{{ link.text }}</a>
+        {%- endfor %}
       </div>
     </div>
   </div>

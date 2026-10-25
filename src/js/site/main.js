@@ -85,9 +85,139 @@ function initFilm() {
   play.addEventListener('click', () => {
     root.classList.add('film-live');
     load();
-    const toggle = document.querySelector('[data-film-toggle]');
-    if (toggle) toggle.focus();
+    const screen = document.querySelector('[data-film-screen]');
+    if (screen) { screen.tabIndex = -1; screen.focus({ preventScroll: true }); }
   }, { once: true });
+}
+
+// ---- The opening's announcement ---------------------------------------------------------------
+// The build keeps the items that have not ended (src/lib/announcements.mjs); the reader's own clock
+// decides which one is running now, so a pill never outlives its last day between deploys. Days are
+// days in India. A preview (the dev server only) always shows.
+const IST = '+05:30';
+function initNews() {
+  const list = document.querySelector('[data-news]');
+  if (!list) return;
+  const now = Date.now();
+  let shown = false;
+  for (const item of list.children) {
+    const live = item.hasAttribute('data-preview')
+      || (Date.parse(`${item.dataset.start}T00:00:00${IST}`) <= now && now <= Date.parse(`${item.dataset.end}T23:59:59.999${IST}`));
+    item.hidden = shown || !live;
+    if (live) shown = true;
+  }
+  list.hidden = !shown;
+}
+
+// ---- The partners along the opening's foot ------------------------------------------------------
+// The row slides by itself (the stylesheet's one loop) and stops while it is pointed at or holds the
+// focus. There is no button (the user's call, 25 October 2026), so a tap, or a click, stops it and
+// starts it again: a touch screen and a keyboard can still hold it still (WCAG 2.2.2).
+function initMarquee() {
+  const band = document.querySelector('[data-marquee]');
+  const strip = band && band.querySelector('.marquee');
+  if (!strip) return;
+  strip.addEventListener('click', () => band.classList.toggle('is-paused'));
+  strip.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); band.classList.toggle('is-paused'); }
+  });
+}
+
+// ---- The film's pins --------------------------------------------------------------------------
+// Once the film has pinned every state we work in (scene.js lifts the wrapper's inert), each pin is a
+// button. Pointing at one, focusing it or tapping it opens the card beside it: the state, what was
+// screened there (map-layers.js, the Our work layer's line) and a link down to the map, which opens
+// on Our work with the state picked. A tap goes to the nearest pin, since on a small map the pins'
+// tap areas overlap; the arrow keys step between pins, and Escape, or a tap elsewhere, closes it.
+function initPins() {
+  const wrap = document.querySelector('[data-places-wrap]');
+  if (!wrap) return;
+  const card = wrap.querySelector('#place-card');
+  const name = card.querySelector('[data-place-name]');
+  const line = card.querySelector('[data-place-line]');
+  const link = card.querySelector('[data-place-link]');
+  const items = [...wrap.querySelectorAll('[data-place]')];
+  const pins = items.map((item) => item.querySelector('.place-pin'));
+  let open = -1;
+  let held = false; // opened by a click or tap, so it stays when the pointer leaves
+
+  const close = () => {
+    if (open === -1) return;
+    pins[open].setAttribute('aria-expanded', 'false');
+    items[open].classList.remove('is-open');
+    card.hidden = true;
+    open = -1;
+    held = false;
+  };
+  const show = (index, hold = false) => {
+    if (index === open) { held = held || hold; return; }
+    close();
+    const item = items[index];
+    const id = item.dataset.place;
+    const state = STATES.find((entry) => entry.id === id);
+    name.textContent = state ? state.n : id;
+    line.textContent = LAYERS.work.note(id);
+    link.dataset.state = id;
+    // The card opens to the pin's east, away from the page's text, unless it would leave the film
+    // there. On a phone there is no room beside a pin: it is docked along the foot of the map.
+    const docked = window.matchMedia('(max-width: 39.99rem)').matches;
+    (docked ? wrap : item).appendChild(card);
+    card.classList.toggle('is-docked', docked);
+    item.classList.remove('is-west');
+    card.hidden = false;
+    const box = wrap.getBoundingClientRect();
+    if (!docked && card.getBoundingClientRect().right > box.right - 8) item.classList.add('is-west');
+    item.classList.add('is-open');
+    pins[index].setAttribute('aria-expanded', 'true');
+    open = index;
+    held = hold;
+  };
+  const nearest = (x, y) => {
+    let best = -1;
+    let gap = Infinity;
+    pins.forEach((pin, index) => {
+      const r = pin.getBoundingClientRect();
+      const d = Math.hypot(r.left + r.width / 2 - x, r.top + r.height / 2 - y);
+      if (d < gap) { gap = d; best = index; }
+    });
+    return best;
+  };
+
+  pins.forEach((pin, index) => {
+    pin.addEventListener('click', (event) => {
+      const chosen = event.detail === 0 ? index : nearest(event.clientX, event.clientY);
+      if (chosen === open && held) close();
+      else show(chosen, true);
+    });
+    pin.addEventListener('focus', () => { if (pin.matches(':focus-visible')) show(index); });
+    items[index].addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') show(index); });
+    items[index].addEventListener('pointerleave', (event) => { if (event.pointerType === 'mouse' && !held && open === index) close(); });
+    items[index].addEventListener('focusout', (event) => { if (!items[index].contains(event.relatedTarget) && !held && open === index) close(); });
+  });
+  wrap.addEventListener('keydown', (event) => {
+    const here = pins.indexOf(document.activeElement);
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+    if (step && here !== -1) {
+      event.preventDefault();
+      pins[(here + step + pins.length) % pins.length].focus();
+    } else if (event.key === 'Escape' && open !== -1) {
+      const back = pins[open];
+      close();
+      back.focus();
+    }
+  });
+  document.addEventListener('pointerdown', (event) => { if (open !== -1 && !wrap.contains(event.target)) close(); });
+  link.addEventListener('click', (event) => {
+    const id = link.dataset.state;
+    const map = document.getElementById('map');
+    if (!map || !id) return;
+    event.preventDefault();
+    close();
+    document.dispatchEvent(new CustomEvent('ll:map-show', { detail: { layer: 'work', state: id } }));
+    map.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
+    const figure = map.querySelector('[data-map]');
+    if (figure) figure.focus({ preventScroll: true });
+  });
 }
 
 // ---- The map --------------------------------------------------------------------------------
@@ -108,6 +238,10 @@ const TONE = { strong: 1, pale: 0.42, faint: 0.1 }; // the key's swatches, as th
 const NAME_NUDGE = { MP: [-4.2, -0.6], JH: [2, 0.5], CG: [0.3, 2.4], OD: [4.2, 2.6], DL: [5.4, 0.3] };
 // On a small map the names are no smaller, so they need moving further.
 const NAME_NUDGE_SMALL = { GJ: [-4.5, -0.6], MP: [-1.5, -4.2], MH: [1.5, 0.9], JH: [3.5, 2.6], TS: [2, 2.4], CG: [-1.2, 3.4], OD: [7.2, 4.4], DL: [8.2, 0.4], PB: [-1.5, -1], WB: [5.5, 3] };
+// A state with the emblem has it on the state itself, and its name under it: these move the pair
+// where the state's middle would put it on a neighbour's name, or off a state too small to hold it.
+const EMBLEM_NUDGE = { MP: [-2.5, -1.8], CG: [0.3, -1.2], JH: [0.6, -0.6], MH: [-1.2, -0.8], DL: [0, -0.4] };
+const EMBLEM = '/assets/logo/lightening-lives-emblem.svg';
 const SMALL_MAP = 430; // pixels across, below which the names use the second set
 const NAMES_FROM = 235; // and below which the map is too small to carry more than one name
 
@@ -168,12 +302,22 @@ function initMap() {
   names.className = 'map-names';
   names.setAttribute('aria-hidden', 'true');
   // Under Our work a picked state's name becomes its chip: the name, then what was screened there
-  // (content 6.2). States, not towns, are marked: there are no pins (R2).
+  // (content 6.2). States, not towns, are marked (R2): a state we have worked in carries the
+  // emblem, on every layer, with its name under it (25 October 2026, after the poster's map).
   const nameItems = STATES.map((state) => {
     const item = document.createElement('li');
     const name = document.createElement('b');
     const line = document.createElement('small');
     name.append(state.n, line);
+    if (LAYERS.work.states[state.id]) {
+      const emblem = document.createElement('img');
+      emblem.className = 'map-emblem';
+      emblem.src = EMBLEM;
+      emblem.alt = '';
+      emblem.width = emblem.height = 60;
+      item.classList.add('has-emblem');
+      item.appendChild(emblem);
+    }
     item.appendChild(name);
     names.appendChild(item);
     return item;
@@ -218,7 +362,7 @@ function initMap() {
   function placeNames() {
     const nudges = small ? NAME_NUDGE_SMALL : NAME_NUDGE;
     STATES.forEach((state, index) => {
-      const nudge = nudges[state.id] || [0, 0];
+      const nudge = (LAYERS.work.states[state.id] ? EMBLEM_NUDGE : nudges)[state.id] || [0, 0];
       [nameItems[index].style.left, nameItems[index].style.top] = at(state.x + nudge[0], state.z + nudge[1]);
     });
   }
@@ -233,7 +377,8 @@ function initMap() {
     // television's spatial navigation) stays where it is, since moving it would drop the focus.
     if (chosen !== -1 && document.activeElement !== paths[chosen]) states.appendChild(paths[chosen]);
     nameItems.forEach((item, index) => {
-      const marked = level(index) >= 0.9 && !tiny;
+      // On a small map a state with the emblem is marked by it alone; its name comes with a pick.
+      const marked = level(index) >= 0.9 && !tiny && !(small && LAYERS.work.states[STATES[index].id]);
       const line = index === chosen && chipOf ? chipOf(STATES[index].id).replace(`${STATES[index].n} · `, '') : '';
       item.querySelector('small').textContent = line;
       item.classList.toggle('has-chip', Boolean(line));
@@ -378,6 +523,14 @@ function initMap() {
     showMarks();
   };
   if ('ResizeObserver' in window) new ResizeObserver(measure).observe(figure);
+  // The film's card sends the reader here with a state: the map opens on that layer with it picked.
+  document.addEventListener('ll:map-show', (event) => {
+    const { layer: wanted, state } = event.detail || {};
+    const input = inputs.find((item) => item.value === wanted);
+    if (input && !input.checked) { input.checked = true; showLayer(true); }
+    const index = STATES.findIndex((entry) => entry.id === state);
+    if (index !== -1) { hovered = -1; keep(index); }
+  });
   window.addEventListener('resize', measure);
   // A page restored from history can come back with a different layer already chosen.
   window.addEventListener('pageshow', () => showLayer(false));
@@ -387,6 +540,9 @@ function initMap() {
 
 ready(() => {
   initMenu();
+  initNews();
+  initMarquee();
+  initPins();
   initReassured();
   initMap();
   initFilm();

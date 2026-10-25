@@ -45,7 +45,7 @@ const CROPS = {
 const WIDTHS = [640, 1280, 1920];
 // The weight each width may reach (Task 6.4 Step 3b); the 1920 is for very large screens and has none.
 const BUDGET = { 640: 80 * 1024, 1280: 200 * 1024 };
-const OWN = /^(box|person)-/; // the company's own pictures, not stand-ins
+const OWN = /^(box|person|work)-/; // the company's own pictures (boxes, portraits, its own posters and papers), not stand-ins
 
 // The widths a picture of a given width is written at.
 function widthsFor(name, width) {

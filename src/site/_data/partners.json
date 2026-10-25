@@ -1,0 +1,140 @@
+{
+  "_note": "Partner logos, cropped from content/assets/partners/collaborations-collage.png (the company's own collage). strip: shown on the home page's strip, institutions first (marketing review, 25 Oct 2026). Written permission for each logo is still to be confirmed (content 9, item 37). All thirteen are published since 25 October 2026 (the user chose the hero's sliding row of all thirteen); written permission for each is still to be confirmed.",
+  "groups": {
+    "science": "Science and incubation",
+    "foundations": "Foundations",
+    "patients": "Patient and community organisations"
+  },
+  "logos": [
+    {
+      "name": "CSIR-Centre for Cellular and Molecular Biology",
+      "file": "logo-ccmb.png",
+      "width": 108,
+      "height": 135,
+      "group": "science",
+      "strip": true,
+      "shape": "tall",
+      "published": true
+    },
+    {
+      "name": "Atal Incubation Centre, CCMB",
+      "file": "logo-aic-ccmb.png",
+      "width": 284,
+      "height": 96,
+      "group": "science",
+      "strip": true,
+      "shape": "",
+      "published": true
+    },
+    {
+      "name": "Nucleome",
+      "file": "logo-nucleome.png",
+      "width": 126,
+      "height": 87,
+      "group": "science",
+      "strip": true,
+      "shape": "",
+      "published": true
+    },
+    {
+      "name": "Tata Trusts",
+      "file": "logo-tata-trusts.png",
+      "width": 282,
+      "height": 36,
+      "group": "foundations",
+      "strip": true,
+      "shape": "short",
+      "published": true
+    },
+    {
+      "name": "Tata Steel Foundation",
+      "file": "logo-tata-steel.png",
+      "width": 142,
+      "height": 72,
+      "group": "foundations",
+      "strip": true,
+      "shape": "",
+      "published": true
+    },
+    {
+      "name": "Thalassemia and Sickle Cell Society",
+      "file": "logo-tscs.png",
+      "width": 324,
+      "height": 78,
+      "group": "patients",
+      "strip": true,
+      "shape": "",
+      "published": true
+    },
+    {
+      "name": "Cure SMA India",
+      "file": "logo-cure-sma.png",
+      "width": 214,
+      "height": 112,
+      "group": "patients",
+      "strip": true,
+      "shape": "",
+      "published": true
+    },
+    {
+      "name": "Sickle Cell Saksham Rajasthan Foundation",
+      "file": "logo-saksham.png",
+      "width": 162,
+      "height": 173,
+      "group": "patients",
+      "strip": false,
+      "shape": "tall",
+      "published": true
+    },
+    {
+      "name": "IAMD",
+      "file": "logo-iamd.png",
+      "width": 199,
+      "height": 99,
+      "group": "patients",
+      "strip": false,
+      "shape": "",
+      "published": true
+    },
+    {
+      "name": "Blood Warriors",
+      "file": "logo-blood-warriors.png",
+      "width": 102,
+      "height": 134,
+      "group": "patients",
+      "strip": false,
+      "shape": "tall",
+      "published": true
+    },
+    {
+      "name": "Manasthya Foundation",
+      "file": "logo-manasthya.png",
+      "width": 134,
+      "height": 134,
+      "group": "patients",
+      "strip": false,
+      "shape": "tall",
+      "published": true
+    },
+    {
+      "name": "Indigenous Development Organization",
+      "file": "logo-ido.png",
+      "width": 164,
+      "height": 87,
+      "group": "patients",
+      "strip": false,
+      "shape": "",
+      "published": true
+    },
+    {
+      "name": "NASCO",
+      "file": "logo-nasco.png",
+      "width": 217,
+      "height": 53,
+      "group": "patients",
+      "strip": false,
+      "shape": "",
+      "published": true
+    }
+  ]
+}

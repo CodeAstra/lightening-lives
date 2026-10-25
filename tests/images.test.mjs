@@ -27,7 +27,7 @@ const SHORTLIST = [
 ];
 const LICENCES = /^(CC0 1\.0|Public domain|CC BY(-SA)? [1-4]\.0|Unsplash Licence)$/;
 const SRC = 'src/images-src';
-const OWN = /^(box|person)-/;
+const OWN = /^(box|person|work)-/; // the company's own: boxes, portraits, its posters and papers
 const all = () => readdirSync(SRC).filter((f) => /\.(jpe?g|png)$/i.test(f)).map((f) => ({ file: `${SRC}/${f}`, base: f.replace(/\.\w+$/, '') }));
 const sources = () => all().filter((s) => !OWN.test(s.base)); // the stock photographs
 const own = () => all().filter((s) => OWN.test(s.base));
@@ -164,18 +164,17 @@ test('every placed photograph comes through the picture include: every width, si
   }
 });
 
-test('the home page shows the three place photographs, captioned by state', () => {
+test('the home page shows one place photograph, for the field programmes, named by its state', () => {
   const $ = load('/');
-  const figures = $('.fieldwork figure');
-  assert.deepEqual(figures.map((i, f) => baseOf($(f).find('img').attr('src'))).get(), ['place-nandurbar', 'place-kothagudem', 'place-jharkhand']);
-  assert.deepEqual(figures.map((i, f) => $(f).find('figcaption').text().trim()).get(), ['Maharashtra', 'Telangana', 'Jharkhand']);
-  assert.match(figures.eq(0).find('img').attr('alt'), /Toranmal, Nandurbar district, Maharashtra/);
+  const pics = $('#map .work-card img').map((i, img) => baseOf(img.attribs.src)).get();
+  assert.deepEqual(pics, ['place-nandurbar', 'work-poster-v9']);
+  assert.equal($('#map .work-card img').first().attr('alt'), 'A monsoon-green gorge in Maharashtra.');
 });
 
 test('the footer credits what its page shows, and says the photographs are representative', () => {
   const $ = load('/');
   const items = $('.credits li[data-credit]');
-  const shown = new Set(placed($).map((i, el) => baseOf(el.attribs.src)).get());
+  const shown = new Set(placed($).map((i, el) => baseOf(el.attribs.src)).get().filter((base) => !OWN.test(base)));
   assert.deepEqual(new Set(items.map((i, li) => li.attribs['data-credit']).get()), new Set([...shown, 'map-india']));
   for (const row of credits().filter((r) => shown.has(r.basename))) {
     const li = $(`.credits li[data-credit="${row.basename}"]`);
@@ -188,9 +187,9 @@ test('the footer credits what its page shows, and says the photographs are repre
   // (content 5.17): a photograph's licence is linked plainly.
   assert.equal($('[rel~="license"]').length, 0, 'a link declares the page\'s own licence');
   assert.match($('.credits').text(), /representative/i);
-  // The line is the content file's (4.2), not the build's own copy.
+  // The line is the site's own (site.json, footer.representative).
   const line = $('.credits > p').first().text().trim();
-  assert.ok(readFileSync('content/website-content.md', 'utf8').includes(`**Representative line:** ${line}`), `"${line}" is not in content 4.2`);
+  assert.equal(line, JSON.parse(readFileSync('src/site/_data/site.json', 'utf8')).footer.representative);
 });
 
 // Fixture pages, rendered through the real config, layout and data, test the include and the

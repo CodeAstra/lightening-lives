@@ -1,0 +1,17 @@
+{
+  "h2": "The standard we design to, <span class=\"h-mark\">letter by letter</span>",
+  "lead": "We are an innovation-driven company developing REASSURED genetic tests, making molecular diagnosis accessible to all.",
+  "source": "Criteria: Land et al., Nature Microbiology (2019). Sensitivity and specificity: Lightening Lives.",
+  "sourceHref": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7097043/table/Tab3",
+  "items": [
+    { "letter": "R", "name": "Real-time monitoring", "line": "Test details captured on a mobile app.", "icon": "smartphone" },
+    { "letter": "E", "name": "Easy specimen collection", "line": "Blood collected by a painless finger prick, dried on a card.", "icon": "droplet" },
+    { "letter": "A", "name": "Affordable", "line": "Affordable testing.", "icon": "indian-rupee" },
+    { "letter": "S", "name": "Sensitive", "line": "100% sensitivity.", "icon": "scan-search" },
+    { "letter": "S", "name": "Specific", "line": "100% specificity.", "icon": "crosshair" },
+    { "letter": "U", "name": "User-friendly", "line": "Extraction-free genetic testing, on an automation-friendly workflow.", "icon": "test-tube-diagonal" },
+    { "letter": "R", "name": "Rapid and robust", "line": "Quick turnaround time and high-throughput molecular screening.", "icon": "timer" },
+    { "letter": "E", "name": "Equipment-free (minimal)", "line": "Minimal laboratory infrastructure.", "icon": "flask-conical" },
+    { "letter": "D", "name": "Deliverable to end-users", "line": "Designed for individual testing and for large-scale public health programmes.", "icon": "users" }
+  ]
+}

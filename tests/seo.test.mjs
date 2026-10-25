@@ -108,8 +108,8 @@ test('llms.txt: the company in one paragraph, every public page, then the facts 
   }
   assert.equal(blocks[4], '## Facts');
   const facts = blocks.slice(5).join('\n');
-  // The proof is the home page's "What stands behind the tests", word for word.
-  const home = load('/');
+  // The proof is "What stands behind the tests" (proof.njk, shown on About), word for word.
+  const home = load('/about/');
   const proof = home('#proof li').map((i, li) => `- ${home(li).find('h3').text().trim()}: ${home(li).find('p').text().trim()}`).get();
   assert.deepEqual(proof.map((l) => l.split(':')[0]), ['- Approved by ICMR', '- Patented in India and Japan', '- Working with CSIR-CCMB', '- Proven at 15 sites']);
   for (const line of proof) assert.ok(facts.split('\n').includes(line), line);

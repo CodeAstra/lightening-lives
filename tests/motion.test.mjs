@@ -24,10 +24,15 @@ test('bundle budgets', () => {
   assert.match(readFileSync('dist/assets/js/site.js', 'utf8'), /GreenSock|gsap/i);
 });
 
-test('nothing loops', () => {
-  const css = readFileSync('dist/assets/css/site.css', 'utf8');
-  assert.doesNotMatch(css, /animation-iteration-count:\s*infinite|\binfinite\b/);
+test('nothing loops but the partners along the opening\'s foot, which a button stops (25 October 2026)', () => {
+  const css = readFileSync('src/css/site.css', 'utf8');
+  const loops = [...css.matchAll(/([^{}]+)\{[^}]*\binfinite\b[^}]*\}/g)].map((m) => m[1].trim());
+  assert.deepEqual(loops, ['.marquee-track'], 'the one loop');
+  assert.match(css, /animation: marquee [\d.]+s linear infinite/);
   assert.doesNotMatch(code(), /repeat:\s*-1|yoyo/);
+  // WCAG 2.2.2: it can be stopped, by a button as well as by pointing at it, and never runs for a
+  // reader who has asked for less motion.
+  assert.match(readFileSync('src/js/site/main.js', 'utf8'), /function initMarquee\(\)/);
 });
 
 test('the one scroll-linked motion settles in once and is never scrubbed (D1, B)', () => {
@@ -59,11 +64,13 @@ test('initMotion binds exactly the listed selectors, and reaches elements only t
     press: '.btn, .nav-link, .tag, .test-row, .action',
     arrow: '.link',
     slide: '.actions a',
-    caption: '[data-film-caption]',
     settle: 'main > section.section > .wrap > :first-child, main > section.vision > .wrap',
     segment: '.seg',
     disclosure: 'details.map-sources, details.about, .faq details, details.credits',
     menu: 'details[data-menu]',
+    gel: '[data-gel]',
+    gelLane: '.lane',
+    gelBand: '.lane-band',
   });
   // Every query in motion.js goes through all(BOUND.…) or looks inside an element it was given.
   const queries = [...code().matchAll(/\.querySelector(?:All)?\(\s*(['"`][^'"`]*['"`]|[^)'"`]+)/g)].map((m) => m[1]);

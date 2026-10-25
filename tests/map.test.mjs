@@ -59,9 +59,12 @@ test('the Our work layer marks the nine states and Delhi, as the other layers ma
   for (const state of STATES) assert.equal(LAYERS.work.note(state.id), LINES[state.n] ?? '', state.n);
   for (const line of Object.values(LAYERS.work.states)) assert.doesNotMatch(line, TOWNS);
   assert.equal(LAYERS.work.sentence, 'Our laboratory is in Hyderabad, Telangana. We have run population and newborn screening at 15 sites in nine states and Delhi.');
-  // No pins for towns: the layer marks states only, and the page's script draws no pins.
+  // No pins for towns: the layer marks states only. The one mark the script draws is the emblem, one
+  // per state with a site, keyed by the state (25 October 2026), never a town's position.
   assert.equal(LAYERS.work.places, 0);
-  assert.doesNotMatch(readFileSync('src/js/site/main.js', 'utf8'), /map-pins|PLACES/);
+  const main = readFileSync('src/js/site/main.js', 'utf8');
+  assert.doesNotMatch(main, /map-pins|PLACES/);
+  assert.match(main, /if \(LAYERS\.work\.states\[state\.id\]\) \{[\s\S]*?map-emblem/);
 });
 
 test('a state\'s chip names it and what was screened there, in the shortest form (6.2)', () => {
@@ -106,11 +109,12 @@ test('a pin\'s chip says what was screened in the shortest form, and its name sa
   assert.equal(said(site('Dhule')), 'Dhule, Maharashtra: newborn screening for sickle cell anaemia.');
 });
 
-test('the home page says what the map\'s script says, and the film names five states (R2)', () => {
+test('the home page says what the map\'s script says, and the film pins every state we work in (R2)', () => {
   const $ = load('/');
   assert.equal($('#map input[value=work]').attr('data-readout'), LAYERS.work.sentence);
   const named = $('.hero [data-places] [data-place]').map((i, li) => [[li.attribs['data-place'], $(li).find('b').contents().first().text().trim()]]).get();
-  assert.deepEqual(named, [['DL', 'Delhi'], ['MH', 'Maharashtra'], ['JH', 'Jharkhand'], ['TS', 'Telangana'], ['TN', 'Tamil Nadu']]);
+  assert.deepEqual(named, [['DL', 'Delhi'], ['RJ', 'Rajasthan'], ['GJ', 'Gujarat'], ['MP', 'Madhya Pradesh'], ['JH', 'Jharkhand'], ['CG', 'Chhattisgarh'], ['MH', 'Maharashtra'], ['TS', 'Telangana'], ['KA', 'Karnataka'], ['TN', 'Tamil Nadu']]);
+  assert.deepEqual(named.map(([id]) => id).sort(), Object.keys(LAYERS.work.states).sort(), 'one pin for each state with a site');
   // Each label is placed on its own state.
   const cells = [];
   RUNS.forEach((row, r) => { for (let i = 0; i < row.length; i += 3) for (let c = row[i]; c <= row[i + 1]; c += 1) cells.push({ x: GRID.x0 + (c + 0.5) * GRID.pitchX, z: GRID.z0 + (r + 0.5) * GRID.pitchZ, state: STATES[row[i + 2]].id }); });

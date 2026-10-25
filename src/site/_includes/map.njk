@@ -21,7 +21,7 @@
   <section id="{{ band }}" class="section map-band{{ ' ' + surface if surface }}" aria-labelledby="{{ band }}-h">
     <div class="wrap map-layout" data-map-layout>
       <div class="map-words">
-        <h2 id="{{ band }}-h" class="h2">{{ options.h2 or "Where the need is, and where we work" }}</h2>
+        <h2 id="{{ band }}-h" class="h2">{{ (options.h2 or "Where the need is, and where we work") | safe }}</h2>
         {%- if options.body %}
         <p class="map-body">{{ options.body }}</p>
         {%- endif %}
@@ -46,6 +46,7 @@
               <li><i class="key key-{{ entry.tone }}"></i>{{ entry.text }}</li>
               {%- endfor %}
             </ul>
+            <p class="map-key-emblem"><img src="/assets/logo/lightening-lives-emblem.svg" alt="" width="60" height="60">Where we have worked</p>
           </div>
           <div class="state-card" data-map-state hidden>
             <p class="state-title" data-state-title></p>
@@ -69,5 +70,8 @@
         <img class="map-still" data-map-still src="/assets/img/site-map-{{ opened }}.webp" width="1000" height="1000" alt="A map of India with state borders drawn on it. The states the chosen layer marks are shown in green and named." loading="lazy" decoding="async">
       </div>
     </div>
+    {%- if caller %}
+    <div class="wrap map-after">{{ caller() }}</div>
+    {%- endif %}
   </section>
 {%- endmacro %}

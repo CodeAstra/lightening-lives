@@ -1,6 +1,6 @@
 // Phase 6, Task 6.4 Step 3a: DESIGN.md's contrast table, re-measured on the built stylesheet. The
-// three text colours (canopy, moss, leaf) on every surface they are set on (mist, paper, sprout and
-// glass over mist), the solid button's paper on leaf, and canopy on the one pointed-out fill (life
+// three text colours (canopy, moss, leaf) on every surface they are set on (mist, paper, sprout, stone
+// and glass over mist), the solid button's paper on leaf, and canopy on the one pointed-out fill (life
 // green lightened through paper, 22%: the comparison table's column and the 404 page's line). Every
 // pair at least 4.5:1 (WCAG 2, AA, text of any size).
 import { test } from 'node:test';
@@ -40,11 +40,12 @@ test('the ratio is WCAG 2\'s: black on white is 21, a colour on itself 1', () =>
 });
 
 test('every text colour on every surface it is set on is at least 4.5:1', () => {
-  const c = Object.fromEntries(['mist', 'paper', 'sprout', 'leaf', 'canopy', 'moss', 'sun', 'glass', 'glass-strong'].map((n) => [n, rgba(token(n))]));
+  const c = Object.fromEntries(['mist', 'paper', 'sprout', 'stone', 'leaf', 'canopy', 'moss', 'sun', 'glass', 'glass-strong'].map((n) => [n, rgba(token(n))]));
   const surfaces = {
     mist: c.mist,
     paper: c.paper,
     sprout: c.sprout,
+    stone: c.stone,
     'glass over mist': over(c.glass, c.mist),
     'strong glass over mist': over(c['glass-strong'], c.mist),
     'sun through paper (22%)': over(c.sun, c.paper, 0.22),

@@ -1,0 +1,13 @@
+{
+  "_note": "The hero's announcement (25 October 2026). Add an event as an item: text (a few words), when (as it should read), link { text, href }, start and end (YYYY-MM-DD, days in India; it shows from the start of the first to the end of the last), and optionally tag (default 'Event'). The soonest running item shows as one line above the hero's heading; nothing shows when none is running. Expired items can stay: they are never published. The SMA Run below is the user's example; its dates have passed, so it shows only on the dev server (npm run dev), as a preview.",
+  "items": [
+    {
+      "tag": "Event",
+      "text": "Join the SMA Run",
+      "when": "13–14 October",
+      "link": { "text": "Register here", "href": "/contact/" },
+      "start": "2026-10-01",
+      "end": "2026-10-14"
+    }
+  ]
+}

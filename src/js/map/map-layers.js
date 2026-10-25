@@ -124,18 +124,21 @@ export function said(site) {
   return `${state === site.name ? site.name : `${site.name}, ${state}`}: ${words}.`;
 }
 
-// The states the film names in chips as the camera comes to rest (content 5.1, R2): Delhi, and four
-// states at the country's edges, west, east and south, with Telangana, where our laboratory is and
-// where the open card lies; so the chips stand apart and say what the caption says, "at the scale of
-// a nation". Each chip sits to the right of a point on its state, chosen so that no two chips meet:
-// Maharashtra's is north of the state's middle and Telangana's south of it, since the two states
-// are neighbours and the chips run east.
+// The states the film pins as the camera comes to rest (content 5.1, R2; 25 October 2026, the user:
+// "show all the states Lightening Lives is in using the logo as pin"): every state with a site, each
+// at a point inside it, where the emblem stands and the state's name sits under it. Names only: the
+// user asked for Telangana's "Our laboratory" note to go (25 October 2026).
 export const FILM_PLACES = [
-  { id: 'DL', lat: 28.61, lon: 77.21, note: 'Screening' },
-  { id: 'MH', lat: 20.3, lon: 75.4, note: 'Screening', shortSide: 'left' }, // west on a short screen: see site.css
-  { id: 'JH', lat: 23.55, lon: 85.3, note: 'Screening' },
-  { id: 'TS', lat: 17.05, lon: 78.9, note: 'Our laboratory, and screening' },
-  { id: 'TN', lat: 11.1, lon: 78.4, note: 'Screening' },
+  { id: 'DL', lat: 28.61, lon: 77.21, note: '' },
+  { id: 'RJ', lat: 26.3, lon: 73.6, note: '' },
+  { id: 'GJ', lat: 22.7, lon: 71.4, note: '' },
+  { id: 'MP', lat: 23.6, lon: 77.0, note: '' },
+  { id: 'JH', lat: 23.55, lon: 85.3, note: '' },
+  { id: 'CG', lat: 21.0, lon: 82.6, note: '' },
+  { id: 'MH', lat: 19.6, lon: 75.6, note: '' },
+  { id: 'TS', lat: 18.2, lon: 79.6, note: '' },
+  { id: 'KA', lat: 13.9, lon: 75.7, note: '' },
+  { id: 'TN', lat: 11.1, lon: 78.4, note: '' },
 ];
 
 // For each layer:

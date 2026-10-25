@@ -22,7 +22,8 @@ const $ = load('/');
 
 test('every still the home page shows is there at the size its markup gives', () => {
   const stills = $('img[src^="/assets/img/site-"]');
-  assert.ok(stills.length >= 5);
+  // Since 25 October 2026 the home page shows the film's opening still and the map's (the steps moved to Technology).
+  assert.ok(stills.length >= 2);
   stills.each((i, img) => {
     const file = `dist${img.attribs.src}`;
     assert.ok(existsSync(file), file);
@@ -49,6 +50,6 @@ test('the preview card is the 1200 x 630 PNG the page names, light enough to sha
   assert.deepEqual(size('dist/assets/img/social.png'), [1200, 630]);
   assert.ok(statSync('dist/assets/img/social.png').size <= 300 * 1024, `${statSync('dist/assets/img/social.png').size} bytes`);
   const alt = $('meta[property="og:image:alt"]').attr('content') ?? '';
-  assert.match(alt, /Genetic testing from a spot of blood on a card\./);
+  assert.match(alt, /One test to screen\. The same test to confirm\./);
   assert.match(alt, /map of India/);
 });

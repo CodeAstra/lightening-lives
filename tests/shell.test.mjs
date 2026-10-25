@@ -36,8 +36,9 @@ test('every page has the shell', () => {
     assert.equal($('header .btn-solid').length, 2, `${url}: no call to action in the header beyond the two navs' one`);
     assert.ok($('main .btn-solid').length <= 2, url);
 
-    assert.match($('footer').text(), /Nacharam, Hyderabad, Telangana 500076/, url);
-    assert.match($('footer').text(), /Hayathnagar, Hyderabad, Telangana 500068/, url);
+    // The footer was made compact on 25 October 2026: the city with its icon; the full addresses live on Contact.
+    assert.match($('footer').text(), /Hyderabad, Telangana/, url);
+    assert.equal($('footer .foot-social a').length, 3, url);
     assert.match($('footer').text(), /We don't offer testing to individuals/, url);
 
     assert.equal($('html').attr('lang'), 'en-IN', url);
@@ -57,7 +58,7 @@ test('the notice for individuals appears where the content file says', () => {
   // These pages arrive in Phase 4; each is checked once it exists.
   for (const url of ['/solutions/', '/programmes/', '/partnerships/', '/contact/'].filter(exists))
     assert.match(load(url)('.notice').text(), /don't test individuals/, url);
-  const home = load('/');
-  assert.equal(home('.notice').length, 1);
-  assert.match(home('.notice').text(), /don't test individuals/);
+  // The home page no longer carries it (nine sections, 25 October 2026); the footer says it on every page.
+  assert.equal(load('/')('main .notice').length, 0);
+  assert.match(load('/')('footer').text(), /We don't offer testing to individuals/);
 });

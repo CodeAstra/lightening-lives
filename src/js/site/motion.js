@@ -3,11 +3,11 @@
 // thing is on screen, so it can be taken up again at any instant (overwrite: 'auto'). The keyboard
 // gets what the pointer gets. A reader who has asked for less motion gets none of it: the
 // stylesheet's states alone. The one scroll-linked motion is a section's opening settling in, once,
-// the first time it comes into view (decision D1, B); nothing is scrubbed and nothing loops.
+// the first time it comes into view (decision D1, B); nothing is scrubbed and nothing here loops (the
+// partners sliding along the opening's foot are the stylesheet's one loop, with a button that stops it).
 //
 // What moves, and what does not: colour (hover fills, REASSURED's green) stays the stylesheet's
-// short transitions; GSAP moves things (a press, the link's arrow, the contact row, the film's
-// caption, the settle-ins), and the stylesheet's own movement for those is switched off while it does
+// short transitions; GSAP moves things (a press, the link's arrow, the contact row, the settle-ins), and the stylesheet's own movement for those is switched off while it does
 // (html.motion-on).
 
 import { gsap } from 'gsap';
@@ -18,11 +18,13 @@ export const BOUND = {
   press: '.btn, .nav-link, .tag, .test-row, .action',
   arrow: '.link',
   slide: '.actions a',
-  caption: '[data-film-caption]',
   settle: 'main > section.section > .wrap > :first-child, main > section.vision > .wrap',
   segment: '.seg',
   disclosure: 'details.map-sources, details.about, .faq details, details.credits',
   menu: 'details[data-menu]',
+  gel: '[data-gel]',
+  gelLane: '.lane',
+  gelBand: '.lane-band',
 };
 
 const EASE = 'power2.out'; // decelerates, no overshoot: nothing here was thrown
@@ -53,19 +55,6 @@ function bind(signal) {
     for (const type of ['pointerenter', 'focus']) on(row, type, () => { if (type === 'pointerenter' || row.matches(':focus-visible')) slideTo(row, 0.75 * rem()); });
     for (const type of ['pointerleave', 'blur']) on(row, type, () => { if (!row.matches(':hover') && document.activeElement !== row) slideTo(row, 0); });
   }
-
-  // The line under the film: the film says which one is on (is-on); the new one rises 6px into place
-  // as the last fades.
-  const captions = all(BOUND.caption);
-  gsap.set(captions, { opacity: (i, el) => (el.classList.contains('is-on') ? 1 : 0), y: (i, el) => (el.classList.contains('is-on') ? 0 : 6) });
-  const watch = new MutationObserver((changes) => {
-    for (const { target } of changes) {
-      const now = target.classList.contains('is-on');
-      gsap.to(target, { opacity: now ? 1 : 0, y: now ? 0 : 6, duration: 0.45, ease: EASE, overwrite: 'auto' });
-    }
-  });
-  captions.forEach((caption) => watch.observe(caption, { attributes: true, attributeFilter: ['class'] }));
-  signal.addEventListener('abort', () => watch.disconnect());
 
   // The map's choices: the chosen pill slides to the new choice, so the change reads as one control
   // changing its mind rather than two pills swapping colour (0.26 s; the text's colour follows).
@@ -108,6 +97,22 @@ function bind(signal) {
   // A section's opening settles in the first time it comes into view: 10px and a fade, half a second.
   for (const el of all(BOUND.settle)) {
     gsap.from(el, { opacity: 0, y: 10, duration: 0.5, ease: EASE, scrollTrigger: { trigger: el, start: 'top 85%', once: true } });
+  }
+
+  // The gel: the first time it comes into view, each band travels down from its well to where it
+  // settles, the way DNA moves through a gel, lane by lane (the home page's one authored moment
+  // outside the film). Without script, or with less motion, the bands simply stand where they read.
+  const gel = document.querySelector(BOUND.gel);
+  if (gel) {
+    const lanes = [...gel.querySelectorAll(BOUND.gelLane)];
+    const bands = [...gel.querySelectorAll(BOUND.gelBand)];
+    const tl = gsap.timeline({ scrollTrigger: { trigger: gel, start: 'top 75%', once: true } });
+    bands.forEach((band) => {
+      const lane = lanes.indexOf(band.closest(BOUND.gelLane));
+      const track = band.parentElement;
+      const travel = band.offsetTop - track.clientHeight * 0.06;
+      tl.from(band, { y: -travel, opacity: 0.2, scaleX: 0.85, duration: 1.4, ease: 'power3.out' }, lane * 0.09);
+    });
   }
 }
 

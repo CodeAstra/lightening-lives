@@ -1,3 +1,5 @@
+import { icon, brand } from './src/lib/icons.mjs';
+import { upcoming } from './src/lib/announcements.mjs';
 // Eleventy builds the pages from src/site into dist/. Everything in src/assets (the logo, pictures,
 // type, and the stylesheet and scripts that scripts/build.mjs compiles) is copied to dist/assets.
 import { CONDITIONS } from './src/js/site/contact.js';
@@ -21,6 +23,11 @@ export default function (eleventyConfig) {
 
   // picture.njk names a photograph npm run images has not written: stop the build rather than
   // publish an empty srcset.
+  eleventyConfig.addShortcode('icon', icon); // {% icon "name" %} or {% icon "name", "Label" %}: a Lucide icon, inline (src/lib/icons.mjs)
+  eleventyConfig.addShortcode('brand', brand); // {% brand "linkedin" %}: a social mark
+  // The hero's announcements still to come or running (src/lib/announcements.mjs); the dev server
+  // previews the latest when none is.
+  eleventyConfig.addFilter('upcoming', (items) => upcoming(items, Date.now(), process.env.ELEVENTY_RUN_MODE === 'serve'));
   eleventyConfig.addFilter('where', (list, key, value) => (list ?? []).filter((item) => item[key] === value)); // the items whose key has the value (Our work's sites by state)
   eleventyConfig.addFilter('unknownImage', (name) => {
     throw new Error(`picture(): no image "${name}" in src/site/_data/images.json (run npm run images)`);
@@ -30,7 +37,7 @@ export default function (eleventyConfig) {
   // map's outline where the page draws the map. The company's own pictures (box-, person-) are not
   // stand-ins: they are never credited, so a page that shows only those has no credits and no
   // "representative" line.
-  const own = (row) => /^(box|person)-/.test(row.basename);
+  const own = (row) => /^(box|person|work)-/.test(row.basename);
   eleventyConfig.addFilter('creditsFor', (rows, html = '') =>
     rows.filter((row) => !own(row) && (row.basename === 'map-india' ? /\sdata-map[\s>]/.test(html) : html.includes(`/assets/img/${row.basename}-`))));
 

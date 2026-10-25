@@ -19,6 +19,6 @@ export default {
   // The map's key under each layer, so that the markup a page opens on matches what the script draws
   // (src/site/_includes/map.njk).
   keys: Object.fromEntries(LAYER_ORDER.map((layer) => [layer, LAYERS[layer].key])),
-  // The states the film names in chips as it comes to rest, each with a short note (5.1, R2).
-  film: FILM_PLACES.map((place) => ({ id: place.id, name: name(place.id), note: place.note, shortSide: place.shortSide })),
+  // The states the film pins with the emblem as it comes to rest, Telangana with a note (5.1, R2).
+  film: FILM_PLACES.map((place) => ({ id: place.id, name: name(place.id), note: place.note })),
 };

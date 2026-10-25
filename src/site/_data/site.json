@@ -11,8 +11,21 @@
   "whatsapp": true,
   "analytics": null,
   "social": [
-    { "text": "LinkedIn", "href": "https://www.linkedin.com/in/lightening-lives-llp-32a12b392/" },
-    { "text": "X", "href": "https://x.com/LivesLlp85686" }
+    {
+      "text": "LinkedIn",
+      "icon": "linkedin",
+      "href": "https://www.linkedin.com/in/lightening-lives-llp-32a12b392/"
+    },
+    {
+      "text": "YouTube",
+      "icon": "youtube",
+      "href": "https://www.youtube.com/@LighteningLivesLLP"
+    },
+    {
+      "text": "X",
+      "icon": "x",
+      "href": "https://x.com/LivesLlp85686"
+    }
   ],
   "addresses": {
     "lab": {
@@ -31,32 +44,98 @@
     }
   },
   "nav": [
-    { "text": "Technology", "href": "/technology/" },
-    { "text": "Solutions", "href": "/solutions/" },
-    { "text": "Programmes", "href": "/programmes/" },
-    { "text": "Our work", "href": "/our-work/" },
-    { "text": "About", "href": "/about/" }
+    {
+      "text": "Technology",
+      "href": "/technology/"
+    },
+    {
+      "text": "Solutions",
+      "href": "/solutions/"
+    },
+    {
+      "text": "Programmes",
+      "href": "/programmes/"
+    },
+    {
+      "text": "Our work",
+      "href": "/our-work/"
+    },
+    {
+      "text": "About",
+      "href": "/about/"
+    }
   ],
-  "cta": { "text": "Partner with us", "href": "/partnerships/" },
+  "cta": {
+    "text": "Partner with us",
+    "href": "/partnerships/"
+  },
   "footer": {
     "whatWeDo": [
-      { "text": "Technology", "href": "/technology/" },
-      { "text": "Solutions", "href": "/solutions/" },
-      { "text": "Programmes", "href": "/programmes/" },
-      { "text": "Our work", "href": "/our-work/" }
+      {
+        "text": "Technology",
+        "href": "/technology/"
+      },
+      {
+        "text": "Solutions",
+        "href": "/solutions/"
+      },
+      {
+        "text": "Programmes",
+        "href": "/programmes/"
+      },
+      {
+        "text": "Our work",
+        "href": "/our-work/"
+      }
     ],
     "company": [
-      { "text": "About", "href": "/about/" },
-      { "text": "Team", "href": "/about/team/" },
-      { "text": "Partnerships", "href": "/partnerships/" },
-      { "text": "Contact", "href": "/contact/" }
+      {
+        "text": "About",
+        "href": "/about/"
+      },
+      {
+        "text": "Team",
+        "href": "/about/team/"
+      },
+      {
+        "text": "Partnerships",
+        "href": "/partnerships/"
+      },
+      {
+        "text": "Contact",
+        "href": "/contact/"
+      }
     ],
     "disclaimer": "We work with hospitals, laboratories, clinicians, NGOs, CSR funders and government health programmes. We don't offer testing to individuals. Information on this website is general and is not medical advice.",
     "trademark": "LitLife™ is a trade mark of Lightening Lives LLP.",
     "representative": "These photographs are representative images, not pictures of our own work.",
     "policies": [
-      { "text": "Privacy", "href": "/privacy/" },
-      { "text": "Terms", "href": "/terms/" }
+      {
+        "text": "Privacy",
+        "href": "/privacy/"
+      },
+      {
+        "text": "Terms",
+        "href": "/terms/"
+      }
+    ],
+    "solutions": [
+      {
+        "text": "Sickle cell anaemia",
+        "href": "/solutions/sickle-cell-anaemia/"
+      },
+      {
+        "text": "Thalassaemia",
+        "href": "/solutions/thalassaemia/"
+      },
+      {
+        "text": "Spinal muscular atrophy",
+        "href": "/solutions/spinal-muscular-atrophy/"
+      },
+      {
+        "text": "Develop a test with us",
+        "href": "/solutions/develop-a-test/"
+      }
     ]
   },
   "notice": {
@@ -66,7 +145,13 @@
   "closing": {
     "h2": "Tell us what your programme needs",
     "body": "Tell us the condition you need to test for and where the testing will happen. We will take it from there.",
-    "solid": { "text": "Partner with us", "href": "/partnerships/" },
-    "line": { "text": "Contact us", "href": "/contact/" }
+    "solid": {
+      "text": "Partner with us",
+      "href": "/partnerships/"
+    },
+    "line": {
+      "text": "Contact us",
+      "href": "/contact/"
+    }
   }
 }

@@ -1,6 +1,7 @@
-// The home page: the approved Lumen page (designs/lumen.html) in its sections and order, with the
-// content file's revised copy (content/website-content.md 5.1) and its one new section, "Who we are".
-// The copy below is 5.1's, as written, with [TBC] brackets stripped and the sentence before them kept.
+// The home page (content/website-content.md 5.1, cut to nine sections by the marketing review of 25
+// October 2026, built with the fi.co patterns the user liked; eight since the hero's redo the same day,
+// the partners sliding along its foot): the film; Innovate,
+// Diagnose, REASSURED, Transform lives; one platform; the need and our work; three ways to partner.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -10,38 +11,96 @@ const $ = load('/');
 const text = (el) => $(el).text().replace(/\s+/g, ' ').trim();
 const texts = (selector) => $(selector).map((i, el) => text(el)).get();
 const links = (selector) => $(selector).map((i, a) => [[text(a), $(a).attr('href')]]).get();
+const CRIT = JSON.parse(readFileSync('src/site/_data/reassuredCopy.json', 'utf8'));
+const PARTNERS = JSON.parse(readFileSync('src/site/_data/partners.json', 'utf8'));
 
-test('the page is 5.1\'s: title, description, and no inner-page opening or closing band', () => {
-  assert.equal($('title').text(), 'Lightening Lives | Genetic testing from a spot of blood on a card');
-  assert.equal($('meta[name=description]').attr('content'), 'Molecular diagnostics for inherited blood and muscle conditions, from a dried blood spot. Approved by ICMR, patented in India and Japan, screened at 15 sites. Hyderabad.');
+test('the page: title, description, and no inner-page opening or closing band', () => {
+  assert.equal($('title').text(), 'Lightening Lives | Genetic testing that reaches every community');
+  assert.equal($('meta[name=description]').attr('content'), 'Genetic and molecular diagnostics from a dried blood spot: REASSURED tests that screen and confirm inherited disorders in one test. ICMR approved.');
   assert.equal($('.page-open').length, 0);
   assert.equal($('.closing').length, 0);
 });
 
-test('the sections are the approved page\'s, in its order, with "Who we are" before the vision', () => {
+test('eight sections, in the review\'s order, each labelled by its own heading', () => {
   assert.deepEqual($('main > section').map((i, s) => $(s).attr('id')).get(),
-    ['top', 'how', 'why', 'tests', 'proof', 'map', 'reassured', 'partners', 'programmes', 'who', 'vision', 'contact']);
-  assert.deepEqual(texts('main h2:not(.label)'), [
-    'From one card to a national programme', 'Molecular diagnostics without the limits of conventional testing',
-    'Our diagnostic portfolio', 'What stands behind the tests', 'Where the need is, and where we work',
-    'The standard we design to, letter by letter', 'We work with institutions', 'A test is the middle of the story',
-    'Founded by a physician and scientist', 'Tell us what your programme needs']);
-  // Every section is labelled by its own heading.
+    ['top', 'innovate', 'diagnose', 'reassured', 'model', 'tests', 'map', 'contact']);
+  assert.deepEqual(texts('main h2'), [
+    'Where we work: 10 states', 'We work with', 'Innovate. Patient, carrier or unaffected, read in one run.', 'Diagnose. What changes when you switch.',
+    'The standard we design to, letter by letter', 'Transform lives. Six steps, from a finger prick to a family in care.',
+    'One platform. Built for any inherited condition.', 'Where the need is, and where we work',
+    'Partner with us. Tell us what you need to test for.']);
   $('main > section').each((i, s) => assert.equal($(`#${$(s).attr('aria-labelledby')}`).closest('section').attr('id'), $(s).attr('id'), $(s).attr('id')));
 });
 
-test('the opening film: heading, lead, buttons, note and captions', () => {
-  assert.equal(text('h1'), 'Genetic testing from a spot of blood on a card.');
+test('two-tone headings: the key phrase in DNA blue, never life green, and no eyebrow labels', () => {
+  assert.equal(text('h1 .h-mark'), 'reaches every community.');
+  assert.deepEqual(texts('main h2 .h-mark'), ['Innovate.', 'Diagnose.', 'letter by letter', 'Transform lives.', 'Built for any inherited condition.', 'and where we work', 'Tell us what you need to test for.']);
+  const css = readFileSync('dist/assets/css/site.css', 'utf8').replace(/\s+/g, '');
+  assert.match(css, /\.h-mark\{color:var\(--leaf\)/);
+});
+
+test('the opening: heading, lead with the category, buttons, the proof with icons; no caption and no replay', () => {
+  assert.equal(text('h1'), 'Genetic testing that reaches every community.');
   assert.equal($('h1').closest('section').attr('id'), 'top');
-  assert.equal(text('.hero-lead'), 'We develop genetic tests for inherited blood and muscle conditions, built for hospitals, laboratories and public health programmes.');
-  assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/partnerships/'], ['See our solutions', '/solutions/']]);
+  assert.equal(text('.hero-lead'), 'Genetic and molecular diagnostics from a dried blood spot: one test to screen and confirm, patient, carrier or unaffected, built to the REASSURED standard.');
+  assert.ok(text('.hero-lead').split(' ').length <= 25, 'R1: the home lead is at most 25 words');
+  assert.equal($('.hero-lead a.lead-link').attr('href'), '#reassured');
+  assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/partnerships/'], ['How the test works', '/technology/']]);
   assert.ok($('.hero-actions a').first().is('.btn-solid') && $('.hero-actions a').last().is('.btn-line'));
-  assert.equal(text('.hero-note'), 'Our sickle cell test: approved by ICMR, patented in India and Japan.');
-  assert.match(text('.hero-note'), /approved by ICMR, patented in India and Japan/);
-  assert.deepEqual(texts('.hero [data-film-caption]'), ['A spot of blood, dried on a card.', 'From card to result without a DNA extraction step.', 'Built for screening at the scale of a nation.']);
-  // The captions are hidden from screen readers: "How it works" says the same with more to say.
-  assert.equal($('.film-captions').attr('aria-hidden'), 'true');
-  assert.equal($('.hero button.film-toggle').attr('aria-label'), 'Pause the film');
+  assert.deepEqual(texts('.hero-proof li'), ['ICMR approved', 'Patents granted in India and Japan', '15 sites, 9 states and Delhi']);
+  assert.equal($('.hero-proof li svg.icon').length, 3);
+  // The film plays once, within five seconds, and rests on the map: no caption line, no replay.
+  assert.equal($('[data-film-caption], .film-toggle, [data-film-toggle]').length, 0);
+  const scene = readFileSync('src/js/site/scene.js', 'utf8');
+  const end = Number(scene.match(/end: ([\d.]+), \/\/ the film is over/)[1]);
+  const speed = Number(scene.match(/const SPEED = ([\d.]+);/)[1]);
+  assert.ok(end / speed < 5, `the film runs ${(end / speed).toFixed(2)} s`);
+  assert.match(scene, /film\.time \+= clamp\(elapsed, 0\.001, 0\.125\) \* SPEED/);
+  // The text comes before the film in the page, so the keyboard reaches the buttons before the pins.
+  const order = $('.hero').children().map((i, el) => $(el).attr('class')).get();
+  assert.ok(order.indexOf('hero-text') < order.indexOf('film-screen'), order.join(' '));
+});
+
+test('the film\'s pins: every state we work in, each a named button opening one card that links to the map', () => {
+  const pins = $('.hero [data-places] .place-pin');
+  assert.deepEqual(pins.map((i, b) => $(b).attr('aria-label')).get(), ['Delhi', 'Rajasthan', 'Gujarat', 'Madhya Pradesh', 'Jharkhand', 'Chhattisgarh', 'Maharashtra', 'Telangana', 'Karnataka', 'Tamil Nadu']);
+  pins.each((i, b) => {
+    assert.equal($(b).attr('type'), 'button');
+    assert.equal($(b).attr('aria-expanded'), 'false');
+    assert.equal($(b).attr('aria-controls'), 'place-card');
+    assert.equal($(b).find('img.place-emblem[alt=""]').length, 1);
+  });
+  // Not usable until the film has pinned them (scene.js lifts inert).
+  assert.ok($('[data-places-wrap]').is('[inert]'));
+  assert.equal(text('#places-h'), 'Where we work: 10 states');
+  const card = $('#place-card');
+  assert.ok(card.is('[hidden]'));
+  assert.equal(card.attr('aria-live'), 'polite');
+  assert.equal(card.find('a[data-place-link]').attr('href'), '#map');
+  const main = readFileSync('src/js/site/main.js', 'utf8');
+  assert.match(main, /function initPins\(\)/);
+  assert.match(main, /ll:map-show/);
+  assert.match(main, /Escape/);
+});
+
+test('the announcement: none in a build for the site once its last day has passed; the dates decide', async () => {
+  const data = JSON.parse(readFileSync('src/site/_data/announcements.json', 'utf8'));
+  assert.ok(Array.isArray(data.items));
+  // The example has ended, so the built page has no pill.
+  assert.equal($('.hero-news').length, 0);
+  const { upcoming } = await import('../src/lib/announcements.mjs');
+  const run = { text: 'Join the SMA Run', when: '13–14 October', link: { text: 'Register here', href: '/contact/' }, start: '2026-10-01', end: '2026-10-14' };
+  const at = (iso) => Date.parse(iso);
+  assert.deepEqual(upcoming([run], at('2026-09-30T12:00:00+05:30')).map((i) => i.live), [false], 'before its first day: kept, not live');
+  assert.deepEqual(upcoming([run], at('2026-10-01T00:00:00+05:30')).map((i) => i.live), [true], 'from midnight of its first day, Indian time');
+  assert.deepEqual(upcoming([run], at('2026-10-14T23:59:00+05:30')).map((i) => i.live), [true], 'through its last day');
+  assert.deepEqual(upcoming([run], at('2026-10-15T00:00:01+05:30')), [], 'gone the next day');
+  assert.deepEqual(upcoming([run], at('2026-10-25T12:00:00+05:30'), true).map((i) => i.preview), [true], 'the dev server previews the latest');
+  assert.deepEqual(upcoming([{ ...run, link: undefined }], at('2026-10-05T12:00:00+05:30')), [], 'an item without a link is not shown');
+  const later = { ...run, text: 'Later', start: '2026-11-01', end: '2026-11-02' };
+  assert.deepEqual(upcoming([later, run], at('2026-10-05T12:00:00+05:30')).map((i) => i.text), ['Join the SMA Run', 'Later'], 'soonest first');
+  // The page checks the dates again in the reader's browser.
+  assert.match(readFileSync('src/js/site/main.js', 'utf8'), /function initNews\(\)/);
 });
 
 test('the film is gated before first paint and falls back to a still', () => {
@@ -61,82 +120,86 @@ test('the film is gated before first paint and falls back to a still', () => {
   assert.ok(play.is('[hidden]'), 'shown by the script only where the film can play');
 });
 
-test('How it works: the three steps, in the film\'s words', () => {
-  assert.equal(text('#how .lead'), 'Our tests are simple, affordable and usable outside specialised laboratories, so that molecular diagnosis can reach everyone.');
-  assert.deepEqual(texts('#how .steps .label'), ['One card', 'One batch', 'One programme']);
-  assert.deepEqual(texts('#how h3'), ['A spot of blood, dried on a card.', 'From card to result without a DNA extraction step.', 'Built for screening at the scale of a nation.']);
-  assert.deepEqual(texts('#how .steps p:not(.label)'), [
-    'That is the whole sample: a finger prick and a card. No needle, no tube, no cold chain on the way to the testing centre.',
-    'A small punch from the spot goes straight into the reaction. Many cards run at once, on standard PCR equipment.',
-    'Population and newborn screening at 15 sites in nine states and Delhi, with test details captured on a mobile app as it happens.']);
-  assert.equal($('#how .steps img').length, 3);
-  assert.deepEqual(links('#how a.link'), [['How the technology works', '/technology/']]);
+test('who works with us: all thirteen logos sliding the full width of the opening\'s foot, sized by their own shapes', () => {
+  const published = PARTNERS.logos.filter((p) => p.published);
+  assert.equal(published.length, 13);
+  const first = $('#partners .marquee-track').first();
+  assert.deepEqual(first.find('img').map((i, img) => img.attribs.alt).get(), published.map((p) => p.name));
+  first.find('img').each((i, img) => {
+    const p = published[i];
+    assert.ok(img.attribs.width && img.attribs.height && img.attribs.loading === 'lazy', img.attribs.alt);
+    // Each logo carries its own proportions, so the stylesheet sizes it without squeezing it.
+    assert.equal(img.attribs.style, `--ratio: ${Math.round((p.width / p.height) * 1000) / 1000}`, img.attribs.alt);
+  });
+  // The second copy makes the loop seamless and is hidden from assistive technology.
+  const copy = $('#partners .marquee-copy');
+  assert.equal(copy.attr('aria-hidden'), 'true');
+  assert.equal(copy.find('img').length, 13);
+  copy.find('img').each((i, img) => assert.equal(img.attribs.alt, ''));
+  assert.equal($('#partners').closest('section').attr('id'), 'top');
+  // No visible label and no button (the user, 25 October 2026): its heading is for screen readers, and
+  // the row itself takes the focus, which stops it, as pointing at it and tapping it do.
+  assert.ok($('#partners-h').is('.sr-only'));
+  assert.equal($('#partners button, #partners a').length, 0);
+  assert.equal($('#partners .marquee').attr('tabindex'), '0');
+  const css = readFileSync('src/css/site.css', 'utf8');
+  assert.match(css, /\.marquee:hover \.marquee-track, \.marquee:focus-within \.marquee-track, \.hero-foot\.is-paused \.marquee-track \{ animation-play-state: paused; \}/);
+  assert.match(css, /prefers-reduced-motion: reduce\) \{\s*\.marquee \{[^}]*overflow-x: auto/);
+  assert.match(css, /\.hero-foot \{ margin: 2\.25rem calc\(var\(--gutter\) \* -1\) 0;/, 'the full width of the window');
+  assert.match(readFileSync('src/js/site/main.js', 'utf8'), /strip\.addEventListener\('click'/);
 });
 
-test('Why: eight rows, and no line of adjectives', () => {
-  assert.equal(text('#why .lead'), 'Conventional genetic tests need venous blood, a cold chain, a specialist laboratory and a second test to confirm. So they rarely reach the people who need them most.');
-  // "Genetic diagnosis, made: Faster · Simpler · …" is removed (content 5.1, R1).
-  assert.equal($('#why .better').length, 0);
-  assert.equal($('#better-h').length, 0);
-  assert.deepEqual($('#why .why > li').map((i, li) => [[text($(li).find('h3')), text($(li).find('p'))]]).get(), [
-    ['A spot of blood, not a tube', 'A finger prick onto a card. No venepuncture, no EDTA tube, no pre-processing.'],
-    ['Room temperature, not a cold chain', 'Cards keep and travel at room temperature, so samples can come from anywhere a health worker can reach.'],
-    ['Screening and confirmation in one', 'One test does both, so a positive result needs no second test and no second visit.*'],
-    ['Extraction-free molecular diagnostics', 'No separate DNA extraction step, which saves a laboratory time and reagents.*'],
-    ['From birth', 'Newborns can be tested at birth. Conventional confirmatory tests wait 72 hours.*'],
-    ['Minimal laboratory infrastructure', 'Standard PCR equipment and a gel tank. No specialised laboratory.'],
-    ['High-throughput, automation-friendly', 'Many cards in one run, on a workflow that can be automated.'],
-    ['For one patient or a whole district', 'Designed for a diagnosis in a clinic and for large-scale public health programmes.']]);
-  assert.equal(text('#why .footnote'), '* Where applicable for developed assays.');
+test('Innovate: the gel, five lanes with the carrier pointed out, four icon-led points, and the way to the method', () => {
+  assert.deepEqual(texts('#innovate .lane-name'), ['Marker', 'Unaffected', 'Carrier', 'Patient', 'Control']);
+  assert.equal($('#innovate .lane.is-on .lane-name').text(), 'Carrier');
+  assert.deepEqual($('#innovate .lane').map((i, l) => $(l).find('.lane-band').length).get(), [6, 1, 2, 1, 0]);
+  assert.ok($('#innovate [role=img]').attr('aria-label').length > 60);
+  assert.deepEqual(texts('#innovate .ticks strong'), ['Screening cum confirmatory.', 'From birth.', 'No cold chain.', 'No DNA extraction.']);
+  assert.equal($('#innovate .ticks svg.icon').length, 4);
+  assert.deepEqual(links('#innovate a.link'), [['How the test works', '/technology/']]);
 });
 
-test('the portfolio: four kinds, then seven tests ending with the open place', () => {
-  assert.equal(text('#tests .lead'), 'Four kinds of genetic test, in two families so far, with more assays under development.');
-  assert.deepEqual($('#tests .kinds > li').map((i, li) => [[text($(li).find('h3')), text($(li).find('p'))]]).get(), [
-    ['Monogenic disorders', 'Haemoglobinopathies and musculopathies: inherited disorders of haemoglobin, and inherited conditions that weaken the muscles. The two families we have developed tests for so far.'],
-    ['Pharmacogenetic variants', 'How a person\'s genes change their response to a medicine, for personalised therapy. In development.'],
-    ['Rare genetic disorders', 'Tests for rare inherited conditions, developed when an institution needs one.'],
-    ['Custom molecular diagnostic assays', 'Assays designed for a research study or a clinical service.']]);
-  assert.equal(text('#tests .sofar h3'), 'Developed so far');
-  assert.equal(text('#tests .sofar p'), 'Each of these began with an institution that needed it. The next can begin with yours.');
-
-  const rows = $('#tests li.test.test-row');
-  assert.equal(rows.length, 7);
-  const row = (i) => rows.eq(i);
-  assert.deepEqual(rows.map((i, li) => [[text($(li).find('h4')), text($(li).find('.label'))]]).get(), [
-    ['Sickle cell anaemia', 'Haemoglobinopathy'], ['Thalassaemia and other haemoglobinopathies', 'Haemoglobinopathy'],
-    ['Spinal muscular atrophy', 'Musculopathy'], ['Duchenne muscular dystrophy', 'Musculopathy'],
-    ['Limb-girdle muscular dystrophy', 'Musculopathy'], ['In development', 'Coming soon'], ['The condition you need next', '']]);
-  assert.deepEqual(rows.map((i, li) => text($(li).find('.test-what > p'))).get(), [
-    'LitLife™-SCA screens for and confirms sickle cell anaemia in one test. Developed with CSIR-CCMB know-how for the National Sickle Cell Anaemia Elimination Mission.',
-    'LitLife™-BThal and LitLife™-AlphaThal for beta and alpha thalassaemia, LitLife™-SiBThal217 for sickle cell anaemia and beta thalassaemia together, and testing for HbD and HbE.',
-    'LitLife™-SMA screens for and confirms SMA from a dried blood spot. Designed for newborn screening, where finding SMA before symptoms changes what treatment can do.',
-    'A genetic test for DMD: an earlier diagnosis for a boy losing strength, and carrier testing for his mother and sisters.',
-    'A genetic test for LGMD, where the first symptom and a diagnosis are often years apart, and the subtype decides the care.',
-    'A blood coagulation panel for inherited bleeding disorders, and pharmacogenomics testing.',
-    'Tell us what your programme or laboratory needs to detect. We develop the test to the same REASSURED standard.']);
-  // Tags: proof tags filled; a row whose tags are only a bracket has none.
-  assert.deepEqual(row(0).find('.tag').map((i, t) => [[text(t), $(t).is('.tag-proof')]]).get(),
-    [['Approved by ICMR', true], ['Patented in India and Japan', true], ['Dried blood spot', false]]);
-  assert.deepEqual(texts(row(1).find('.tag')), ['Dried blood spot']);
-  assert.deepEqual(texts(row(2).find('.tag')), ['Dried blood spot', 'No DNA extraction']);
-  for (const i of [3, 4, 5, 6]) assert.equal(row(i).find('.tags').length, 0, `row ${i}`);
-  // Each row's link; DMD and LGMD point to Develop a test until their pages open (content 3.1).
-  assert.deepEqual(rows.map((i, li) => links($(li).find('a'))).get(), [
-    ['About this test', '/solutions/sickle-cell-anaemia/'], ['About these tests', '/solutions/thalassaemia/'],
-    ['About this test', '/solutions/spinal-muscular-atrophy/'],
-    ['Ask about this test', '/solutions/develop-a-test/#musculopathies'], ['Ask about this test', '/solutions/develop-a-test/#musculopathies'],
-    ['What we are developing', '/solutions/develop-a-test/#in-development'], ['Talk to us about a new test', '/solutions/develop-a-test/']]);
-  assert.equal($('#tests details').length, 0, 'the "About the condition" disclosures moved to the tests\' pages');
+test('Diagnose: the poster\'s comparison, six rows, ours pointed out, short labels on a phone', () => {
+  assert.deepEqual(texts('#diagnose tbody th'), ['Sample', 'Storage and transport', 'Pre-processing', 'A second test to confirm', 'Newborns', 'Throughput']);
+  assert.deepEqual(texts('#diagnose thead th'), ['Conventional screening tests', 'Conventional confirmatory tests', 'LitLife™']);
+  assert.equal($('#diagnose td.is-ours').length, 6);
+  assert.deepEqual([...new Set($('#diagnose td').map((i, td) => td.attribs['data-label']).get())], ['Screening', 'Confirmation', 'LitLife™']);
+  assert.doesNotMatch(text('#diagnose'), /sensitivity|specificity/i);
 });
 
-test('Evidence: four proof names in DNA blue', () => {
-  assert.deepEqual(texts('#proof .hl'), ['ICMR', 'India and Japan', 'CSIR-CCMB', '15 sites']);
-  assert.deepEqual($('#proof .proof > li').map((i, li) => [[text($(li).find('h3')), text($(li).find('p'))]]).get(), [
-    ['Approved by ICMR', 'LitLife™-SCA, our sickle cell test, is approved by the Indian Council of Medical Research.'],
-    ['Patented in India and Japan', 'The technology behind our tests holds patents granted in India and Japan, and a patent published internationally.'],
-    ['Working with CSIR-CCMB', 'An MOU with the CSIR-Centre for Cellular and Molecular Biology, Hyderabad, covers developing and commercialising the sickle cell assay.'],
-    ['Proven at 15 sites', 'Population and newborn screening in nine states and Delhi, and a test built for the National Sickle Cell Anaemia Elimination Mission.']]);
+test('REASSURED: nine letters as buttons over nine criteria in the poster\'s words, each with its icon', () => {
+  assert.equal(texts('#reassured [data-word] button').join(''), 'REASSURED');
+  const rows = $('#reassured [data-criteria] > li');
+  assert.equal(rows.length, 9);
+  rows.each((i, li) => {
+    const c = CRIT.items[i];
+    assert.equal(text($(li).find('h3 span').last()), c.name, c.name);
+    assert.equal(text($(li).find('p')), c.line, c.name);
+    assert.equal($(li).find('.icon-tile svg.icon').length, 1, c.name);
+  });
+  assert.equal(text('#reassured .lead'), 'We are an innovation-driven company developing REASSURED genetic tests, making molecular diagnosis accessible to all.');
+  // The user, 25 October 2026: "Avoid one drop of blood and everything else can be used".
+  assert.doesNotMatch(text('#reassured'), /drop of blood|single drop|one drop/i);
+  assert.match(text('#reassured'), /Land et al\., Nature Microbiology \(2019\)/);
+});
+
+test('Transform lives: the poster\'s six steps, testing then care, each with its icon', () => {
+  assert.deepEqual(texts('#model .model-step h3'), ['1 Collect', '2 Transport', '3 Test', '4 Report', '5 Treat and counsel', '6 Follow up']);
+  assert.equal($('#model .model-step .icon-tile svg.icon').length, 6);
+  assert.equal($('#model .model-step.is-care').length, 2);
+  assert.deepEqual(texts('#model .model-phase'), ['Testing', 'Care']);
+});
+
+test('one platform: two families of tests, what is in development, and the open place', () => {
+  assert.deepEqual(texts('#tests .family h3'), ['Blood disorders', 'Muscle disorders']);
+  assert.deepEqual($('#tests .family-list a > span:first-child').map((i, s) => text(s)).get(), [
+    'Sickle cell anaemia', 'Sickle-beta thalassaemia', 'Beta thalassaemia', 'Alpha thalassaemia', 'HbD and HbE',
+    'Spinal muscular atrophy', 'Duchenne muscular dystrophy', 'Limb-girdle muscular dystrophy']);
+  assert.match(text('#tests .family-dev'), /blood coagulation panel and pharmacogenomics/);
+  assert.equal($('#tests a.next-tile').attr('href'), '/solutions/develop-a-test/');
+  assert.match(text('#tests a.next-tile'), /Your condition next\./);
+  // Unpublished pages are not linked (DMD and LGMD wait for their facts).
+  $('#tests a').each((i, a) => assert.doesNotMatch(a.attribs.href, /duchenne|limb-girdle/, a.attribs.href));
 });
 
 test('the map: three layers, each with its sentence, and a still without script', () => {
@@ -157,66 +220,25 @@ test('the map: three layers, each with its sentence, and a still without script'
   assert.equal($('#map [aria-live=polite]').length, 1);
 });
 
-test('REASSURED: nine letters as buttons and nine criteria in the company\'s words', () => {
-  assert.equal(text('#reassured .lead'), 'REASSURED is a published set of nine criteria for diagnostic tests that work in low-resource settings. Here is what each one means in our tests.');
-  const names = ['Real-time connectivity', 'Ease of specimen collection', 'Affordable', 'Sensitive', 'Specific', 'User-friendly', 'Rapid and robust', 'Equipment-free or simple', 'Deliverable to end-users'];
-  assert.deepEqual($('#reassured [data-word] button').map((i, b) => [[text(b), b.attribs['aria-label']]]).get(),
-    names.map((n) => [n[0], `${n[0]}: ${n}`]));
-  assert.deepEqual($('#reassured .criteria > li').map((i, li) => [[text($(li).find('h3')), text($(li).find('p'))]]).get(), [
-    [names[0], 'Test details are captured on a mobile app, so a programme can follow its screening as it happens.'],
-    [names[1], 'A spot of blood from a finger prick, dried on a card. Minimally invasive.'],
-    [names[2], 'Priced for programmes that test whole populations, and for the health system that pays.'],
-    [names[3], 'Few false negatives. Our validation data is shared with institutions on request.'],
-    [names[4], 'Few false positives, which is what lets one test both screen and confirm.'],
-    [names[5], 'Extraction-free, with an automation-friendly workflow and minimal training.'],
-    [names[6], 'Quick turnaround and high-throughput screening. Cards keep at room temperature.'],
-    [names[7], 'Minimal laboratory infrastructure: standard PCR equipment, no specialised laboratory.'],
-    [names[8], 'Designed for one patient in a clinic and for large-scale public health programmes.']]);
-  assert.match(text('#reassured'), /Source Land et al\., Nature Microbiology \(2019\)/);
+test('our latest work, under the map: three real items, each a compact card with its kind', () => {
+  assert.equal(text('#map .work-row-h'), 'Our latest work');
+  assert.deepEqual(texts('#map .work-kind'), ['Field programmes', 'Conference poster', 'Patents']);
+  assert.deepEqual($('#map .work-card a').map((i, a) => a.attribs.href).get(), ['/our-work/#sites', '/our-work/', '/technology/#patents']);
+  assert.deepEqual(links('#map .work-row > a.link'), [['All our work', '/our-work/']]);
 });
 
-test('Who we work with: three audiences, a link and the notice', () => {
-  assert.equal(text('#partners .lead'), 'Hospitals, laboratories and public health programmes bring us a condition to screen for or diagnose. Most of that work begins as a collaboration.');
-  assert.deepEqual($('#partners .audiences > li').map((i, li) => [[text($(li).find('h3')), text($(li).find('p'))]]).get(), [
-    ['Hospitals, laboratories and clinicians', 'Genetic tests for inherited blood and muscle conditions, designed to run with minimal laboratory infrastructure. We help set the method up and train your staff.'],
-    ['District health officers and government programmes', 'Tests developed for national health programmes, for screening at population scale, with counselling and follow-up alongside.'],
-    ['NGOs and CSR funders', 'A partner for large, population-level screening: the testing, the method for the field, and support for the families it identifies.']]);
-  assert.deepEqual(links('#partners a.link'), [['How a collaboration works', '/partnerships/#how-it-starts']]);
-  assert.equal(text('#partners .notice .label'), 'For individuals');
-  assert.equal(text('#partners .notice p'), 'Looking for a test for yourself or your family? We work with institutions and don\'t test individuals. Please speak to your doctor or visit your nearest government health facility.');
+test('three ways to partner, signed by the founder, with the email and the phone', () => {
+  assert.deepEqual(texts('#contact .door-who'), ['Hospitals and laboratories', 'Public health programmes', 'CSR and NGOs']);
+  assert.equal($('#contact .door .icon-tile svg.icon').length, 3);
+  assert.match(text('#contact .signed'), /Dr\. Giriraj Ratan Chandak, MD, PhD, DNB\. Founder and CEO; formerly Chief Scientist at CSIR-CCMB and Director of CDFD\./);
+  assert.deepEqual($('#contact .signed-reach a').map((i, a) => a.attribs.href).get(), ['mailto:admin@lighteninglives.in', 'tel:+919182588191']);
 });
 
-test('Programmes: the story after the test, and the three place photographs labelled as places', () => {
-  assert.equal(text('#programmes .lead'), 'After the result come treatment, counselling and follow-up. We run awareness and counselling programmes, mostly on behalf of the government, and help set up patient support groups.');
-  assert.match(text('#programmes'), /Sample collection, transport, testing, reporting, treatment with counselling, follow-up: our testing model covers all six, so that a result leads somewhere\./);
-  assert.deepEqual(links('#programmes a.link'), [['See our programmes', '/programmes/']]);
-  assert.equal($('#programmes h3, #programmes .label').filter((i, e) => /Where our field work has taken us/.test(text(e))).length, 1);
-  // Labelled by state (R2); the alt text may still describe the exact place.
-  assert.deepEqual(texts('#programmes figcaption'), ['Maharashtra', 'Telangana', 'Jharkhand']);
-  assert.equal(text('#programmes h3.label'), 'Where our field work has taken us');
-});
-
-test('Who we are: the founders, in text only, with two links', () => {
-  assert.equal(text('#who .label'), 'Who we are');
-  assert.equal(text('#who p:not(.label):not(:has(a))'), 'Dr. Giriraj Ratan Chandak, formerly Chief Scientist at CSIR-CCMB and a Director of CDFD, founded the company with Mrs. Nidhi Chandak. He brings more than 25 years in genetic diagnostics.');
-  assert.deepEqual(links('#who a'), [['About the company', '/about/'], ['Meet the team', '/about/team/']]);
-  assert.equal($('#who img').length, 0, 'the founders\' portrait belongs on About and Team');
-});
-
-test('the vision keeps the company\'s own sentence', () => {
-  assert.equal(text('#vision .label'), 'Our vision');
-  assert.equal(text('.vision-line'), 'To make precision genetic diagnosis accessible to every individual, through innovative technologies that need only a single drop of blood.');
-});
-
-test('Contact: four actions that open an email with the subject filled in', () => {
-  assert.equal(text('#contact .lead'), 'Choose where you would like to begin.');
-  assert.deepEqual(links('#contact .actions a.action'), [
-    ['Explore a partnership', 'mailto:admin@lighteninglives.in?subject=Partnership'],
-    ['Request tests', 'mailto:admin@lighteninglives.in?subject=Request%20tests'],
-    ['Ask about awareness and counselling', 'mailto:admin@lighteninglives.in?subject=Awareness%20and%20counselling'],
-    ['Talk to sales', 'mailto:admin@lighteninglives.in?subject=Sales']]);
-  assert.match(text('#contact'), /Write or call admin@lighteninglives\.in \+91 91825 88191/);
-  assert.equal($('#contact a[href="tel:+919182588191"]').length, 1);
-  assert.match(text('#contact'), /Each request is discussed on its own terms, based on your institutional or regulatory requirements\./);
-  assert.doesNotMatch(text('#contact'), /We work with institutions/);
+test('copy rules: no "one drop", no town in the copy, no kit headline, no placeholder', () => {
+  const copy = text('main');
+  assert.doesNotMatch(copy, /single drop|one drop|drop of blood/i);
+  assert.doesNotMatch(copy, /\[(CONFIRM|TBC)|PLACEHOLDER/);
+  for (const town of ['Udaipur', 'Bhopal', 'Jamshedpur', 'Bilaspur', 'Nandurbar', 'Nagpur', 'Dhule', 'Chandrapur', 'Mumbai', 'Valsad', 'Kothagudem', 'Mysuru', 'Mysore', 'Gudalur', 'Toranmal'])
+    assert.ok(!copy.includes(town) && !$('main img').toArray().some((img) => (img.attribs.alt || '').includes(town)), town);
+  assert.doesNotMatch(texts('main h2, main h3').join(' '), /\bkits?\b/i);
 });

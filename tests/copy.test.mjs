@@ -14,10 +14,10 @@ const PROOF_TAGS = ['Approved by ICMR', 'Patented in India and Japan'];
 // last row and carton on the home page and Solutions: five words, its own wording, kept as written.
 const OPEN_PLACE = 'The condition you need next';
 
-test('the home lead and note are short', () => {
+test('the home lead is short, and each proof under it is a label of six words or fewer', () => {
   const $ = load('/');
   assert.ok(words(text($, '.hero-lead')) <= 25, `lead: ${words(text($, '.hero-lead'))} words`);
-  assert.ok(words(text($, '.hero-note')) <= 12, `note: ${words(text($, '.hero-note'))} words`);
+  $('.hero-proof li').each((i, li) => assert.ok(words(text($, li)) <= 6, `proof: ${text($, li)}`));
 });
 
 // Every place on a page whose words run over R1's limit, as "<what> (<n> words): <text>". The bodies
@@ -93,13 +93,10 @@ test('no sentence twice on a page, the film captions and step headings aside', (
   }
 });
 
-test('"We work with institutions" is said once on the home page, and in the notice', () => {
+test('"We work with" heads the partner strip, once', () => {
   const $ = load('/');
-  const said = $('main *').filter((i, e) => $(e).children().length === 0 || $(e).is('p, h2, h3'))
-    .filter((i, e) => /We work with institutions/.test($(e).text())).map((i, e) => $(e).closest('section').attr('id')).get();
-  assert.deepEqual([...new Set(said)], ['partners']);
-  assert.match(text($, '#partners h2'), /^We work with institutions$/);
-  assert.match(text($, '#partners .notice'), /We work with institutions/);
+  assert.equal(text($, '#partners h2'), 'We work with');
+  assert.equal($('main h2').filter((i, h) => /^We work with/.test(text($, h))).length, 1);
 });
 
 test('places by state on the home page', () => {
@@ -108,10 +105,9 @@ test('places by state on the home page', () => {
   // The visible copy and what is written for sharing; alt text may still name the exact place.
   assert.doesNotMatch($('main').clone().find('img').remove().end().text(), towns);
   assert.doesNotMatch(`${$('title').text()} ${$('meta[name=description]').attr('content')} ${$('meta[property="og:image:alt"]').attr('content') ?? ''}`, towns);
-  assert.deepEqual($('.places b').map((i, b) => $(b).contents().first().text().trim()).get().sort(),
-    ['Delhi', 'Jharkhand', 'Maharashtra', 'Tamil Nadu', 'Telangana']);
+  // The film pins every state we work in with the emblem, each named and nothing more.
   assert.deepEqual($('.places b').map((i, b) => [[$(b).contents().first().text().trim(), $(b).find('small').text().trim()]]).get(), [
-    ['Delhi', 'Screening'], ['Maharashtra', 'Screening'], ['Jharkhand', 'Screening'],
-    ['Telangana', 'Our laboratory, and screening'], ['Tamil Nadu', 'Screening']]);
-  assert.deepEqual($('.fieldwork figcaption').map((i, f) => text($, f)).get(), ['Maharashtra', 'Telangana', 'Jharkhand']);
+    ['Delhi', ''], ['Rajasthan', ''], ['Gujarat', ''], ['Madhya Pradesh', ''], ['Jharkhand', ''], ['Chhattisgarh', ''],
+    ['Maharashtra', ''], ['Telangana', ''], ['Karnataka', ''], ['Tamil Nadu', '']]);
+  assert.equal($('.places li img.place-emblem[src="/assets/logo/lightening-lives-emblem.svg"][alt=""]').length, 10);
 });

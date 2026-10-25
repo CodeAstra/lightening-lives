@@ -115,13 +115,10 @@ test('About: the company in brief is a table of eight rows, without the registra
   assert.doesNotMatch(text(table), /Registration|LLP identification/);
 });
 
-test('About: the evidence is the home page\'s, from one include, then the two links', () => {
+test('About: the evidence, from its one include, then the two links', () => {
   const { $, links } = about;
-  const strip = (html) => html.replace(/\s+/g, ' ').trim();
   assert.equal($('#proof .proof > li').length, 4);
-  assert.equal(strip($('#proof .proof').html()), strip(load('/')('#proof .proof').html()));
   assert.deepEqual(links('#proof a.link'), [['Meet the team', '/about/team/'], ['Who we work with', '/partnerships/']]);
-  assert.equal(load('/')('#proof a').length, 0, 'the home page\'s evidence has no links');
 });
 
 test('About: the closing band is 4.5\'s; no notice; no bracket; the portrait is not credited', () => {

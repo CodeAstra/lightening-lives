@@ -127,10 +127,13 @@ const TIMING = {
   soak: 0.96, // and the spot spreads
   shut: [2.72, 3.52], // the cover folds shut again, as the spot finishes spreading
   marked: [5.2, 6.0], // the places the company works come up on the map
-  pinned: [5.92, 6.4], // and are named, as the camera comes to rest
-  captions: [0, 2.6, 5.0], // when each of the three lines under the film comes up
+  pinned: [5.92, 6.4], // and are pinned and named, as the camera comes to rest
   end: 6.56, // the film is over
 };
+// The film's seconds run this much faster than the reader's, so that it is over within five seconds
+// of starting (6.56 / 1.4 = 4.69 s): moving content that starts by itself and stops by itself within
+// five seconds needs no button to pause it (WCAG 2.2.2), and the replay button went on 25 October 2026.
+const SPEED = 1.4;
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -374,9 +377,9 @@ function init(root) {
   const pageColumn = root.querySelector('[data-frame]');
   const heroText = root.querySelector('[data-hero-text]');
   const placeList = root.querySelector('[data-places]');
+  const placesWrap = root.querySelector('[data-places-wrap]');
+  const foot = root.querySelector('.hero-foot'); // the partners' band, laid over the film's foot on a wide screen
   const placeLabels = new Map([...root.querySelectorAll('[data-place]')].map((el) => [el.dataset.place, el]));
-  const toggle = root.querySelector('[data-film-toggle]');
-  const captions = [...root.querySelectorAll('[data-film-caption]')];
 
   const renderer = new WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
   renderer.shadowMap.enabled = true;
@@ -929,33 +932,97 @@ function init(root) {
     if (placeList) {
       const pinned = smooth(between(time, TIMING.pinned));
       placeList.style.opacity = pinned.toFixed(3);
+      // Once the pins are all but in place they answer the reader (main.js, initPins).
+      if (pinned > 0.98 && placesWrap && placesWrap.inert) {
+        placesWrap.inert = false;
+        placesWrap.classList.add('is-ready');
+      }
       if (pinned > 0.01) {
         camera.updateMatrixWorld();
+        const spots = [];
         LABELS.forEach((place) => {
           const label = placeLabels.get(place.id);
           if (!label) return;
           point.set(place.x, 0, place.z).project(camera);
-          label.style.transform = `translate(${((point.x * 0.5 + 0.5) * view.width).toFixed(1)}px, ${((-point.y * 0.5 + 0.5) * view.height).toFixed(1)}px)`;
+          const x = (point.x * 0.5 + 0.5) * view.width;
+          const y = (-point.y * 0.5 + 0.5) * view.height;
+          label.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+          spots.push({ id: place.id, x, y });
         });
+        arrangePlaces(spots);
       }
     }
     showProgress();
   }
 
-  // Under the film: the line that says what it is showing, and what its one button will do next.
-  const shown = { caption: -1, state: '' };
-  function showProgress() {
-    let caption = 0;
-    TIMING.captions.forEach((start, k) => { if (film.time >= start) caption = k; });
-    if (caption !== shown.caption) {
-      shown.caption = caption;
-      captions.forEach((line, k) => line.classList.toggle('is-on', k === caption));
+  // The pins and their names (25 October 2026: every state we work in, the emblem as the pin). The pins
+  // are sized so that no two meet, however small the map is drawn; then each name, in the list's order,
+  // takes the first place beside its pin (under it, then right, left, above) where it meets no pin, no
+  // name already placed, the page's text or the edge of the film. A name with no such place is left
+  // off; its pin stays. Sizes are measured once for each size of the film.
+  const PIN = { min: 12, gap: 3, edge: 4 }; // px: the smallest pin, the clear space round it, and inside the film's edge
+  let measuredFor = '';
+  const nameSize = new Map();
+  let pinMax = 32;
+  function arrangePlaces(spots) {
+    if (!spots.length) return;
+    const sizeKey = `${view.width}x${view.height}`;
+    if (measuredFor !== sizeKey) {
+      measuredFor = sizeKey;
+      placeList.style.removeProperty('--pin');
+      const probe = placeList.querySelector('.place-emblem');
+      pinMax = probe ? probe.offsetWidth || 32 : 32;
+      placeLabels.forEach((li, id) => {
+        const name = li.querySelector('b');
+        nameSize.set(id, name && name.offsetWidth ? { w: name.offsetWidth, h: name.offsetHeight } : null);
+      });
     }
+    let nearest = Infinity;
+    for (let i = 0; i < spots.length; i += 1) for (let j = i + 1; j < spots.length; j += 1) nearest = Math.min(nearest, Math.hypot(spots[i].x - spots[j].x, spots[i].y - spots[j].y));
+    const pin = clamp(Math.floor(nearest - PIN.gap * 2), PIN.min, pinMax);
+    placeList.style.setProperty('--pin', `${pin}px`);
+    const r = pin / 2 + PIN.gap;
+    const taken = spots.map((spot) => ({ l: spot.x - r, r: spot.x + r, t: spot.y - r, b: spot.y + r }));
+    const meets = (a, b) => a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b;
+    const left = view.textRight ?? -Infinity;
+    spots.forEach((spot) => {
+      const label = placeLabels.get(spot.id);
+      const name = label.querySelector('b');
+      const size = nameSize.get(spot.id);
+      if (!name || !size) return;
+      const { w, h } = size;
+      const sides = [
+        [-w / 2, r], // under
+        [r, -h / 2], // right
+        [-r - w, -h / 2], // left
+        [-w / 2, -r - h], // above
+      ];
+      let chosen = null;
+      for (const [dx, dy] of sides) {
+        const box = { l: spot.x + dx, r: spot.x + dx + w, t: spot.y + dy, b: spot.y + dy + h };
+        if (box.l < Math.max(PIN.edge, left) || box.r > view.width - PIN.edge || box.t < PIN.edge || box.b > view.height - PIN.edge) continue;
+        if (taken.some((other) => meets(box, other))) continue;
+        chosen = [dx, dy, box];
+        break;
+      }
+      if (chosen) {
+        taken.push(chosen[2]);
+        name.style.left = `${chosen[0].toFixed(1)}px`;
+        name.style.top = `${chosen[1].toFixed(1)}px`;
+        name.style.visibility = '';
+      } else {
+        name.style.visibility = 'hidden';
+      }
+    });
+  }
+
+  // Whether the film is playing, paused (a hidden tab) or over, for the stylesheet.
+  const shown = { state: '' };
+  function showProgress() {
     const state = film.ended ? 'ended' : playing() || !film.started ? 'playing' : 'paused';
     if (state !== shown.state) {
       shown.state = state;
       if (filmRoot) filmRoot.dataset.filmState = state;
-      if (toggle) toggle.setAttribute('aria-label', state === 'ended' ? 'Replay the film' : state === 'playing' ? 'Pause the film' : 'Play the film');
     }
   }
 
@@ -965,7 +1032,7 @@ function init(root) {
     lastTime = now;
     const moving = playing();
     if (moving) {
-      film.time += clamp(elapsed, 0.001, 0.125); // real time down to eight frames a second; slower than that, the film slows too
+      film.time += clamp(elapsed, 0.001, 0.125) * SPEED; // real time down to eight frames a second; slower than that, the film slows too
       if (film.time >= TIMING.end) {
         film.time = TIMING.end;
         film.ended = true;
@@ -1007,12 +1074,6 @@ function init(root) {
     film.started = true;
     wake();
   }
-  if (toggle) {
-    toggle.addEventListener('click', () => {
-      if (film.ended) seek(0);
-      else { film.held = playing(); film.started = true; wake(); }
-    });
-  }
 
   // --- Where the canvas lives, and how big it is ---
   // The right edge of the hero's text as it is set: its widest line of words, or a button.
@@ -1041,10 +1102,12 @@ function init(root) {
     const whole = mount.getBoundingClientRect();
     const column = pageColumn ? pageColumn.getBoundingClientRect() : whole;
     view.layout = pageColumn && column.width > 0 ? WIDE : NARROW;
+    view.textRight = -Infinity; // where the page's text ends, in the film's pixels: no pin's name crosses it
     let room = whole;
     if (view.layout === WIDE) {
       const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
       const edge = textEdge();
+      if (Number.isFinite(edge)) view.textRight = edge - whole.left + rem;
       if (filmRoot && Number.isFinite(edge)) filmRoot.style.setProperty('--text-edge', `${(edge - filmRoot.getBoundingClientRect().left).toFixed(1)}px`);
       const left = Math.max(column.left, edge + GAP * rem);
       room = { left, width: Math.max(column.right - left, width * 0.2) };
@@ -1054,7 +1117,9 @@ function init(root) {
     // The opening is at least 36rem tall, so on a short window (a phone held sideways, a television's
     // browser at 960 by 540) it runs past the first screen: the subject is fitted into the part of it
     // that is on the first screen, so the map is never cut by the fold (R3, defect 3).
-    const shown = clamp(window.innerHeight - (whole.top + window.scrollY), height * 0.5, height);
+    // On a wide screen the partners' band lies over the film's foot, so the subject is fitted above it.
+    const band = view.layout === WIDE && foot && getComputedStyle(foot).position === 'absolute' ? foot.offsetHeight : 0;
+    const shown = clamp(Math.min(window.innerHeight - (whole.top + window.scrollY), height) - band, height * 0.5, height);
     view.up = view.layout.up * (shown / height);
     view.shiftY = 0.5 - (shown * (0.5 - view.layout.shiftY)) / height;
     renderer.setPixelRatio(view.ratio);

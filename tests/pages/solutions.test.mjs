@@ -57,7 +57,7 @@ test('two families: two columns, their words, their tests and their links', () =
     ['Spinal muscular atrophy', '/solutions/spinal-muscular-atrophy/'], ['Duchenne muscular dystrophy', ASK], ['Limb-girdle muscular dystrophy', ASK]]);
 });
 
-test('developed so far: the home page\'s seven rows, headed one level under the section', () => {
+test('developed so far: seven rows, headed one level under the section', () => {
   const section = $('#developed');
   assert.equal(text(section.find('.lead')), 'Each of these began with an institution that needed it. The next can begin with yours.');
   const rows = section.find('.test-row');
@@ -71,10 +71,6 @@ test('developed so far: the home page\'s seven rows, headed one level under the 
     ['About this test', '/solutions/sickle-cell-anaemia/'], ['About these tests', '/solutions/thalassaemia/'],
     ['About this test', '/solutions/spinal-muscular-atrophy/'], ['Ask about this test', ASK], ['Ask about this test', ASK],
     ['What we are developing', '/solutions/develop-a-test/#in-development'], ['Talk to us about a new test', '/solutions/develop-a-test/']]);
-  // The same markup as the home page's rows, the heading level aside.
-  const home = load('/');
-  const strip = (html) => html.replace(/<(\/?)h[34]\b/g, '<$1h').replace(/\s+/g, ' ');
-  assert.equal(strip($('#developed ul.tests').html()), strip(home('#tests ul.tests').html()));
 });
 
 test('what you get: six rows, each keeping its sentence, no brackets, and the footnote', () => {

@@ -109,7 +109,8 @@ test('places by state (R2): towns only as detail in the sites table', () => {
 });
 
 test('no photographs; the footer credits the map alone', () => {
-  assert.deepEqual($('main img').map((i, img) => $(img).attr('src')).get(), ['/assets/img/site-map-work.webp']);
+  // The map's key shows the emblem that marks a state we have worked in; that is a mark, not a photograph.
+  assert.deepEqual($('main img').map((i, img) => $(img).attr('src')).get(), ['/assets/logo/lightening-lives-emblem.svg', '/assets/img/site-map-work.webp']);
   assert.deepEqual($('footer [data-credit]').map((i, li) => $(li).attr('data-credit')).get(), ['map-india']);
 });
 

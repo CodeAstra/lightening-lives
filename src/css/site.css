@@ -11,6 +11,7 @@
 
 @theme inline {
   --color-mist: var(--mist);
+  --color-stone: var(--stone);
   --color-paper: var(--paper);
   --color-sprout: var(--sprout);
   --color-leaf: var(--leaf);
@@ -27,9 +28,10 @@
   /* Design tokens. The names are Design 10's, because the film and the comparison toolbar read them;
      the values are Lumen's. */
   :root {
-    --mist: #F0F9FF;    /* ice white: the page, and the haze the cards fade into */
+    --mist: #F0F9FF;    /* ice white: the opening (the hero and each page's opening), and the haze the cards fade into */
     --paper: #FFFFFF;   /* cards and raised surfaces */
-    --sprout: #E0F2FE;  /* hover and quiet fills */
+    --sprout: #E0F2FE;  /* hover and quiet fills, icon tiles, and the one tinted band (the close) */
+    --stone: #F7F7F4;   /* the ground under the opening (25 October 2026): blue stays the theme, in the ink, the opening and the close, not on every band */
     --meadow: #BAE6FD;  /* sky blue: the field of cards, seen from far enough to be a map */
     --leaf: #0369A1;    /* DNA blue: labels, links, actions, the print on the cards */
     --canopy: #0C4A6E;  /* text */
@@ -94,7 +96,7 @@
   }
   body {
     position: relative;
-    background: var(--mist);
+    background: var(--stone);
     color: var(--canopy);
     font-family: var(--font-sans);
     font-size: 1.125rem;
@@ -275,10 +277,11 @@
   .hero .display { order: 1; }
   @media (max-width: 30rem) { .hero .display { font-size: clamp(1.95rem, 9.4vw, 2.6rem); } }
   .film-screen { order: 2; position: relative; width: 100%; max-width: 34rem; margin: 1.75rem auto 0; aspect-ratio: 1; }
-  .film-foot { order: 3; display: none; }
   .hero-lead { order: 4; margin-top: 1.5rem; max-width: 34rem; }
   .hero-actions { order: 5; display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
   .hero-note { order: 6; margin-top: 1.25rem; font-size: 1rem; color: var(--moss); }
+  .hero-news { order: 0; }
+  .hero-foot { order: 7; }
   .film-poster { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 1.25rem; }
   .film-screen canvas { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 0.7s ease; }
   html.film-ready .film-screen canvas { opacity: 1; }
@@ -302,7 +305,6 @@
   html.film-live .film-screen { max-width: none; width: auto; margin: 1.25rem calc(var(--gutter) * -1) 0; aspect-ratio: auto; height: min(100vw, 58vh, calc(125vh - 30rem)); }
   @supports (height: 100svh) { html.film-live .film-screen { height: min(100vw, 58svh, calc(125svh - 30rem)); } }
   @media (max-width: 30rem) { .hero { padding-top: 5.5rem; } }
-  html.film-live .film-foot { margin-top: 0.5rem; }
   /* Its top and bottom edges fade into the page, so the field of cards has no hard edge. */
   html.film-live .film-screen::after {
     content: "";
@@ -321,7 +323,6 @@
     html.film-live .hero-actions { grid-column: 1; grid-row: 3; margin-top: 1.1rem; }
     html.film-live .hero-note { grid-column: 1; grid-row: 4; }
     html.film-live .film-screen { grid-column: 2; grid-row: 1 / span 4; margin: 0; height: max(12rem, calc(100vh - 9rem)); }
-    html.film-live .film-foot { grid-column: 2; grid-row: 5; }
   }
   @supports (height: 100svh) {
     @media (max-width: 56.2499rem) and (max-height: 30rem) and (min-aspect-ratio: 21/20) {
@@ -336,7 +337,6 @@
     html.film-live .film-screen::after { content: none; }
     html.film-live .hero-text { position: relative; z-index: 2; max-width: var(--text-w); }
     html.film-live .hero-text > :not(.display) { max-width: calc(var(--text-w) * 0.82); }
-    html.film-live .film-foot { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 1.75rem; z-index: 3; margin: 0; }
     /* Keeps the text readable whatever the film is showing behind it. It stays solid until 3rem past
        the text's widest line, which the film measures and sets as --text-edge (until it does, the
        widest the heading can be), and is gone 2rem later, where the film's subject begins (R3). */
@@ -369,23 +369,6 @@
   }
 
   /* What the film is showing, in words: one line for each of its three parts. */
-  .film-captions { display: grid; flex: 1; min-width: 0; }
-  .film-caption { grid-area: 1 / 1; align-self: end; opacity: 0; translate: 0 6px; } /* the change is motion.js's */
-  .film-caption.is-on { opacity: 1; translate: none; }
-  .film-line { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.2rem, 1.75vw, 1.55rem); line-height: 1.15; letter-spacing: var(--display-tracking); text-wrap: balance; }
-  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
-    .film-captions { max-width: calc(var(--text-w) * 0.9); }
-  }
-
-  /* The film's one control: pause it, play it on, or, once it has ended, play it again. It sits at
-     the end of the caption's line, out of the way. */
-  html.film-live .film-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
-  .film-toggle { flex: none; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 2px solid var(--canopy); border-radius: 50%; background: var(--paper); color: var(--canopy); cursor: pointer; transition: background-color 0.16s ease; }
-  .film-toggle:hover { background: var(--sprout); }
-  .film-toggle svg { grid-area: 1 / 1; display: none; }
-  [data-film-state="playing"] .film-toggle .i-pause,
-  [data-film-state="paused"] .film-toggle .i-play,
-  [data-film-state="ended"] .film-toggle .i-replay { display: block; }
 
   /* The places we have worked, each pinned where it is: a dot on the place itself, a short leader,
      and a chip that names it and says what is there. */
@@ -412,13 +395,6 @@
   .places small { display: none; font-size: 0.75rem; font-weight: 600; color: var(--moss); }
   .places li[data-side="left"]::before { left: auto; right: 0; }
   .places li[data-side="left"] b { left: auto; right: var(--lead); }
-  /* A short screen (a phone held sideways, a television's browser at 960 by 540): the map is small,
-     and Maharashtra's chip, run east, would meet Telangana's and Jharkhand's; it turns west, over the
-     sea. In the wide layout that still leaves it 4.5rem clear of the text (scene.js, GAP). */
-  @media (max-height: 36rem) {
-    .places li[data-short-side="left"]::before { left: auto; right: 0; }
-    .places li[data-short-side="left"] b { left: auto; right: var(--lead); }
-  }
   /* On the smallest phones the western pin's chip would touch the edge of the screen. */
   @media (max-width: 22.5rem) {
     .places { --lead: 0.7rem; }
@@ -434,7 +410,7 @@
   /* ---------- How it works: the film's three parts, standing still ---------- */
   .steps { display: grid; gap: 2.75rem; }
   .steps > li { display: grid; gap: 0.5rem; align-content: start; }
-  .steps img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 1.25rem; margin-bottom: 0.9rem; background: var(--mist); }
+  .steps img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 1.25rem; margin-bottom: 0.9rem; background: var(--stone); }
   .steps .h3 { margin-top: 0.15rem; }
   .steps p:not(.label) { color: var(--moss); margin-top: 0.25rem; }
   @media (min-width: 40rem) and (max-width: 59.99rem) {
@@ -512,6 +488,8 @@
   .map-readout { color: var(--moss); font-size: 1.0625rem; line-height: 1.5; }
   .map-key { display: grid; gap: 0.35rem; margin-top: 0.8rem; font-size: 0.9375rem; line-height: 1.35; }
   .map-key li { display: grid; grid-template-columns: 1.1rem minmax(0, 1fr); align-items: start; gap: 0.6rem; }
+  .map-key-emblem { display: grid; grid-template-columns: 1.1rem minmax(0, 1fr); align-items: center; gap: 0.6rem; margin-top: 0.35rem; font-size: 0.9375rem; line-height: 1.35; }
+  .map-key-emblem img { width: 1.25rem; height: 1.25rem; margin-left: -0.075rem; }
   .key { width: 1.1rem; height: 1.1rem; margin-top: 0.08rem; border: 1.5px solid var(--canopy); border-radius: 0.3rem; background: var(--meadow); }
   .key-strong { background: var(--sun); }
   .key-pale { background: var(--sun); }
@@ -575,8 +553,12 @@
   .map-figure .weave { fill: none; stroke: var(--paper); stroke-opacity: 0.5; pointer-events: none; }
   .map-names { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; pointer-events: none; }
   .map-names li { position: absolute; width: 0; height: 0; }
-  .map-names li { opacity: 0; transition: opacity 0.35s ease; }
-  .map-names li.is-shown { opacity: 1; }
+  .map-names b { opacity: 0; transition: opacity 0.35s ease, background-color 0.15s ease, border-color 0.15s ease; }
+  .map-names li.is-shown b { opacity: 1; }
+  /* A state we have worked in: the emblem on the state, on a paper disc, and its name under it. */
+  .map-emblem { position: absolute; left: 0; top: 0; translate: -50% -50%; max-width: none; width: 1.875rem; height: 1.875rem; padding: 0.125rem; border-radius: 50%; background: var(--paper); box-shadow: 0 0 0 0.0625rem var(--line), 0 0.25rem 0.5rem -0.2rem rgba(12, 74, 110, 0.45); }
+  .map-names li.has-emblem b { top: 1.125rem; translate: -50% 0; }
+  .map-names li.has-emblem.is-on .map-emblem { box-shadow: 0 0 0 0.125rem var(--canopy), 0 0.25rem 0.5rem -0.2rem rgba(12, 74, 110, 0.45); }
   .map-names b {
     position: absolute;
     left: 0;
@@ -593,12 +575,13 @@
     border: 1.5px solid transparent;
     border-radius: 0.85rem;
     text-shadow: 0 0 3px var(--paper), 0 0 3px var(--paper), 0 0 6px var(--paper);
-    transition: background-color 0.15s ease, border-color 0.15s ease;
   }
   .map-names li.is-on { z-index: 1; }
   .map-names li.is-on b { background: var(--paper); border-color: var(--canopy); text-shadow: none; }
   @media (max-width: 39.99rem) {
     .map-names b { padding: 0.06rem 0.35rem; font-size: 0.6875rem; line-height: 1.2; }
+    .map-emblem { width: 1.5rem; height: 1.5rem; }
+    .map-names li.has-emblem b { top: 0.875rem; }
   }
 
   /* ---------- Evidence ---------- */
@@ -780,8 +763,8 @@
 
   /* The light. Each white band is lit by one soft pool, DNA blue from the left or life green from the right,
      and the vision by both. The pools are clipped to their band, so nothing widens the page. */
-  .section.bg-paper, .vision { position: relative; isolation: isolate; overflow: clip; }
-  .section.bg-paper::before, .vision::before, .vision::after {
+  .section.bg-paper, .vision, .logo-band { position: relative; isolation: isolate; overflow: clip; }
+  .section.bg-paper::before, .vision::before, .vision::after, .logo-band::before {
     content: "";
     position: absolute;
     z-index: -1;
@@ -800,7 +783,7 @@
 
   /* The glass. What Design 10 raises in flat paper is a white the light shows through, with a soft
      shadow; the chips over the film and the menu's panel are a stronger white, to stay readable. */
-  .btn-line, .film-toggle, .seg, .kinds > li, .notice, .menu-panel, .places b {
+  .btn-line, .seg, .kinds > li, .notice, .menu-panel, .places b {
     background: var(--glass);
     -webkit-backdrop-filter: var(--blur);
     backdrop-filter: var(--blur);
@@ -895,7 +878,7 @@
   /* Nothing depends on hover (R3, television use): what a pointer brings out, the keyboard's focus
      and a remote's bring out too, alongside the focus ring. */
   .btn-solid:focus-visible { background: var(--canopy); border-color: var(--canopy); }
-  .btn-line:focus-visible, .nav-link:focus-visible, .film-toggle:focus-visible, .actions a:focus-visible { background: var(--sprout); }
+  .btn-line:focus-visible, .nav-link:focus-visible, .actions a:focus-visible { background: var(--sprout); }
   .seg input:focus-visible:not(:checked) + span { background: var(--sprout); }
   .link:focus-visible { color: var(--leaf); text-decoration-thickness: 3px; }
   .link:focus-visible svg { translate: 0.25rem 0; }
@@ -908,7 +891,6 @@
      below and above apply at once. */
   .motion-on .link:hover svg, .motion-on .link:focus-visible svg { translate: none; }
   .motion-on .actions a:hover, .motion-on .actions a:focus-visible { padding-left: 0; }
-  .motion-on .film-caption, .motion-on .film-caption.is-on { translate: none; }
   /* The map's choices: motion.js lays a pill under the chosen one and slides it (the chosen span's
      own fill is then the pill's); the chosen text turns white as the pill arrives. */
   .seg-thumb { display: none; }
@@ -1063,7 +1045,7 @@
   .boxes img { object-fit: cover; background: var(--sprout); box-shadow: var(--shadow); }
   .boxes figcaption, .boxes .open-name { display: block; margin-top: 0.75rem; font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; line-height: 1.25; letter-spacing: -0.008em; color: var(--canopy); overflow-wrap: anywhere; }
   .boxes .open a { display: block; border-radius: 1.25rem; }
-  .boxes .tile { container-type: inline-size; display: grid; place-items: center; background: var(--mist); transition: background-color 0.16s ease; }
+  .boxes .tile { container-type: inline-size; display: grid; place-items: center; background: var(--stone); transition: background-color 0.16s ease; }
   .boxes .open-name { text-decoration: underline; text-decoration-color: var(--leaf); text-decoration-thickness: 0.125rem; text-underline-offset: 0.3rem; }
   .boxes .open a:hover .tile, .boxes .open a:focus-visible .tile { background: var(--sprout); }
   .boxes .open a:hover .open-name, .boxes .open a:focus-visible .open-name { color: var(--leaf); text-decoration-thickness: 0.1875rem; }
@@ -1268,7 +1250,7 @@
      head: its 2px rule as a band at the foot of its last row, a hairline over each state. */
   @media (min-width: 64rem) {
     .sites thead { position: sticky; top: 0; z-index: 1; }
-    .sites thead th { background-color: var(--mist); }
+    .sites thead th { background-color: var(--stone); }
     .sites thead .sites-site-h, .sites .sites-kinds th { background-image: linear-gradient(var(--canopy), var(--canopy)); background-position: left bottom; background-size: 100% 0.125rem; background-repeat: no-repeat; }
     .sites tbody + tbody .sites-group th { border-top: 1px solid var(--line); }
     .sites tbody:last-of-type tr:last-child > * { border-bottom: 1px solid var(--line); }
@@ -1511,7 +1493,6 @@
   .why h3, .criteria h3, .person-name, .policy-h { font-size: 1.125rem; line-height: 1.25; font-stretch: var(--display-stretch); }
   .why p, .criteria p, .about > p { font-size: 1rem; line-height: 1.5; }
   .vision-line { font-size: clamp(1.5rem, 2.6vw, 2.35rem); line-height: 1.16; max-width: 56rem; }
-  .film-line { font-size: clamp(1.05rem, 1.4vw, 1.3rem); }
   .brand-name { font-size: 1.25rem; }
 
   /* Space. */
@@ -1535,16 +1516,16 @@
   .steps img { aspect-ratio: 4 / 3; margin-bottom: 0.6rem; }
   .word button { font-size: clamp(2.4rem, 8.4vw, 7.25rem); line-height: 0.95; }
 
-  /* Material: flat paper, a hairline edge, 8 px corners. */
-  .section.bg-paper::before, .vision::before, .vision::after { content: none; }
-  .btn-line, .film-toggle, .seg, .kinds > li, .notice, .menu-panel, .places b {
+  /* Material: flat paper, a hairline edge, 8 px corners. The pools of light on the white bands stay
+     (25 October 2026, the user liked Lumen's gradient on the left of "We work with institutions"). */
+  .btn-line, .seg, .kinds > li, .notice, .menu-panel, .places b {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     box-shadow: none;
   }
   .btn-line { background: var(--paper); }
   .kinds > li { background: var(--paper); border: var(--edge); border-radius: var(--radius); padding: 1.25rem 1.35rem 1.4rem; }
-  .section.bg-paper .kinds > li { background: var(--mist); }
+  .section.bg-paper .kinds > li { background: var(--stone); }
   .notice { border-width: 0.0625rem; border-radius: var(--radius); }
   .menu-panel { border-width: 0.0625rem; border-radius: var(--radius); box-shadow: 0 0.75rem 1.75rem -1.125rem rgba(12, 74, 110, 0.35); }
   .steps img, .map-still, .fieldwork img, .blank-card, .film-poster, .person-photo { box-shadow: none; border-radius: var(--radius); }
@@ -1554,7 +1535,7 @@
   .nav-link { font-size: 1rem; font-weight: 600; padding: 0 0.8rem; }
 
   /* One display voice: everything set in the display face takes its width, weight and tracking. */
-  .word button, .vision-line, .film-line, .actions a, .crit-letter, .criteria .crit-letter, .brand-name, .state-title, .run-in, .lead-line, .boxes figcaption, .boxes .open-name {
+  .word button, .vision-line, .actions a, .crit-letter, .criteria .crit-letter, .brand-name, .state-title, .run-in, .lead-line, .boxes figcaption, .boxes .open-name {
     font-stretch: var(--display-stretch);
     font-weight: var(--display-weight);
     letter-spacing: var(--display-tracking);
@@ -1574,14 +1555,14 @@
   /* Header: stays with the reader, on a solid ground once the page moves under it; the page it is
      on is marked. It keeps its place over the film (the negative margin), as before. */
   .site-header { position: sticky; top: var(--compare-h, 0rem); height: var(--header-h); margin-bottom: calc(var(--header-h) * -1); padding-block: 0; transition: background-color 0.2s ease, border-color 0.2s ease; border-bottom: 0.0625rem solid transparent; }
-  .site-header.is-stuck { background: var(--mist); border-bottom-color: var(--line); }
+  .site-header.is-stuck { background: var(--paper); border-bottom-color: var(--line); }
   .nav-link[aria-current="page"] { color: var(--leaf); box-shadow: inset 0 -0.125rem 0 var(--leaf); border-radius: 0; }
   .nav-link[aria-current="page"]:hover { background: none; }
   .menu-panel .nav-link[aria-current="page"] { box-shadow: inset 0.1875rem 0 0 var(--leaf); }
   @media (min-width: 64rem) and (max-width: 72.99rem) { .brand-text { display: grid; } .brand-line { display: none; } .nav-link { padding: 0 0.55rem; } }
   @media (min-width: 73rem) and (max-width: 77.99rem) { .brand-text { display: grid; } .brand-line { display: none; } }
   .menu-panel { left: 0; right: 0; top: 100%; border-width: 0 0 0.0625rem; border-color: var(--line); border-radius: 0 0 var(--radius) var(--radius); padding: 0.5rem var(--gutter) 1rem; box-shadow: 0 1rem 1.5rem -1.25rem rgba(12, 74, 110, 0.35); }
-  .site-header:has(details[open]) { background: var(--mist); }
+  .site-header:has(details[open]) { background: var(--paper); }
 
   /* Inner pages: the same room under the opening whatever the next band is. */
   .page-open { padding-bottom: 2.5rem; }
@@ -1629,3 +1610,295 @@
 
 /* Outside the layers, so it outweighs the utility it adjusts: the gap under a section's heading. */
 .section .mt-12 { margin-top: var(--head-gap); }
+
+/* ---------- Home, second pass, 25 October 2026 ---------- */
+/* The nine-section home page (marketing review, 25 October 2026) and the patterns the user liked on
+   fi.co: two-tone headings (the key phrase in DNA blue), icon-led lists, a logo strip, compact cards
+   with a small tag. Life green is never text here: it fills tiles and rings the answer. */
+@layer components {
+  /* Icons (src/lib/icons.mjs): sized by the text they sit in; a tile is a sprout square with the icon in DNA blue. */
+  .icon { display: inline-block; width: 1.25em; height: 1.25em; flex: none; vertical-align: -0.2em; }
+  .icon-tile { display: inline-grid; place-items: center; flex: none; width: 2.75rem; height: 2.75rem; border-radius: var(--radius); background: var(--sprout); color: var(--leaf); }
+  .icon-tile .icon { width: 1.375rem; height: 1.375rem; vertical-align: 0; }
+  .h-mark { color: var(--leaf); }
+  .lead-link { color: var(--leaf); font-weight: 600; text-decoration: underline; text-decoration-thickness: 0.125rem; text-underline-offset: 0.2em; }
+  .lead-link:hover, .lead-link:focus-visible { color: var(--canopy); }
+
+  /* The hero's proof: three facts, each with its icon. */
+  .hero-proof { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin-top: 1.5rem; padding: 0; list-style: none; font-size: 0.9375rem; font-weight: 600; color: var(--canopy); }
+  .hero-proof li { display: inline-flex; align-items: center; gap: 0.45rem; }
+  .hero-proof .icon { color: var(--leaf); width: 1.125rem; height: 1.125rem; }
+
+  /* While the film plays, the text's ground fades into the film over a long, eased run instead of a
+     2rem edge, so the opening no longer reads as two halves. */
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    html.film-live .hero-veil {
+      --veil-edge: var(--text-edge, calc(var(--gutter) + var(--text-w)));
+      background:
+        linear-gradient(180deg, var(--mist) 0, color-mix(in srgb, var(--mist) 90%, transparent) 4.5rem, transparent 8.25rem),
+        linear-gradient(90deg, var(--mist) 0, var(--mist) calc(var(--veil-edge) + 0.5rem),
+          color-mix(in srgb, var(--mist) 88%, transparent) calc(var(--veil-edge) + 4rem),
+          color-mix(in srgb, var(--mist) 62%, transparent) calc(var(--veil-edge) + 9rem),
+          color-mix(in srgb, var(--mist) 30%, transparent) calc(var(--veil-edge) + 15rem),
+          color-mix(in srgb, var(--mist) 10%, transparent) calc(var(--veil-edge) + 21rem),
+          transparent calc(var(--veil-edge) + 27rem));
+    }
+  }
+
+  /* The opening, third pass (25 October 2026): an announcement above the heading when there is one,
+     the film's pins as buttons with a card, and the partners sliding along the foot. */
+
+  /* The announcement: one line, a paper chip on the ice white, its tag in life green. */
+  .hero-news { margin: 0 0 1.25rem; padding: 0; list-style: none; }
+  .news { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.75rem; max-width: 100%; padding: 0.375rem 0.875rem 0.375rem 0.375rem; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); color: var(--canopy); font-size: 0.9375rem; line-height: 1.35; text-decoration: none; transition: border-color 0.16s ease; }
+  .news:hover, .news:focus-visible { border-color: var(--leaf); }
+  .news-tag { padding: 0.15rem 0.5rem; border-radius: 0.375rem; background: var(--sun); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; }
+  .news-text strong { font-weight: 700; }
+  .news-when { color: var(--moss); }
+  .news-cta { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--leaf); font-weight: 700; }
+  .news-cta .icon { width: 1rem; height: 1rem; transition: translate 0.16s ease; }
+  .news:hover .news-cta .icon { translate: 0.15rem 0; }
+
+  /* The film's pins: every state we work in carries the emblem on a paper disc. Its size and each
+     name's place are the film's (scene.js, arrangePlaces): --pin is set so no two pins meet; a name
+     is set beside its pin where it meets nothing, or hidden. Each pin is a button with a tap area of
+     at least 2.75rem; the card opens beside it, to the side with more room. */
+  .places-wrap { display: none; }
+  html.film-live .places-wrap { display: block; position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+  .places li::before, .places li::after { content: none; }
+  .place-pin { position: absolute; left: 0; top: 0; translate: -50% -50%; display: block; width: var(--pin, 2rem); height: var(--pin, 2rem); padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; pointer-events: none; }
+  .places-wrap.is-ready .place-pin { pointer-events: auto; }
+  .place-pin::after { content: ""; position: absolute; inset: min(0rem, calc(50% - 1.375rem)); border-radius: 50%; }
+  .place-pin:focus-visible { outline: 0.1875rem solid var(--canopy); outline-offset: 0.125rem; }
+  .place-emblem { display: block; max-width: none; width: 100%; height: 100%; padding: 0.125rem; border-radius: 50%; background: var(--paper); box-shadow: 0 0 0 0.0625rem var(--line), 0 0.25rem 0.5rem -0.2rem rgba(12, 74, 110, 0.45); transition: box-shadow 0.16s ease; }
+  .place-pin:hover .place-emblem, .places li.is-open .place-emblem { box-shadow: 0 0 0 0.125rem var(--canopy), 0 0.25rem 0.5rem -0.2rem rgba(12, 74, 110, 0.45); }
+  .places li.is-open { z-index: 5; }
+  .places b, .places li[data-side="left"] b { left: -50%; right: auto; top: 1.05rem; translate: none; padding: 0; text-align: center; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 800; line-height: 1.2; background: none; border: 0; border-radius: 0; pointer-events: none; text-shadow: 0 0 0.1875rem var(--mist), 0 0 0.1875rem var(--mist), 0 0 0.375rem var(--mist); }
+  @media (min-width: 56.25rem) {
+    .places b, .places li[data-side="left"] b { padding: 0; font-size: 0.8125rem; }
+  }
+  @media (max-width: 39.99rem) {
+    .place-pin { width: var(--pin, 1.375rem); height: var(--pin, 1.375rem); }
+    .place-emblem { padding: 0.0625rem; }
+    .places b { display: none; }
+  }
+  .place-card { position: absolute; left: calc(var(--pin, 2rem) / 2 + 0.75rem); top: 0; translate: 0 -50%; z-index: 6; width: min(16rem, 62vw); padding: 0.85rem 1rem 0.95rem; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); box-shadow: 0 0.75rem 1.75rem -1.125rem rgba(12, 74, 110, 0.4); text-align: left; pointer-events: auto; }
+  .places li.is-west .place-card { left: auto; right: calc(var(--pin, 2rem) / 2 + 0.75rem); }
+  .place-card[hidden] { display: none; }
+  .place-card.is-docked { left: 1rem; right: 1rem; top: auto; bottom: 0.75rem; translate: none; width: auto; }
+  .place-card-h { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.0625rem; line-height: 1.2; letter-spacing: -0.01em; color: var(--canopy); }
+  .place-card-line { margin: 0.3rem 0 0.6rem; font-size: 0.875rem; line-height: 1.45; color: var(--moss); }
+  .place-card-link { font-size: 0.875rem; }
+
+  /* The partners along the opening's foot (25 October 2026, second pass): all thirteen in their own
+     colours, the full width of the window, with no label and no button. Each logo is sized by its own
+     proportions to one visual weight, not one height (--ratio, its width over its height): a long
+     wordmark sits low (and is never wider than 10.5rem), a square or tall emblem stands taller, and
+     none is squeezed. One seamless loop
+     (two copies of the row, each moving its own width), the stylesheet's one loop; it stops while
+     pointed at (the logo under the pointer stays bright, the rest dim), while it holds the focus, and
+     on a tap (main.js, initMarquee). For a reader who has asked for less motion it is a still row that
+     scrolls by hand. Each moving row has the opening's ground of its own (the fade and the movement each
+     isolate it), so the logos' white grounds multiply away into it. */
+  .hero-foot { margin: 2.25rem calc(var(--gutter) * -1) 0; padding-top: 1.25rem; border-top: 0.0625rem solid var(--line); }
+  .marquee { display: flex; overflow: hidden; background: var(--mist); outline-offset: -0.1875rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4rem, #000 calc(100% - 4rem), transparent); mask-image: linear-gradient(90deg, transparent, #000 4rem, #000 calc(100% - 4rem), transparent); }
+  .marquee:focus-visible { outline: 0.1875rem solid var(--canopy); }
+  .marquee-track { display: flex; flex: none; align-items: center; background: var(--mist); gap: clamp(2.5rem, 4vw, 4rem); margin: 0; padding: 0.375rem clamp(2.5rem, 4vw, 4rem) 0.375rem 0; list-style: none; animation: marquee 80s linear infinite; }
+  .marquee-track li { flex: none; }
+  .marquee-track img { display: block; max-width: none; width: auto; height: 3rem; height: min(clamp(1.875rem, calc(3.25rem * sqrt(1.6 / var(--ratio, 1.6))), 4rem), calc(10.5rem / var(--ratio, 1.6))); mix-blend-mode: multiply; transition: opacity 0.2s ease; }
+  .marquee:hover .marquee-track, .marquee:focus-within .marquee-track, .hero-foot.is-paused .marquee-track { animation-play-state: paused; }
+  .marquee:has(li:hover) li:not(:hover) img { opacity: 0.45; }
+  @keyframes marquee { to { transform: translateX(-100%); } }
+  @media (max-width: 39.99rem) {
+    .marquee-track img { height: min(clamp(1.625rem, calc(2.75rem * sqrt(1.6 / var(--ratio, 1.6))), 3.25rem), calc(8.5rem / var(--ratio, 1.6))); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+    .marquee-track { animation: none; padding-left: var(--gutter); }
+    .marquee-copy { display: none; }
+  }
+  /* Beside the text on a wide screen without the film: the foot runs under both columns. */
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    .hero-foot { grid-column: 1 / -1; grid-row: 2; }
+  }
+  /* A phone held sideways: under both columns. */
+  @media (max-width: 56.2499rem) and (max-height: 30rem) and (min-aspect-ratio: 21/20) {
+    html.film-live .hero-foot { grid-column: 1 / -1; grid-row: 5; }
+  }
+  /* With the film filling a wide opening, the foot is a band along its bottom edge, over the film. */
+  @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
+    html.film-live .hero { padding-bottom: 9.5rem; }
+    html.film-live .hero-foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; margin: 0; padding: 1rem 0 1.1rem; background: var(--mist); }
+  }
+
+  /* 2. We work with (25 October 2026, the user: the white strip "is looking pale"): the logos in their
+     own colours, each in a cell of a ruled wall, under its group, institutions first. Seven columns
+     from 64rem, the groups spanning 3, 2 and 2; on smaller screens each group is its own row. */
+  /* The opening keeps the ice white it always had (the film fades into it); the page under it is stone. */
+  .hero, .page-open { background: var(--mist); }
+  .logo-band { background: var(--paper); border-block: 0.0625rem solid var(--line); padding-block: clamp(2rem, 3.4vw, 2.75rem); }
+  .logo-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; margin-bottom: 1.25rem; }
+  .logo-band-h { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1.375rem, 2vw, 1.75rem); line-height: 1.15; letter-spacing: var(--display-tracking); color: var(--canopy); }
+  .logo-groups { display: grid; gap: 1.25rem; }
+  .logo-group-h { margin: 0 0 0.6rem; font-family: var(--font-sans); font-size: 0.8125rem; font-weight: 600; line-height: 1.3; color: var(--moss); }
+  .logo-row { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border-top: 0.125rem solid var(--canopy); border-bottom: 0.0625rem solid var(--line); }
+  .logo-row li { display: grid; place-items: center; min-height: 6.25rem; padding: 1rem 0.75rem; border-left: 0.0625rem solid var(--line); transition: background-color 0.16s ease; }
+  .logo-row li:first-child { border-left: 0; }
+  .logo-row li:hover { background: var(--stone); }
+  .logo-row img { display: block; height: 3rem; width: auto; max-width: 100%; object-fit: contain; mix-blend-mode: multiply; }
+  .logo-row img.is-tall { height: 4rem; }
+  .logo-row img.is-short { height: 1.5rem; }
+  @media (max-width: 39.99rem) {
+    .logo-row li { min-height: 5rem; padding: 0.75rem 0.5rem; }
+    .logo-row img { height: 2.5rem; }
+    .logo-row img.is-tall { height: 3.25rem; }
+    .logo-row img.is-short { height: 1.25rem; }
+  }
+  @media (min-width: 64rem) {
+    .logo-groups { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; }
+    .logo-group { grid-column: span var(--n); }
+    .logo-group + .logo-group .logo-group-h { padding-left: 0.75rem; }
+    .logo-group + .logo-group .logo-row li:first-child { border-left: 0.0625rem solid var(--line); }
+  }
+
+  /* Icon-led lists: the icon, then a bold run-in and its sentence. */
+  .ticks { display: grid; gap: 0.85rem; margin: 0; padding: 0; list-style: none; }
+  .ticks li { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .ticks .icon { color: var(--leaf); margin-top: 0.15em; }
+  .ticks p { margin: 0; color: var(--canopy); }
+  .ticks strong { font-weight: 700; }
+
+  /* 3. Innovate: the gel. */
+  .split-gel { display: grid; gap: 2.5rem; align-items: center; }
+  @media (min-width: 64rem) { .split-gel { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 4.5rem; } }
+  .gel { margin: 0; }
+  .gel-lanes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(0.5rem, 1.2vw, 1rem); }
+  .lane { display: grid; gap: 0.6rem; justify-items: stretch; }
+  .lane-track { position: relative; height: clamp(14rem, 24vw, 19rem); background: var(--paper); border: 0.0625rem solid var(--meadow); border-radius: 0.375rem; }
+  .lane-well { position: absolute; top: 0.7rem; left: 20%; right: 20%; height: 0.6rem; border: 0.094rem solid var(--meadow); border-radius: 0.15rem; background: var(--stone); }
+  .lane-band { position: absolute; left: 15%; right: 15%; top: var(--y); height: 0.55rem; border-radius: 1rem; background: var(--leaf); }
+  .lane-marker .lane-band { height: 0.25rem; background: var(--canopy); opacity: 0.35; }
+  .lane.is-on .lane-track { border-color: var(--leaf); outline: 0.1875rem solid var(--sun); outline-offset: 0.125rem; }
+  .lane-name { font-size: 0.8125rem; font-weight: 600; text-align: center; color: var(--moss); line-height: 1.25; }
+  .lane.is-on .lane-name { color: var(--canopy); font-weight: 700; }
+  .gel figcaption { margin-top: 1.1rem; font-size: 0.875rem; color: var(--moss); max-width: 36rem; }
+
+  /* 5. REASSURED's criteria, each with its icon; the tile fills green with its letter. */
+  .criteria > li { grid-template-columns: 2.75rem minmax(0, 1fr); column-gap: 1rem; align-items: start; }
+  .criteria .crit-icon { transition: background-color 0.14s ease, color 0.14s ease; }
+  .criteria h3 .crit-letter { display: inline; font-size: 1em; color: var(--leaf); margin-right: 0.1em; }
+  .criteria li.is-on h3 span.crit-letter { background: none; padding: 0; margin: 0 0.1em 0 0; }
+  .criteria li.is-on .crit-icon { background: var(--sun); color: var(--canopy); }
+
+  /* 6. Transform lives: six steps, testing then care. */
+  .model { display: grid; gap: 0.75rem 1.25rem; }
+  .model-phase { display: none; margin: 0; padding-bottom: 0.5rem; border-bottom: 0.125rem solid var(--canopy); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--canopy); }
+  .model-phase-care { border-bottom-color: var(--leaf); color: var(--leaf); }
+  .model-steps { display: grid; gap: 1.75rem 1.25rem; margin: 0; padding: 0; list-style: none; grid-column: 1 / -1; }
+  @media (min-width: 40rem) { .model-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 56rem) { .model-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 75rem) {
+    .model { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .model-phase { display: block; }
+    .model-phase-test { grid-column: 1 / span 4; }
+    .model-phase-care { grid-column: 5 / span 2; }
+    .model-steps { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  }
+  .model-step h3 { margin-top: 0.9rem; font-size: 1.125rem; line-height: 1.25; font-stretch: var(--display-stretch); }
+  .model-n { color: var(--leaf); margin-right: 0.15em; }
+  .model-step p { margin-top: 0.35rem; font-size: 0.9375rem; line-height: 1.5; color: var(--canopy); }
+  .model-step.is-care .icon-tile { background: var(--sun); color: var(--canopy); }
+
+  /* 7. One platform. */
+  .platform { display: grid; gap: 2.5rem 3.5rem; }
+  @media (min-width: 56rem) { .platform { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .family-head { display: flex; align-items: center; gap: 0.9rem; padding-bottom: 1rem; border-bottom: 0.125rem solid var(--canopy); }
+  .family-sub { margin-top: 0.15rem; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--moss); }
+  .family-list { margin: 0; padding: 0; list-style: none; }
+  .family-list a { display: flex; align-items: baseline; gap: 1rem; padding: 0.85rem 0; border-bottom: 0.0625rem solid var(--line); font-weight: 600; color: var(--canopy); text-decoration: none; }
+  .family-list a > span:first-child { flex: 1 1 auto; }
+  .family-code { font-size: 0.8125rem; font-weight: 400; color: var(--moss); white-space: nowrap; }
+  .family-list .icon { width: 1rem; height: 1rem; color: var(--leaf); align-self: center; opacity: 0.45; transition: opacity 0.16s ease, translate 0.16s ease; }
+  .family-list a:hover, .family-list a:focus-visible { color: var(--leaf); }
+  .family-list a:hover .icon, .family-list a:focus-visible .icon { opacity: 1; translate: 0.15rem 0; }
+  .family-next { display: grid; gap: 1rem 3.5rem; align-items: center; grid-column: 1 / -1; }
+  @media (min-width: 56rem) { .family-next { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .family-dev { display: flex; gap: 0.65rem; align-items: flex-start; margin: 0; color: var(--canopy); }
+  .family-dev .icon { color: var(--leaf); margin-top: 0.15em; }
+  .next-tile { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border: 0.094rem dashed var(--leaf); border-radius: var(--radius); background: var(--paper); color: var(--canopy); text-decoration: none; transition: background-color 0.16s ease; }
+  .next-tile > span:nth-child(2) { flex: 1; }
+  .next-tile > .icon { color: var(--leaf); }
+  .next-tile:hover, .next-tile:focus-visible { background: var(--sprout); }
+
+  /* 8. Under the map: the latest work, as compact cards with a small tag. */
+  .map-after { padding-top: clamp(2.5rem, 4vw, 3.5rem); }
+  .work-row-h { margin: 0 0 1.25rem; font-size: 1.25rem; font-stretch: var(--display-stretch); }
+  .work-cards { display: grid; gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
+  @media (min-width: 56rem) { .work-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .work-card a { display: flex; flex-direction: column; height: 100%; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); overflow: hidden; color: var(--canopy); text-decoration: none; transition: border-color 0.16s ease; }
+  .work-card a:hover, .work-card a:focus-visible { border-color: var(--leaf); }
+  .work-pic { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--sprout); }
+  .work-pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .work-pic-icon { display: grid; place-items: center; color: var(--leaf); }
+  .work-pic-icon .icon { width: 3rem; height: 3rem; }
+  .work-kind { align-self: flex-start; margin: 1rem 1.1rem 0; padding: 0.2rem 0.55rem; border-radius: 0.375rem; background: color-mix(in srgb, var(--sun) 32%, var(--paper)); font-size: 0.75rem; font-weight: 700; color: var(--canopy); }
+  .work-title { display: block; padding: 0.55rem 1.1rem 1.2rem; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.0625rem; line-height: 1.3; letter-spacing: -0.01em; }
+
+  /* 9. Three ways to partner, signed by the founder. */
+  .closing-home { background: var(--sprout); }
+  .doors { display: grid; gap: 1rem; margin-bottom: 0; padding: 0; list-style: none; }
+  @media (min-width: 56rem) { .doors { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .door { display: flex; flex-direction: column; height: 100%; min-height: 13rem; padding: 1.5rem; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); color: var(--canopy); text-decoration: none; transition: border-color 0.16s ease; }
+  .door:hover, .door:focus-visible { border-color: var(--leaf); }
+  .door-who { margin-top: 1rem; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.015em; }
+  .door-line { margin-top: 0.45rem; color: var(--canopy); }
+  .door-go { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: auto; padding-top: 1rem; font-weight: 600; color: var(--leaf); }
+  .door-go .icon { width: 1rem; height: 1rem; }
+  .signed { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 0.0625rem solid color-mix(in srgb, var(--canopy) 22%, transparent); font-size: 0.9375rem; }
+  .signed img.signed-pic { width: 3.25rem; height: 3.25rem; border-radius: 50%; object-fit: cover; object-position: 30% 20%; }
+  .signed p { margin: 0; flex: 1 1 26rem; }
+  .signed .link { min-height: 0; margin-left: 0.4rem; }
+  .signed-reach { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; flex: 0 1 auto !important; }
+  .signed-reach a { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--canopy); font-weight: 600; text-decoration: none; }
+  .signed-reach .icon { color: var(--leaf); width: 1.05rem; height: 1.05rem; }
+  .signed-reach a:hover, .signed-reach a:focus-visible { color: var(--leaf); }
+
+  /* The home page's comparison on a phone: each row a card with the three answers side by side. */
+  @media (max-width: 47.99rem) {
+    .compare-compact tbody tr, .compare-compact tbody tr + tr, .compare-compact tbody tr:last-child { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 0.4rem; padding: 0.9rem 0.9rem 1rem; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
+    .compare-compact tbody th { grid-column: 1 / -1; padding-bottom: 0.45rem; font-size: 1.0625rem; }
+    .compare-compact td, .compare-compact td + td { display: block; padding: 0.45rem 0.45rem 0.5rem; border-top: 0; font-size: 0.875rem; line-height: 1.35; }
+    .compare-compact td::before { display: block; margin-bottom: 0.2rem; font-size: 0.6875rem; }
+    .compare-compact td.is-ours, .compare-compact tbody tr:last-child td.is-ours { margin: 0; padding: 0.45rem 0.5rem 0.5rem; border-radius: 0.375rem; }
+  }
+  @media (min-width: 22rem) and (max-width: 39.99rem) { .model-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 1rem; } }
+
+  /* The footer, redone. */
+  .site-footer { border-top: 0.125rem solid var(--canopy); }
+  .site-footer .foot-wrap { padding-block: 2.75rem 1.25rem; }
+  .foot-top { display: grid; gap: 2rem 2.5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .foot-brand { grid-column: 1 / -1; }
+  .foot-contact { grid-column: 1 / -1; }
+  @media (min-width: 56rem) {
+    .foot-top { grid-template-columns: minmax(0, 5fr) repeat(2, minmax(0, 2.2fr)) minmax(0, 3fr); }
+    .foot-brand, .foot-contact { grid-column: auto; }
+  }
+  .foot-about { margin-top: 0.9rem; max-width: 24rem; font-size: 0.9375rem; line-height: 1.55; color: var(--moss); }
+  .foot-social { display: flex; gap: 0.5rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+  .foot-social a { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 0.0625rem solid var(--line); border-radius: 50%; color: var(--canopy); transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease; }
+  .foot-social a:hover, .foot-social a:focus-visible { background: var(--sprout); border-color: var(--leaf); color: var(--leaf); }
+  .foot-social .icon { width: 1.05rem; height: 1.05rem; }
+  .foot-h { margin: 0 0 0.5rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--moss); }
+  .foot-group ul { margin: 0; padding: 0; list-style: none; }
+  .site-footer .foot-link { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.25rem; font-size: 0.9375rem; color: var(--canopy); text-decoration: none; }
+  .site-footer .foot-link:hover, .site-footer .foot-link:focus-visible { color: var(--leaf); text-decoration: underline; text-underline-offset: 0.2em; }
+  .foot-contact .icon { width: 1.05rem; height: 1.05rem; color: var(--leaf); }
+  .foot-bar { display: grid; gap: 0.75rem 2rem; margin-top: 2rem; padding-top: 1rem; border-top: 0.0625rem solid var(--line); font-size: 0.8125rem; line-height: 1.5; color: var(--moss); }
+  @media (min-width: 56rem) { .foot-bar { grid-template-columns: minmax(0, 1fr) auto; align-items: start; } }
+  .foot-fine { margin: 0; max-width: 52rem; }
+  .foot-legal { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.25rem; }
+  .foot-legal .foot-link { min-height: 1.75rem; font-size: 0.8125rem; }
+  .foot-legal .credits { order: -1; }
+  .foot-legal .credits[open] { flex-basis: 100%; }
+  .foot-legal .credits ul, .foot-legal .credits p { font-size: 0.8125rem; }
+}

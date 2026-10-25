@@ -11,6 +11,7 @@ colors:
   mist: "#F0F9FF"
   paper: "#FFFFFF"
   sprout: "#E0F2FE"
+  stone: "#F7F7F4" # the ground under the opening, since 25 October 2026
   meadow: "#BAE6FD"
   sun: "#6EE7B7" # life green: what is being pointed out; the token keeps the name it had when it was amber
   drop: "#A61B18"
@@ -47,12 +48,6 @@ typography:
     fontSize: 2.35rem
     fontWeight: 700
     lineHeight: 1.16
-    letterSpacing: -0.03em
-  film-line:
-    fontFamily: Archivo
-    fontSize: 1.3rem
-    fontWeight: 700
-    lineHeight: 1.15
     letterSpacing: -0.03em
   action:
     fontFamily: Archivo
@@ -124,7 +119,13 @@ spacing:
   xl: 4rem
 components:
   page:
+    # the opening (the hero, and each page's opening)
     backgroundColor: "{colors.mist}"
+    textColor: "{colors.primary}"
+    typography: "{typography.body}"
+  page-ground:
+    # the page under the opening, between the paper bands (25 October 2026)
+    backgroundColor: "{colors.stone}"
     textColor: "{colors.primary}"
     typography: "{typography.body}"
   secondary-text:
@@ -199,15 +200,20 @@ components:
     backgroundColor: "{colors.sprout}"
     textColor: "{colors.canopy}"
     typography: "{typography.vision-line}"
-  film-toggle:
-    backgroundColor: "{colors.paper}"
+  partner-row:
+    # the partners sliding along the opening's foot, the full width (25 October 2026)
+    backgroundColor: "{colors.mist}"
     textColor: "{colors.canopy}"
-    rounded: "{rounded.full}"
-    size: 2.75rem
-  place-chip:
+  announcement:
+    # the one-line event above the hero's heading; its tag is life green
     backgroundColor: "{colors.paper}"
     textColor: "{colors.canopy}"
     rounded: "{rounded.sm}"
+  place-chip:
+    # since 25 October 2026 the emblem's disc; the state's name beside it has no box
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.canopy}"
+    rounded: "{rounded.full}"
   map-state:
     backgroundColor: "{colors.meadow}"
     textColor: "{colors.canopy}"
@@ -233,7 +239,7 @@ This file describes the design of the production site. It began as Design 11, "L
 
 - **Archivo** for every voice, chosen over Instrument Sans and the previous Quicksand and Nunito (the user: "Let us go with Archivo"). Headings are set wide (`font-stretch: 112%`), text at normal width.
 - **Less space:** sections about half the padding they had (68 px at a laptop's width, was 128), a smaller type scale, heading and lead aligned at the top, landscape pictures.
-- **Flat material:** no frosted glass, no blur, no pools of light, no soft shadows. Paper on ice white with hairline edges, and one corner radius, 0.5rem, in place of pills.
+- **Flat material:** no frosted glass, no blur, no soft shadows. Paper on ice white with hairline edges, and one corner radius, 0.5rem, in place of pills. Lumen's pools of light were taken out too, and came back on 25 October 2026 (see "Surfaces, 25 October 2026").
 - **A sticky header** that takes a solid ground once the page moves under it, and marks the page it is on.
 
 The rules live in `src/css/site.css` (the tokens at the top; the "Refinement, 25 October 2026" block at the end). `designs/` keeps the comparison pages as they were and is not the reference any more. Where the site and this file differ, this file is the reference.
@@ -300,7 +306,7 @@ The film is drawn in WebGL but takes its colours from the same custom properties
 
 ## Typography
 
-One face, **Archivo**, self-hosted as one variable file with a weight and a width axis (`@fontsource-variable/archivo`, the "standard" files: latin, and latin-ext fetched only for a character outside latin), offered across weights 400 to 800. The display voice (every heading, the film's captions, the REASSURED letters, the vision, the contact rows, the name beside the emblem, a marked state's name) is Archivo **700 at width 112%** with -0.03em tracking. Text is Archivo 400 at width 100%; buttons, tags and nav links 600; the label voice 700 at 0.07em, uppercase. The weights in use are 400, 600, 700 and 800; do not add others.
+One face, **Archivo**, self-hosted as one variable file with a weight and a width axis (`@fontsource-variable/archivo`, the "standard" files: latin, and latin-ext fetched only for a character outside latin), offered across weights 400 to 800. The display voice (every heading, the REASSURED letters, the vision, the contact rows, the name beside the emblem, a marked state's name) is Archivo **700 at width 112%** with -0.03em tracking. Text is Archivo 400 at width 100%; buttons, tags and nav links 600; the label voice 700 at 0.07em, uppercase. The weights in use are 400, 600, 700 and 800; do not add others.
 
 | Level | Weight and width | Size | Line height | Tracking | Used for |
 | --- | --- | --- | --- | --- | --- |
@@ -309,7 +315,6 @@ One face, **Archivo**, self-hosted as one variable file with a weight and a widt
 | `h3` | 700, 112% | `clamp(1.15rem, 1.4vw, 1.35rem)` | 1.22 | -0.015em | Headings inside a section |
 | `row-title` | 700, 112% | 1.125rem | 1.25 | -0.015em | Titles in dense lists ("Why", REASSURED criteria, people) |
 | `vision-line` | 700, 112% | `clamp(1.5rem, 2.6vw, 2.35rem)` | 1.16 | -0.03em | The vision statement |
-| `film-line` | 700, 112% | `clamp(1.05rem, 1.4vw, 1.3rem)` | 1.15 | -0.03em | The caption under the film |
 | `word` | 700, 112% | `clamp(2.4rem, 8.4vw, 7.25rem)` | 0.95 | -0.03em | The nine letters of REASSURED |
 | `brand` | 700, 112% | 1.25rem | 1 | -0.03em | The name beside the emblem in the header |
 | `lead` | 400 | `clamp(1.125rem, 1.4vw, 1.3125rem)` | 1.45 | | The paragraph beside a section heading, in `moss`, at most 38rem |
@@ -332,7 +337,7 @@ One face, **Archivo**, self-hosted as one variable file with a weight and a widt
 
 **One centred column.** `.wrap` is 82rem at its widest (`--frame`) with side padding of `clamp(1.25rem, 5vw, 4.5rem)` (`--pad`). `--gutter` is the distance from the window's edge to the column's content; the header and the film, which span the window, use it to line up with the column.
 
-**Sections** have `clamp(2.75rem, 4.8vw, 4.25rem)` of padding above and below (`--section-y`: 68 px at 1440 px, was 128), and alternate between `mist` and `paper` so that each reads as its own sheet. There is no light or gradient behind a band. The order on the home page:
+**Sections** have `clamp(2.75rem, 4.8vw, 4.25rem)` of padding above and below (`--section-y`: 68 px at 1440 px, was 128), and alternate between the ground and `paper` so that each reads as its own sheet; since 25 October 2026 the ground under the opening is `stone`, and each `paper` band is lit by one soft pool (see "Surfaces, 25 October 2026"). The order on the home page:
 
 | Order | Section | Surface |
 | --- | --- | --- |
@@ -371,7 +376,7 @@ One face, **Archivo**, self-hosted as one variable file with a weight and a widt
 
 The page is flat. Two surfaces and hairlines do all the work:
 
-- **The page.** `mist`, and `paper` bands. Nothing is lit, blurred or glowing.
+- **The page.** The opening on `mist`, then `stone` with `paper` bands, each `paper` band lit by one soft pool of DNA blue from the left (life green from the right on every fourth). Nothing is blurred or glowing.
 - **What stands on it** (outline buttons, the film's button, the map's segmented control, the notice, the menu panel, the chips over the film and the map) is `paper`, edged with a 1px `line` or a 2px `canopy` border. Pictures are edged with a 1px `line` drawn inside them. There is no shadow, except a faint one under the open mobile menu, so that it reads as lying over the page.
 - **Rules.** A 1px `line` hairline separates rows. A 2px `canopy` rule opens a list or table (the first test, the evidence row, each audience, each kind of test, the first contact action) and tops the footer. Controls have a 2px `canopy` border.
 
@@ -384,10 +389,24 @@ The film is the only place with real depth: the shadow under the card's open cov
 - **One corner, 0.5rem** (`rounded.sm`), for buttons, nav links, tags, the segmented control, the notice, the menu panel and every picture. Only the film's round button is a circle (`rounded.full`); the map key's swatches are 0.3rem (`rounded.xs`).
 - **The dashed circle.** The card's collection circle is the design's one motif. It appears as a small dashed `leaf` ring between the five words under "Why". Use it sparingly, and only as a separator.
 - **A name that is proof** is set in `leaf`, in the heading's own face, weight and size, with nothing drawn on or under it, and never broken across a line. The colour is the mark.
-- **Icons** are drawn inline as SVG with a 2px to 2.2px stroke in `currentColor`: a right arrow on links and contact rows, and play, pause and replay on the film. There is no icon set. The plus and minus on disclosures are drawn in CSS.
+- **Icons** are drawn inline as SVG with a 2px to 2.2px stroke in `currentColor`: a right arrow on links and contact rows, and play on the film's button for a reader who asked for less motion. There is no icon set. The plus and minus on disclosures are drawn in CSS.
 - **Pictures** are landscape: 4:3 for the steps and the blank card, 5:4 for the field photos; the people's portraits keep their own shape.
 
+## Icons and highlighted headings
+
+**Icons** (25 October 2026, the user: "icons should be used throughout the app to make it look professional"): Lucide line icons (`lucide-static`, ISC), inlined at build time by the shortcode `{% icon "name" %}` (`src/lib/icons.mjs`), all at a 1.75 stroke in `currentColor`, sized 1.25em by the text they sit in. Decorative by default (`aria-hidden`); `{% icon "name", "Label" %}` names one that carries meaning alone. An unknown name stops the build. An **icon tile** (`.icon-tile`) is a 2.75rem `sprout` square with 0.5rem corners and the icon in `leaf`; where it marks the pointed-out or the care side (REASSURED's chosen letter, the testing model's care steps) it fills `sun` with the icon in `canopy`. Social marks (`{% brand "linkedin" %}`, YouTube and X from `simple-icons`, LinkedIn's glyph written in the file) are filled and sit in 2.75rem round buttons in the footer. No emoji or Unicode glyphs stand in for icons.
+
+**Highlighted headings** (the fi.co pattern the user liked): a heading's key phrase is set in `leaf` (`.h-mark`), the rest in `canopy`: "One test to screen. **The same test to confirm.**" On the home page the company's three words lead three headings this way ("**Innovate.** Patient, carrier or unaffected, read in one run."), instead of eyebrow labels over them. Life green is never the highlighted text: it fails contrast as type.
+
 ## Components
+
+### The home page (25 October 2026)
+
+Eight sections since the opening's third pass (see "The opening, third pass"; nine from the marketing review until then): the opening, with the partners sliding along its foot (the grouped wall of logos, `.logo-band`, waits in the stylesheet for the Partners page: a `paper` band, each logo in a ruled cell under its group, seven columns from 64rem spanning 3, 2 and 2); **Innovate**, the gel (five lanes in HTML and CSS: marker, unaffected, carrier, patient, control; the carrier lane ringed in `sun`; each band travels down from its well once as the section comes into view, GSAP, `BOUND.gel`) beside four icon-led points (`.ticks`); **Diagnose**, the poster's comparison (`.compare-table.compare-compact`: on a phone each row is a card with the three answers side by side under short labels); **REASSURED** (`src/site/_data/reassuredCopy.json`, the poster's words, an icon tile per criterion); **Transform lives**, the testing model as six steps under "Testing" and "Care" rules (`.model`); **One platform**, two families as link lists with their product codes, "In development" and the dashed "Your condition next" tile; **the map**, with "Our latest work" beneath it as three compact cards (`.work-card`: picture, a small pale-green kind tag, title); and **three doors** to partner on a `sprout` band, signed by the founder with a small round portrait and the email and phone.
+
+### Footer (25 October 2026)
+
+One compact band under a 2px `canopy` rule: the brand lockup (emblem and name, as the header), the company line in `moss` and three round social buttons; three short link groups (Solutions, Company, Contact with icons); then one hairline and a single line of small print (copyright, trade mark, the notice for individuals) with the credits disclosure, Privacy and Terms. Links are 0.9375rem, 2.25rem tall. The two addresses are on Contact only.
 
 ### Header
 
@@ -409,7 +428,7 @@ Sticky, 4.75rem tall (`--header-h`), and laid over the top of the film by a nega
 
 ### Steps (How it works)
 
-Three items: a 4:3 still from the film with a hairline edge, a label, an `h3` and a paragraph. One column on phones, picture beside text from 40rem, three columns from 60rem. The three `h3` lines are the film's three captions, word for word.
+Three items: a 4:3 still from the film with a hairline edge, a label, an `h3` and a paragraph. One column on phones, picture beside text from 40rem, three columns from 60rem. The three `h3` lines were the film's three captions, word for word, until the captions went on 25 October 2026.
 
 ### Lists and rows
 
@@ -443,7 +462,7 @@ The word set as nine buttons across the column at up to 9rem, above nine criteri
 - **Field photos:** three in a row, 5:4, with a hairline edge, each with a label naming the state (R2). Under 24rem two go side by side and the third runs the width under them, so the labels never meet. The home page's Programmes section and Programmes' "Where we have worked" show the same three until Our work has entries of its own.
 - **Vision:** a `sprout` band, with a label and one statement in `vision-line`. On About it carries the mission above the vision, each a label (an `h2` in the label voice) and its statement in `vision-line`, 3rem to 4rem apart.
 - **Contact actions:** four full-width rows in `action` type with an arrow at the right; on hover the row fills `sprout` and its text moves in 0.75rem. Each opens an email until a form service is chosen. One source for every page that offers them (home, Partnerships' closing band, Contact): `src/site/_data/actions.json` (label, subject, and the line Contact sets under each), rendered by `actionList()` in `src/site/_includes/actions.njk`. On Contact, `actionList(classes, { lines: true })` sets each action's line under its label (see Inner pages, "Contact").
-- **Footer:** 2.75rem of padding above, the full logo at 7rem, a short description and the campaign line as a label; contact links; two addresses; then, under a hairline, the disclaimer, a credits disclosure, the copyright line and the policy links.
+- **Footer:** see "Footer (25 October 2026)" above; this line described the earlier footer: the full logo at 7rem, a short description and the campaign line as a label; contact links; two addresses; then, under a hairline, the disclaimer, a credits disclosure, the copyright line and the policy links.
 
 ### Inner pages
 
@@ -495,10 +514,10 @@ The signature. About six and a half seconds, shot as one take, in three parts th
 | 4.16 | The camera passes over the batch, still climbing. | |
 | 5.0 | | "Built for screening at the scale of a nation." |
 | 5.2 to 6.0 | The cards have become a map of India, seen from straight above, north up. The places the company works light up in life green. | |
-| 5.92 to 6.4 | The places are named, in `paper` chips. The camera comes to rest, for the first time. | |
-| 6.56 | The film is over. Its button offers a replay. | |
+| 5.92 to 6.4 | The emblem pins every state we work in, each named where its name fits. The camera comes to rest, for the first time. | |
+| 6.56 | The film is over and rests on the map; its pins are buttons. There is no replay. | |
 
-The first caption is the page's wording as approved on 12 October. The content file (`content/website-content.md`, Part 8 item 1) proposes "A spot of blood, dried on a card." for the site; the film does not change either way.
+The film has had no captions since 25 October 2026.
 
 **Rules the client set. Do not undo them without being asked.**
 
@@ -506,13 +525,13 @@ The first caption is the page's wording as approved on 12 October. The content f
 - It is one continuous take. The camera is moving in the first frame and rests only on the map. No holds between the parts, no cuts.
 - One drop falls, from above, slowly enough to be seen as a drop. It is small: its radius is **0.027 of the card's length**, about a sixth of the collection circle's radius of 0.155. The client asked for it smaller on 13 October 2026 (0.05 became 0.036) and chose the toolbar's "Smaller still" (0.75 of that, 0.027) on 23 October. Do not enlarge it without being asked. In the code the designed radius is `DROP.radius` in `designs/src/js/lumen/scene.js`, and `--film-drop` on the page is a multiple of it; the chosen size is either `DROP.radius: 0.027` with no multiple, or 0.036 with `--film-drop: 0.75`, which is how the toolbar shows it now.
 - The map is flat and upright: straight above, north up, not tilted.
-- No progress bar and no chapter markers. The film has one control: a 2.75rem round `paper` button at the end of the caption's line that pauses, plays or, at the end, replays.
+- No progress bar, no chapter markers, no caption line and no control (25 October 2026): the film's seconds run 1.4 times the reader's (`SPEED` in `scene.js`), so the 6.56 s above take 4.69 s, under the five seconds after which moving content needs a way to pause it (WCAG 2.2.2). The times in this table are the film's own.
 - Its pace is settled: 6.56 seconds. Do not slow it down.
 
 **How it sits on the page.**
 
-- *Wide windows:* the film fills the whole opening, at least 36rem and otherwise the height of the window. The heading, lead, two buttons and a note stand over its left side in a column of `min(38rem, 44vw)`. A veil of `mist` behind the text fades out where the column ends, so the text is readable whatever the film shows. The film's subject is centred 74% of the way across the page's column. The caption and the button run along the foot.
-- *Small screens:* heading first, then the film in a frame the full width of the screen and `min(100vw, 58svh)` tall, its top and bottom edges fading into `mist`; then the caption and button, the lead, the buttons and the note.
+- *Wide windows:* the film fills the whole opening, at least 36rem and otherwise the height of the window. The heading, lead, two buttons and a note stand over its left side in a column of `min(38rem, 44vw)`. A veil of `mist` behind the text fades out where the column ends, so the text is readable whatever the film shows. The film's subject is centred 74% of the way across the page's column, fitted above the partners' band along the foot.
+- *Small screens:* heading first, then the film in a frame the full width of the screen and `min(100vw, 58svh)` tall, its top and bottom edges fading into `mist`; then the lead, the buttons, the note and the partners.
 - The heading, lead, buttons and note rise in on load, one after another (see Motion).
 
 **When the film cannot or should not play.**
@@ -536,13 +555,12 @@ The film is the one orchestrated moment. Everything else moves only in answer to
 | Hover and selection colour | 0.14s to 0.16s, `ease` (the stylesheet's transitions) |
 | A press (buttons, nav links, tags, test rows, contact rows) | Scales to 0.985 on the way down and back on release, 0.18s, `power2.out` |
 | Link arrow, contact row | The arrow moves 0.25rem, the row slides in 0.75rem, 0.2s, on pointing or keyboard focus |
-| Film caption change | 0.45s fade, rising 6px |
 | A section's opening, the first time it comes into view | Rises 10px and fades in over 0.5s, once, never again (decision D1, B, 24 October 2026) |
 | Map layer change | 0.5s per state, spreading outward |
 | Map names | 0.35s fade |
 | Anchor links | Smooth scrolling |
 
-What moves outside the film is `src/js/site/motion.js` (GSAP): every tween starts from where the thing is on screen, so it can be taken up again at any instant, and the keyboard's focus gets what the pointer gets. Colour stays in the stylesheet. The one motion tied to scrolling is the settle-in, and it plays once: nothing is scrubbed with the scroll, there is no parallax and nothing loops. With reduced motion requested, `motion.js` binds nothing, the hero text does not rise, scrolling is not smoothed, the map's colours change at once and the film waits for its button.
+What moves outside the film is `src/js/site/motion.js` (GSAP): every tween starts from where the thing is on screen, so it can be taken up again at any instant, and the keyboard's focus gets what the pointer gets. Colour stays in the stylesheet. The one motion tied to scrolling is the settle-in, and it plays once: nothing is scrubbed with the scroll, there is no parallax, and nothing loops but the partners along the opening's foot (the stylesheet's one animation that repeats, 80 s a turn, stopped by pointing at it, focusing it or tapping it, and never run for a reader who asks for less motion). With reduced motion requested, `motion.js` binds nothing, the hero text does not rise, scrolling is not smoothed, the map's colours change at once and the film waits for its button.
 
 ## Imagery
 
@@ -585,7 +603,7 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 - Text meets 4.5:1 everywhere (see Contrast), including the "Our vision" label (`leaf` on `sprout`, 5.17) and a proof name in `leaf` on `mist` (5.57).
 - A skip link is the first thing in the page. Every section is labelled by its heading. The page has one `h1`.
 - Focus is always visible, and nothing is reachable only by pointer: the map answers to the arrow keys and Escape, and the REASSURED letters are buttons.
-- The film's captions are hidden from screen readers because the same three lines, with more to say, are under "How it works". The film's button always says what it will do ("Pause the film", "Play the film", "Replay the film").
+- The film itself is hidden from screen readers; its pins are a real list under a heading only they hear ("Where we work: 10 states"), each a button named by its state that opens the card (`aria-expanded`, `aria-controls`; the card is `aria-live`). The partners' row is a focusable group named by its hidden heading, "We work with"; Enter or Space stops and starts it.
 - The map has a full text summary for screen readers, and its changing sentence is a polite live region.
 - Menus and disclosures are `<details>` elements and work without script. Without script the film and the map are still images.
 - `prefers-reduced-motion` is respected throughout (see Motion).
@@ -607,13 +625,13 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 - Don't make the film follow the scroll, add stops or a progress bar to it, slow it down, or enlarge the drop.
 - Don't tilt the map or show more than one drop.
 - Don't put a bar, a box or a fill on a proof name; the coloured mark was turned down.
-- Don't bring back glass, blur, pools of light, soft shadows, pills or decorative illustration. Don't loosen the spacing back towards the 128 px sections the user called too much space.
+- Don't bring back glass, blur, soft shadows, pills or decorative illustration; the pools of light are back only on `paper` bands, one to a band. Don't loosen the spacing back towards the 128 px sections the user called too much space.
 - Don't use `leaf` for text on `meadow` or `sun`, or `sun` for text anywhere.
 - Don't mix `sun` straight into a blue: go through `paper`.
 - Don't restyle the logo. Its colours stay in the logo; none of them is used in the interface.
 - Don't use partner logos without permission, or photos with identifiable people (the company's own portraits of its people on About and Team are the exception).
 - Don't add a cookie or consent banner. Say what analytics the site uses in the privacy policy.
-- Don't add scroll-scrubbed animation, parallax or anything that loops. The one scroll-linked motion is a section's opening settling in, once (see Motion).
+- Don't add scroll-scrubbed animation, parallax or another loop: the partners' slide is the one, and it keeps stopping on hover, focus and tap. The one scroll-linked motion is a section's opening settling in, once (see Motion).
 
 ## Where things live
 
@@ -631,6 +649,18 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 | Steps for going live | `designs/README.md` |
 
 Compiled files in `designs/assets/css` and `designs/assets/js` are committed; run `npm run build` in `designs/` after changing anything in `designs/src/`.
+
+**The opening, third pass (25 October 2026).** The user: "the hero section needs a redo… support any announcements… may not need the replay button… auto sliding partners like fi.co… the title should be something like 'Genetic testing that reaches every community'", then "after the video is finished, can we make the map interactive". From the top:
+
+- **Announcement** (optional): one line above the heading, a `paper` chip with a hairline edge and 0.5rem corners: a life-green tag ("Event"), the event in 700 and its dates in `moss`, and its link in `leaf` with an arrow. From `src/site/_data/announcements.json` (text, when, link, start, end, days in India); `src/lib/announcements.mjs` keeps the items not yet ended and the page checks the dates again (`main.js`, `initNews`), so an event never shows after its last day; with none running there is no chip and nothing in its place. The dev server previews the latest item when none is running; a build for the site never does, and the stills are captured from a build.
+- **Heading:** "Genetic testing that **reaches every community.**", the second half in `leaf`. The category opens the lead instead of standing over the heading as a label: "Genetic and molecular diagnostics from a dried blood spot: one test to screen and confirm, patient, carrier or unaffected, built to the REASSURED standard."
+- **The film** plays once, in under five seconds, with no caption and no button, and rests on the map with every state we work in pinned with the emblem (see Pins). The text comes before the film in the page, so the keyboard reaches the buttons first.
+- **The pins answer once the film has placed them** (`scene.js` lifts `inert`): each is a button with a tap area of at least 2.75rem, and pointing at it, focusing it or tapping it opens one `paper` card beside it (to the east, away from the text, unless it would leave the film; docked along the map's foot on a phone): the state in the display voice, the Our work layer's line for it, and "See on the map", which scrolls to the map section and opens it on Our work with the state picked (`ll:map-show`). A tap goes to the nearest pin; the arrow keys step between pins; Escape or a tap elsewhere closes it. The film's own map is never recoloured.
+- **Partners along the foot** (second pass, the same day; the user: "drop 'we work with', make the logos a bit bigger and don't lose their original shapes… stop scrolling when I hover… remove the pause button… use the full width"): all thirteen logos in their own colours, the full width of the window, with no visible label (its heading is for screen readers), no button and no link. Each logo is sized by its own proportions to one visual weight (`--ratio`, its width over its height: 3.25rem × √(1.6 / ratio) tall, from 1.875rem to 4rem, and never wider than 10.5rem; smaller on a phone), so a long wordmark sits low, an emblem stands taller and none is squeezed. One slow seamless loop (80 s a turn; two copies of the row, the second hidden from assistive technology). It stops while pointed at, the logo under the pointer staying bright and the rest dimming to 45%; while it holds the focus (the row is focusable); and on a tap or a click, which starts it again (`main.js`, `initMarquee`), so touch and keyboard can still hold it still without a button. Each moving row has the `mist` ground of its own, so the logos' white grounds multiply away. On a wide screen the foot is a `mist` band over the film's bottom edge, under a hairline, and the film fits its subject above it; on smaller screens it follows the note, bleeding to both edges. For a reader who asks for less motion it is a still row that scrolls by hand.
+
+**Surfaces, 25 October 2026.** The user: "the blue background everywhere is not looking good… keep the blue theme, I am just saying it is overused", and "I do not want to make changes to primary and secondary colours". No colour token changed. Blue stays the theme in the ink, the buttons, the icons, the map and two places only as a ground: the opening (`mist`, as it always was, which the film fades into; each inner page's opening too) and the close (`sprout`, the three doors). Under the opening the page's ground is `stone` (`#F7F7F4`, a neutral just warm of grey), and the `paper` bands between are lit by Lumen's soft pools of light (the user pointed to them on "We work with institutions" in `designs/lumen.html`). The sticky header is `paper` once the page moves under it. Placeholders, the work cards and the logo cells' hover take `stone`.
+
+**Pins: the emblem marks the states we work in (25 October 2026).** After the poster's map, but by state, never by town (R2). On the map (`main.js`, `initMap`) each state with a site carries the emblem on a small `paper` disc at a point inside it, on every layer, with its name under it; the map's key adds "Where we have worked" with the emblem. On a map under 430px wide the emblem alone marks the state, and a pick brings its name. In the film (`scene.js`, `arrangePlaces`; `FILM_PLACES` in `map-layers.js`) all ten (nine states and Delhi) are pinned the same way as the camera comes to rest, names only, no notes: the pins are sized from the nearest two so no pins meet (12px to the stylesheet's size), and each name takes the first side of its pin, under, right, left or above, where it meets no pin, no name, the page's text or the film's edge, or is left off while its pin stays. Below 40rem the film shows the pins without names. The logo is never restyled: the disc is around it, not on it.
 
 **The comparison page is history.** `designs/lumen.html` and `designs/src/` keep Design 11 as it was compared in October 2026 (Exo and Roboto Mono by default, the toolbar's variations, glass and pools). They are not updated with the refinement and are not the reference; build from `src/` and this file.
 

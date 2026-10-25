@@ -7,7 +7,8 @@ import { file, load, pages } from './helpers.mjs';
 
 // Words to leave out (content 2.8). Matched at the start of a word, so "empowering" and "diagnostic
 // tools" are caught too. "single drop" has its own test, because the vision statement keeps it.
-const BANNED = ['revolutionary', 'limitless', 'endless', 'cutting-edge', 'world-class', 'state-of-the-art', 'game-changing', 'empower', 'seamless', 'holistic', 'ecosystem', 'leverage', 'hope', 'humbled', 'flagship', 'painless', 'diagnostic tool', 'solutions provider'];
+// "painless" left the list on 25 October 2026: the user allowed the poster's "painless finger prick" in REASSURED.
+const BANNED = ['revolutionary', 'limitless', 'endless', 'cutting-edge', 'world-class', 'state-of-the-art', 'game-changing', 'empower', 'seamless', 'holistic', 'ecosystem', 'leverage', 'hope', 'humbled', 'flagship', 'diagnostic tool', 'solutions provider'];
 
 // What a reader or a search engine reads: the page's text, its title and its description.
 function copy($) {

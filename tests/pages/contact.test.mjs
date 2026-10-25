@@ -56,8 +56,8 @@ test('where to begin: the four actions, each an email with its subject, the line
   assert.deepEqual(ACTIONS.map((a) => a.label), actions.map((i, a) => text($(a).find('.action-label'))).get());
 });
 
-test('the home page and Partnerships keep their actions without the lines', () => {
-  for (const url of ['/', '/partnerships/']) {
+test('Partnerships keeps its actions without the lines (the home page has its three doors instead, 25 October 2026)', () => {
+  for (const url of ['/partnerships/']) {
     const page = load(url);
     assert.equal(page('.actions a.action').length, 4, url);
     assert.equal(page('.action-line').length, 0, url);
