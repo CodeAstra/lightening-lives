@@ -18,7 +18,8 @@ const pages = process.argv.includes('--pages');
 
 const css = { input: 'src/css/site.css', output: 'src/assets/css/site.css' };
 // The page's behaviour, and the opening film (three.js), which the page fetches only when it will play.
-const scripts = { site: 'src/js/site/main.js', 'site-scene': 'src/js/site/scene.js' };
+// The kits in 3D on Solutions (three.js) are a script of their own, fetched only by that page.
+const scripts = { site: 'src/js/site/main.js', 'site-scene': 'src/js/site/scene.js', 'site-kits': 'src/js/kits/viewer.js' };
 
 function tailwind(watching) {
   const args = ['-i', at(css.input), '-o', at(css.output), '--minify'];

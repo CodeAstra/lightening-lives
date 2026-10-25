@@ -1905,35 +1905,6 @@
 
 /* Inner pages, in the home page's direction (25 October 2026; the reviewer's ten-page site map). */
 @layer components {
-  /* The Solutions panel in the header: the tests by family, what is in development, and the two links.
-     A <details>, so it opens without script; main.js closes it on Escape, a click outside and a choice. */
-  .nav-drop { position: relative; }
-  .nav-drop > summary { list-style: none; cursor: pointer; gap: 0.3rem; }
-  .nav-drop > summary::-webkit-details-marker { display: none; }
-  .nav-drop > summary .icon { width: 1rem; height: 1rem; transition: rotate 0.16s ease; }
-  .nav-drop[open] > summary { background: var(--sprout); }
-  .nav-drop[open] > summary .icon { rotate: 180deg; }
-  .nav-drop > summary.is-current { color: var(--leaf); box-shadow: inset 0 -0.125rem 0 var(--leaf); border-radius: 0; }
-  .nav-drop-panel { position: absolute; top: calc(100% + 0.6rem); left: 50%; translate: -50% 0; z-index: 30; width: min(36rem, 92vw); padding: 1.25rem; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); box-shadow: 0 1rem 2rem -1.25rem rgba(12, 74, 110, 0.4); }
-  .nav-drop-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
-  .nav-drop-h { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 0.5rem; font-size: 0.9375rem; font-weight: 700; color: var(--canopy); }
-  .nav-drop-h .icon-tile { width: 2rem; height: 2rem; }
-  .nav-drop-h .icon-tile .icon { width: 1.05rem; height: 1.05rem; }
-  .nav-drop-group ul { display: grid; gap: 0.15rem; margin: 0; padding: 0; list-style: none; }
-  .nav-drop-link { display: grid; gap: 0.05rem; padding: 0.5rem 0.6rem; border-radius: var(--radius); color: var(--canopy); text-decoration: none; transition: background-color 0.16s ease; }
-  .nav-drop-link:hover, .nav-drop-link:focus-visible { background: var(--sprout); }
-  .nav-drop-link span { font-weight: 600; font-size: 1rem; line-height: 1.3; }
-  .nav-drop-link small { font-size: 0.8125rem; color: var(--moss); }
-  .nav-drop-link[aria-current="page"] span { color: var(--leaf); }
-  .nav-drop-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; margin-top: 1rem; padding-top: 0.9rem; border-top: 0.0625rem solid var(--line); }
-  .nav-drop-foot p { display: flex; align-items: center; gap: 0.5rem; margin: 0; font-size: 0.875rem; color: var(--moss); }
-  .nav-drop-foot p .icon { flex: none; color: var(--leaf); width: 1.1rem; height: 1.1rem; }
-  .nav-drop-foot ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: 0; padding: 0; list-style: none; }
-  .nav-drop-foot .link { font-size: 0.9375rem; }
-  /* The phone menu lists the tests under Solutions. */
-  .menu-sub { display: grid; gap: 0.1rem; margin: 0 0 0.35rem; padding: 0 0 0 1rem; list-style: none; border-left: 0.0625rem solid var(--line); margin-left: 0.9rem; }
-  .menu-sub .nav-link { min-height: 2.5rem; font-size: 0.9375rem; color: var(--moss); }
-
   /* The opening: the proof row and the buttons under the lead (opening.njk). */
   .page-proof { margin-top: 1.25rem; }
   .page-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
@@ -2000,3 +1971,176 @@
    Unlayered: the band also carries the utility bg-paper, which would otherwise win. */
 .section.closing { background: var(--sprout); }
 .section.closing::before { content: none; }
+
+/* Solutions and the test pages (25 October 2026; the reviewer's seven parts, content 5.4.0). */
+@layer components {
+  /* A family's heading carries its icon tile. */
+  .family-icon { vertical-align: 0.15em; margin-right: 0.75rem; width: 2.5rem; height: 2.5rem; }
+  /* The conditions of a family: one row each, the condition, what the test does, its product, the way in. */
+  .conditions { display: grid; margin: 3rem 0 0; padding: 0; list-style: none; border-top: 0.125rem solid var(--canopy); }
+  .condition { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.3rem 1rem; align-items: center; padding: 1.1rem 0.25rem; border-bottom: 0.0625rem solid var(--line); color: var(--canopy); text-decoration: none; transition: background-color 0.16s ease; }
+  .condition:hover, .condition:focus-visible { background: var(--sprout); }
+  .condition-name { font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.125rem; line-height: 1.25; letter-spacing: -0.01em; }
+  .condition-does { grid-column: 1; color: var(--moss); font-size: 0.9375rem; }
+  .condition-code { grid-column: 1; justify-self: start; padding: 0.15rem 0.55rem; border-radius: 0.375rem; background: var(--sprout); font-size: 0.8125rem; font-weight: 700; color: var(--leaf); }
+  .condition-code.is-ask { background: color-mix(in srgb, var(--sun) 32%, var(--paper)); color: var(--canopy); }
+  .condition > .icon { grid-column: 2; grid-row: 1 / span 3; color: var(--leaf); }
+  @media (min-width: 56rem) {
+    .condition { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 11rem 1.5rem; gap: 2rem; padding: 1.15rem 0.5rem; }
+    .condition-does, .condition-code, .condition > .icon { grid-column: auto; grid-row: auto; }
+    .condition-code { justify-self: start; }
+  }
+  .conditions-note { display: flex; gap: 0.6rem; margin: 1.25rem 0 0; max-width: 46rem; font-size: 0.9375rem; color: var(--moss); }
+  .conditions-note .icon { flex: none; color: var(--leaf); margin-top: 0.15em; }
+  @media (min-width: 56rem) { .answers.answers-two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 64rem) { .start-steps.start-five { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.5rem; } }
+
+  /* About the condition: a disclosure under the opening, on its ice white. */
+  .page-open + .section.test-about { padding-top: 0; padding-bottom: clamp(2rem, 3.5vw, 2.75rem); }
+  .about-condition { max-width: 50rem; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
+  .about-condition > summary, .kit-contents > summary { display: flex; align-items: center; gap: 0.6rem; min-height: 3.25rem; padding: 0.6rem 1.1rem; list-style: none; cursor: pointer; font-weight: 700; color: var(--canopy); }
+  .about-condition > summary::-webkit-details-marker, .kit-contents > summary::-webkit-details-marker { display: none; }
+  .about-condition > summary .icon:first-child, .kit-contents > summary .icon:first-child { color: var(--leaf); }
+  .about-condition > summary .icon:last-child, .kit-contents > summary .icon:last-child { margin-left: auto; width: 1.1rem; height: 1.1rem; transition: rotate 0.16s ease; }
+  .about-condition[open] > summary .icon:last-child, .kit-contents[open] > summary .icon:last-child { rotate: 180deg; }
+  .about-condition-body { display: grid; gap: 0.75rem; padding: 0 1.1rem 1.15rem 2.95rem; }
+  .about-condition-body p { margin: 0; color: var(--canopy); }
+
+  /* What it detects: icon-led cards beside who it is for; the conditions it also reads below. */
+  .detects { display: grid; gap: 2rem; align-items: start; }
+  @media (min-width: 64rem) { .detects { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 3rem; } }
+  .spec { display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+  .spec li { display: flex; gap: 0.9rem; align-items: flex-start; }
+  .spec h3 { margin: 0.15rem 0 0.25rem; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.0625rem; line-height: 1.25; letter-spacing: -0.01em; color: var(--canopy); }
+  .spec p { margin: 0; color: var(--moss); }
+  .spec-cards li { padding: 1.15rem 1.25rem 1.25rem; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
+  .section:not(.bg-paper) .spec-cards li { background: var(--paper); }
+  @media (min-width: 40rem) { .spec-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 64rem) { .spec-cards.spec-three { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .spec-list li { padding: 0.9rem 0; border-bottom: 0.0625rem solid var(--line); }
+  .spec-list li:first-child { border-top: 0.125rem solid var(--canopy); }
+  .who { padding: 1.35rem 1.4rem; background: var(--sprout); border-radius: var(--radius); }
+  .subs { display: grid; gap: 1rem; margin-bottom: 0; padding: 0; list-style: none; }
+  @media (min-width: 56rem) { .subs { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.5rem; } }
+  .subs li { padding-top: 1rem; border-top: 0.125rem solid var(--canopy); scroll-margin-top: calc(var(--header-h) + 1rem); }
+  .subs h3 { margin: 0 0 0.4rem; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.125rem; color: var(--canopy); }
+  .subs p { margin: 0; color: var(--moss); }
+
+  /* Why a DNA test here: the lines where today's testing stops, numbered. */
+  .gaps { display: grid; gap: 1rem; margin-bottom: 0; padding: 0; list-style: none; }
+  @media (min-width: 56rem) { .gaps:not(.gaps-stack) { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.5rem; } }
+  .gaps li { display: flex; gap: 0.85rem; align-items: flex-start; padding: 1.1rem 1.2rem; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
+  .section.bg-paper .gaps li { background: var(--stone); }
+  .gaps p { margin: 0; color: var(--canopy); }
+
+  /* In the laboratory: the spec list, the kit's contents on a click, the boxes beside. */
+  .lab { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 64rem) { .lab.has-boxes { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 4rem; } }
+  .lab:not(.has-boxes) { max-width: 52rem; }
+  .kit-contents { margin-top: 1.5rem; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
+  .section:not(.bg-paper) .kit-contents { background: var(--paper); }
+  .kit-contents-body { padding: 0 1.1rem 1.15rem 2.95rem; }
+  .kit-contents-body > p { margin: 0 0 0.75rem; color: var(--canopy); }
+  .kit-h { margin: 0 0 0.35rem; font-size: 0.9375rem; font-weight: 700; color: var(--canopy); }
+  .lab-boxes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+  .lab-boxes li:only-child { grid-column: 1 / -1; max-width: 22rem; }
+  .lab-boxes img { width: 100%; height: auto; border-radius: var(--radius); }
+
+  /* Questions, beside the rest of the family. */
+  .family-box { padding: 1.25rem 1.35rem; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
+  .section:not(.bg-paper) .family-box { background: var(--paper); }
+}
+
+/* Solutions, the kit catalogue (25 October 2026: the user's grid, grouped by family). */
+@layer components {
+  /* The navigation under the opening: each kit by its box, then Develop a test and Under development. */
+  .page-open + .section.kit-nav { padding-top: 0.25rem; padding-bottom: clamp(2rem, 3.5vw, 2.75rem); }
+  .kit-jumps { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.25rem, 1fr)); gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+  .kit-jump { display: flex; align-items: center; gap: 0.55rem; height: 100%; padding: 0.4rem 0.6rem 0.4rem 0.4rem; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); color: var(--canopy); text-decoration: none; transition: border-color 0.16s ease, translate 0.16s ease; }
+  .kit-jump:hover, .kit-jump:focus-visible { border-color: var(--leaf); translate: 0 -0.125rem; }
+  .kit-jump-img { flex: none; width: 2.75rem; height: 2.25rem; object-fit: cover; border-radius: 0.3rem; background: var(--mist); }
+  .kit-jump-plain .icon-tile { width: 2.75rem; height: 2.25rem; }
+  .kit-jump span:last-child { display: grid; gap: 0.05rem; min-width: 0; }
+  .kit-jump b { font-size: 0.9375rem; font-weight: 700; line-height: 1.2; }
+  .kit-jump small { font-size: 0.75rem; line-height: 1.25; color: var(--moss); }
+  .kit-shared { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 1.25rem 0 0; padding: 0; list-style: none; font-size: 0.9375rem; font-weight: 600; color: var(--canopy); }
+  .kit-shared li { display: inline-flex; align-items: center; gap: 0.45rem; }
+  .kit-shared .icon { color: var(--leaf); width: 1.125rem; height: 1.125rem; }
+
+  /* The kits: a card each, the box on a lit stage, drawn in 3D (src/js/kits/viewer.js) over its photograph. */
+  .kit-grid { display: grid; gap: 1.25rem; margin-bottom: 0; padding: 0; list-style: none; }
+  @media (min-width: 40rem) { .kit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 72rem) { .kit-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .kit-card { display: flex; flex-direction: column; scroll-margin-top: calc(var(--header-h) + 1rem); background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); overflow: hidden; transition: border-color 0.16s ease, box-shadow 0.2s ease; }
+  .section.bg-paper .kit-card:not(.kit-ask) { background: var(--stone); }
+  .kit-card:not(.kit-ask):hover, .kit-card:focus-within { border-color: var(--leaf); box-shadow: 0 1rem 2rem -1.5rem rgba(12, 74, 110, 0.45); }
+  .kit-card:target { border-color: var(--leaf); box-shadow: 0 0 0 0.125rem var(--leaf); }
+  .kit-stage { position: relative; display: grid; place-items: center; aspect-ratio: 5 / 4; padding: 1.25rem 1.5rem 1rem; background: radial-gradient(70% 62% at 50% 42%, var(--paper), var(--mist) 68%, var(--sprout)); cursor: grab; touch-action: pan-y; outline-offset: -0.1875rem; }
+  .kit-stage:focus-visible { outline: 0.1875rem solid var(--canopy); }
+  .kit-stage.is-dragging { cursor: grabbing; }
+  .kit-stage { -webkit-user-select: none; user-select: none; }
+  .kit-stage img, .kit-canvas { pointer-events: none; -webkit-user-drag: none; }
+  .kit-img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; border-radius: 0.375rem; transition: opacity 0.4s ease; }
+  .kit-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease; }
+  .kit-stage.is-3d .kit-canvas { opacity: 1; }
+  .kit-stage.is-3d .kit-img { opacity: 0; }
+  .kit-hint { position: absolute; left: 0.6rem; top: 0.55rem; display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0.5rem; border-radius: 0.375rem; background: rgba(255, 255, 255, 0.85); font-size: 0.75rem; font-weight: 700; color: var(--leaf); opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
+  .kit-hint .icon { width: 0.95rem; height: 0.95rem; }
+  .kit-stage.is-3d .kit-hint { opacity: 0.9; }
+  .kit-card:hover .kit-stage.is-3d .kit-hint, .kit-stage.is-dragging .kit-hint { opacity: 0; }
+  .kit-link { display: flex; flex: 1; flex-direction: column; color: var(--canopy); text-decoration: none; }
+  .kit-body { display: flex; flex: 1; flex-direction: column; gap: 0.5rem; padding: 1.1rem 1.25rem 1.25rem; }
+  .kit-condition { font-size: 0.8125rem; font-weight: 700; color: var(--leaf); }
+  .kit-name { font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.25rem; line-height: 1.15; letter-spacing: -0.02em; }
+  .kit-features { display: grid; gap: 0.35rem; margin-top: 0.15rem; font-size: 0.9375rem; line-height: 1.35; color: var(--canopy); }
+  .kit-features span { display: flex; gap: 0.45rem; align-items: flex-start; }
+  .kit-features .icon { flex: none; width: 1rem; height: 1rem; margin-top: 0.15em; color: var(--leaf); }
+  .kit-more { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: auto; padding-top: 0.6rem; font-weight: 700; font-size: 0.9375rem; color: var(--leaf); }
+  .kit-more .icon { width: 1rem; height: 1rem; transition: translate 0.16s ease; }
+  .kit-link:hover .kit-more .icon, .kit-link:focus-visible .kit-more .icon { translate: 0.2rem 0; }
+  .kit-link:focus-visible { outline: 0.1875rem solid var(--canopy); outline-offset: -0.1875rem; }
+  /* A condition we can diagnose without a kit on this page yet: a quieter card that asks us. */
+  .kit-card.kit-ask { background: transparent; border-style: dashed; border-color: rgba(12, 74, 110, 0.35); }
+  .kit-card.kit-ask:hover { border-color: var(--leaf); }
+  .kit-ask .kit-body { gap: 0.6rem; padding: 1.4rem; }
+  .kit-line { color: var(--moss); font-size: 0.9375rem; }
+  .kit-also { display: flex; align-items: center; gap: 0.55rem; margin: 1.25rem 0 0; color: var(--canopy); }
+  .kit-also .icon { color: var(--leaf); }
+
+  /* Develop a test with us: the page's main ask, on its own sprout panel. */
+  .develop-band { padding: clamp(1.5rem, 3.5vw, 2.75rem); background: var(--sprout); border-radius: var(--radius); }
+  .develop-band .start-steps li { border-top-color: var(--leaf); }
+  .develop-band .icon-tile { background: var(--paper); }
+  .develop-note { max-width: 34rem; font-size: 0.9375rem; color: var(--moss); }
+
+  /* Under development: dashed cards with their tag. */
+  .dev-cards { display: grid; gap: 1.25rem; margin-bottom: 0; padding: 0; list-style: none; }
+  @media (min-width: 48rem) { .dev-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .dev-cards li { position: relative; display: grid; gap: 0.6rem; align-content: start; padding: 1.5rem; border: 0.094rem dashed rgba(12, 74, 110, 0.35); border-radius: var(--radius); }
+  .dev-cards h3 { margin: 0.25rem 0 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.25rem; color: var(--canopy); }
+  .dev-cards p { margin: 0; color: var(--moss); }
+  .dev-tag { position: absolute; top: 1.25rem; right: 1.25rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.15rem 0.55rem; border-radius: 0.375rem; background: color-mix(in srgb, var(--sun) 32%, var(--paper)); font-size: 0.75rem; font-weight: 700; color: var(--canopy); }
+  .dev-tag .icon { width: 0.9rem; height: 0.9rem; }
+
+  /* Beyond the kits: four ways in to the Partners page. */
+  .beyond { display: grid; gap: 1rem; margin-bottom: 0; padding: 0; list-style: none; }
+  @media (min-width: 40rem) { .beyond { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 64rem) { .beyond { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .beyond a { display: flex; flex-direction: column; gap: 0.55rem; height: 100%; padding: 1.25rem; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); color: var(--canopy); text-decoration: none; transition: border-color 0.16s ease; }
+  .beyond a:hover, .beyond a:focus-visible { border-color: var(--leaf); }
+  .beyond b { margin-top: 0.3rem; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.0625rem; }
+  .beyond a > span:not(.icon-tile):not(.kit-more) { color: var(--moss); font-size: 0.9375rem; }
+
+}
+
+/* Solutions on a phone: the kit links in one row that scrolls sideways; no broken words in a heading. */
+@layer components {
+  @media (max-width: 39.99rem) {
+    .kit-jumps { display: flex; gap: 0.5rem; margin-inline: calc(var(--pad) * -1); padding: 0.15rem var(--pad) 0.5rem; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: var(--pad); scrollbar-width: none; }
+    .kit-jumps::-webkit-scrollbar { display: none; }
+    .kit-jumps li { flex: 0 0 auto; width: 10.5rem; scroll-snap-align: start; }
+  }
+  .page-open .display, .h2 { hyphens: manual; }
+  .kit-also { align-items: flex-start; }
+  .kit-also .icon { margin-top: 0.2em; }
+}

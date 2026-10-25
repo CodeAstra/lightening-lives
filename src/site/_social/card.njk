@@ -26,7 +26,7 @@ layout: false
     {%- if target.data.label %}
     <p class="label">{{ target.data.label }}</p>
     {%- endif %}
-    <h1>{{ target.data.og_title or target.data.h1 }}</h1>
+    <h1>{{ (target.data.og_title or target.data.h1) | unbracket | safe }}</h1>
   </div>
   <p class="social-domain">{{ site.domain | replace("https://", "") }}</p>
 </div>

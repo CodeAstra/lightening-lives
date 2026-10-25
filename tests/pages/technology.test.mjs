@@ -122,7 +122,7 @@ test('no bracket renders; the notice is absent; the closing band asks its own qu
   assert.equal($('.notice').length, 0);
   assert.equal(text('.closing h2'), 'Have a condition in mind?');
   assert.equal(text('.closing .lead'), 'Tell us what you need to detect. We develop the test.');
-  assert.deepEqual(links('.closing .btn-solid'), [['Develop a test with us', '/solutions/develop-a-test/']]);
+  assert.deepEqual(links('.closing .btn-solid'), [['Develop a test with us', '/solutions/#develop']]);
   assert.deepEqual(links('.closing .btn-line'), [['Contact us', '/contact/']]);
 });
 

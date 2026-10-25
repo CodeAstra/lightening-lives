@@ -191,9 +191,9 @@ Confident and plain, the way a senior scientist speaks to a colleague.
 
 ### 3.2 Navigation
 
-**Header (desktop):** Technology · Solutions ▾ · Partners · Our work · About · **[Partner with us]**
+**Header (desktop):** Technology · Solutions · Partners · Our work · About · **[Partner with us]**
 
-- *Solutions ▾* opens a panel: *Blood disorders* (Sickle cell anaemia, Thalassaemia) and *Muscle disorders* (Spinal muscular atrophy), and a row: *In development: coagulation panel, pharmacogenomics* · *Develop a test with us →* (`/solutions/#develop`). DMD and LGMD are rows on Solutions, not in the menu.
+- Every item is a plain link (the user, 25 October 2026): Solutions is one catalogue page, and its own jump links lead to each kit, Develop a test with us and Under development. The footer's Solutions list links the condition pages directly.
 - *Partners* is a plain link to `/partners/`, and *[Partner with us]*, the one solid button (24 October 2026), goes there too.
 
 **Header (phone and tablet):** logo and the menu, a panel listing the same items.
@@ -686,7 +686,7 @@ The one place on this page a box appears: a 3D view of a LitLife™ kit that the
 
 ### 5.3 Solutions `/solutions/`
 
-**Since 25 October 2026 (3.1): six sections.** 1 Opening ("One platform. A test for each inherited condition a programme needs.") · 2 Blood disorders · 3 Muscle disorders (SMA links; DMD and LGMD as rows, `#dmd`, `#lgmd`: "Molecular diagnosis available. Talk to us.") · 4 In development · 5 Develop a test with us (`#develop`, 5.5's five steps as one row, one action) · 6 Closing. Cut: "Every stage of care" and the 3D shelf.
+**Since 25 October 2026: a kit catalogue (the user).** One page that shows the kits we have developed and says we can meet a wide range of diagnostic needs: 1 Opening ("Kits we have developed. Solutions for a wide range of diagnostic needs."), a jump to each kit and to the two other ways in, and what every kit shares · 2 Blood disorders: LitLife™-SCA, -SiBThal217, -BThal, -AlphaThal, each a card with its box in 3D, its key features and Read more; HbD and HbE also available · 3 Muscle disorders: LitLife™-SMA; DMD and LGMD as cards that ask us (`#dmd`, `#lgmd`) · 4 Develop a test with us (`#develop`, Propose a condition) · 5 Under development: blood coagulation panel, pharmacogenomics · 6 Beyond the kits: testing programmes, awareness and counselling, training, laboratory set-up and consultancy (from the old Services page, without prenatal screening, biobank data, NCD kits or individual testing) · questions · closing. The SCA box, with its CSIR-CCMB logo and printed claims, was cleared by the user on 25 October 2026. The kits are shown in 3D, built from their print artwork; the SiBThal box's name reads SiBThal217 (the user). Print files for BThal and AlphaThal would replace their rebuilt faces.
 
 **Title:** Solutions: REASSURED genetic tests for inherited disorders | Lightening Lives
 **Meta:** One platform for screening and confirmatory genetic tests: inherited blood and muscle disorders so far, coagulation and pharmacogenomics next, and new tests on request.

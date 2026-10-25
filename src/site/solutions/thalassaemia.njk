@@ -1,54 +1,68 @@
 ---
-name: "Thalassaemia and other haemoglobinopathies"
+name: "Thalassaemia"
 layout: test-page.njk
-title: Thalassaemia, HbD and HbE testing | Lightening Lives
-description: "Molecular tests for beta and alpha thalassaemia, sickle-beta thalassaemia, HbD and HbE from a dried blood spot: LitLife™-BThal, LitLife™-AlphaThal and LitLife™-SiBThal217."
-label: Haemoglobinopathy
-h1: Thalassaemia and other haemoglobinopathies
-lead: "Tests for the haemoglobin disorders a programme meets alongside sickle cell anaemia: beta and alpha thalassaemia, sickle-beta thalassaemia, HbD and HbE. All from a spot of blood on a card."
-chips:
-  - { text: Dried blood spot }
-  - { text: Room temperature transport }
+title: "Thalassaemia: LitLife™-BThal and AlphaThal | Lightening Lives"
+description: Genetic tests for beta and alpha thalassaemia from a dried blood spot. Find the carriers routine screening misses, and support couple counselling. HbE testing too.
+label: Blood disorders
+h1: 'Thalassaemia carriers, <span class="h-mark">found before they become parents.</span>'
+lead: LitLife™-BThal and LitLife™-AlphaThal find patients and carriers from a dried blood spot, including the carriers routine blood tests miss.
+proof:
+  - { icon: "dna", text: "Beta and alpha thalassaemia" }
+  - { icon: "thermometer", text: "Room temperature transport" }
+  - { icon: "award", text: "Technology patented in India and Japan" }
 condition:
-  h2: The conditions
-  rows:
-    - { title: Beta thalassaemia, body: "The body makes too little of the beta chain of haemoglobin. The severe form, thalassaemia major, needs blood transfusions for life. Carriers are usually healthy; their mild anaemia is often mistaken for iron deficiency. On average 3 to 4 in 100 Indians are carriers; when both parents are, each pregnancy has a 1 in 4 chance of thalassaemia major." }
-    - { title: Alpha thalassaemia, body: "Changes in the alpha-globin genes, most often deletions. The effect runs from no symptoms to a lifelong anaemia, depending on how many of the four genes are affected. Routine screening often misses it." }
-    - { title: Sickle-beta thalassaemia, body: "A person who inherits the sickle gene from one parent and a beta thalassaemia gene from the other. It can look like sickle cell disease, and it is common where both conditions run, as they do in the central belt. Telling the two apart matters for care and for counselling." }
-    - { title: HbE and HbD, body: "Two other variants of haemoglobin. HbE is common in eastern and north-eastern India, and with a beta thalassaemia gene it can cause a serious anaemia. HbD, found in Punjab and Gujarat, can be mistaken for the sickle gene on a screening test." }
+  paragraphs:
+    - Thalassaemias are inherited disorders in which the body makes too little of one of haemoglobin's chains. Two carrier parents can have a child with thalassaemia major, who needs lifelong transfusions. Finding carriers early lets couples make informed choices.
+    - On average 3 to 4 in 100 Indians carry beta thalassaemia; when both parents are carriers, each pregnancy has a 1 in 4 chance of thalassaemia major.
   source: "National Health Mission, Guidelines for Prevention and Control of Hemoglobinopathies in India (2016) [TBC: confirm each statement against the guidelines, Part 8 item 11]"
-test:
-  h2: The tests
+detects:
+  h2: 'The tests. <span class="h-mark">What they detect.</span>'
+  lead: Patients and carriers, from the same dried blood spot.
   rows:
-    - { title: LitLife™-BThal, body: "A dried blood spot molecular test for diagnosis of beta thalassaemia. [TBC: which mutations; carriers, disease, or both]" }
-    - { title: LitLife™-AlphaThal, body: "A dried blood spot molecular test for diagnosis of alpha thalassaemia. [TBC: which deletions]" }
-    - { title: LitLife™-SiBThal217, body: "A dried blood spot molecular test for diagnosis of sickle cell anaemia and beta thalassaemia together, for programmes in the belt where both run. [TBC: what \"217\" refers to; what it reports]" }
-    - { title: HbD and HbE, body: "Testing for the HbD and HbE variants is also available. [TBC: as options within a kit, or as tests of their own]" }
-    - { title: The sample, body: "A spot of blood, dried on a card. Cards keep and travel at room temperature." }
-    - { title: Validation, body: "[TBC: the status of each, Part 8 item 9]" }
-  boxes:
-    - { name: box-bthal, alt: "The LitLife™-BThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.", caption: LitLife™-BThal }
-    - { name: box-alphathal, alt: "The LitLife™-AlphaThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.", caption: LitLife™-AlphaThal }
-    - { name: box-sibthal217, alt: "The LitLife™-SiBThal217 box, printed with the Lightening Lives logo, sickled red blood cells and a strand of DNA.", caption: LitLife™-SiBThal217 }
-where:
-  h2: Where they have been used
-  body: Population screening for sickle-beta thalassaemia in Maharashtra, Gujarat and Telangana, and newborn screening in Maharashtra. Population screening for beta thalassaemia in Maharashtra and Telangana.
-  link: { text: See all our work, href: /our-work/ }
-who:
-  h2: Who they are for
-  items:
+    - { icon: "dna", title: "LitLife™-BThal", body: "A dried blood spot molecular test for diagnosis of beta thalassaemia. [CONFIRM: mutations covered, e.g. the common Indian mutations]" }
+    - { icon: "dna", title: "LitLife™-AlphaThal", body: "A dried blood spot molecular test for alpha thalassaemia, detecting the common gene deletions routine screening misses. [CONFIRM: deletions covered]" }
+    - { icon: "users", title: "Patients and carriers", body: "Including the carriers mistaken for iron deficiency." }
+    - { icon: "droplet", title: "The sample", body: "A spot of blood, dried on a card. Cards keep and travel at room temperature." }
+  subs:
+    - { id: "beta", title: "Beta thalassaemia", body: "The body makes too little of the beta chain of haemoglobin. The severe form, thalassaemia major, needs blood transfusions for life. Carriers are usually healthy." }
+    - { id: "alpha", title: "Alpha thalassaemia", body: "Changes in the alpha-globin genes, most often deletions. The effect runs from no symptoms to a lifelong anaemia, depending on how many of the four genes are affected." }
+    - { id: "hbe", title: "HbE", body: "Common in eastern and north-eastern India; HbE with a beta thalassaemia gene can cause severe disease. Testing for HbE is available. [CONFIRM: product]" }
+  who:
     - Hospitals and laboratories that diagnose thalassaemia
     - Programmes screening couples, families and newborns for carrier status
     - Sickle cell programmes in districts where beta thalassaemia also runs
     - Patient organisations working with affected families
+gap:
+  h2: 'Why a DNA test here. <span class="h-mark">Where today''s testing stops.</span>'
+  items:
+    - Beta thalassaemia carriers have small red cells and are often treated for iron deficiency instead.
+    - Alpha thalassaemia carriers usually have normal HbA2 on HPLC, so routine screening misses them.
+lab:
+  rows:
+    - { icon: "droplet", title: "The sample", body: "A finger-prick spot of blood, dried on a card." }
+    - { icon: "flask-conical", title: "The method", body: "Molecular testing with no DNA extraction, read on an agarose gel." }
+    - { icon: "microscope", title: "The equipment", body: "A thermal cycler, a gel electrophoresis tank and a punch." }
+  boxes:
+    - { name: box-render-bthal, alt: "The LitLife™-BThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.", caption: LitLife™-BThal }
+    - { name: box-render-alphathal, alt: "The LitLife™-AlphaThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.", caption: LitLife™-AlphaThal }
+evidence:
+  rows:
+    - { icon: "award", title: "Patents", body: "The technology behind our tests is patented in India and Japan." }
+    - { icon: "clipboard-check", title: "Validation", body: "[TBC: the status of each, Part 8 item 9]" }
+  where: Population screening for beta thalassaemia in Maharashtra and Telangana, and for sickle-beta thalassaemia in Maharashtra, Gujarat and Telangana, including newborns in Maharashtra.
+  link: { text: See all our work, href: /our-work/ }
+questions:
+  - { q: "Can it find carriers that HPLC misses?", a: "Alpha thalassaemia carriers, often yes, because the test looks for the gene deletion itself rather than haemoglobin levels. [CONFIRM]" }
+  - { q: "Does the sample need a cold chain?", a: "No. The dried card travels at room temperature." }
+  - { q: "Is it suitable for premarital and antenatal screening?", a: "[CONFIRM]" }
+  - { q: "Does a positive result need confirmation?", a: "[CONFIRM]" }
 family:
-  - { text: Sickle cell anaemia, href: /solutions/sickle-cell-anaemia/, note: "LitLife™-SCA." }
+  - { text: Sickle cell anaemia, href: /solutions/sickle-cell-anaemia/, note: "LitLife™-SCA, and LitLife™-SiBThal217 for sickle-beta thalassaemia." }
 closing:
-  h2: Planning thalassaemia screening?
+  h2: 'Planning thalassaemia <span class="h-mark">screening?</span>'
   body: Tell us who you plan to screen and where the samples will be tested.
   solid: { text: Ask about thalassaemia testing, condition: thalassaemia }
 ---
-{#- Thalassaemia and other haemoglobinopathies (content file 5.5), on the test-page layout: the copy is
-    the front matter above, brackets and all (they never render; the Validation row, only a bracket, is
-    left out). 5.5 has no "Why" section and no "In the box": the three box stills end "The tests"
-    (ruling 5), and the places are words without the map (ruling 6). -#}
+{#- Thalassaemia (content file 5.4.2), on the test-page layout: the copy is the front matter above,
+    brackets and all (they never render; the Validation row and two questions, only brackets, are
+    left out). Sickle-beta thalassaemia is read on the sickle cell page (#sickle-beta), HbE here. -#}

@@ -32,8 +32,10 @@ function overLimits($, url) {
     if (n > limit) found.push(`${url} ${what} (${n} words): ${text($, e).slice(0, 60)}`);
   });
   over('.page-open .lead, section .lead', 30, 'lead');
-  over('.steps li > p:not(.label), .why p, .kinds p, .test-what > p, .proof p, .audiences p, .steps-numbered li p, .rows > :is(li, div) p, .families p:not(.label), .pair p', home ? 25 : 35, 'body', '#the-condition');
-  over('#the-condition .rows > :is(li, div) p', 60, 'condition body');
+  // A test page's rows, its numbered gaps and the problems answered (.spec, .gaps, .answers) stop at 35;
+  // the conditions a test also reads (.subs) are written as the condition is, and may run to 60.
+  over('.steps li > p:not(.label), .why p, .kinds p, .test-what > p, .proof p, .audiences p, .steps-numbered li p, .rows > :is(li, div) p, .families p:not(.label), .pair p, .spec p, .gaps p, .answers p', home ? 25 : 35, 'body');
+  over('.subs p', 60, 'condition body');
   over('main p', 60, 'paragraph');
   // A heading set in the label voice is a heading, not a label. The two proof tags are the content
   // file's own wording (4.3), which its R1 revision kept: "Patented in India and Japan" is five; so
@@ -51,12 +53,11 @@ test('leads, bodies, paragraphs and labels keep to the limits on every page', ()
   for (const url of pages()) assert.deepEqual(overLimits(load(url), url), [], url);
 });
 
-test('a body under a test page\'s "The condition(s)" may run to 60 words; anywhere else a row body stops at 35', () => {
+test('a test page\'s row body stops at 35 words; a condition the test also reads may run to 60', () => {
   const body = (n) => Array.from({ length: n }, (_, i) => `word${i}`).join(' ');
-  const rows = (id, n) => `<section id="${id}"><ul class="rows"><li><h3>Beta thalassaemia</h3><p>${body(n)}</p></li></ul></section>`;
-  const $ = cheerio(`<main>${rows('the-condition', 57)}${rows('the-test', 36)}</main>`);
+  const $ = cheerio(`<main><ul class="spec"><li><p>${body(36)}</p></li></ul><ul class="subs"><li><p>${body(57)}</p></li></ul></main>`);
   assert.deepEqual(overLimits($, '/solutions/thalassaemia/').map((f) => f.split(':')[0]), ['/solutions/thalassaemia/ body (36 words)']);
-  const $$ = cheerio(`<main>${rows('the-condition', 61)}</main>`);
+  const $$ = cheerio(`<main><ul class="subs"><li><p>${body(61)}</p></li></ul></main>`);
   assert.deepEqual(overLimits($$, '/solutions/thalassaemia/').map((f) => f.split(':')[0]),
     ['/solutions/thalassaemia/ condition body (61 words)', '/solutions/thalassaemia/ paragraph (61 words)']);
 });

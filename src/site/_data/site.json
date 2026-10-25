@@ -50,49 +50,7 @@
     },
     {
       "text": "Solutions",
-      "href": "/solutions/",
-      "menu": {
-        "groups": [
-          {
-            "name": "Blood disorders",
-            "icon": "droplets",
-            "links": [
-              {
-                "text": "Sickle cell anaemia",
-                "code": "LitLife™-SCA",
-                "href": "/solutions/sickle-cell-anaemia/"
-              },
-              {
-                "text": "Thalassaemia",
-                "code": "LitLife™-BThal",
-                "href": "/solutions/thalassaemia/"
-              }
-            ]
-          },
-          {
-            "name": "Muscle disorders",
-            "icon": "activity",
-            "links": [
-              {
-                "text": "Spinal muscular atrophy",
-                "code": "LitLife™-SMA",
-                "href": "/solutions/spinal-muscular-atrophy/"
-              }
-            ]
-          }
-        ],
-        "note": "In development: a blood coagulation panel and pharmacogenomics.",
-        "more": [
-          {
-            "text": "All solutions",
-            "href": "/solutions/"
-          },
-          {
-            "text": "Develop a test with us",
-            "href": "/solutions/develop-a-test/"
-          }
-        ]
-      }
+      "href": "/solutions/"
     },
     {
       "text": "Partners",
@@ -159,6 +117,10 @@
     ],
     "solutions": [
       {
+        "text": "All kits",
+        "href": "/solutions/"
+      },
+      {
         "text": "Sickle cell anaemia",
         "href": "/solutions/sickle-cell-anaemia/"
       },
@@ -172,7 +134,7 @@
       },
       {
         "text": "Develop a test with us",
-        "href": "/solutions/develop-a-test/"
+        "href": "/solutions/#develop"
       }
     ]
   },

@@ -1,154 +1,161 @@
 ---
 name: "Solutions"
-title: "Diagnostic solutions | Lightening Lives"
-description: "Molecular tests for sickle cell anaemia, thalassaemia, HbD and HbE, spinal muscular atrophy, Duchenne and limb-girdle muscular dystrophy, from a dried blood spot, for hospitals, laboratories and health programmes."
+title: "Solutions: LitLife™ genetic test kits | Lightening Lives"
+description: "LitLife™ kits for sickle cell anaemia, sickle-beta, beta and alpha thalassaemia and SMA, from a dried blood spot. Coagulation and pharmacogenomics in development; new tests on request."
 label: Solutions
-h1: Diagnostic solutions for inherited conditions
-lead: "We develop tests for inherited blood and muscle conditions, and make each one something an institution can run: assay, card, method, training and counselling."
+h1: 'Kits we have developed. <span class="h-mark">Solutions for a wide range of diagnostic needs.</span>'
+lead: "Five LitLife™ kits for inherited blood and muscle disorders, each reading mutations from a dried blood spot, and the next test built on request."
+proof:
+  - { icon: "badge-check", text: "ICMR approved" }
+  - { icon: "award", text: "Patents granted in India and Japan" }
+  - { icon: "map-pin", text: "15 sites, 9 states and Delhi" }
 notice: true
+closing:
+  h2: 'Start with the condition <span class="h-mark">your programme needs.</span>'
+  body: "Who will be tested, roughly how many, and where. We reply with how we would approach it."
+  solid: { text: "Talk to our scientific team", href: "/contact/" }
+  line: { text: "Partner with us", href: "/partners/" }
 ---
-{#- Solutions (content file 5.3). The layout opens the page (label, h1, lead) and closes it with 4.5's
-    band and the notice for individuals (4.4). Brackets are stripped and the sentence before each is
-    kept; the DMD and LGMD tests are named without their names, and their links ask about them on
-    Develop a test until their pages open (3.1). A column body over 35 words is split at a sentence
-    (R1). "Kit" is said only under "How a test arrives". The LitLife™-SCA box is withheld from the
-    row of boxes: its pictures carry the CSIR-CCMB logo and printed claims still to be confirmed
-    (content 7.1, Part 8 items 4 and 25). The bands alternate back from the closing
-    band's paper, so the first section is a paper band of its own. -#}
-{%- from "links.njk" import arrow, pageLink %}
+{#- Solutions (content file 5.3), since 25 October 2026 the user's catalogue grid, grouped by family:
+    the kits we have developed, each a card with its box in 3D (it turns as the pointer moves over it;
+    src/js/kits/viewer.js), its condition, its key features and "Read more" to its place on a test page;
+    DMD and LGMD as cards that ask us; Develop a test with us (#develop, the page's main ask); what is
+    under development; and Beyond the kits, what still holds of the old Services page, each item
+    leading to the Partners page. The kits come from src/site/_data/kits.json. The jump links under
+    the opening are the page's navigation. -#}
+{%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' %}
 {%- from "picture.njk" import picture with context %}
 {%- from "faq.njk" import faq %}
-{%- set boxSizes = "(min-width: 64rem) 15vw, (min-width: 40rem) 30vw, 46vw" %}
+<script type="module" src="/assets/js/site-kits.js"></script>
 
-  <!-- Two families of conditions -->
-  <section id="families" class="section" aria-labelledby="families-h">
+  <!-- The page's navigation: every kit, then the other two ways in; and what every kit shares -->
+  <section id="kits" class="section on-mist kit-nav" aria-label="Kits on this page">
     <div class="wrap">
-      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
-        <h2 id="families-h" class="h2 lg:col-span-7">Two families of conditions, one way of testing</h2>
-        <p class="lead lg:col-span-5">Every test works the same way: a spot of blood on a card, no DNA extraction, a modest laboratory. What differs is the condition.</p>
-      </div>
-      <ul class="families mt-12">
-        <li id="haemoglobinopathies">
-          <h3 class="h3">Haemoglobinopathies</h3>
-          <p>Inherited disorders of haemoglobin. They are India's most common single-gene conditions, and most families learn of them only after an affected child is born.</p>
-          <p>Carrier screening, diagnosis and newborn screening, from the same card.</p>
-          <p class="label">Tests</p>
-          <ul class="family-tests">
-            <li>LitLife™-SCA</li>
-            <li>LitLife™-SiBThal217</li>
-            <li>LitLife™-BThal</li>
-            <li>LitLife™-AlphaThal</li>
-            <li>HbD and HbE testing</li>
-          </ul>
-          <ul class="family-links">
-            <li>{{ pageLink("/solutions/sickle-cell-anaemia/", "Sickle cell anaemia") }}</li>
-            <li>{{ pageLink("/solutions/thalassaemia/", "Thalassaemia and other haemoglobinopathies") }}</li>
-          </ul>
-        </li>
-        <li id="musculopathies">
-          <h3 class="h3">Musculopathies</h3>
-          <p>Inherited conditions that weaken the muscles. Children are often thought to be weak or undernourished, and families wait years for a diagnosis.</p>
-          <p>A genetic result ends the wait, opens the treatment that exists, and tells the family who else carries the condition.</p>
-          <p class="label">Tests</p>
-          <ul class="family-tests">
-            <li>LitLife™-SMA</li>
-            <li>DMD test</li>
-            <li>LGMD test</li>
-          </ul>
-          <ul class="family-links">
-            <li>{{ pageLink("/solutions/spinal-muscular-atrophy/", "Spinal muscular atrophy") }}</li>
-            <li>{{ pageLink("/solutions/develop-a-test/#musculopathies", "Duchenne muscular dystrophy") }}</li>
-            <li>{{ pageLink("/solutions/develop-a-test/#musculopathies", "Limb-girdle muscular dystrophy") }}</li>
-          </ul>
-        </li>
+      <ul class="kit-jumps">
+        {%- for family in kits.families %}{% for kit in family.kits %}
+        <li><a class="kit-jump" href="#{{ kit.id }}">{{ picture(kit.image, "", "3.5rem", { class: "kit-jump-img" }) }}<span><b>{{ kit.short }}</b><small>{{ kit.condition }}</small></span></a></li>
+        {%- endfor %}{% endfor %}
+        <li><a class="kit-jump kit-jump-plain" href="#develop"><span class="icon-tile">{% icon "plus" %}</span><span><b>Develop a test</b><small>Propose a condition</small></span></a></li>
+        <li><a class="kit-jump kit-jump-plain" href="#in-development"><span class="icon-tile">{% icon "hourglass" %}</span><span><b>Under development</b><small>Two new families</small></span></a></li>
+      </ul>
+      <ul class="kit-shared">
+        <li>{% icon "droplet" %}<span>A dried blood spot</span></li>
+        <li>{% icon "thermometer" %}<span>Room temperature transport</span></li>
+        <li>{% icon "flask-conical" %}<span>No DNA extraction</span></li>
+        <li>{% icon "microscope" %}<span>Standard PCR equipment</span></li>
       </ul>
     </div>
   </section>
 
-  <!-- Developed so far: the home page's rows -->
-  <section id="developed" class="section bg-paper" aria-labelledby="developed-h">
+  {%- for family in kits.families %}
+  <!-- {{ family.name }} -->
+  <section id="{{ family.id }}" class="section{{ ' bg-paper' if loop.first }}" aria-labelledby="{{ family.id }}-h">
     <div class="wrap">
-      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
-        <h2 id="developed-h" class="h2 lg:col-span-7">Developed so far</h2>
-        <p class="lead lg:col-span-5">Each of these began with an institution that needed it. The next can begin with yours.</p>
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="{{ family.id }}-h" class="h2 lg:col-span-7"><span class="family-icon icon-tile">{% icon family.icon %}</span>{{ family.name }}. <span class="h-mark">{{ family.sub }}.</span></h2>
+        <p class="lead lg:col-span-5">{{ family.lead }}</p>
       </div>
-      {%- set testRows = { heading: "h3" } %}
-      {%- include "test-rows.njk" %}
-    </div>
-  </section>
-
-  <!-- What a solution includes -->
-  <section id="what-you-get" class="section" aria-labelledby="what-you-get-h">
-    <div class="wrap">
-      <h2 id="what-you-get-h" class="h2 max-w-[44rem]">What you get when we work together</h2>
-      <ul class="rows mt-10">
-        <li>
-          <h3>A test developed for the condition</h3>
-          <p>An assay built and validated for what your programme needs to detect.</p>
-        </li>
-        <li>
-          <h3>A sample that can be taken anywhere</h3>
-          <p>A spot of blood on a card, carried at room temperature. Collection is simple and minimally invasive.</p>
-        </li>
-        <li>
-          <h3>A method your laboratory can run</h3>
-          <p>Written for laboratories with minimal infrastructure, with no DNA extraction step.*</p>
-        </li>
-        <li>
-          <h3>Training for the people who run it</h3>
-          <p>Hands-on workshops for laboratory staff and health workers.</p>
-        </li>
-        <li>
-          <h3>A way to watch the programme</h3>
-          <p>Test details captured on a mobile app, for real-time monitoring.</p>
-        </li>
-        <li>
-          <h3>Help with what follows a result</h3>
-          <p>Genetic and social counselling for patients and carriers, awareness programmes, and patient support groups.</p>
-        </li>
-      </ul>
-      <p class="footnote">* Where applicable for developed assays.</p>
-    </div>
-  </section>
-
-  <!-- How a test arrives: the boxes as stills (the 3D view is Phase 7), then the open place, drawn -->
-  <section id="how-a-test-arrives" class="section bg-paper" aria-labelledby="how-a-test-arrives-h">
-    <div class="wrap">
-      <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
-        <h2 id="how-a-test-arrives-h" class="h2 lg:col-span-7">How a test arrives</h2>
-        <p class="text-moss lg:col-span-5">Each test is packed as a kit: a sample collection kit for the people who take the samples, and, where the laboratory needs it, a reagent kit. Our tests are made in India by a third-party manufacturer that holds a quality certification.</p>
-      </div>
-      <ul class="boxes mt-12">
-        <li>
-          <figure>
-            {{ picture("box-sibthal217", "The LitLife™-SiBThal217 box, printed with the Lightening Lives logo, sickled red blood cells and a strand of DNA.", boxSizes) }}
-            <figcaption>LitLife™-SiBThal217</figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure>
-            {{ picture("box-bthal", "The LitLife™-BThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.", boxSizes) }}
-            <figcaption>LitLife™-BThal</figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure>
-            {{ picture("box-alphathal", "The LitLife™-AlphaThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.", boxSizes) }}
-            <figcaption>LitLife™-AlphaThal</figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure>
-            {{ picture("box-sma", "The front of the LitLife™-SMA box: the Lightening Lives logo above the test's name, among drawings of DNA, muscle and nerve cells.", boxSizes) }}
-            <figcaption>LitLife™-SMA</figcaption>
-          </figure>
-        </li>
-        <li class="open">
-          <a href="/solutions/develop-a-test/">
-            <span class="tile" aria-hidden="true"><span class="carton"></span></span>
-            <span class="open-name">The condition you need next</span>
+      <ul class="kit-grid mt-12">
+        {%- for kit in family.kits %}
+        <li id="{{ kit.id }}" class="kit-card">
+          <div class="kit-stage" data-kit3d="{{ kit.model | dump }}" tabindex="0" role="img" aria-label="{{ kit.code }} box, in 3D. Drag to turn it, or use the arrow keys.">
+            {{ picture(kit.image, kit.alt, "(min-width: 72rem) 22vw, (min-width: 40rem) 45vw, 92vw", { class: "kit-img" }) }}
+            <span class="kit-hint" aria-hidden="true">{% icon "rotate-3d" %}Drag to turn</span>
+          </div>
+          <a class="kit-link" href="{{ kit.href }}">
+            <span class="kit-body">
+              <span class="kit-condition">{{ kit.condition }}</span>
+              <span class="kit-name" id="{{ kit.id }}-name">{{ kit.code }}</span>
+              <span class="kit-features">
+                {%- for f in kit.features %}
+                <span>{% icon "circle-check-big" %}{{ f }}</span>
+                {%- endfor %}
+              </span>
+              <span class="kit-more">Read more {% icon "arrow-right" %}</span>
+            </span>
           </a>
         </li>
+        {%- endfor %}
+        {%- for ask in family.ask %}
+        <li id="{{ ask.id }}" class="kit-card kit-ask">
+          <a class="kit-link" href="/contact/">
+            <span class="kit-body">
+              <span class="icon-tile">{% icon "message-circle" %}</span>
+              <span class="kit-condition">Molecular diagnosis available</span>
+              <span class="kit-name">{{ ask.condition }}</span>
+              <span class="kit-line">{{ ask.line }}</span>
+              <span class="kit-more">Talk to us {% icon "arrow-right" %}</span>
+            </span>
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
+      {%- if family.also %}
+      <p class="kit-also">{% icon "plus" %}<span>{{ family.also.text }} {% for l in family.also.links %}<a class="link" href="{{ l.href }}">{{ l.text }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</span></p>
+      {%- endif %}
+    </div>
+  </section>
+  {%- endfor %}
+
+  <!-- Develop a test with us: the page's main ask -->
+  <section id="develop" class="section bg-paper" aria-labelledby="develop-h">
+    <div class="wrap">
+      <div class="develop-band">
+        <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+          <h2 id="develop-h" class="h2 lg:col-span-7">Develop a test with us. <span class="h-mark">Propose a condition.</span></h2>
+          <p class="lead lg:col-span-5">Every LitLife™ test began with a programme's need. If yours needs a test that doesn't exist, our scientists can develop and validate it.</p>
+        </div>
+        <ol class="start-steps start-five mt-10">
+          <li><span class="icon-tile">{% icon "message-circle" %}</span><h3><span class="model-n">1</span> Brief</h3><p>You tell us the condition, the population and the setting.</p></li>
+          <li><span class="icon-tile">{% icon "search" %}</span><h3><span class="model-n">2</span> Feasibility</h3><p>Our scientists assess the genetics and the method.</p></li>
+          <li><span class="icon-tile">{% icon "dna" %}</span><h3><span class="model-n">3</span> Development</h3><p>We design and optimise the test.</p></li>
+          <li><span class="icon-tile">{% icon "clipboard-check" %}</span><h3><span class="model-n">4</span> Validation</h3><p>We validate it against reference methods on real samples.</p></li>
+          <li><span class="icon-tile">{% icon "graduation-cap" %}</span><h3><span class="model-n">5</span> Rollout</h3><p>Training, supply and support for your programme.</p></li>
+        </ol>
+        <div class="audience-act">
+          <a class="btn btn-solid" href="/contact/">Propose a condition</a>
+          <span class="develop-note">A condition common in one community, a mutation profile specific to a region, or a format no one makes.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Under development -->
+  <section id="in-development" class="section" aria-labelledby="in-development-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="in-development-h" class="h2 lg:col-span-7">Under development. <span class="h-mark">The next two families.</span></h2>
+        <p class="lead lg:col-span-5">Want early access, or to take part in validation? <a class="lead-link" href="/contact/">Tell us</a>.</p>
+      </div>
+      <ul class="dev-cards mt-12">
+        <li>
+          <span class="dev-tag">{% icon "hourglass" %}Under development</span>
+          <span class="icon-tile">{% icon "droplets" %}</span>
+          <h3>Blood coagulation panel</h3>
+          <p>Genetic testing for inherited bleeding disorders such as haemophilia A and B. The panel will confirm a diagnosis, identify carriers and support family counselling.</p>
+        </li>
+        <li>
+          <span class="dev-tag">{% icon "hourglass" %}Under development</span>
+          <span class="icon-tile">{% icon "pill" %}</span>
+          <h3>Pharmacogenomics</h3>
+          <p>Testing for the genetic differences that change how a person responds to a medicine, so that the drug and the dose can be chosen for the person.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Beyond the kits: what still holds of the old Services page, each to the Partners page -->
+  <section id="beyond" class="section bg-paper" aria-labelledby="beyond-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="beyond-h" class="h2 lg:col-span-7">Beyond the kits. <span class="h-mark">What we bring to a programme.</span></h2>
+        <p class="lead lg:col-span-5">A kit is the middle of the work. Around it, we help programmes and laboratories run it well.</p>
+      </div>
+      <ul class="beyond mt-12">
+        <li><a href="/partners/#programmes"><span class="icon-tile">{% icon "users" %}</span><b>Testing programmes</b><span>Screening for patients, carriers and newborns, and custom panels for a community.</span><span class="kit-more">For programmes {% icon "arrow-right" %}</span></a></li>
+        <li><a href="/partners/#funders"><span class="icon-tile">{% icon "megaphone" %}</span><b>Awareness and counselling</b><span>Screening and awareness camps, and genetic counselling for families.</span><span class="kit-more">For funders {% icon "arrow-right" %}</span></a></li>
+        <li><a href="/partners/#laboratories"><span class="icon-tile">{% icon "graduation-cap" %}</span><b>Training</b><span>Hands-on workshops for laboratory staff and health workers.</span><span class="kit-more">For laboratories {% icon "arrow-right" %}</span></a></li>
+        <li><a href="/partners/#laboratories"><span class="icon-tile">{% icon "microscope" %}</span><b>Laboratory set-up and consultancy</b><span>Setting up a molecular laboratory, and planning a programme or a grant.</span><span class="kit-more">For laboratories {% icon "arrow-right" %}</span></a></li>
       </ul>
     </div>
   </section>
@@ -156,16 +163,14 @@ notice: true
   <!-- Questions we are asked -->
   <section id="faq" class="section" aria-labelledby="faq-h">
     <div class="wrap grid gap-10 lg:grid-cols-12 lg:gap-16">
-      <h2 id="faq-h" class="h2 lg:col-span-5">Questions we are asked</h2>
+      <h2 id="faq-h" class="h2 lg:col-span-5">Questions <span class="h-mark">we are asked.</span></h2>
       <div class="lg:col-span-7">
         {{ faq([
           { q: "Do you test individuals?", a: "No. We work with hospitals, laboratories, clinicians, NGOs, CSR funders and government health programmes. If you are looking for a test for yourself or your family, please speak to your doctor or visit your nearest government health facility." },
-          { q: "What does our laboratory need to run the tests?", a: "A thermal cycler, a gel electrophoresis tank and a punch, a bench, and staff who have run PCR or have been trained. We help set the method up and train your staff." },
+          { q: "What does our laboratory need to run the kits?", a: "A thermal cycler, a gel electrophoresis tank and a punch, a bench, and staff who have run PCR or have been trained. We help set the method up and train your staff." },
           { q: "How do samples reach the laboratory?", a: "On the card, at room temperature, by ordinary courier or post. No cold chain." },
-          { q: "Are the tests approved?", a: "LitLife™-SCA, our sickle cell test, is approved by ICMR. The technology behind our tests is patented in India and Japan." },
-          { q: "Does a positive result need a second test?", a: "For LitLife™-SCA and LitLife™-SMA, no: the test screens and confirms." },
-          { q: "Can you develop a test for a condition that isn't listed?", a: "Yes. Each test we have developed began with an institution that needed it. Tell us the condition and the setting, and we take it from there." },
-          { q: "How do we start?", a: "Write to us with the condition, who will be tested and roughly how many, where samples will be collected and which laboratory will run them. We reply with how we would approach it." }
+          { q: "Are the kits approved?", a: "LitLife™-SCA, our sickle cell kit, is approved by ICMR. The technology behind our kits is patented in India and Japan." },
+          { q: "Can you develop a test for a condition that isn't listed?", a: "Yes. Each test we have developed began with an institution that needed it. Tell us the condition and the setting, and we take it from there." }
         ]) }}
       </div>
     </div>

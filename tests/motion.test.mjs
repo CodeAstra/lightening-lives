@@ -20,6 +20,8 @@ test('bundle budgets', () => {
   const gz = (f) => gzipSync(readFileSync(f)).length;
   assert.ok(gz('dist/assets/js/site.js') <= 90 * 1024, `site.js ${Math.round(gz('dist/assets/js/site.js') / 1024)} KB`);
   assert.ok(gz('dist/assets/js/site-scene.js') <= 260 * 1024, `site-scene.js ${Math.round(gz('dist/assets/js/site-scene.js') / 1024)} KB`);
+  // The kits in 3D on Solutions: three.js again, without the film.
+  assert.ok(gz('dist/assets/js/site-kits.js') <= 160 * 1024, `site-kits.js ${Math.round(gz('dist/assets/js/site-kits.js') / 1024)} KB`);
   // GSAP is the page's, not the film's: it is in site.js.
   assert.match(readFileSync('dist/assets/js/site.js', 'utf8'), /GreenSock|gsap/i);
 });

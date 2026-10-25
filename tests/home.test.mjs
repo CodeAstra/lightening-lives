@@ -196,7 +196,7 @@ test('one platform: two families of tests, what is in development, and the open 
     'Sickle cell anaemia', 'Sickle-beta thalassaemia', 'Beta thalassaemia', 'Alpha thalassaemia', 'HbD and HbE',
     'Spinal muscular atrophy', 'Duchenne muscular dystrophy', 'Limb-girdle muscular dystrophy']);
   assert.match(text('#tests .family-dev'), /blood coagulation panel and pharmacogenomics/);
-  assert.equal($('#tests a.next-tile').attr('href'), '/solutions/develop-a-test/');
+  assert.equal($('#tests a.next-tile').attr('href'), '/solutions/#develop');
   assert.match(text('#tests a.next-tile'), /Your condition next\./);
   // Unpublished pages are not linked (DMD and LGMD wait for their facts).
   $('#tests a').each((i, a) => assert.doesNotMatch(a.attribs.href, /duchenne|limb-girdle/, a.attribs.href));

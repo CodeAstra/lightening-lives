@@ -11,6 +11,41 @@
     ],
     "height": 356
   },
+  "box-render-alphathal": {
+    "widths": [
+      640,
+      960
+    ],
+    "height": 512
+  },
+  "box-render-bthal": {
+    "widths": [
+      640,
+      960
+    ],
+    "height": 512
+  },
+  "box-render-sca": {
+    "widths": [
+      640,
+      960
+    ],
+    "height": 512
+  },
+  "box-render-sibthal217": {
+    "widths": [
+      640,
+      960
+    ],
+    "height": 512
+  },
+  "box-render-sma": {
+    "widths": [
+      640,
+      960
+    ],
+    "height": 512
+  },
   "box-sibthal217": {
     "widths": [
       476

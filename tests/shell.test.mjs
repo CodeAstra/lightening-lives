@@ -21,26 +21,20 @@ test('every page has the shell', () => {
     assert.ok($('body').children().first().is('a.skip[href="#main"]'), `${url}: the skip link comes first`);
     assert.equal($('main#main').length, 1, url);
 
-    // The header has two navs, as before: the links on wide screens (Solutions opening its panel, since
-    // 25 October 2026) and the same links in the Menu panel, the tests listed under Solutions.
-    const top = $('header nav.site-nav');
-    const items = top.children('a.nav-link, details.nav-drop').map((i, el) => [[$(el).is('details') ? $(el).children('summary').text().trim() : $(el).text().trim(), $(el).is('details') ? '/solutions/' : $(el).attr('href')]]).get();
-    assert.deepEqual(items, NAV, `${url} site-nav`);
-    const drop = top.find('details.nav-drop[data-nav-drop]');
-    assert.deepEqual(drop.find('.nav-drop-link').map((i, a) => [[$(a).find('span').text(), $(a).attr('href')]]).get(), [
-      ['Sickle cell anaemia', '/solutions/sickle-cell-anaemia/'], ['Thalassaemia', '/solutions/thalassaemia/'], ['Spinal muscular atrophy', '/solutions/spinal-muscular-atrophy/']], url);
-    assert.deepEqual(drop.find('.nav-drop-foot a').map((i, a) => $(a).attr('href')).get(), ['/solutions/', '/solutions/develop-a-test/'], url);
-    const mobile = $('header details.menu .menu-panel');
-    assert.deepEqual(mobile.find('> ul > li > a.nav-link').map((i, a) => [[$(a).text().trim(), $(a).attr('href')]]).get(), NAV, `${url} menu`);
-    assert.equal(mobile.find('.menu-sub a').length, 4, `${url}: the three tests and Develop a test under Solutions`);
+    // The header has two navs: the links on wide screens and the same links in the Menu panel, every
+    // one a plain link (Solutions too, since 25 October 2026), each nav with one solid button.
+    for (const nav of ['nav.site-nav', 'details.menu .menu-panel']) {
+      const links = $(`header ${nav} a:not(.btn)`);
+      assert.deepEqual(links.map((i, a) => [[$(a).text().trim(), $(a).attr('href')]]).get(), NAV, `${url} ${nav}`);
+    }
+    assert.equal($('header details.nav-drop, header .menu-sub').length, 0, `${url}: no dropdown`);
     for (const nav of ['nav.site-nav', 'details.menu .menu-panel']) {
       assert.equal($(`header ${nav} .btn-solid`).length, 1, `${url} ${nav}: one call to action`);
       assert.equal($(`header ${nav} .btn-solid`).attr('href'), '/partners/', url);
       assert.equal($(`header ${nav} .btn-solid`).text().trim(), 'Partner with us', url);
     }
-    const current = top.children('a.nav-link[aria-current=page]').map((i, a) => $(a).attr('href')).get();
-    assert.deepEqual(current, NAV.filter(([, href]) => href !== '/solutions/' && url.startsWith(href)).map(([, href]) => href), url);
-    assert.equal(drop.children('summary').is('.is-current'), url.startsWith('/solutions/'), url);
+    const current = $('header nav.site-nav a.nav-link[aria-current=page]').map((i, a) => $(a).attr('href')).get();
+    assert.deepEqual(current, NAV.filter(([, href]) => url.startsWith(href)).map(([, href]) => href), url);
     assert.equal($('header .btn-solid').length, 2, `${url}: no call to action in the header beyond the two navs' one`);
     assert.ok($('main .btn-solid').length <= 2, url);
 

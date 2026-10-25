@@ -37,21 +37,6 @@ function initMenu() {
   });
 }
 
-// The header's Solutions panel (a <details>): a choice in it, Escape, or a click anywhere else closes it.
-function initNavDrop() {
-  const drop = document.querySelector('[data-nav-drop]');
-  if (!drop) return;
-  drop.addEventListener('click', (event) => { if (event.target.closest('a')) drop.open = false; });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && drop.open) {
-      drop.open = false;
-      drop.querySelector('summary').focus();
-    }
-  });
-  document.addEventListener('pointerdown', (event) => { if (drop.open && !drop.contains(event.target)) drop.open = false; });
-  drop.addEventListener('focusout', (event) => { if (drop.open && event.relatedTarget && !drop.contains(event.relatedTarget)) drop.open = false; });
-}
-
 // REASSURED: each big letter and its criterion light up together, whichever one is pointed at or focused.
 function initReassured() {
   const letters = [...document.querySelectorAll('[data-word] button')];
@@ -555,7 +540,6 @@ function initMap() {
 
 ready(() => {
   initMenu();
-  initNavDrop();
   initNews();
   initMarquee();
   initPins();

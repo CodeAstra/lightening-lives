@@ -31,12 +31,12 @@ test('"single drop" appears only in the vision statement', () => {
 });
 
 test('"kit" only where the content file allows', () => {
-  // Never on the home page; elsewhere only under "In the box" on a test's page and in "How a test
-  // arrives" on Solutions, which carry these ids.
+  // Never on the home page; elsewhere only in a test page's "In the laboratory, with the kit"
+  // (#laboratory) and on Solutions, the kit catalogue (both since 25 October 2026).
   assert.doesNotMatch(load('/')('main').text(), /\bkits?\b/i, '/');
-  for (const url of pages()) {
+  for (const url of pages().filter((u) => u !== '/solutions/')) {
     const $ = load(url);
-    $('#in-the-box, #how-a-test-arrives').remove();
+    $('#laboratory').remove();
     assert.doesNotMatch($('main').text(), /\bkits?\b/i, url);
   }
 });

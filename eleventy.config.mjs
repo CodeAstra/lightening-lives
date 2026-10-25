@@ -69,11 +69,11 @@ export default function (eleventyConfig) {
     return best ? [p.slice(0, best.at), p.slice(best.next)] : [p];
   }));
 
-  // The bracket rule (Global Constraints): a "[TBC: …]" or "[PLACEHOLDER: …]" note never renders.
+  // The bracket rule (Global Constraints): a "[TBC: …]", "[PLACEHOLDER: …]" or "[CONFIRM: …]" note never renders.
   // unbracket strips it from a string and keeps the sentence before it; bracketless does that to
   // each entry of a list (to the entry's own key, when the entries are objects: a row's "body", a
   // chip's "text") and leaves out an entry that was only a bracket.
-  const BRACKET = /\s*\[(?:TBC|PLACEHOLDER)\b[^\]]*\]/g;
+  const BRACKET = /\s*\[(?:TBC|PLACEHOLDER|CONFIRM)\b[^\]]*\]/g;
   const unbracket = (s) => (typeof s === 'string' ? s.replace(BRACKET, '').trim() : s);
   eleventyConfig.addFilter('unbracket', unbracket);
   eleventyConfig.addFilter('bracketless', (list, key) => (list || [])

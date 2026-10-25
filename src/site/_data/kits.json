@@ -1,0 +1,253 @@
+{
+  "_note": "The LitLife™ kits developed so far (Solutions, 25 October 2026: the user's catalogue grid, grouped by family). Box photographs from content/Design revision request.pdf (SCA, SMA) and the earlier box stills (SiBThal217, BThal, AlphaThal). The user cleared the SCA box, with its CSIR-CCMB logo and printed claims, on 25 October 2026. Features are confirmed facts only (content file 5.3 and 5.4). Since 25 October 2026 each kit is drawn in 3D (src/js/kits/viewer.js) from its print artwork in src/assets/kits/<kit>/: SCA and SMA from their flat panels; SiBThal217 from the photograph's faces, its name set as SiBThal217 (the user); BThal and AlphaThal built on the same box from their photographs' words and cells. model.box is width, height and depth.",
+  "families": [
+    {
+      "id": "haemoglobinopathies",
+      "name": "Blood disorders",
+      "sub": "Haemoglobinopathies",
+      "icon": "droplets",
+      "lead": "Inherited disorders of haemoglobin, among the most common single-gene conditions in India.",
+      "kits": [
+        {
+          "id": "kit-sca",
+          "code": "LitLife™-SCA",
+          "short": "SCA",
+          "condition": "Sickle cell anaemia",
+          "image": "box-render-sca",
+          "alt": "The LitLife™-SCA box, printed with the Lightening Lives and CSIR-CCMB logos, sickled red blood cells and a strand of DNA.",
+          "features": [
+            "Screens and confirms in one test",
+            "ICMR approved",
+            "Tells patients from carriers",
+            "Newborns, from birth"
+          ],
+          "href": "/solutions/sickle-cell-anaemia/",
+          "model": {
+            "kit": "sca",
+            "box": [
+              1.71,
+              1,
+              1
+            ],
+            "faces": {
+              "front": [
+                1024,
+                597
+              ],
+              "top": [
+                1024,
+                597
+              ],
+              "back": [
+                1024,
+                597
+              ],
+              "left": [
+                640,
+                640
+              ],
+              "right": [
+                640,
+                640
+              ]
+            },
+            "bottom": "#e5d7d3"
+          }
+        },
+        {
+          "id": "kit-sibthal217",
+          "code": "LitLife™-SiBThal217",
+          "short": "SiBThal217",
+          "condition": "Sickle-beta thalassaemia",
+          "image": "box-render-sibthal217",
+          "alt": "The LitLife™-SiBThal217 box, printed with the Lightening Lives logo, sickled red blood cells and a strand of DNA.",
+          "features": [
+            "Sickle cell anaemia and beta thalassaemia together",
+            "Resolves the compound state often misread as sickle cell disease or trait"
+          ],
+          "href": "/solutions/sickle-cell-anaemia/#sickle-beta",
+          "model": {
+            "kit": "sibthal217",
+            "box": [
+              1.34,
+              1,
+              0.85
+            ],
+            "faces": {
+              "front": [
+                1024,
+                764
+              ],
+              "top": [
+                1024,
+                650
+              ],
+              "right": [
+                650,
+                765
+              ]
+            },
+            "bottom": "#d1beb1",
+            "back": "front",
+            "left": "right"
+          }
+        },
+        {
+          "id": "kit-bthal",
+          "code": "LitLife™-BThal",
+          "short": "BThal",
+          "condition": "Beta thalassaemia",
+          "image": "box-render-bthal",
+          "alt": "The LitLife™-BThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.",
+          "features": [
+            "Finds carriers and patients",
+            "Including carriers mistaken for iron deficiency"
+          ],
+          "href": "/solutions/thalassaemia/#beta",
+          "model": {
+            "kit": "bthal",
+            "box": [
+              1.34,
+              1,
+              0.85
+            ],
+            "faces": {
+              "front": [
+                1024,
+                764
+              ],
+              "top": [
+                1024,
+                650
+              ],
+              "right": [
+                650,
+                765
+              ]
+            },
+            "bottom": "#d2c0b3",
+            "back": "front",
+            "left": "right"
+          }
+        },
+        {
+          "id": "kit-alphathal",
+          "code": "LitLife™-AlphaThal",
+          "short": "AlphaThal",
+          "condition": "Alpha thalassaemia",
+          "image": "box-render-alphathal",
+          "alt": "The LitLife™-AlphaThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.",
+          "features": [
+            "Detects the common gene deletions",
+            "Finds the carriers routine screening misses"
+          ],
+          "href": "/solutions/thalassaemia/#alpha",
+          "model": {
+            "kit": "alphathal",
+            "box": [
+              1.34,
+              1,
+              0.85
+            ],
+            "faces": {
+              "front": [
+                1024,
+                764
+              ],
+              "top": [
+                1024,
+                650
+              ],
+              "right": [
+                650,
+                765
+              ]
+            },
+            "bottom": "#d2bdb0",
+            "back": "front",
+            "left": "right"
+          }
+        }
+      ],
+      "also": {
+        "text": "Also available: testing for HbD and HbE.",
+        "links": [
+          {
+            "text": "HbD",
+            "href": "/solutions/sickle-cell-anaemia/#hbd"
+          },
+          {
+            "text": "HbE",
+            "href": "/solutions/thalassaemia/#hbe"
+          }
+        ]
+      }
+    },
+    {
+      "id": "musculopathies",
+      "name": "Muscle disorders",
+      "sub": "Musculopathies",
+      "icon": "activity",
+      "lead": "Inherited muscle disorders, which children often live with for years before anyone names them.",
+      "kits": [
+        {
+          "id": "kit-sma",
+          "code": "LitLife™-SMA",
+          "short": "SMA",
+          "condition": "Spinal muscular atrophy",
+          "image": "box-render-sma",
+          "alt": "The LitLife™-SMA box, printed with the Lightening Lives logo and drawings of DNA, muscle and nerve cells.",
+          "features": [
+            "Detects the SMN1 deletion behind most cases",
+            "Built for newborn screening",
+            "Direct PCR, no DNA extraction"
+          ],
+          "href": "/solutions/spinal-muscular-atrophy/",
+          "model": {
+            "kit": "sma",
+            "box": [
+              1.71,
+              1,
+              1
+            ],
+            "faces": {
+              "front": [
+                1024,
+                599
+              ],
+              "top": [
+                1024,
+                599
+              ],
+              "back": [
+                1024,
+                599
+              ],
+              "left": [
+                640,
+                640
+              ],
+              "right": [
+                640,
+                640
+              ]
+            },
+            "bottom": "#d4d8d4"
+          }
+        }
+      ],
+      "ask": [
+        {
+          "id": "dmd",
+          "condition": "Duchenne muscular dystrophy",
+          "line": "Molecular diagnosis in boys, and carrier testing for mothers and sisters."
+        },
+        {
+          "id": "lgmd",
+          "condition": "Limb-girdle muscular dystrophy",
+          "line": "Molecular confirmation that ends diagnostic uncertainty."
+        }
+      ]
+    }
+  ]
+}
