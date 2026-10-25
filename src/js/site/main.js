@@ -123,6 +123,120 @@ function initMarquee() {
   });
 }
 
+// ---- Our work's map of the field programmes ------------------------------------------------------
+// The map and its panels are in the page; without script every panel shows, one after another.
+// With it, one state at a time: pointing at a worked state, tapping it, or choosing its chip (or the
+// arrow keys among the chips) shows that state's panel and lights its outline and its pin.
+function initFieldMap() {
+  const root = document.querySelector('[data-fieldmap]');
+  if (!root) return;
+  const chips = [...root.querySelectorAll('[data-fm-pick]')];
+  const panels = new Map([...root.querySelectorAll('[data-fm-panel]')].map((p) => [p.dataset.fmPanel, p]));
+  const paths = new Map([...root.querySelectorAll('[data-fm-state]')].map((p) => [p.dataset.fmState, p]));
+  const pins = new Map([...root.querySelectorAll('[data-fm-pin]')].map((p) => [p.dataset.fmPin, p]));
+  let current = chips[0] && chips[0].dataset.fmPick;
+  root.classList.add('is-live');
+  const select = (id, focus) => {
+    if (!panels.has(id)) return;
+    current = id;
+    panels.forEach((panel, key) => { panel.hidden = key !== id; });
+    chips.forEach((chip) => chip.setAttribute('aria-pressed', String(chip.dataset.fmPick === id)));
+    paths.forEach((path, key) => path.classList.toggle('is-on', key === id));
+    pins.forEach((pin, key) => pin.classList.toggle('is-on', key === id));
+    const path = paths.get(id);
+    if (path) path.parentNode.appendChild(path); // drawn last, so its outline is whole
+    if (focus) chips.find((c) => c.dataset.fmPick === id)?.focus();
+  };
+  chips.forEach((chip, k) => {
+    chip.addEventListener('click', () => select(chip.dataset.fmPick));
+    chip.addEventListener('keydown', (e) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (!step) return;
+      e.preventDefault();
+      select(chips[(k + step + chips.length) % chips.length].dataset.fmPick, true);
+    });
+  });
+  const svg = root.querySelector('.fieldmap-svg');
+  svg.addEventListener('click', (e) => { const id = e.target.closest('[data-fm-state]')?.dataset.fmState; if (id) select(id); });
+  svg.addEventListener('pointerover', (e) => { if (e.pointerType !== 'mouse') return; const id = e.target.closest('[data-fm-state]')?.dataset.fmState; if (id) select(id); });
+  select(current);
+}
+
+// ---- Our work's photographs -------------------------------------------------------------------
+// A row of slides that scrolls by itself, one slide every data-interval ms, from the slide in view.
+// It holds while the pointer is over it or a control has the focus, stops for good with its pause
+// button, and never moves by itself for a reader who has asked for less motion; the arrows, the dots,
+// a swipe and the arrow keys move it by hand. Without script it is a row that scrolls sideways.
+function initGallery() {
+  const root = document.querySelector('[data-gallery]');
+  if (!root) return;
+  const track = root.querySelector('[data-gallery-track]');
+  const slides = [...root.querySelectorAll('[data-gallery-slide]')];
+  const dots = [...root.querySelectorAll('[data-gallery-dot]')];
+  const toggle = root.querySelector('[data-gallery-toggle]');
+  const controls = root.querySelector('[data-gallery-controls]');
+  if (!track || slides.length < 2) return;
+  controls.hidden = false;
+  root.classList.add('is-live');
+  const every = Number(root.dataset.interval) || 6000;
+  let index = 0;
+  let timer = 0;
+  let stopped = reducedMotion.matches;
+  let held = false;
+  const show = (i, smooth = true) => {
+    index = (i + slides.length) % slides.length;
+    track.scrollTo({ left: slides[index].offsetLeft - track.offsetLeft, behavior: smooth && !reducedMotion.matches ? 'smooth' : 'auto' });
+    dots.forEach((d, k) => { d.classList.toggle('is-on', k === index); d.setAttribute('aria-current', k === index ? 'true' : 'false'); });
+    restart();
+  };
+  const restart = () => {
+    clearTimeout(timer);
+    root.classList.remove('is-running');
+    void root.offsetWidth; // restart the dot's fill
+    if (stopped || held) return;
+    root.classList.add('is-running');
+    timer = setTimeout(() => show(index + 1), every);
+  };
+  const setStopped = (value) => {
+    stopped = value;
+    toggle.setAttribute('aria-pressed', String(value));
+    toggle.setAttribute('aria-label', value ? 'Play the photos' : 'Pause the photos');
+    root.classList.toggle('is-stopped', value);
+    restart();
+  };
+  root.style.setProperty('--gallery-interval', `${every}ms`);
+  root.querySelector('[data-gallery-prev]').addEventListener('click', () => show(index - 1));
+  root.querySelector('[data-gallery-next]').addEventListener('click', () => show(index + 1));
+  dots.forEach((d, k) => d.addEventListener('click', () => show(k)));
+  toggle.addEventListener('click', () => setStopped(!stopped));
+  root.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { held = true; restart(); } });
+  root.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { held = false; restart(); } });
+  root.addEventListener('focusin', () => { held = true; restart(); });
+  root.addEventListener('focusout', (e) => { if (!root.contains(e.relatedTarget)) { held = false; restart(); } });
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(index - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); show(index + 1); }
+  });
+  // A swipe or a scroll by hand: follow the slide that ends up in view.
+  let settle = 0;
+  track.addEventListener('scroll', () => {
+    clearTimeout(settle);
+    settle = setTimeout(() => {
+      const near = slides.reduce((best, s, k) => (Math.abs(s.offsetLeft - track.offsetLeft - track.scrollLeft) < Math.abs(slides[best].offsetLeft - track.offsetLeft - track.scrollLeft) ? k : best), 0);
+      if (near !== index) { index = near; dots.forEach((d, k) => d.classList.toggle('is-on', k === index)); restart(); }
+    }, 120);
+  }, { passive: true });
+  // Only while it is on screen.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      const seen = entries[entries.length - 1].isIntersecting;
+      if (seen) restart(); else { clearTimeout(timer); root.classList.remove('is-running'); }
+    }, { threshold: 0.35 }).observe(root);
+  }
+  if (stopped) setStopped(true);
+  show(0, false);
+}
+
 // ---- The film's pins --------------------------------------------------------------------------
 // Once the film has pinned every state we work in (scene.js lifts the wrapper's inert), each pin is a
 // button. Pointing at one, focusing it or tapping it opens the card beside it: the state, what was
@@ -543,6 +657,8 @@ ready(() => {
   initNews();
   initMarquee();
   initPins();
+  initGallery();
+  initFieldMap();
   initReassured();
   initMap();
   initFilm();

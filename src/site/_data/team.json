@@ -29,7 +29,8 @@
       "photo": "abhishek-chandak.jpg",
       "bio": [
         "A finance leader with more than 20 years' experience at PwC, GE, Wipro, SenecaGlobal and Fourth Frontier, in audit and assurance, manufacturing, IT services and start-ups. He was named MSME CFO of the Year by CII Southern Region in 2021, for his work at SenecaGlobal IT Services."
-      ]
+      ],
+      "group": "operations"
     },
     {
       "name": "Ms. Manisha Arumalla",
@@ -38,7 +39,8 @@
       "photo": "manisha-arumalla.jpg",
       "bio": [
         "A molecular and cell biologist with an MSc in Human Genetics and Genomics from the University of Barcelona, and a background in protein engineering. She spent more than seven years at CCMB, working with Dr. Chandak on the genomics of complex diseases, where she designed experiments, planned projects, managed teams and ran training programmes."
-      ]
+      ],
+      "group": "science"
     },
     {
       "name": "Ms. Punyasri PSKDB",
@@ -47,7 +49,8 @@
       "photo": "punyasri-pskdb.jpg",
       "bio": [
         "Holds a BSc in Microbiology, Genetics and Chemistry and an MSc in Nutrition, and has more than seven years' experience in genetic screening, awareness campaigns and field work. She sets up and runs experiments in the laboratory and helps keep the diagnostic process reliable."
-      ]
+      ],
+      "group": "science"
     },
     {
       "name": "Ms. Mehraj Begum",
@@ -56,7 +59,8 @@
       "photo": "mehraj-begum.jpg",
       "bio": [
         "A commerce graduate who runs the company's administration: materials for the laboratory, social media, and meetings with investors and stakeholders."
-      ]
+      ],
+      "group": "operations"
     },
     {
       "name": "Mr. Pruthvi Bellamkonda",
@@ -65,7 +69,8 @@
       "photo": "pruthvi.png",
       "bio": [
         "Looks after the company's day-to-day finances. Holds an MBA in Finance and HR from SK University, Anantapur."
-      ]
+      ],
+      "group": "operations"
     },
     {
       "name": "Jyothi Vislavath",
@@ -74,7 +79,8 @@
       "photo": "jyothi.png",
       "bio": [
         "A biotechnology graduate with more than nine years in molecular diagnostics: patient counselling, genetic testing and clinical reporting, in government and private healthcare. Has helped develop affordable diagnostic methods for haemoglobinopathies and musculopathies."
-      ]
+      ],
+      "group": "science"
     }
   ],
   "patron": [
@@ -97,6 +103,18 @@
       "slug": "gv-krishnaveni",
       "photo": "prof-krishnaveni.png",
       "role": "Adviser"
+    }
+  ],
+  "groups": [
+    {
+      "id": "science",
+      "name": "Science and laboratory",
+      "icon": "flask-conical"
+    },
+    {
+      "id": "operations",
+      "name": "Finance and operations",
+      "icon": "briefcase"
     }
   ]
 }

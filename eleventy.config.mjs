@@ -31,6 +31,8 @@ export default function (eleventyConfig) {
   // Where an old address's forwarding page is written: /partnerships/ → partnerships/index.html, and an
   // old .php address as a folder of its name (content 3.3), which GitHub Pages serves at /x.php/.
   eleventyConfig.addFilter('forwardPath', (from) => `${from.replace(/^\//, '').replace(/\/?$/, '/')}index.html`);
+  // A news article's date as it reads: 14 October 2026.
+  eleventyConfig.addFilter('newsDate', (iso) => new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }));
   eleventyConfig.addFilter('where', (list, key, value) => (list ?? []).filter((item) => item[key] === value)); // the items whose key has the value (Our work's sites by state)
   eleventyConfig.addFilter('unknownImage', (name) => {
     throw new Error(`picture(): no image "${name}" in src/site/_data/images.json (run npm run images)`);

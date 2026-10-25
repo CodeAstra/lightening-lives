@@ -153,5 +153,10 @@
       "text": "Contact us",
       "href": "/contact/"
     }
+  },
+  "forms": {
+    "_note": "The contact form posts to Web3Forms (web3forms.com, free) when web3formsKey holds the site's access key; with null it opens the visitor's email app with the enquiry written out.",
+    "web3formsKey": null,
+    "endpoint": "https://api.web3forms.com/submit"
   }
 }

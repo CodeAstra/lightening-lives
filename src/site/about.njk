@@ -3,33 +3,126 @@ name: "About"
 title: "About us: healthcare technology from Hyderabad | Lightening Lives"
 description: "Lightening Lives LLP is a Hyderabad healthcare technology company developing REASSURED genetic tests, founded by Dr. Giriraj Ratan Chandak, formerly Chief Scientist at CSIR-CCMB. ICMR approved; patents in India and Japan."
 label: About
-h1: 'We invent genetic tests <span class="h-mark">that change what happens next.</span>'
+h1: 'The scientists and the team <span class="h-mark">behind the tests.</span>'
 lead: "Lightening Lives is a Hyderabad healthcare technology company. We develop REASSURED genetic tests so inherited disorders are found early, confirmed once and cared for."
-leadLine: "Our mission: to develop genetic tests that let every hospital, laboratory and programme screen and confirm inherited disorders, early and close to the patient."
 closing:
   h2: 'Work with us. <span class="h-mark">Most of our work begins as a collaboration.</span>'
   body: "Tell us the condition you need to test for and where the testing will happen."
   solid: { text: "Partner with us", href: "/partners/" }
   line: { text: "Contact us", href: "/contact/" }
 ---
-{#- About (content file 5.8; one page since 25 October 2026, the reviewer's site map, 3.1): the founder
-    in full, everyone else by a tap. The opening with the mission under the lead; the company at a
-    glance, a fact block written for people and for AI systems alike; the founders (their one joint
-    portrait, Dr. Chandak's record and bio in full, the co-founder beside him); and the people (#team):
-    the patron, the advisers and the team in one grid of portrait, name and role, where a tap opens
-    a bio wherever team.json has one. Nothing is invented: the patron's and advisers' entries have no
-    bio, so they do not open. Each person keeps the anchor of their slug, which the old team pages
-    forward to. Cut: the story, the why-how-what and the mission and vision bands (the mission stays
-    in the opening), and the evidence row. -#}
+{#- About (content file 5.8), people first since 25 October 2026 (the user: "people feel secondary";
+    less text; bios open on a click). The founders in a spotlight; the team in its groups, then the
+    patron and the advisers, each a portrait card; the company at a glance, lower and compact. A bio
+    is never on the page itself: a card with one opens it in a side panel, a native popover (the
+    browser opens and closes it, no script; Escape or a click outside closes it). A person without an
+    approved bio has a card that does not open. Each card keeps its person's slug as its anchor, which
+    the old team addresses forward to. -#}
 {%- from "picture.njk" import picture with context %}
 {%- set ff = team.founders[0] %}
 {%- set co = team.founders[1] %}
 
-  <!-- The company at a glance -->
-  <section id="facts" class="section on-mist about-facts" aria-labelledby="facts-h">
+{#- A person's bio in its side panel. -#}
+{%- macro bioPanel(p, photo) -%}
+<div class="bio-panel" id="bio-{{ p.slug }}" popover role="dialog" aria-labelledby="bio-{{ p.slug }}-h">
+  <button type="button" class="bio-close" popovertarget="bio-{{ p.slug }}" popovertargetaction="hide" aria-label="Close">{% icon "x" %}</button>
+  {{ picture(photo or ("person-" + p.slug), p.name, "24rem", { class: "bio-photo" }) }}
+  <div class="bio-body">
+    <h3 id="bio-{{ p.slug }}-h" class="bio-name">{{ p.name }}{% if p.credentials %} <span>{{ p.credentials }}</span>{% endif %}</h3>
+    <p class="bio-role">{{ p.role }}</p>
+    {%- for para in p.bio | paragraphs %}
+    <p>{{ para }}</p>
+    {%- endfor %}
+  </div>
+</div>
+{%- endmacro %}
+
+{#- A portrait card: the whole card opens the bio where there is one. -#}
+{%- macro card(p, group) -%}
+<li id="{{ p.slug }}" class="tcard">
+  {%- if p.bio %}
+  <button type="button" class="tcard-face" popovertarget="bio-{{ p.slug }}">
+    {{ picture("person-" + p.slug, p.name, "(min-width: 72rem) 17rem, (min-width: 40rem) 30vw, 46vw", { class: "tcard-photo" }) }}
+    <span class="tcard-text">
+      <span class="tcard-name">{{ p.name }}</span>
+      <span class="tcard-role">{{ p.role }}</span>
+    </span>
+    <span class="tcard-open" aria-hidden="true">{% icon "plus" %}</span>
+  </button>
+  {{- bioPanel(p) }}
+  {%- else %}
+  <div class="tcard-face">
+    {{ picture("person-" + p.slug, p.name, "(min-width: 72rem) 17rem, (min-width: 40rem) 30vw, 46vw", { class: "tcard-photo" }) }}
+    <span class="tcard-text">
+      <span class="tcard-name">{{ p.name }}</span>
+      <span class="tcard-role">{{ group if p.role == "Adviser" else p.role }}</span>
+    </span>
+  </div>
+  {%- endif %}
+</li>
+{%- endmacro %}
+
+  <!-- The founders, in a spotlight -->
+  <section id="founder" class="section on-mist founder-band" aria-labelledby="founder-h">
     <div class="wrap">
-      <h2 id="facts-h" class="sr-only">At a glance</h2>
-      <dl class="facts-grid">
+      <div class="spotlight" id="founders">
+        <div class="spotlight-photo">
+          {{ picture("person-founders", "Dr. Giriraj Ratan Chandak and Mrs. Nidhi Chandak", "(min-width: 64rem) 34rem, 92vw") }}
+        </div>
+        <div class="spotlight-body">
+          <p class="spotlight-kind">The founders</p>
+          <h2 id="founder-h" class="spotlight-name"><span id="{{ ff.slug }}">{{ ff.name }}</span></h2>
+          <p class="spotlight-role">{{ ff.role }} <span>· {{ ff.credentials }}</span></p>
+          <ul class="spotlight-record">
+            <li>{% icon "landmark" %}<span><b>Former Chief Scientist</b>CSIR-CCMB, Hyderabad</span></li>
+            <li>{% icon "graduation-cap" %}<span><b>Former Director</b>CDFD, founding faculty</span></li>
+            <li>{% icon "award" %}<span><b>Sir J.C. Bose Fellow</b>Government of India</span></li>
+            <li>{% icon "users" %}<span><b>Fellow</b>all four Indian science academies and TWAS</span></li>
+          </ul>
+          <p class="spotlight-line">Twenty-five years on inherited disorders, from the laboratory to the communities that most needed testing.</p>
+          <div class="spotlight-act">
+            <button type="button" class="btn btn-solid" popovertarget="bio-{{ ff.slug }}">His story</button>
+            <button type="button" class="spotlight-co" popovertarget="bio-{{ co.slug }}" id="{{ co.slug }}">
+              <span><b>{{ co.name }}</b>{{ co.role }}</span>{% icon "arrow-right" %}
+            </button>
+          </div>
+        </div>
+      </div>
+      {{- bioPanel(ff, "person-founders") }}
+      {{- bioPanel(co, "person-founders") }}
+    </div>
+  </section>
+
+  <!-- The people: the team in its groups, then the patron and the advisers -->
+  <section id="team" class="section bg-paper" aria-labelledby="team-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="team-h" class="h2 lg:col-span-7">The team. <span class="h-mark">Tap anyone to meet them.</span></h2>
+        <p class="lead lg:col-span-5">Scientists, laboratory specialists and operations staff, guided by a patron and an advisory board.</p>
+      </div>
+      {%- for g in team.groups %}
+      <div class="tgroup">
+        <h3 class="tgroup-h">{% icon g.icon %}{{ g.name }}</h3>
+        <ul class="tgrid">
+          {%- for p in team.team %}{% if p.group == g.id %}{{ card(p) }}{% endif %}{% endfor %}
+        </ul>
+      </div>
+      {%- endfor %}
+      <div class="tgroup">
+        <h3 class="tgroup-h">{% icon "compass" %}Patron and advisers</h3>
+        <ul class="tgrid">
+          {%- for p in team.patron %}{{ card(p, "Patron") }}{% endfor %}
+          {%- for p in team.advisers %}{{ card(p, "Advisory board") }}{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- The company at a glance -->
+  <section id="facts" class="section" aria-labelledby="facts-h">
+    <div class="wrap">
+      <h2 id="facts-h" class="h2 max-w-[44rem]">At a <span class="h-mark">glance.</span></h2>
+      <dl class="facts-grid mt-10">
         {%- for row in [
           { icon: "building-2", term: "Legal name", def: site.legalName },
           { icon: "map-pin", term: "Headquarters", def: "Hyderabad, Telangana, India" },
@@ -46,87 +139,5 @@ closing:
         </div>
         {%- endfor %}
       </dl>
-    </div>
-  </section>
-
-  <!-- The founders: Dr. Chandak in full, the co-founder beside him -->
-  <section id="founder" class="section bg-paper" aria-labelledby="founder-h">
-    <div class="wrap">
-      <h2 id="founder-h" class="h2 max-w-[44rem]">Founded by a scientist <span class="h-mark">who spent 25 years on inherited disorders.</span></h2>
-      <div class="founder mt-12" id="founders">
-        <figure class="founder-photo">
-          {{ picture("person-founders", "Dr. Giriraj Ratan Chandak and Mrs. Nidhi Chandak", "(min-width: 64rem) 26rem, 90vw") }}
-          <figcaption>Dr. Giriraj Ratan Chandak and Mrs. Nidhi Chandak, the founders.</figcaption>
-        </figure>
-        <div class="founder-body">
-          <div id="{{ ff.slug }}" class="founder-lead">
-            <h3 class="founder-name">{{ ff.name }} <span class="person-credentials">{{ ff.credentials }}</span></h3>
-            <p class="founder-role">{{ ff.role }}</p>
-            <ul class="founder-record">
-              <li>{% icon "landmark" %}<span>Former Chief Scientist, CSIR-Centre for Cellular and Molecular Biology (CCMB), Hyderabad</span></li>
-              <li>{% icon "graduation-cap" %}<span>Founding faculty member and former Director, Centre for DNA Fingerprinting and Diagnostics (CDFD)</span></li>
-              <li>{% icon "award" %}<span>Sir J.C. Bose Fellow</span></li>
-              <li>{% icon "users" %}<span>Fellow of all four Indian national science academies and of The World Academy of Sciences</span></li>
-            </ul>
-            <div class="founder-bio">
-              <p>A physician and scientist who works on molecular diagnostics and genetic disorders. His research includes work on sickle cell anaemia among populations in several states that have had little access to testing.</p>
-              <p>He founded Lightening Lives to develop affordable diagnostic tests that reduce the burden of disease.</p>
-            </div>
-          </div>
-          <div id="{{ co.slug }}" class="founder-co">
-            <h3 class="founder-name founder-name-co">{{ co.name }}</h3>
-            <p class="founder-role">{{ co.role }}</p>
-            {%- for para in co.bio %}
-            <p>{{ para }}</p>
-            {%- endfor %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- The people: patron, advisers and team in one grid; a tap opens a bio where there is one -->
-  <section id="team" class="section" aria-labelledby="team-h">
-    <div class="wrap">
-      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
-        <h2 id="team-h" class="h2 lg:col-span-7">The people <span class="h-mark">behind the tests.</span></h2>
-        <p class="lead lg:col-span-5">Scientists, laboratory specialists and operations staff, guided by a patron and an advisory board.</p>
-      </div>
-      <ul class="people-grid mt-12">
-        {%- set everyone = [] %}
-        {%- for p in team.patron %}{% set everyone = (everyone.push({ p: p, group: "Patron" }), everyone) %}{% endfor %}
-        {%- for p in team.advisers %}{% set everyone = (everyone.push({ p: p, group: "Advisory board" }), everyone) %}{% endfor %}
-        {%- for p in team.team %}{% set everyone = (everyone.push({ p: p, group: "Team" }), everyone) %}{% endfor %}
-        {%- for e in everyone %}
-        {%- set p = e.p %}
-        <li id="{{ p.slug }}" class="pcard">
-          {%- if p.bio %}
-          <details class="pcard-details">
-            <summary class="pcard-face">
-              {{ picture("person-" + p.slug, p.name, "(min-width: 64rem) 14rem, (min-width: 40rem) 30vw, 44vw", { class: "pcard-photo" }) }}
-              <span class="pcard-group">{{ e.group }}</span>
-              <span class="pcard-name">{{ p.name }}</span>
-              <span class="pcard-role">{{ p.role }}</span>
-              <span class="pcard-more"><span class="pcard-open">Read bio</span><span class="pcard-close">Close</span>{% icon "chevron-down" %}</span>
-            </summary>
-            <div class="pcard-bio">
-              {%- for para in p.bio | paragraphs %}
-              <p>{{ para }}</p>
-              {%- endfor %}
-            </div>
-          </details>
-          {%- else %}
-          <div class="pcard-face">
-            {{ picture("person-" + p.slug, p.name, "(min-width: 64rem) 14rem, (min-width: 40rem) 30vw, 44vw", { class: "pcard-photo" }) }}
-            <span class="pcard-group">{{ e.group }}</span>
-            <span class="pcard-name">{{ p.name }}</span>
-            {%- if p.role and p.role != "Adviser" %}
-            <span class="pcard-role">{{ p.role }}</span>
-            {%- endif %}
-          </div>
-          {%- endif %}
-        </li>
-        {%- endfor %}
-      </ul>
     </div>
   </section>

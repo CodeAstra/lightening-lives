@@ -10,41 +10,48 @@ const $ = load('/about/');
 const text = (el) => $(el).text().replace(/\s+/g, ' ').trim();
 const TEAM = JSON.parse(readFileSync('src/site/_data/team.json', 'utf8'));
 
-test('the page: title, a two-tone heading, the lead and the mission under it', () => {
+test('the page: title, a people-first two-tone heading, no label', () => {
   assert.equal($('title').text(), 'About us: healthcare technology from Hyderabad | Lightening Lives');
-  assert.equal(text('h1'), 'We invent genetic tests that change what happens next.');
+  assert.equal(text('h1'), 'The scientists and the team behind the tests.');
   assert.equal($('.page-open .label').length, 0);
-  assert.match(text('.page-open .lead-line'), /^Our mission: /);
 });
 
-test('the sections, in order', () => {
-  assert.deepEqual($('main > section[id]').map((i, s) => $(s).attr('id')).get(), ['facts', 'founder', 'team']);
+test('people first: the founders, the team, then the facts', () => {
+  assert.deepEqual($('main > section[id]').map((i, s) => $(s).attr('id')).get(), ['founder', 'team', 'facts']);
   assert.equal($('main > section.closing').length, 1);
 });
 
-test('at a glance: eight facts, written for people and for AI systems alike', () => {
-  assert.equal($('#facts .facts-grid > div').length, 8);
-  assert.deepEqual($('#facts dt').map((i, d) => text(d)).get().slice(0, 3), ['Legal name', 'Headquarters', 'Founder and CEO']);
+test('the founder in a spotlight: his portrait, his record, and his story and the co-founder\'s a click away', () => {
+  const [ff, co] = TEAM.founders;
+  assert.equal(text(`#${ff.slug}`), ff.name);
+  assert.equal($('#founder .spotlight-record li').length, 4);
+  assert.equal($('#founder .spotlight-photo img').attr('alt'), 'Dr. Giriraj Ratan Chandak and Mrs. Nidhi Chandak');
+  for (const p of [ff, co]) {
+    assert.ok($(`#founder [popovertarget="bio-${p.slug}"]`).length, p.slug);
+    assert.equal($(`#bio-${p.slug}[popover][role=dialog]`).length, 1, p.slug);
+  }
+  assert.equal($(`#${co.slug}`).attr('popovertarget'), `bio-${co.slug}`);
 });
 
-test('the founder in full: his portrait, credentials, record and bio; the co-founder beside him', () => {
-  const ff = TEAM.founders[0];
-  assert.equal($(`#${ff.slug} .founder-name`).length, 1);
-  assert.match(text(`#${ff.slug} .founder-name`), /MD, PhD, DNB$/);
-  assert.equal($('#founder .founder-record li').length, 4);
-  assert.equal($('#founder img').attr('alt'), 'Dr. Giriraj Ratan Chandak and Mrs. Nidhi Chandak');
-  assert.equal($(`#${TEAM.founders[1].slug} .founder-role`).text(), 'Co-Founder');
-});
-
-test('the people: patron, advisers and team in one grid, each by their slug; a bio opens only where there is one', () => {
-  const everyone = [...TEAM.patron, ...TEAM.advisers, ...TEAM.team];
-  assert.deepEqual($('#team .pcard').map((i, li) => $(li).attr('id')).get(), everyone.map((p) => p.slug));
+test('the team in its groups, then patron and advisers; a card opens a bio only where there is one, never on the page itself', () => {
+  assert.deepEqual($('#team .tgroup-h').map((i, h) => text(h)).get(), [...TEAM.groups.map((g) => g.name), 'Patron and advisers']);
+  const everyone = [...TEAM.team, ...TEAM.patron, ...TEAM.advisers];
+  assert.equal($('#team .tcard').length, everyone.length);
   for (const p of everyone) {
     const card = $(`#${p.slug}`);
     assert.equal(card.find('img').attr('alt'), p.name, p.slug);
-    assert.equal(card.find('details').length, p.bio ? 1 : 0, `${p.slug}: opens only with a bio`);
-    if (p.bio) assert.ok(!card.find('details').is('[open]'), p.slug);
+    assert.equal(card.find(`button.tcard-face[popovertarget="bio-${p.slug}"]`).length, p.bio ? 1 : 0, `${p.slug}: opens only with a bio`);
+    if (p.bio) {
+      const panel = $(`#bio-${p.slug}`);
+      assert.ok(panel.is('[popover]'), p.slug);
+      assert.equal(panel.find('[popovertargetaction=hide]').attr('aria-label'), 'Close', p.slug);
+    }
   }
+  for (const g of TEAM.groups) assert.ok(TEAM.team.some((p) => p.group === g.id), g.id);
+});
+
+test('at a glance: eight facts, lower on the page', () => {
+  assert.equal($('#facts .facts-grid > div').length, 8);
 });
 
 test('the old team page forwards here, and nothing unconfirmed renders', () => {

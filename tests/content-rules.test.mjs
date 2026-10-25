@@ -37,6 +37,7 @@ test('"kit" only where the content file allows', () => {
   for (const url of pages().filter((u) => u !== '/solutions/')) {
     const $ = load(url);
     $('#laboratory').remove();
+    $('#media .media-body h3').remove(); // the poster's own title, quoted on Our work
     assert.doesNotMatch($('main').text(), /\bkits?\b/i, url);
   }
 });

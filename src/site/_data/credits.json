@@ -204,6 +204,78 @@
     "changes": ""
   },
   {
+    "basename": "gallery-camp",
+    "shows": "Women in saris and face masks queueing indoors at a village health camp, Andhra Pradesh",
+    "label": "Health camp, Andhra Pradesh",
+    "author": "Bhupathi Srinu",
+    "authorUrl": "https://unsplash.com/@bhupathi_",
+    "licence": "Unsplash Licence",
+    "licenceUrl": "https://unsplash.com/license",
+    "source": "Unsplash",
+    "sourceUrl": "https://unsplash.com/photos/a-group-of-women-wearing-face-masks-TkFFpP9EpkE",
+    "changes": ""
+  },
+  {
+    "basename": "gallery-lab",
+    "shows": "A gloved hand with a micropipette at a laboratory bench",
+    "label": "At the laboratory bench",
+    "author": "Nathan Rimoux",
+    "authorUrl": "https://unsplash.com/@nathan_rmx",
+    "licence": "Unsplash Licence",
+    "licenceUrl": "https://unsplash.com/license",
+    "source": "Unsplash",
+    "sourceUrl": "https://unsplash.com/photos/scientist-uses-pipette-in-a-laboratory-experiment-HRLTL6bmeow",
+    "changes": ""
+  },
+  {
+    "basename": "gallery-plate",
+    "shows": "A pipette dispensing into a rack of tubes in a 96-well layout",
+    "label": "Preparing a plate",
+    "author": "Louis Reed",
+    "authorUrl": "https://unsplash.com/@_louisreed",
+    "licence": "Unsplash Licence",
+    "licenceUrl": "https://unsplash.com/license",
+    "source": "Unsplash",
+    "sourceUrl": "https://unsplash.com/photos/refill-of-liquid-on-tubes-pwcKF7L4-no",
+    "changes": ""
+  },
+  {
+    "basename": "gallery-training",
+    "shows": "A full lecture room facing a projector screen at a medical college in Odisha",
+    "label": "A training session",
+    "author": "Adhitya Sibikumar",
+    "authorUrl": "https://unsplash.com/@adhitya_2505",
+    "licence": "Unsplash Licence",
+    "licenceUrl": "https://unsplash.com/license",
+    "source": "Unsplash",
+    "sourceUrl": "https://unsplash.com/photos/a-group-of-people-sitting-at-a-table-in-front-of-a-projector-screen-2uX_7L_10rM",
+    "changes": ""
+  },
+  {
+    "basename": "gallery-newborn",
+    "shows": "A newborn's feet cradled in an adult's hands",
+    "label": "A newborn's feet",
+    "author": "Omar Lopez",
+    "authorUrl": "https://unsplash.com/@omarlopez1",
+    "licence": "Unsplash Licence",
+    "licenceUrl": "https://unsplash.com/license",
+    "source": "Unsplash",
+    "sourceUrl": "https://unsplash.com/photos/person-holding-baby-feet-vTknj2OxDVg",
+    "changes": ""
+  },
+  {
+    "basename": "gallery-village",
+    "shows": "A village among dense trees at sunset, seen from above, Chhattisgarh",
+    "label": "A village, Chhattisgarh",
+    "author": "Mustafa Fatemi",
+    "authorUrl": "https://unsplash.com/@solaticace",
+    "licence": "Unsplash Licence",
+    "licenceUrl": "https://unsplash.com/license",
+    "source": "Unsplash",
+    "sourceUrl": "https://unsplash.com/photos/a-birds-eye-view-of-a-small-village-surrounded-by-trees-YVK2RyUCAZc",
+    "changes": ""
+  },
+  {
     "basename": "map-india",
     "shows": "The outline of India and its state boundaries, under the film's map and the map section",
     "label": "Map outline and state boundaries",

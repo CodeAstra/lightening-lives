@@ -1,0 +1,11 @@
+[
+  { "id": "a-diagnosis-at-three", "state": "Madhya Pradesh", "condition": "Duchenne muscular dystrophy", "icon": "activity", "title": "A diagnosis at three",
+    "first": "A three-year-old boy in a village in Madhya Pradesh was losing strength in his muscles. His family, a long way from any specialist hospital, took it for poor nutrition. An NGO working in the area arranged a molecular test, and the result was Duchenne muscular dystrophy.",
+    "rest": "With a diagnosis at three, the family could begin supportive therapy and join a patient support group, instead of spending years without an answer." },
+  { "id": "two-carriers-one-plan", "state": "Chhattisgarh", "condition": "Spinal muscular atrophy", "icon": "users", "title": "Two carriers, one plan",
+    "first": "A couple in Chhattisgarh had lost their first child to spinal muscular atrophy without ever learning the cause. During their second pregnancy they were referred to us through a government screening programme. Carrier testing showed that both parents carry the SMA mutation.",
+    "rest": "With counselling and early testing they could plan with full information. They now have a healthy child." },
+  { "id": "what-had-been-called-fate", "state": "Odisha", "condition": "Sickle cell anaemia", "icon": "droplets", "title": "What had been called fate",
+    "first": "In a village in Odisha, a young couple had watched two children in their extended family live with severe anaemia and repeated infections. Testing showed that both of them carry the sickle cell gene.",
+    "rest": "In their village the illness had been put down to fate. The couple now know what it is, how it is passed on and what their choices are." }
+]

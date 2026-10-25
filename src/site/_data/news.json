@@ -1,0 +1,4 @@
+{
+  "_note": "Newspaper and media coverage for Our work's 'In the news' (25 October 2026). Add an article as { outlet, headline, date (YYYY-MM-DD), url, language (optional, e.g. 'Telugu'), excerpt (optional, one line) }. Newest first is applied by the page. With no articles the section is left out.",
+  "articles": []
+}

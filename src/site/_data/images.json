@@ -118,6 +118,54 @@
     ],
     "height": 427
   },
+  "gallery-camp": {
+    "widths": [
+      640,
+      1280,
+      1920
+    ],
+    "height": 287
+  },
+  "gallery-lab": {
+    "widths": [
+      640,
+      1280,
+      1920
+    ],
+    "height": 427
+  },
+  "gallery-newborn": {
+    "widths": [
+      640,
+      1280,
+      1920
+    ],
+    "height": 427
+  },
+  "gallery-plate": {
+    "widths": [
+      640,
+      1280,
+      1920
+    ],
+    "height": 427
+  },
+  "gallery-training": {
+    "widths": [
+      640,
+      1280,
+      1920
+    ],
+    "height": 360
+  },
+  "gallery-village": {
+    "widths": [
+      640,
+      1280,
+      1920
+    ],
+    "height": 359
+  },
   "lab-bench": {
     "widths": [
       640,
@@ -290,6 +338,14 @@
       1920
     ],
     "height": 428
+  },
+  "work-fullposter-v9": {
+    "widths": [
+      640,
+      1280,
+      1920
+    ],
+    "height": 860
   },
   "work-method-1": {
     "widths": [

@@ -1,59 +1,125 @@
 ---
 name: "Contact"
-title: "Contact | Lightening Lives"
-description: "Contact Lightening Lives about a partnership, tests, awareness and counselling programmes, or an institutional order. Hyderabad, India."
+title: "Contact Lightening Lives | Hyderabad, India"
+description: "Talk to our scientific team about genetic testing for your hospital, laboratory, programme or CSR initiative. Hyderabad, India."
 label: Contact
-h1: Tell us what your programme needs
-lead: "Choose where you would like to begin. We work with institutions, and each request is discussed on its own terms."
+h1: 'Talk to us. <span class="h-mark">Tell us who you are and what you need.</span>'
+lead: "Our scientific team reads every enquiry and replies with how we would approach it."
 notice: true
 closing: false
 ---
-{#- Contact (content file 5.15). The layout opens the page (label, h1, lead) and, with closing: false,
-    ends it with the notice for individuals (4.4) in a band of its own: a closing band asking the
-    reader to contact the company, with a button to this page, would repeat the page itself.
-    The four contact actions are the home page's (src/site/_data/actions.json), here with the line
-    under each; each is an email with its subject filled in, without script (Review Focus 5).
-    contact.js adds the condition a test's page sends (?condition=) to each email's body: it finds the
-    actions by data-contact. "Write to us", the form, waits for Phase 7 (the plan's decision "Email
-    links at launch"). The addresses are site.json's, as the footer's; "Open in maps" opens Google
-    Maps' search for the address in the same tab, as every link on the site does (on a phone the
-    maps app takes it), with rel="noopener" as the site's other links out carry. The bands: the actions
-    continue the opening's mist; the addresses are a paper band; the notice's band is mist again. -#}
-{%- from "actions.njk" import actionList with context %}
+{#- Contact (content file 5.9; three sections since 25 October 2026, the reviewer's site map, 3.1):
+    who you are (four choices that set the form and its subject, ?enquiry=) with the form beside it;
+    direct contact and the two addresses; the notice for individuals. GitHub Pages cannot process a
+    form: with site.forms.web3formsKey set it posts to Web3Forms, otherwise it opens the visitor's
+    email app with the enquiry written out (contact.js). Without script it is a mailto form. A test's
+    page sends ?condition=<slug>, which ticks that condition. No CAPTCHA: a hidden field catches bots. -#}
 {%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' %}
+{%- set key = site.forms.web3formsKey %}
+{%- set who = [
+  { id: "scientific", icon: "hospital", label: "Hospital or laboratory", line: "Run LitLife™ tests, or confirm a diagnosis" },
+  { id: "programme", icon: "landmark", label: "Public health programme", line: "Screening at district or state scale" },
+  { id: "funder", icon: "hand-heart", label: "CSR or NGO", line: "Fund or co-run a programme" },
+  { id: "develop", icon: "flask-conical", label: "New test, research or media", line: "Propose a condition, or anything else" }
+] %}
+{%- set conditions = [
+  { slug: "sickle-cell-anaemia", name: "Sickle cell anaemia" },
+  { slug: "thalassaemia", name: "Thalassaemia, HbD or HbE" },
+  { slug: "spinal-muscular-atrophy", name: "Spinal muscular atrophy" },
+  { slug: "duchenne-muscular-dystrophy", name: "Duchenne muscular dystrophy" },
+  { slug: "limb-girdle-muscular-dystrophy", name: "Limb-girdle muscular dystrophy" },
+  { slug: "other", name: "Another condition" }
+] %}
 
-  <!-- Where to begin: the four actions, each with its line; beside them, writing or calling directly -->
-  <section id="where-to-begin" class="section contact-begin" aria-labelledby="where-to-begin-h write-or-call-h" data-contact>
-    <div class="wrap grid gap-14 lg:grid-cols-12 lg:gap-16">
-      <div class="lg:col-span-7">
-        <h2 id="where-to-begin-h" class="label">Where to begin</h2>
-        {{ actionList("mt-4", { lines: true }) }}
-      </div>
-      <div id="write-or-call" class="lg:col-span-4 lg:col-start-9">
-        <h2 id="write-or-call-h" class="label">Write or call</h2>
-        <ul class="reach mt-4">
-          <li><a class="link" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-          <li><a class="link" href="tel:{{ site.tel }}">{{ site.phone | replace(" ", "&nbsp;") | safe }}</a>{% if site.whatsapp %} <span class="text-moss">(call or WhatsApp)</span>{% endif %}</li>
-        </ul>
-      </div>
+  <!-- 1. Who you are, and the form -->
+  <section id="enquiry" class="section on-mist contact-form-band" aria-labelledby="enquiry-h" data-contact>
+    <div class="wrap">
+      <h2 id="enquiry-h" class="sr-only">Send an enquiry</h2>
+      <form class="enquiry" data-enquiry method="post"
+        {%- if key %} action="{{ site.forms.endpoint }}"{% else %} action="mailto:{{ site.email }}?subject=Enquiry" enctype="text/plain"{% endif %}
+        data-email="{{ site.email }}" data-mode="{{ 'web3forms' if key else 'email' }}">
+        {%- if key %}
+        <input type="hidden" name="access_key" value="{{ key }}">
+        <input type="hidden" name="from_name" value="lighteninglives.in">
+        <input type="hidden" name="subject" value="Enquiry from the website" data-subject>
+        {%- endif %}
+        <input type="checkbox" name="botcheck" class="enquiry-trap" tabindex="-1" aria-hidden="true">
+
+        <fieldset class="enquiry-who">
+          <legend>Who are you?</legend>
+          <div class="who-choices">
+            {%- for w in who %}
+            <label class="who-choice">
+              <input type="radio" name="enquiry" value="{{ w.id }}"{% if loop.first %} checked{% endif %} required>
+              <span class="who-face">
+                <span class="icon-tile">{% icon w.icon %}</span>
+                <span class="who-label">{{ w.label }}</span>
+                <span class="who-line">{{ w.line }}</span>
+              </span>
+            </label>
+            {%- endfor %}
+          </div>
+        </fieldset>
+
+        <div class="enquiry-fields">
+          <label class="field"><span>Your name</span><input name="name" type="text" autocomplete="name" required></label>
+          <label class="field"><span>Organisation</span><input name="organisation" type="text" autocomplete="organization" required></label>
+          <label class="field"><span>Your role</span><input name="role" type="text" autocomplete="organization-title"></label>
+          <label class="field"><span>State</span><input name="state" type="text" autocomplete="address-level1" list="states"></label>
+          <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
+          <label class="field"><span>Phone <small>(optional)</small></span><input name="phone" type="tel" autocomplete="tel"></label>
+          <datalist id="states">
+            {%- for st in ["Andhra Pradesh", "Assam", "Bihar", "Chhattisgarh", "Delhi", "Gujarat", "Haryana", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Odisha", "Punjab", "Rajasthan", "Tamil Nadu", "Telangana", "Uttar Pradesh", "Uttarakhand", "West Bengal"] %}
+            <option value="{{ st }}"></option>
+            {%- endfor %}
+          </datalist>
+        </div>
+
+        <fieldset class="enquiry-conditions">
+          <legend>Conditions of interest <small>(any that apply)</small></legend>
+          <div class="condition-checks">
+            {%- for c in conditions %}
+            <label class="check"><input type="checkbox" name="conditions[]" value="{{ c.name }}" data-slug="{{ c.slug }}"><span>{{ c.name }}</span></label>
+            {%- endfor %}
+          </div>
+        </fieldset>
+
+        <label class="field field-wide"><span>Your message</span><textarea name="message" rows="5" required placeholder="The setting, roughly how many people, and the laboratory you have in mind."></textarea></label>
+
+        <div class="enquiry-send">
+          <p class="enquiry-consent">We use these details only to reply to you. <a class="link" href="/privacy/">Privacy</a></p>
+          <button class="btn btn-solid" type="submit">{% icon "send" %}Send enquiry</button>
+        </div>
+        <p class="enquiry-status" data-enquiry-status role="status" aria-live="polite" hidden></p>
+      </form>
     </div>
   </section>
 
-  <!-- Where we are: the two offices, each with a link to the map -->
-  <section id="where-we-are" class="section bg-paper" aria-labelledby="where-we-are-h">
-    <div class="wrap grid gap-10 lg:grid-cols-12 lg:gap-16">
-      <h2 id="where-we-are-h" class="h2 lg:col-span-5">Where we are</h2>
-      <ul class="addresses lg:col-span-7">
-        {%- for key, a in site.addresses %}
-        {%- set full = a.street + ", " + a.locality + ", " + a.region + " " + a.postcode %}
-        <li>
-          <h3 class="h3">{{ a.label }}</h3>
-          <address>{{ full }}</address>
-          <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query={{ full | urlencode }}" rel="noopener">Open in maps<span class="sr-only">: {{ a.label }}</span>
-            {{ arrow | safe }}
-          </a>
-        </li>
-        {%- endfor %}
-      </ul>
+  <!-- 2. Direct, and where we are -->
+  <section id="direct" class="section bg-paper" aria-labelledby="direct-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="direct-h" class="h2 lg:col-span-7">Or reach us <span class="h-mark">directly.</span></h2>
+        <p class="lead lg:col-span-5">Write, call or message on WhatsApp.</p>
+      </div>
+      <div class="direct mt-12">
+        <ul class="direct-ways">
+          <li><a href="mailto:{{ site.email }}"><span class="icon-tile">{% icon "mail" %}</span><span><b>Email</b><small>{{ site.email }}</small></span></a></li>
+          <li><a href="tel:{{ site.tel }}"><span class="icon-tile">{% icon "phone" %}</span><span><b>Call</b><small>{{ site.phone | replace(" ", "&nbsp;") | safe }}</small></span></a></li>
+          {%- if site.whatsapp %}
+          <li><a href="https://wa.me/{{ site.tel | replace('+', '') }}" rel="noopener"><span class="icon-tile">{% icon "message-circle" %}</span><span><b>WhatsApp</b><small>{{ site.phone | replace(" ", "&nbsp;") | safe }}</small></span></a></li>
+          {%- endif %}
+        </ul>
+        <ul class="addresses-cards" id="where-we-are">
+          {%- for key, a in site.addresses %}
+          {%- set full = a.street + ", " + a.locality + ", " + a.region + " " + a.postcode %}
+          <li>
+            <h3>{% icon "map-pin" %}{{ a.label }}</h3>
+            <address>{{ full }}</address>
+            <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query={{ full | urlencode }}" rel="noopener">Open in maps<span class="sr-only">: {{ a.label }}</span> {{ arrow | safe }}</a>
+          </li>
+          {%- endfor %}
+        </ul>
+      </div>
     </div>
   </section>
