@@ -1,9 +1,11 @@
-// The motion module (plan, Task 2.1; DESIGN.md, Motion): everything outside the film moves only in
-// answer to the reader, briefly, and not at all for a reader who has asked for less motion; the one
-// scroll-linked motion is a section's opening settling in once (decision D1, B). Nothing loops.
+// The motion module (plan, Task 2.1; DESIGN.md, Motion): everything outside the film either answers the
+// reader, briefly, or shows once, the first time it comes into view, what a section says happening (the
+// testing model, the comparison, the path of a new test); nothing at all for a reader who has asked for
+// less motion. Nothing is scrubbed, and the one thing that repeats, the partners' logos changing in
+// place, stops when pointed at, focused or tapped (25 October 2026, evening).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 
 const src = () => readFileSync('src/js/site/motion.js', 'utf8');
@@ -22,19 +24,25 @@ test('bundle budgets', () => {
   assert.ok(gz('dist/assets/js/site-scene.js') <= 260 * 1024, `site-scene.js ${Math.round(gz('dist/assets/js/site-scene.js') / 1024)} KB`);
   // The kits in 3D on Solutions: three.js again, without the film.
   assert.ok(gz('dist/assets/js/site-kits.js') <= 160 * 1024, `site-kits.js ${Math.round(gz('dist/assets/js/site-kits.js') / 1024)} KB`);
-  // GSAP is the page's, not the film's: it is in site.js.
-  assert.match(readFileSync('dist/assets/js/site.js', 'utf8'), /GreenSock|gsap/i);
+  // The gel is flat (26 October 2026): no bundle of its own.
+  assert.ok(!existsSync('dist/assets/js/site-gel.js'), 'no site-gel.js');
+  // GSAP is the page's, not the film's: in site.js or in a chunk site.js imports.
+  const site = readFileSync('dist/assets/js/site.js', 'utf8');
+  const chunks = [...site.matchAll(/from\s*"\.\/(chunk-[\w-]+\.js)"/g)].map((m) => readFileSync(`dist/assets/js/${m[1]}`, 'utf8'));
+  assert.ok([site, ...chunks].some((js) => /GreenSock|gsap/i.test(js)), 'GSAP is loaded with the page');
+  assert.ok(gz('dist/assets/js/site.js') + chunks.reduce((sum, js) => sum + gzipSync(js).length, 0) <= 90 * 1024, 'site.js with its chunks');
 });
 
-test('nothing loops but the partners along the opening\'s foot, which a button stops (25 October 2026)', () => {
+test('nothing loops: the stylesheet has no endless animation, and the partners\' logos stop when asked (WCAG 2.2.2)', () => {
   const css = readFileSync('src/css/site.css', 'utf8');
   const loops = [...css.matchAll(/([^{}]+)\{[^}]*\binfinite\b[^}]*\}/g)].map((m) => m[1].trim());
-  assert.deepEqual(loops, ['.marquee-track'], 'the one loop');
-  assert.match(css, /animation: marquee [\d.]+s linear infinite/);
+  assert.deepEqual(loops, [], 'no endless CSS animation');
   assert.doesNotMatch(code(), /repeat:\s*-1|yoyo/);
-  // WCAG 2.2.2: it can be stopped, by a button as well as by pointing at it, and never runs for a
-  // reader who has asked for less motion.
-  assert.match(readFileSync('src/js/site/main.js', 'utf8'), /function initMarquee\(\)/);
+  // The logos change every few seconds, only while seen, and hold while pointed at, focused or tapped;
+  // they are bound under the reduced-motion guard, so never for a reader who asked for less.
+  assert.match(code(), /function cycleLogos\(signal\)/);
+  assert.match(code(), /cycleLogos\(stop\.signal\)/);
+  for (const event of ['pointerenter', 'focusin', "'click'", 'visibilitychange', 'IntersectionObserver']) assert.ok(code().includes(event), event);
 });
 
 test('the one scroll-linked motion settles in once and is never scrubbed (D1, B)', () => {
@@ -63,19 +71,25 @@ test('initMotion binds exactly the listed selectors, and reaches elements only t
   const { BOUND } = await import('../src/js/site/motion.js').catch(() => ({ BOUND: null })) ?? {};
   const listed = BOUND ?? Function(`return ${src().match(/export const BOUND = (\{[\s\S]*?\n\});/)[1]}`)();
   assert.deepEqual(listed, {
-    press: '.btn, .nav-link, .tag, .test-row, .action',
+    press: '.btn, .nav-link, .tag, .action',
     arrow: '.link',
+    go: 'svg[data-icon="arrow-right"], svg[data-icon="arrow-up-right"]',
     slide: '.actions a',
-    settle: 'main > section.section > .wrap > :first-child, main > section.vision > .wrap',
+    settle: 'main > section.section:not(.page-open) > .wrap > :first-child:not(.sr-only), main > section.section:not(.page-open) > .wrap > .sr-only + *',
     segment: '.seg',
-    disclosure: 'details.map-sources, details.about, .faq details, details.credits',
+    disclosure: 'details:not([data-menu])',
     menu: 'details[data-menu]',
     gel: '[data-gel]',
     gelLane: '.lane',
     gelBand: '.lane-band',
+    logos: '[data-logos]',
+    model: '.model',
+    compare: '.compare-table',
+    develop: '.develop-path',
+    sequence: '.method-steps, .start-steps',
   });
   // Every query in motion.js goes through all(BOUND.…) or looks inside an element it was given.
   const queries = [...code().matchAll(/\.querySelector(?:All)?\(\s*(['"`][^'"`]*['"`]|[^)'"`]+)/g)].map((m) => m[1]);
-  for (const q of queries) assert.ok(!/^['"`]/.test(q.trim()) || /^['"`](svg|input:checked|label|span|\.menu-panel|:scope > :not\(summary\))['"`]$/.test(q.trim()), `unlisted query ${q}`);
+  for (const q of queries) assert.ok(!/^['"`]/.test(q.trim()) || /^['"`](svg|input:checked|label|span|\.menu-panel|:scope > :not\(summary\)|:scope > summary|\[data-logo-pool\]|\.logo-cycle|\[data-logo-status\]|\.model-phase-test|\.model-phase-care|\.model-step|\.is-ours|\.develop-node)['"`]$/.test(q.trim()), `unlisted query ${q}`);
   assert.doesNotMatch(code(), /document\.querySelectorAll\(\s*['"`]/);
 });

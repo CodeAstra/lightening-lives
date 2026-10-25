@@ -1686,35 +1686,9 @@
   .place-card-line { margin: 0.3rem 0 0.6rem; font-size: 0.875rem; line-height: 1.45; color: var(--moss); }
   .place-card-link { font-size: 0.875rem; }
 
-  /* The partners along the opening's foot (25 October 2026, second pass): all thirteen in their own
-     colours, the full width of the window, with no label and no button. Each logo is sized by its own
-     proportions to one visual weight, not one height (--ratio, its width over its height): a long
-     wordmark sits low (and is never wider than 10.5rem), a square or tall emblem stands taller, and
-     none is squeezed. One seamless loop
-     (two copies of the row, each moving its own width), the stylesheet's one loop; it stops while
-     pointed at (the logo under the pointer stays bright, the rest dim), while it holds the focus, and
-     on a tap (main.js, initMarquee). For a reader who has asked for less motion it is a still row that
-     scrolls by hand. Each moving row has the opening's ground of its own (the fade and the movement each
-     isolate it), so the logos' white grounds multiply away into it. Sized for legibility (26 October 2026, the user:
-     some logos "not properly visible"): the square and tall emblems, whose names are small print inside
-     them, run up to 5.5rem; the long wordmarks are held by width (12rem), so the row stays even. */
+  /* The partners along the opening's foot: since 25 October 2026 (evening) a row of cells whose logos
+     change in place (see "Enhancements" at the end of this file); the band itself is set here. */
   .hero-foot { margin: 2.25rem calc(var(--gutter) * -1) 0; padding-top: 1.25rem; border-top: 0.0625rem solid var(--line); }
-  .marquee { display: flex; overflow: hidden; background: var(--mist); outline-offset: -0.1875rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4rem, #000 calc(100% - 4rem), transparent); mask-image: linear-gradient(90deg, transparent, #000 4rem, #000 calc(100% - 4rem), transparent); }
-  .marquee:focus-visible { outline: 0.1875rem solid var(--canopy); }
-  .marquee-track { display: flex; flex: none; align-items: center; background: var(--mist); gap: clamp(2.5rem, 4vw, 4rem); margin: 0; padding: 0.375rem clamp(2.5rem, 4vw, 4rem) 0.375rem 0; list-style: none; animation: marquee 80s linear infinite; }
-  .marquee-track li { flex: none; }
-  .marquee-track img { display: block; max-width: none; width: auto; height: 3rem; height: min(clamp(1.75rem, calc(4.25rem * sqrt(1.6 / var(--ratio, 1.6))), 5.5rem), calc(12rem / var(--ratio, 1.6))); mix-blend-mode: multiply; transition: opacity 0.2s ease; }
-  .marquee:hover .marquee-track, .marquee:focus-within .marquee-track, .hero-foot.is-paused .marquee-track { animation-play-state: paused; }
-  .marquee:has(li:hover) li:not(:hover) img { opacity: 0.45; }
-  @keyframes marquee { to { transform: translateX(-100%); } }
-  @media (max-width: 39.99rem) {
-    .marquee-track img { height: min(clamp(1.5rem, calc(3.1rem * sqrt(1.6 / var(--ratio, 1.6))), 4rem), calc(9rem / var(--ratio, 1.6))); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
-    .marquee-track { animation: none; padding-left: var(--gutter); }
-    .marquee-copy { display: none; }
-  }
   /* Beside the text on a wide screen without the film: the foot runs under both columns. */
   @media (min-width: 56.25rem) and (min-aspect-ratio: 21/20) {
     .hero-foot { grid-column: 1 / -1; grid-row: 2; }
@@ -2562,7 +2536,7 @@
 @layer components {
   .criteria > li { grid-template-columns: 3.75rem minmax(0, 1fr) !important; column-gap: 1rem; align-items: start; }
   .criteria > li > .crit-letter { display: block; margin: -0.35rem 0 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 800; font-size: clamp(3rem, 4.4vw, 3.75rem); line-height: 1; letter-spacing: -0.04em; color: var(--leaf); text-align: center; transition: color 0.2s ease, -webkit-text-stroke 0.2s ease; }
-  .criteria li.is-on > .crit-letter { color: var(--canopy); text-shadow: 0.06em 0.06em 0 var(--sun); }
+  .criteria li.is-on > .crit-letter { color: var(--canopy); background: var(--sun); border-radius: var(--radius); }
   .criteria h3 { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin: 0.15rem 0 0; }
   .criteria h3 .crit-name { background: none !important; box-shadow: none !important; }
   .criteria h3 .crit-icon { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: var(--radius); background: var(--sprout); color: var(--leaf); transition: background-color 0.14s ease, color 0.14s ease; }
@@ -2730,4 +2704,181 @@ main p { text-wrap: pretty; }
   @keyframes lost-run { from { top: 3%; opacity: 0; filter: blur(3px); } 30% { opacity: 1; } }
   @keyframes lost-look { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
   @keyframes lost-stamp { from { opacity: 0; transform: rotate(-2deg) scale(1.9); } to { opacity: 1; transform: rotate(-9deg) scale(1); } }
+}
+
+/* ---------- Enhancements, 25 October 2026 (evening) ---------- */
+/* The user's free hand ("modern enhancements ... just avoid AI slop"; the design system may change,
+   but not the primary blue or the secondary green): the gel read lane by lane, proof that reads as credentials,
+   the announcement as a ticket, the partners as a grid whose logos change in place, and motion that
+   carries meaning. One block, so it can be read, and taken out, as one piece. */
+@layer components {
+  /* Innovate: the gel, flat (26 October 2026; the 3D one went: the user found it did not serve the
+     purpose). The poster's read-out, drawn: the three samples are the subject, so their names are
+     the brightest; the marker and the control are references, set quieter, and the control says
+     why its lane is empty. */
+  .gel .lane-name b { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 0.3rem; font-weight: 700; transition: background-color 0.2s ease, color 0.2s ease; }
+  .gel .lane-marker .lane-name, .gel .lane-control .lane-name { color: rgba(186, 230, 253, 0.72); }
+  .gel .lane-marker .lane-name b, .gel .lane-control .lane-name b { font-weight: 600; }
+  .lane-note { position: absolute; left: 50%; top: 50%; translate: -50% -50%; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; color: rgba(186, 230, 253, 0.6); white-space: nowrap; writing-mode: vertical-rl; rotate: 180deg; }
+  @media (min-width: 30rem) { .lane-note { writing-mode: horizontal-tb; rotate: none; } }
+  /* The lit lane: framed in life green, its name filled; the other lanes dim (main.js, initGel). */
+  .gel .lane-track::after { content: ""; position: absolute; inset: -0.2rem 6% -0.6rem; border: 0.125rem solid var(--sun); border-radius: 0.4rem; opacity: 0; transition: opacity 0.22s ease; pointer-events: none; }
+  .gel .lane.is-on .lane-track::after { opacity: 1; }
+  .gel .lane.is-on .lane-name b { background: var(--sun); color: var(--canopy); }
+
+  /* The read-out under the gel: three keys, each a small lane drawn with its bands. */
+  .gel-key { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+  .gel-key li { display: flex; }
+  .gel-key-btn { display: flex; align-items: center; gap: 0.7rem; width: 100%; min-height: 3.25rem; padding: 0.55rem 0.75rem; border: 0.0625rem solid var(--line); border-radius: var(--radius); background: var(--paper); color: var(--canopy); font: inherit; text-align: left; cursor: pointer; transition: background-color 0.16s ease, border-color 0.16s ease; }
+  .gel-key-btn:hover, .gel-key-btn.is-on { border-color: var(--leaf); }
+  .gel-key-btn[aria-pressed="true"] { background: var(--sprout); border-color: var(--leaf); }
+  .gel-key-text { display: grid; gap: 0.1rem; min-width: 0; line-height: 1.2; }
+  .gel-key-text strong { font-size: 0.9375rem; font-weight: 700; }
+  .gel-key-text span { font-size: 0.8125rem; color: var(--moss); }
+  /* The glyph: a lane with three places for a band, drawn as the gel draws them. */
+  .gel-glyph { position: relative; flex: none; display: grid; grid-template-rows: repeat(3, 0.25rem); align-content: space-between; width: 1.6rem; height: 2rem; padding: 0.3rem 0.25rem; border-radius: 0.25rem; background: var(--canopy); }
+  .gel-glyph i { display: block; height: 0.25rem; border-radius: 0.1rem; background: var(--sun); box-shadow: 0 0 0.3rem rgba(110, 231, 183, 0.6); }
+  .gel-glyph.is-lower i:nth-child(2), .gel-glyph.is-upper i:nth-child(3) { visibility: hidden; }
+  /* The key reflows by the figure's own width, not the window's: where the three do not fit side by
+     side, one to a line, the name and the band on one line at the page's 16px. */
+  .gel { container-type: inline-size; }
+  @container (max-width: 30rem) {
+    .gel-key { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; }
+    .gel-key-btn { min-height: 2.75rem; padding: 0.4rem 0.75rem; }
+    .gel-key-text { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.5rem; font-size: 1rem; }
+    .gel-key-text strong, .gel-key-text span { font-size: 1rem; }
+    .gel-glyph { width: 1.35rem; height: 1.75rem; padding: 0.25rem 0.2rem; }
+  }
+  .gel .lane { transition: opacity 0.25s ease; }
+  .gel.is-picking .lane:not(.is-on) { opacity: 0.3; }
+}
+@layer components {
+  /* The proof as credentials (credentials.njk): small paper badges, each led by a mark that says what
+     kind of proof it is. The seal is the one fill of life green on the opening; the codes are set in
+     the ink; a count is a numeral. They are links where the proof can be checked. */
+  .creds { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0; margin-top: 1.35rem; padding: 0; list-style: none; font-size: 0.9375rem; font-weight: 600; line-height: 1.25; color: var(--canopy); }
+  .cred { position: relative; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0 1.1rem; border-left: 0.0625rem solid var(--line); }
+  .cred:first-child, .cred.is-line-start { padding-left: 0; border-left: 0; }
+  .cred > a { display: inline-flex; align-items: center; gap: 0.5rem; color: inherit; text-decoration: none; border-radius: 0.25rem; }
+  .cred > a:hover .cred-text { text-decoration: underline; text-decoration-color: var(--leaf); text-decoration-thickness: 0.0625rem; text-underline-offset: 0.22em; }
+  .cred-mark { display: inline-grid; place-items: center; flex: none; min-width: 1.6rem; height: 1.6rem; }
+  .cred-text { min-width: 0; }
+  .cred-seal .icon { width: 1.6rem; height: 1.6rem; vertical-align: 0; }
+  .cred-seal .icon path:first-child { fill: var(--sun); stroke: var(--canopy); stroke-width: 1.4; }
+  .cred-seal .icon path:last-child { stroke: var(--canopy); stroke-width: 2.1; }
+  .cred-codes { display: inline-flex; gap: 0.125rem; min-width: 0; }
+  .cred-codes b { display: grid; place-items: center; height: 1.375rem; padding: 0 0.3rem; border-radius: 0.25rem; background: var(--sprout); color: var(--canopy); font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.05em; }
+  .cred-icon { color: var(--leaf); }
+  .cred-icon .icon { width: 1.25rem; height: 1.25rem; vertical-align: 0; }
+  .hero-proof.creds li { display: inline-flex; }
+  /* In a narrow column (a phone, an inner page's lead) they wrap; the rule between them goes. */
+  @media (max-width: 47.99rem) {
+    .creds { gap: 0 1.1rem; font-size: 1rem; }
+    .cred, .cred:first-child { padding: 0; border-left: 0; }
+  }
+  /* Where they are tapped, each is a touch target of at least 2.75rem. */
+  @media (max-width: 47.99rem), (pointer: coarse) { .cred > a { min-height: 2.75rem; } }
+  .page-proof.creds { gap: 0.55rem 1.1rem; }
+  .page-proof.creds .cred { padding: 0; border-left: 0; }
+
+  /* The announcement as a ticket: a life-green stub with the date, a perforation, and the event on
+     paper. The stub's notches are cut by a mask; the edge and the shadow are drawn on the list item
+     around it, so the mask does not cut them away. */
+  .hero-news li { width: fit-content; max-width: 100%; filter: drop-shadow(0 0 0.03rem rgba(12, 74, 110, 0.6)); transition: filter 0.16s ease; }
+  .hero-news li:hover { filter: drop-shadow(0 0 0.04rem var(--leaf)) drop-shadow(0 0 0.03rem var(--leaf)); }
+  .news { --stub: 4.6rem; --notch: 0.45rem; display: inline-flex; align-items: stretch; flex-wrap: nowrap; gap: 0; max-width: 100%; padding: 0; overflow: hidden; background: none; border: 0; border-radius: var(--radius); color: var(--canopy); text-decoration: none;
+    -webkit-mask: radial-gradient(circle var(--notch) at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle var(--notch) at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
+    mask: radial-gradient(circle var(--notch) at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle var(--notch) at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat; }
+  .news:focus-visible { outline: none; box-shadow: none; }
+  .hero-news li:has(.news:focus-visible) { outline: 3px solid var(--canopy); outline-offset: 3px; box-shadow: 0 0 0 3px var(--sun); border-radius: var(--radius); }
+  .news-stub { position: relative; flex: none; display: grid; place-content: center; justify-items: center; width: var(--stub); padding: 0.35rem 0.4rem; background: var(--sun); color: var(--canopy); line-height: 1; text-align: center; }
+  .news-stub::after { content: ""; position: absolute; right: -0.0625rem; top: calc(var(--notch) + 0.25rem); bottom: calc(var(--notch) + 0.25rem); border-right: 0.125rem dashed color-mix(in srgb, var(--canopy) 30%, var(--paper)); }
+  .news-stub .icon { width: 1.375rem; height: 1.375rem; }
+  .news-month { font-size: 0.625rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+  .news-day { margin-top: 0.15rem; font-family: var(--font-display); font-stretch: 100%; font-weight: 800; font-size: 1rem; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .news-body { display: flex; flex-wrap: wrap; align-items: center; gap: 0.15rem 0.85rem; min-width: 0; padding: 0.45rem 1rem 0.45rem 0.95rem; background: var(--paper); font-size: 0.9375rem; line-height: 1.3; }
+  .news-tag { padding: 0; background: none; border-radius: 0; font-size: 0.875rem; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--leaf); }
+  .news-tag::after { content: " ·"; color: var(--moss); font-weight: 400; }
+  .news-text { min-width: 0; }
+
+  /* The partners along the opening's foot, as a row of cells whose logos change in place, a few at a
+     time (motion.js, cycleLogos; still for a reader who asked for less motion). Six cells from 64rem,
+     four from 40rem, three on a phone; a hairline between them, so each reads as a place that changes. */
+  .logo-cycle { padding-inline: var(--gutter); outline-offset: -0.1875rem; }
+  .logo-cycle:focus-visible { outline: 0.1875rem solid var(--canopy); box-shadow: none; }
+  .logo-cells { --cells: 6; --cap: 11rem; display: grid; grid-template-columns: repeat(var(--cells), minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; }
+  .logo-cell { display: grid; place-items: center; height: 6rem; overflow: hidden; border-left: 0.0625rem solid var(--line); container-type: inline-size; }
+  .logo-cell:first-child { border-left: 0; }
+  .logo-cell img { grid-area: 1 / 1; display: block; max-width: none; width: auto; height: min(clamp(1.75rem, calc(4.25rem * sqrt(1.6 / var(--ratio, 1.6))), 5.25rem), calc(var(--cap) / var(--ratio, 1.6)), calc(84cqi / var(--ratio, 1.6))); mix-blend-mode: multiply; }
+  @media (max-width: 63.99rem) {
+    .logo-cells { --cells: 4; --cap: 8rem; }
+    .logo-cell:nth-child(n + 5) { display: none; }
+  }
+  @media (max-width: 39.99rem) {
+    .logo-cells { --cells: 3; --cap: 7.25rem; }
+    .logo-cell { height: 4.75rem; }
+    .logo-cell:nth-child(n + 4) { display: none; }
+    .logo-cell img { height: min(clamp(1.4rem, calc(3.2rem * sqrt(1.6 / var(--ratio, 1.6))), 4rem), calc(var(--cap) / var(--ratio, 1.6)), calc(88cqi / var(--ratio, 1.6))); }
+  }
+}
+@layer components {
+  /* Motion's drawable parts (motion.js). Each is drawn by a custom property whose default is the
+     finished drawing, so a reader without script, or who asked for less motion, sees it drawn. */
+  /* The testing model's two rules. */
+  html.motion-on .model-phase { position: relative; border-bottom-color: transparent; }
+  html.motion-on .model-phase::after { content: ""; position: absolute; left: 0; right: 0; bottom: -0.125rem; height: 0.125rem; background: var(--canopy); transform: scaleX(var(--draw, 1)); transform-origin: 0 50%; }
+  html.motion-on .model-phase-care::after { background: var(--leaf); }
+  .model-step .icon-tile { transition: background-color 0.3s ease, color 0.3s ease; }
+  .model.is-waiting .model-step.is-care .icon-tile { background: var(--sprout); color: var(--leaf); }
+  /* The LitLife™ column: its ground fills down the table (across each card on a phone). */
+  html.motion-on .compare-table .is-ours { --ours: color-mix(in srgb, var(--sun) 22%, var(--paper)); background: linear-gradient(var(--ours), var(--ours)) 0 0 / 100% var(--fill, 100%) no-repeat; }
+  @media (max-width: 47.99rem) { html.motion-on .compare-table .is-ours { background-size: var(--fill, 100%) 100%; } }
+  /* Develop a test: the line between the nodes. */
+  .develop-path li:not(:last-child)::before { transform: scaleY(var(--line, 1)); transform-origin: 50% 0; }
+  /* How a partnership starts: each step's rule. */
+  html.motion-on .start-steps li { position: relative; border-top-color: transparent; }
+  html.motion-on .start-steps li::before { content: ""; position: absolute; left: 0; right: 0; top: -0.125rem; height: 0.125rem; background: var(--canopy); transform: scaleX(var(--draw, 1)); transform-origin: 0 50%; }
+  /* Where a jump within the page lands: a ring that fades (motion.js); with less motion, a still one. */
+  .is-landing { outline: 0.1875rem solid transparent; outline-offset: 0.25rem; border-radius: var(--radius); }
+  @media (prefers-reduced-motion: reduce) { :target:not(section) { outline: 0.1875rem solid var(--sun); outline-offset: 0.25rem; } }
+  /* GSAP moves the "go" arrows (motion.js); the stylesheet's own nudges step aside while it does. */
+  html.motion-on .family-list a:hover .icon, html.motion-on .family-list a:focus-visible .icon,
+  html.motion-on .kit-link:hover .kit-more .icon, html.motion-on .kit-link:focus-visible .kit-more .icon,
+  html.motion-on .news:hover .news-cta .icon { translate: none; }
+  /* Our work: a picked state's record replaces the last one visibly. */
+  @media (prefers-reduced-motion: no-preference) {
+    .fm-panel:not([hidden]) > * { animation: fm-in 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+    .fm-panel:not([hidden]) > :nth-child(2) { animation-delay: 0.05s; }
+    .fm-panel:not([hidden]) > :nth-child(n + 3) { animation-delay: 0.1s; }
+  }
+  @keyframes fm-in { from { opacity: 0; translate: 0 0.375rem; } }
+}
+@layer components {
+  /* The map's first view (main.js): names and emblems wait for the colours to spread, then arrive. */
+  .map-names li { transition: opacity 0.4s ease var(--d, 0ms); }
+  .map.is-waiting .map-names li, [data-map].is-waiting .map-names li { opacity: 0; transition: none; }
+}
+@layer base {
+  /* The parts of the page the browser draws, in the page's own colours: checkboxes, radios and range
+     controls in DNA blue, the text cursor too, and a quieter scrollbar. */
+  :root { accent-color: var(--leaf); scrollbar-color: color-mix(in srgb, var(--canopy) 38%, transparent) transparent; }
+  input, textarea, select { caret-color: var(--leaf); }
+}
+@layer components {
+  /* A short window (a television at 960 by 540, a laptop with its bars): the opening keeps both buttons
+     on the first screen. */
+  @media (max-height: 37.5rem) and (min-width: 56.25rem) {
+    .hero-news { margin-bottom: 0.75rem; }
+    .hero .creds { margin-top: 1rem; }
+  }
+}
+@layer components {
+  /* The ticket on a phone: its words at the page's 16px, and close under the header, so the first
+     button stays within a screen and a quarter (R3). */
+  @media (max-width: 47.99rem) {
+    .hero-news { margin-bottom: 0.75rem; }
+    .news-body { font-size: 1rem; padding-block: 0.35rem; }
+    .news-tag { font-size: 1rem; }
+  }
+  @media (max-width: 22.5rem) { .hero-news { margin-bottom: 0.45rem; } }
 }

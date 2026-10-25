@@ -16,7 +16,7 @@ test('the page: title, description, a two-tone heading in the opening, and no la
   assert.equal(text('h1'), 'Partner with us. Choose how we work together.');
   assert.equal(text('h1 .h-mark'), 'Choose how we work together.');
   assert.equal($('.page-open .label').length, 0, 'no eyebrow label');
-  assert.deepEqual($('.page-open .page-proof li').map((i, li) => text(li)).get(), ['ICMR approved', 'Patents granted in India and Japan', '15 sites, 9 states and Delhi']);
+  assert.deepEqual($('.page-open .page-proof .cred-text').map((i, li) => text(li)).get(), ['ICMR approved', 'Patents granted in India and Japan', '15 sites, 9 states and Delhi']);
 });
 
 test('the sections, in the reviewer\'s order, each labelled', () => {

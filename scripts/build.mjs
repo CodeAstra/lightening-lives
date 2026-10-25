@@ -18,7 +18,9 @@ const pages = process.argv.includes('--pages');
 
 const css = { input: 'src/css/site.css', output: 'src/assets/css/site.css' };
 // The page's behaviour, and the opening film (three.js), which the page fetches only when it will play.
-// The kits in 3D on Solutions (three.js) are a script of their own, fetched only by that page.
+// The kits in 3D on Solutions (three.js) are a script of their own, fetched only by that page. The film
+// and the kits share one copy of three.js: esbuild splits what the bundles have in common into
+// chunk-<hash>.js files beside them, fetched once and cached across pages.
 const scripts = { site: 'src/js/site/main.js', 'site-scene': 'src/js/site/scene.js', 'site-kits': 'src/js/kits/viewer.js' };
 
 function tailwind(watching) {
@@ -63,12 +65,17 @@ const missing = Object.values(scripts).filter((file) => !existsSync(at(file)));
 if (missing.length) console.log(`  Skipping scripts that do not exist yet: ${missing.join(', ')}`);
 
 if (Object.keys(entryPoints).length) {
+  // Start from an empty folder, so the shared chunks of an earlier build (named by their contents) are
+  // not copied to dist/ beside the new ones.
+  rmSync(at('src/assets/js'), { recursive: true, force: true });
   const context = await esbuild.context({
     entryPoints,
     outdir: at('src/assets/js'),
     bundle: true,
     minify: true,
     format: 'esm',
+    splitting: true,
+    chunkNames: 'chunk-[hash]',
     target: ['es2020'],
     logLevel: 'info',
     // Images a script imports are inlined, so a canvas that draws them stays same-origin.

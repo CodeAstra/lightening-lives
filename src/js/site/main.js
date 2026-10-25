@@ -57,6 +57,28 @@ function initReassured() {
     });
   });
   rows.forEach((row, index) => row.addEventListener('pointerenter', () => select(index)));
+
+  // The first time the word comes into view, it is read letter by letter: each letter lights with its
+  // criterion, in turn (0.18 s apart), and then none, so the reader sees the letters answer before
+  // pointing at one. It stops the moment the reader points or focuses, or the word leaves the screen.
+  // Never for a reader who asked for less motion, nor when the word is in view as the page opens.
+  const word = document.querySelector('[data-word]');
+  if (!word || reducedMotion.matches || !('IntersectionObserver' in window)) return;
+  const box = word.getBoundingClientRect();
+  if (box.top < window.innerHeight && box.bottom > 0) return;
+  const timers = [];
+  const stop = () => { timers.splice(0).forEach(clearTimeout); };
+  const section = word.closest('section') || word;
+  ['pointerover', 'focusin'].forEach((type) => section.addEventListener(type, stop, { once: true }));
+  const watch = new IntersectionObserver((entries) => {
+    const entry = entries[entries.length - 1];
+    if (entry.isIntersecting && !watch.started) {
+      watch.started = true;
+      letters.forEach((letter, index) => timers.push(setTimeout(() => select(index), 200 + index * 180)));
+      timers.push(setTimeout(() => select(-1), 200 + letters.length * 180 + 220));
+    } else if (!entry.isIntersecting && watch.started) { stop(); select(-1); watch.disconnect(); }
+  }, { rootMargin: '0px 0px -30% 0px' });
+  watch.observe(word);
 }
 
 // The film. The head script has already decided whether it can play by itself (WebGL, and no
@@ -109,18 +131,68 @@ function initNews() {
   list.hidden = !shown;
 }
 
-// ---- The partners along the opening's foot ------------------------------------------------------
-// The row slides by itself (the stylesheet's one loop) and stops while it is pointed at or holds the
-// focus. There is no button (the user's call, 25 October 2026), so a tap, or a click, stops it and
-// starts it again: a touch screen and a keyboard can still hold it still (WCAG 2.2.2).
-function initMarquee() {
-  const band = document.querySelector('[data-marquee]');
-  const strip = band && band.querySelector('.marquee');
-  if (!strip) return;
-  strip.addEventListener('click', () => band.classList.toggle('is-paused'));
-  strip.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); band.classList.toggle('is-paused'); }
+// ---- The proof under an opening ------------------------------------------------------------------
+// A hairline stands between the credentials on a line; one that starts a line of its own, where the
+// row wraps, has none.
+function initCredentials() {
+  const rows = [...document.querySelectorAll('.creds')];
+  if (!rows.length) return;
+  const mark = () => rows.forEach((row) => {
+    let top = null;
+    [...row.children].forEach((item) => {
+      item.classList.remove('is-line-start');
+      const at = item.offsetTop;
+      if (top !== null && at > top + 2) item.classList.add('is-line-start');
+      top = at;
+    });
   });
+  mark();
+  if ('ResizeObserver' in window) rows.forEach((row) => new ResizeObserver(mark).observe(row));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(mark);
+}
+
+// ---- Innovate's gel ------------------------------------------------------------------------------
+// The key under the gel lights one lane at a time: pointing at a read-out or focusing it lights its
+// lane while it is held there; choosing it keeps it lit until it is chosen again. The lit lane is
+// framed in life green, its name filled, and the other lanes dim. Once the bands have run (motion.js
+// says so with ll:gel-ran), the three read-outs light in turn, once, the way a reader checks them;
+// the reader's own pointing or choosing stops that.
+function initGel() {
+  const figure = document.querySelector('[data-gel]');
+  if (!figure) return;
+  const keys = [...figure.querySelectorAll('[data-gel-lane]')];
+  const lanes = [...figure.querySelectorAll('.lane')];
+  let held = -1;
+  const show = (index) => {
+    figure.classList.toggle('is-picking', index !== -1);
+    lanes.forEach((lane, k) => lane.classList.toggle('is-on', k === index));
+    keys.forEach((key) => key.classList.toggle('is-on', Number(key.dataset.gelLane) === index));
+  };
+  const pick = (index, { hold = false, hover = false, auto = false } = {}) => {
+    if (hold) {
+      held = held === index || index === -1 ? -1 : index;
+      keys.forEach((key) => key.setAttribute('aria-pressed', String(Number(key.dataset.gelLane) === held)));
+      show(held);
+    } else if (hover) show(index === -1 ? held : index);
+    else if (auto && held === -1) show(index);
+  };
+  let reading = [];
+  let touched = false;
+  const touch = () => { touched = true; reading.forEach(clearTimeout); reading = []; };
+  keys.forEach((key) => {
+    const lane = Number(key.dataset.gelLane);
+    key.addEventListener('click', () => { touch(); pick(lane, { hold: true }); });
+    key.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') { touch(); pick(lane, { hover: true }); } });
+    key.addEventListener('pointerleave', (event) => { if (event.pointerType === 'mouse') pick(-1, { hover: true }); });
+    key.addEventListener('focus', () => { if (key.matches(':focus-visible')) { touch(); pick(lane, { hover: true }); } });
+    key.addEventListener('blur', () => pick(-1, { hover: true }));
+  });
+  figure.addEventListener('ll:gel-ran', () => {
+    if (touched) return;
+    const beat = 850;
+    keys.forEach((key, k) => reading.push(setTimeout(() => pick(Number(key.dataset.gelLane), { auto: true }), 200 + k * beat)));
+    reading.push(setTimeout(() => pick(-1, { auto: true }), 200 + keys.length * beat));
+  }, { once: true });
 }
 
 // ---- Our work's map of the field programmes ------------------------------------------------------
@@ -696,17 +768,45 @@ function initMap() {
   window.addEventListener('pageshow', () => showLayer(false));
   measure();
   showLayer(false);
+
+  // The first time the map comes into view, the chosen layer spreads out from where it marks most
+  // (the gesture a change of layer makes), then the names arrive, and the emblems last, nearest our
+  // own state first. Not for a reader who asked for less motion, nor when it is in view at once.
+  const open = figure.getBoundingClientRect();
+  if (reducedMotion.matches || !('IntersectionObserver' in window) || open.top < window.innerHeight) return;
+  const home = STATES.find((state) => state.n === 'Telangana');
+  nameItems.forEach((item, index) => {
+    const away = home ? Math.hypot(STATES[index].x - home.x, STATES[index].z - home.z) : 0;
+    item.style.setProperty('--d', `${Math.round(away * 9)}ms`);
+  });
+  figure.classList.add('is-waiting');
+  paths.forEach((path) => { path.style.transition = 'none'; path.style.fill = markedColour(0); });
+  const reveal = () => {
+    if (!figure.classList.contains('is-waiting')) return;
+    paint(true);
+    setTimeout(() => figure.classList.remove('is-waiting'), 650);
+  };
+  const seen = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    seen.disconnect();
+    requestAnimationFrame(reveal);
+  }, { rootMargin: '0px 0px -30% 0px' });
+  seen.observe(figure);
+  // A choice made before it was seen takes over.
+  inputs.forEach((input) => input.addEventListener('change', () => { seen.disconnect(); figure.classList.remove('is-waiting'); }));
+  document.addEventListener('ll:map-show', () => { seen.disconnect(); figure.classList.remove('is-waiting'); });
 }
 
 ready(() => {
   initMenu();
   initNews();
-  initMarquee();
   initPins();
   initGallery();
   initFieldMap();
   initReassured();
   initMap();
+  initGel();
+  initCredentials();
   initFilm();
   initMotion();
   initContact();

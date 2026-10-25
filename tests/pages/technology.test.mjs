@@ -15,7 +15,7 @@ test('the page: title, description, a two-tone heading, no label, the proof and 
   assert.equal(text('h1'), "Molecular diagnosis, without the molecular laboratory's burden.");
   assert.equal(text('h1 .h-mark'), "without the molecular laboratory's burden.");
   assert.equal($('.page-open .label').length, 0);
-  assert.deepEqual(texts('.page-open .page-proof li'), ['ICMR approved', 'Patents granted in India and Japan', 'No DNA extraction']);
+  assert.deepEqual(texts('.page-open .page-proof .cred-text'), ['ICMR approved', 'Patents granted in India and Japan', 'No DNA extraction']);
   assert.deepEqual($('.page-open .page-actions a').map((i, a) => $(a).attr('href')).get(), ['#documents']);
 });
 

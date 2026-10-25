@@ -14,9 +14,15 @@ test('both bundles build', () => {
   assert.ok(existsSync('dist/assets/js/site-scene.js'), 'site-scene.js');
 });
 
-test('three.js is in the film\'s bundle only, so pages without the film never download it', () => {
-  assert.match(bundle('site-scene.js'), /WebGLRenderer|WebGL2RenderingContext/);
-  assert.doesNotMatch(bundle('site.js'), /WebGLRenderer|ShaderMaterial|three\.module/);
+// A bundle with the shared chunks it imports (scripts/build.mjs splits what the bundles have in common).
+const withChunks = (name) => {
+  const js = bundle(name);
+  return [js, ...[...js.matchAll(/from\s*"\.\/(chunk-[\w-]+\.js)"/g)].map((m) => bundle(m[1]))].join('\n');
+};
+
+test('three.js comes with the film (and the 3D kits), never with the page, so pages without them never download it', () => {
+  assert.match(withChunks('site-scene.js'), /WebGLRenderer|WebGL2RenderingContext/);
+  assert.doesNotMatch(withChunks('site.js'), /WebGLRenderer|ShaderMaterial|three\.module/);
   // The card's logo is drawn into a canvas, so it is inlined: no separate file to fetch or ship.
   assert.match(bundle('site-scene.js'), /data:image\/png;base64,/);
 });
@@ -42,7 +48,9 @@ test('the drop is the chosen size and the take is the approved length', () => {
 
 test('nothing of the comparison toolbar is left in the page\'s scripts', () => {
   for (const file of readdirSync('src/js/site').filter((f) => f.endsWith('.js')))
-    assert.doesNotMatch(source(file), /ll:theme|['"`]ll-|compare|localStorage/, file);
+    // (The comparison table on the home page and Technology, .compare-table, is the page's own and
+    // may be named; the toolbar's names may not.)
+    assert.doesNotMatch(source(file).replace(/\.compare-table|BOUND\.compare|\bcompare: /g, ''), /ll:theme|['"`]ll-|compare|localStorage/, file);
 });
 
 test('the film renders at no more than twice the window\'s pixels', () => {

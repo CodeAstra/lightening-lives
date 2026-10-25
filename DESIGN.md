@@ -201,11 +201,11 @@ components:
     textColor: "{colors.canopy}"
     typography: "{typography.vision-line}"
   partner-row:
-    # the partners sliding along the opening's foot, the full width (25 October 2026)
+    # the partners along the opening's foot, the full width: since 25 October 2026 (evening) a row of cells whose logos change in place
     backgroundColor: "{colors.mist}"
     textColor: "{colors.canopy}"
   announcement:
-    # the one-line event above the hero's heading; its tag is life green
+    # the event above the hero's heading, as a ticket: a life-green stub with the date, a perforation, the event on paper (25 October 2026, evening)
     backgroundColor: "{colors.paper}"
     textColor: "{colors.canopy}"
     rounded: "{rounded.sm}"
@@ -250,7 +250,7 @@ Lightening Lives is a healthcare technology company in Hyderabad that develops m
 
 The site should feel light, clear and sure of itself: a healthcare technology company with evidence behind it, not a charity. The line the user chose for it is **"Lab-grade trust, human warmth"**: serious science from an established company that invents things, with warmth because the work is about families. The client's visual wish is lightness: the page is ice white, with white bands, blue ink and one green for what is pointed out.
 
-The whole design rests on one picture: a drop of blood falls onto a card, the card joins a batch, and the batch becomes a map of India made of cards. That is the opening film, and it is the only showpiece on the site. Everything after it is a quiet, exact page: white and ice-white bands, blue ink, a precise grotesque, hairline rules and flat paper.
+The whole design rests on one picture: a drop of blood falls onto a card, the card joins a batch, and the batch becomes a map of India made of cards. That is the opening film, and it is the only showpiece on the site. Everything after it is a quiet, exact page: white and ice-white bands, blue ink, a precise grotesque, hairline rules and flat paper. Innovate's gel has one authored moment of its own: its bands run once and the page reads it, lane by lane (see "Enhancements, 25 October 2026 (evening)"); it was drawn in 3D for a day and went back to flat on 26 October 2026.
 
 Five things were chosen by the client and stay as they are unless the client asks:
 
@@ -424,7 +424,7 @@ Sticky, 4.75rem tall (`--header-h`), and laid over the top of the film by a nega
 
 - **Label:** the small uppercase voice, Archivo 700 at 0.07em, in `leaf`. Names a thing ("One card", "Haemoglobinopathy", "Sources"); never a sentence.
 - **Proof name** (`.hl`): a name inside a heading set in `leaf`, with no bar, box or fill (see Shapes). Only for proof a reader can check: "ICMR", "India and Japan", "CSIR-CCMB", "15 sites".
-- **Tag:** 1.75rem tall, 0.5rem corners, a 1.5px border, Archivo 600. **Proof tag:** the same, filled `sun`, for "Approved by ICMR" and "Patented in India and Japan". In Our work's sites table a screened site is a small filled circle, not an empty tag.
+- **Tag:** 1.75rem tall, 0.5rem corners, a 1.5px border, Archivo 600. **Proof tag:** the same, filled `sun`, for "Approved by ICMR" and "Patented in India and Japan". Under an opening the proof is a row of **credentials** instead (since 25 October 2026, evening; see Enhancements). In Our work's sites table a screened site is a small filled circle, not an empty tag.
 
 ### Steps (How it works)
 
@@ -547,20 +547,34 @@ All the timing is in two tables at the top of `designs/src/js/lumen/scene.js`: `
 
 ## Motion
 
-The film is the one orchestrated moment. Everything else moves only in answer to the reader, and briefly.
+The film is the opening's orchestrated moment and the gel's run is Innovate's. Everything else either answers the reader, briefly, or shows once, the first time it comes into view, what its section says happening (25 October 2026, evening, after a motion study of every page; the user: "animations ... that enhance user experience without being distracting. use gsap.js").
+
+**One vocabulary.** An answer takes 0.2s, an arrival 0.5s, a process (a rule drawing, a column filling, the map spreading, the gel running) about a second. `power2.out` for what answers or arrives, `power1.inOut` for what travels along a path. Siblings 0.09s apart. Arrivals move 10px, along the line they are read in. No bounce, no elastic, no back.
 
 | What | Motion |
 | --- | --- |
-| Hero text on load | Rises 14px and fades in over 0.8s, `cubic-bezier(0.2, 0.7, 0.2, 1)`, each item 90ms after the last |
+| Hero text on load | Rises 14px and fades in over 0.8s, `cubic-bezier(0.2, 0.7, 0.2, 1)`, 90ms apart: the announcement, the heading, the lead, the buttons, the credentials |
+| An inner page's opening | The same rise, from the first paint (CSS, so nothing flashes before the script): heading, lead, line, proof, buttons |
 | Hover and selection colour | 0.14s to 0.16s, `ease` (the stylesheet's transitions) |
-| A press (buttons, nav links, tags, test rows, contact rows) | Scales to 0.985 on the way down and back on release, 0.18s, `power2.out` |
-| Link arrow, contact row | The arrow moves 0.25rem, the row slides in 0.75rem, 0.2s, on pointing or keyboard focus |
-| A section's opening, the first time it comes into view | Rises 10px and fades in over 0.5s, once, never again (decision D1, B, 24 October 2026) |
+| A press (buttons, nav links, tags, contact rows) | Scales to 0.985 on the way down and back on release, 0.18s, `power2.out` |
+| Every "go" arrow (text links, cards, rows, the ticket) | Moves 0.25rem towards where it goes, 0.2s, on pointing or keyboard focus; an arrow that leaves the site (`arrow-up-right`) moves up and out; the contact row slides in 0.75rem |
+| A section's first block, the first time it comes into view | Rises 10px and fades in over 0.5s, once; never one that is already on screen when the page opens |
+| A disclosure | Its height eases open (0.24s) and closed (0.2s), so the rows below glide; its contents fade in |
+| The partners along the opening's foot | Every 4.2s the six cells change their logos, cell after cell (0.09s apart), as gsap.com's row does: each rolls its logo up and out as the next rolls up into its place, both by the cell's height on one curve (0.75s, `power3.inOut`), so the two never meet; the next logos are decoded first; all thirteen are seen in turn. Holds while pointed at or focused, stops and starts on a tap, Enter or Space, waits off screen and in a hidden tab |
+| Innovate's gel, once | Every band travels down from its well at once (1.4s, `power3.out`), as DNA moves through a gel; then the three read-outs light in turn (0.85s each: the lane framed in life green, its name filled, the others dimmed), then none. Pointing at or choosing a read-out stops it. No replay |
+| The comparison (home, Technology), once | The LitLife™ column's ground fills down the table, cell after cell (about 1s; on a phone each card fills from the left); the words never move |
+| REASSURED, once | The nine letters light in turn with their criteria (0.18s apart), then none; stops the moment the reader points or focuses |
+| Transform lives (home, Partners), once | The Testing rule draws left to right as steps one to four arrive along it; then the Care rule and steps five and six, whose tiles turn green as care takes over (about 1.3s) |
+| The map, once | The chosen layer spreads out from where it marks most, then the names arrive, and the emblems last, nearest Telangana first |
+| Develop a test (Solutions), once | The line draws down from node to node, each step arriving as it is reached |
+| Steps in sequence (Technology's method, how a partnership starts) | Arrive in their order; a step's rule draws as it comes |
+| Our work's state record | The new record replaces the last with a 0.22s rise |
+| A jump within the page | Smooth scrolling, then the card asked for is ringed in life green, which fades over 1.2s |
 | Map layer change | 0.5s per state, spreading outward |
-| Map names | 0.35s fade |
-| Anchor links | Smooth scrolling |
 
-What moves outside the film is `src/js/site/motion.js` (GSAP): every tween starts from where the thing is on screen, so it can be taken up again at any instant, and the keyboard's focus gets what the pointer gets. Colour stays in the stylesheet. The one motion tied to scrolling is the settle-in, and it plays once: nothing is scrubbed with the scroll, there is no parallax, and nothing loops but the partners along the opening's foot (the stylesheet's one animation that repeats, 80 s a turn, stopped by pointing at it, focusing it or tapping it, and never run for a reader who asks for less motion). With reduced motion requested, `motion.js` binds nothing, the hero text does not rise, scrolling is not smoothed, the map's colours change at once and the film waits for its button.
+What moves outside the film is `src/js/site/motion.js` (GSAP; `BOUND` lists every selector it answers) and, for what belongs to their own parts, `main.js` (REASSURED's reading, the map's first view, the gel's reading after its run). Every tween starts from where the thing is on screen, so it can be taken up again at any instant, and the keyboard's focus gets what the pointer gets. A drawing is driven by a custom property whose default is the finished drawing (`--draw`, `--fill`, `--line`), so a reader without script sees it drawn. Colour stays in the stylesheet. Nothing is scrubbed with the scroll, nothing is pinned, there is no parallax, and the only thing that repeats is the partners' logos. With reduced motion requested none of it is bound: the stylesheet's finished states, the gel drawn at rest, the map coloured at once, the film waiting for its button.
+
+**Not animated, on purpose:** the film's pins and card; headings (no letter or word splitting); numbers (no counting up: proof is still and readable); photographs (no zoom); grids of cards (team, facts, approvals, patents); the closing bands, the notice and the footer; the header.
 
 ## Imagery
 
@@ -593,7 +607,7 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 - **Any inherited condition.** The company develops a test for whatever condition a programme needs. The tests so far are two families, haemoglobinopathies and musculopathies, and any list of them ends with an open place for the next. Do not name a client or a request as an example.
 - **Institutions only.** Say so near every way of making contact, and tell individuals where to go instead.
 - **The sample is "a spot of blood on a card"**, or a "dried blood spot": the company's choice for the site's content on 12 October 2026. The approved page's heading and first caption still say "a single drop of blood", and so does the company's vision statement, which keeps its own words; the content file asks the company to confirm the change (Part 8, item 1). The larger claims built on it stay out: "limitless", "any genetic test is possible", "revolutionising", "endless possibilities".
-- **Collection is "minimally invasive"**, never "painless".
+- **Collection is "minimally invasive"**. "Painless" appears only in REASSURED's poster line, which the user allowed on 25 October 2026.
 - **No prices, procurement figures or clinical performance figures.**
 - **Headings** are sentence case. Section headings have no full stop; the hero's heading and the film's three lines do, because they are read as statements. **Buttons** start with a verb and say what happens: "Partner with us", "See our solutions", "Request tests".
 - **The map** says "reported in", never "highest in", and always carries its sources.
@@ -612,7 +626,7 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 ## Do's and Don'ts
 
 - Do keep Archivo (headings at width 112%), and `canopy` ink on `mist`. They are the client's choice.
-- Do let the film be the only showpiece. Keep everything after it quiet.
+- Do let the film be the one showpiece; the gel's run is Innovate's one moment. Everything else moves once, to show what its section says, or in answer to the reader.
 - Do set a name that is proof in `leaf`, with nothing drawn on or under it.
 - Do use `sun` only to point something out: the fill of a proof tag, the fill under what the reader is pointing at in REASSURED, the map's marks, a dot with a `canopy` border, the focus ring. Lighten before you move a blue thing to green.
 - Do keep red for the blood sample.
@@ -631,7 +645,7 @@ Clear, evidence-led and warm. Short sentences, plain verbs, Indian English (anae
 - Don't restyle the logo. Its colours stay in the logo; none of them is used in the interface.
 - Don't use partner logos without permission, or photos with identifiable people (the company's own portraits of its people on About and Team are the exception).
 - Don't add a cookie or consent banner. Say what analytics the site uses in the privacy policy.
-- Don't add scroll-scrubbed animation, parallax or another loop: the partners' slide is the one, and it keeps stopping on hover, focus and tap. The one scroll-linked motion is a section's opening settling in, once (see Motion).
+- Don't add scroll-scrubbed animation, pinned sections, parallax or another loop: the partners' logos are the one thing that repeats, and they stop on hover, focus and tap. Don't animate what is already on screen when the page opens, split headings into letters, or count numbers up.
 
 ## Where things live
 
@@ -697,3 +711,11 @@ Compiled files in `designs/assets/css` and `designs/assets/js` are committed; ru
 **The comparison page is history.** `designs/lumen.html` and `designs/src/` keep Design 11 as it was compared in October 2026 (Exo and Roboto Mono by default, the toolbar's variations, glass and pools). They are not updated with the refinement and are not the reference; build from `src/` and this file.
 
 **Retaken after the refinement** (25 October 2026): the film's stills and the home page's card (`npm run stills`) and every page's preview card (`npm run social`). Retake both whenever the type or the card changes.
+
+**Enhancements, 25 October 2026 (evening).** The user: "the app is in good shape but could benefit from some modern enhancements", with a free hand ("just avoid AI slop"; the design system may change, but not the primary blue or the secondary green). One block at the end of `src/css/site.css` ("Enhancements, 25 October 2026 (evening)").
+
+- **Credentials** (`credentials.njk`, the home opening and every inner opening): the proof as one quiet row under the buttons, set apart by its marks, not by boxes, so it never reads as more buttons (a finish review, the same evening): ICMR's approval a 1.6rem seal filled life green with its check in `canopy` (the one green fill on the opening besides the ticket's stub); the patents the two countries' codes, IN and JP, as small `sprout` tiles with `canopy` letters; the sites a pin (never a big number: that is the hero-metric template); any other proof its own icon in `leaf`. Hairlines stand between them on a line; one that starts a new line where the row wraps has none (`main.js`, `initCredentials`). The three that can be checked link to where they are shown (Technology's approvals and patents, Our work's sites), underlined on hover.
+- **The announcement as a ticket:** a life-green stub with the month (label voice) over the days (display voice, 800), a dashed perforation between two notches cut by a mask, then the event on `paper`: its tag ("Event ·") in `leaf`, 700, the event in 700, its link in `leaf` with an arrow. Flat, as the page is: only a hairline edge, drawn on the item around it so the mask does not cut it, which turns `leaf` on hover; focus rings it as everything else is. The stub is hidden from screen readers, which hear the full date. Where `when` is not "days month", the stub carries a calendar icon.
+- **The partners along the foot** (after gsap.com's "Brands using GSAP"): six cells in the page's column, 6rem tall, hairlines between them (four from 40rem, three on a phone), each logo sized by its own proportions at the sizes the user asked for on 26 October 2026 (up to 5.25rem for a square emblem, a long wordmark held by width); every few seconds the cells change their logos in place (see Motion). Every name is in a list a screen reader hears, with a line saying that the logos change and that Enter stops them, and a polite line that says "Stopped" or "Changing again"; the cells are hidden from it. Still no visible label, no button and no link (the user's call earlier the same day).
+- **The gel, flat again** (26 October 2026; the user: the 3D gel "does not serve the purpose", and "remove Run again"). The poster's read-out in HTML and CSS on its `canopy` slab, as the Sweep of 25 October describes it, read more clearly: the three samples' names are the brightest, the marker's and the control's set quieter (ice blue, 600) as the references they are, and the empty control lane says "No DNA" down its middle. Under it, the key, named by where the bands stand on the gel as drawn, under the top band every sample shows (the caption says so): Patient "Bottom band", Unaffected "Middle band", Carrier "Middle and bottom", each with a small drawn lane. Pointing at, focusing or choosing a key lights its lane: a 2px life-green frame round the lane, its name filled life green, the other lanes at 30%; choosing keeps it lit. The key reflows by the figure's own width (a container query): three across, or one to a line at 16px. No 3D, no WebGL, no replay; the 3D gel's code (`src/js/gel/`, the `site-gel` bundle) is gone.
+- **REASSURED's lit letter**, beside its criterion, now sits on a `sun` ground with 0.5rem corners, as the word's own letters do; the hard offset shadow it had is gone (it read as misregistered print once the read-through lit every letter in turn).

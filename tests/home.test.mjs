@@ -47,8 +47,14 @@ test('the opening: heading, lead with the category, buttons, the proof with icon
   assert.equal($('.hero-lead a.lead-link').attr('href'), '#reassured');
   assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/partners/'], ['How the test works', '/technology/']]);
   assert.ok($('.hero-actions a').first().is('.btn-solid') && $('.hero-actions a').last().is('.btn-line'));
-  assert.deepEqual(texts('.hero-proof li'), ['ICMR approved', 'Patents granted in India and Japan', '15 sites, 9 states and Delhi']);
-  assert.equal($('.hero-proof li svg.icon').length, 3);
+  // The proof as credentials (25 October 2026, evening): each a badge led by a mark of its kind, and a
+  // link to where it can be checked.
+  assert.deepEqual(texts('.hero-proof .cred-text'), ['ICMR approved', 'Patents granted in India and Japan', '15 sites, 9 states and Delhi']);
+  assert.equal($('.hero-proof .cred-seal svg.icon').length, 1, 'ICMR: a seal');
+  assert.deepEqual(texts('.hero-proof .cred-codes b'), ['IN', 'JP'], 'the patents: the two countries');
+  assert.equal($('.hero-proof .cred-sites svg.icon').length, 1, 'the sites: a pin, not a big number');
+  assert.equal($('.hero-proof .cred-codes').attr('aria-hidden'), 'true');
+  assert.deepEqual($('.hero-proof .cred a').map((i, a) => a.attribs.href).get(), ['/technology/#approvals', '/technology/#patents', '/our-work/#sites']);
   // The film plays once, within five seconds, and rests on the map: no caption line, no replay.
   assert.equal($('[data-film-caption], .film-toggle, [data-film-toggle]').length, 0);
   const scene = readFileSync('src/js/site/scene.js', 'utf8');
@@ -120,33 +126,39 @@ test('the film is gated before first paint and falls back to a still', () => {
   assert.ok(play.is('[hidden]'), 'shown by the script only where the film can play');
 });
 
-test('who works with us: all thirteen logos sliding the full width of the opening\'s foot, sized by their own shapes', () => {
+test('who works with us: a row of cells along the opening\'s foot whose logos change in place, all thirteen in turn', () => {
   const published = PARTNERS.logos.filter((p) => p.published);
   assert.equal(published.length, 13);
-  const first = $('#partners .marquee-track').first();
-  assert.deepEqual(first.find('img').map((i, img) => img.attribs.alt).get(), published.map((p) => p.name));
-  first.find('img').each((i, img) => {
-    const p = published[i];
-    assert.ok(img.attribs.width && img.attribs.height && img.attribs.loading === 'lazy', img.attribs.alt);
-    // Each logo carries its own proportions, so the stylesheet sizes it without squeezing it.
-    assert.equal(img.attribs.style, `--ratio: ${Math.round((p.width / p.height) * 1000) / 1000}`, img.attribs.alt);
-  });
-  // The second copy makes the loop seamless and is hidden from assistive technology.
-  const copy = $('#partners .marquee-copy');
-  assert.equal(copy.attr('aria-hidden'), 'true');
-  assert.equal(copy.find('img').length, 13);
-  copy.find('img').each((i, img) => assert.equal(img.attribs.alt, ''));
   assert.equal($('#partners').closest('section').attr('id'), 'top');
+  // Every name, for a screen reader; the cells themselves are pictures of the same thing, hidden.
+  assert.deepEqual(texts('#partners .logo-cycle ul.sr-only li'), published.map((p) => p.name));
+  const cells = $('#partners .logo-cells');
+  assert.equal(cells.attr('aria-hidden'), 'true');
+  assert.equal(cells.find('.logo-cell').length, 6);
+  cells.find('img').each((i, img) => {
+    const p = published[i];
+    assert.equal(img.attribs.alt, '');
+    assert.ok(img.attribs.width && img.attribs.height, p.name);
+    // Each logo carries its own proportions, so the stylesheet sizes it without squeezing it.
+    assert.equal(img.attribs.style, `--ratio: ${Math.round((p.width / p.height) * 1000) / 1000}`, p.name);
+  });
+  // The pool the cells draw from: all thirteen, in order.
+  const pool = JSON.parse(cells.attr('data-logo-pool'));
+  assert.deepEqual(pool.map((l) => l.src), published.map((p) => `/assets/logo/partners/${p.file}`));
   // No visible label and no button (the user, 25 October 2026): its heading is for screen readers, and
-  // the row itself takes the focus, which stops it, as pointing at it and tapping it do.
+  // the row itself takes the focus, which holds it, as pointing at it does; a tap stops and starts it.
   assert.ok($('#partners-h').is('.sr-only'));
   assert.equal($('#partners button, #partners a').length, 0);
-  assert.equal($('#partners .marquee').attr('tabindex'), '0');
+  assert.equal($('#partners .logo-cycle').attr('tabindex'), '0');
+  assert.equal($('#partners .logo-cycle').attr('role'), 'group');
+  const motion = readFileSync('src/js/site/motion.js', 'utf8');
+  assert.match(motion, /function cycleLogos\(signal\)/);
+  assert.match(motion, /pointerenter[\s\S]*focusin[\s\S]*'click'[\s\S]*Enter/);
+  assert.match(motion, /visibilitychange/);
+  assert.match(motion, /IntersectionObserver/);
   const css = readFileSync('src/css/site.css', 'utf8');
-  assert.match(css, /\.marquee:hover \.marquee-track, \.marquee:focus-within \.marquee-track, \.hero-foot\.is-paused \.marquee-track \{ animation-play-state: paused; \}/);
-  assert.match(css, /prefers-reduced-motion: reduce\) \{\s*\.marquee \{[^}]*overflow-x: auto/);
   assert.match(css, /\.hero-foot \{ margin: 2\.25rem calc\(var\(--gutter\) \* -1\) 0;/, 'the full width of the window');
-  assert.match(readFileSync('src/js/site/main.js', 'utf8'), /strip\.addEventListener\('click'/);
+  assert.doesNotMatch(css, /\.marquee/, 'the sliding strip is gone');
 });
 
 test('Innovate: the gel as the poster draws it, four icon-led points, and the way to the method', () => {
@@ -154,6 +166,18 @@ test('Innovate: the gel as the poster draws it, four icon-led points, and the wa
   assert.deepEqual(texts('#innovate .lane-name'), ['Marker', 'Patient', 'Unaffected', 'Carrier', 'Control']);
   assert.deepEqual($('#innovate .lane').map((i, l) => $(l).find('.lane-band').length).get(), [12, 2, 2, 3, 0]);
   assert.ok($('#innovate [role=img]').attr('aria-label').length > 60);
+  // Flat since 26 October 2026 (the user: the 3D gel "does not serve the purpose"; "remove Run
+  // again"): no stage, no WebGL bundle, no replay. The references are marked as such, the empty
+  // control says why, and the key under the gel says which band means what and lights that lane.
+  assert.equal($('#innovate [data-gel-stage], #innovate canvas, #innovate [data-gel-run]').length, 0);
+  assert.doesNotMatch(text('#innovate'), /Run again/);
+  assert.deepEqual($('#innovate .lane').map((i, l) => l.attribs.class).get(), ['lane lane-marker', 'lane', 'lane', 'lane', 'lane lane-control']);
+  assert.equal(text('#innovate .lane-control .lane-note'), 'No DNA');
+  assert.deepEqual(texts('#innovate .gel-key-text strong'), ['Patient', 'Unaffected', 'Carrier']);
+  assert.deepEqual(texts('#innovate .gel-key-text > span'), ['Bottom band', 'Middle band', 'Middle and bottom']);
+  assert.deepEqual($('#innovate [data-gel-lane]').map((i, b) => [[b.attribs['data-gel-lane'], b.attribs['aria-pressed']]]).get(), [['1', 'false'], ['2', 'false'], ['3', 'false']]);
+  assert.doesNotMatch(readFileSync('src/js/site/main.js', 'utf8'), /site-gel/);
+  assert.match(readFileSync('src/js/site/main.js', 'utf8'), /ll:gel-ran/);
   assert.deepEqual(texts('#innovate .ticks strong'), ['Screening cum confirmatory.', 'From birth.', 'No cold chain.', 'No DNA extraction.']);
   assert.equal($('#innovate .ticks svg.icon').length, 4);
   assert.deepEqual(links('#innovate a.link'), [['How the test works', '/technology/']]);

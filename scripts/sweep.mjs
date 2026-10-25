@@ -137,7 +137,20 @@ const seen = (el) => {
   return true;
 };
 const boxes = [];
-const add = (el, r, kind) => {
+// What a container clips away is not seen: a box is cut to every ancestor that hides its overflow (a
+// logo rolling out of its cell, 25 October 2026).
+const clip = (el, r) => {
+  let { left, top, right, bottom } = r;
+  for (let e = el.parentElement; e && e !== document.body; e = e.parentElement) {
+    const s = getComputedStyle(e);
+    if (s.overflowX === 'visible' && s.overflowY === 'visible') continue;
+    const c = e.getBoundingClientRect();
+    left = Math.max(left, c.left); top = Math.max(top, c.top); right = Math.min(right, c.right); bottom = Math.min(bottom, c.bottom);
+  }
+  return { left, top, width: right - left, height: bottom - top };
+};
+const add = (el, raw, kind) => {
+  const r = clip(el, raw);
   if (r.width < 3 || r.height < 3) return;
   boxes.push({ el, kind, x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height });
 };

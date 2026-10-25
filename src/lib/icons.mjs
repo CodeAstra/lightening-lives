@@ -21,7 +21,7 @@ export function icon(name, label) {
     cache.set(name, inner);
   }
   const a11y = label ? `role="img" aria-label="${escape(label)}"` : 'aria-hidden="true" focusable="false"';
-  return `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ${a11y}>${cache.get(name)}</svg>`;
+  return `<svg class="icon" data-icon="${escape(name)}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ${a11y}>${cache.get(name)}</svg>`;
 }
 
 // LinkedIn's mark is in neither library, so its glyph is written here; YouTube and X come from

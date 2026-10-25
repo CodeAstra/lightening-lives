@@ -17,7 +17,7 @@ const OPEN_PLACE = 'The condition you need next';
 test('the home lead is short, and each proof under it is a label of six words or fewer', () => {
   const $ = load('/');
   assert.ok(words(text($, '.hero-lead')) <= 25, `lead: ${words(text($, '.hero-lead'))} words`);
-  $('.hero-proof li').each((i, li) => assert.ok(words(text($, li)) <= 6, `proof: ${text($, li)}`));
+  $('.hero-proof .cred-text').each((i, li) => assert.ok(words(text($, li)) <= 6, `proof: ${text($, li)}`));
 });
 
 // Every place on a page whose words run over R1's limit, as "<what> (<n> words): <text>". The bodies

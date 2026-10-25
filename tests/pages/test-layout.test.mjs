@@ -25,7 +25,8 @@ test('the opening: a two-tone heading, no label over it, the proof with icons', 
     const $ = load(url);
     assert.equal($('h1 .h-mark').length, 1, url);
     assert.equal($('.page-open .label').length, 0, url);
-    assert.equal($('.page-open .page-proof li svg.icon').length, 3, url);
+    // Each proof is a credential led by its mark (a seal, the countries' codes, or its own icon).
+    assert.equal($('.page-open .page-proof li .cred-mark').length, 3, url);
   }
   assert.equal(text(load(PAGES[0]), 'h1'), 'Sickle cell anaemia, screened and confirmed in one test.');
 });

@@ -14,6 +14,7 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
 {%- from "map.njk" import mapSection with context %}
 {%- from "doors.njk" import doorList with context %}
 {%- from "model.njk" import testingModel %}
+{%- from "credentials.njk" import credentials %}
 
   <!-- The opening: an announcement when there is one, the heading, and the film beside it, which
        comes to rest on a map with every state we work in pinned; the partners slide along its foot -->
@@ -27,22 +28,23 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
       <ul class="hero-news rise" style="--i:0" aria-label="Announcements" data-news>
         {%- for item in news %}
         <li data-start="{{ item.start }}" data-end="{{ item.end }}"{% if item.preview %} data-preview{% endif %}{% if not item.live or (loop.index0 > 0) %} hidden{% endif %}>
-          <a class="news" href="{{ item.link.href }}"><span class="news-tag">{{ item.tag or "Event" }}</span><span class="news-text"><strong>{{ item.text }}</strong> <span class="news-when">{{ item.when }}</span></span><span class="news-cta">{{ item.link.text }}{% icon "arrow-right" %}</span></a>
+          {%- set when = item.when.split(" ") %}
+          <a class="news" href="{{ item.link.href }}"><span class="news-stub" aria-hidden="true">{% if when.length == 2 and r/^\d/.test(when[0]) %}<span class="news-month news-label">{{ when[1].slice(0, 3) }}</span><span class="news-day">{{ when[0] }}</span>{% else %}{% icon "calendar-days" %}{% endif %}</span><span class="news-body"><span class="news-text"><span class="news-tag">{{ item.tag or "Event" }}</span> <strong>{{ item.text }}</strong><span class="sr-only">, {{ item.when }}</span></span><span class="news-cta">{{ item.link.text }}{% icon "arrow-right" %}</span></span></a>
         </li>
         {%- endfor %}
       </ul>
       {%- endif %}
-      <h1 id="hero-h" class="display rise" style="--i:0">Genetic testing that <span class="h-mark">reaches every community.</span></h1>
-      <p class="hero-lead lead rise" style="--i:1">Genetic and molecular diagnostics from a dried blood spot: one test to screen and confirm, patient, carrier or unaffected, built to the <a class="lead-link" href="#reassured">REASSURED</a> standard.</p>
-      <div class="hero-actions rise" style="--i:2">
+      <h1 id="hero-h" class="display rise" style="--i:1">Genetic testing that <span class="h-mark">reaches every community.</span></h1>
+      <p class="hero-lead lead rise" style="--i:2">Genetic and molecular diagnostics from a dried blood spot: one test to screen and confirm, patient, carrier or unaffected, built to the <a class="lead-link" href="#reassured">REASSURED</a> standard.</p>
+      <div class="hero-actions rise" style="--i:3">
         <a class="btn btn-solid" href="{{ site.cta.href }}">{{ site.cta.text }}</a>
         <a class="btn btn-line" href="/technology/">How the test works</a>
       </div>
-      <ul class="hero-note hero-proof rise" style="--i:3">
-        <li>{% icon "badge-check" %}<span>ICMR approved</span></li>
-        <li>{% icon "award" %}<span>Patents granted in India and Japan</span></li>
-        <li>{% icon "map-pin" %}<span>15 sites, 9 states and Delhi</span></li>
-      </ul>
+      {{ credentials([
+        { icon: "badge-check", text: "ICMR approved" },
+        { icon: "award", text: "Patents granted in India and Japan" },
+        { icon: "map-pin", text: "15 sites, 9 states and Delhi" }
+      ], "hero-note rise", "--i:4") }}
     </div>
 
     <!-- After the text in the page, so the keyboard reaches the buttons first; placed beside it by the stylesheet -->
@@ -69,19 +71,22 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
       </button>
     </div>
 
-    <!-- Who works with us, sliding along the foot of the opening, the full width of the window; it stops
-         while pointed at, focused or tapped -->
-    <div class="hero-foot" id="partners" data-marquee>
+    <!-- Who works with us, along the foot of the opening: a row of cells whose logos change in place, a
+         few at a time (main.js, initLogos); every name is in the list a screen reader hears -->
+    <div class="hero-foot" id="partners" data-logos>
       <h2 class="sr-only" id="partners-h">We work with</h2>
-      <div class="marquee" tabindex="0" role="group" aria-labelledby="partners-h">
-        <ul class="marquee-track">
-          {%- for p in partners.logos %}{% if p.published %}
-          <li><img src="/assets/logo/partners/{{ p.file }}" width="{{ p.width }}" height="{{ p.height }}" alt="{{ p.name }}" style="--ratio: {{ (p.width / p.height) | round(3) }}" loading="lazy" decoding="async"></li>
-          {%- endif %}{% endfor %}
+      {%- set shown = partners.logos | selectattr("published") %}
+      <div class="logo-cycle" tabindex="0" role="group" aria-labelledby="partners-h" aria-describedby="partners-note">
+        <p class="sr-only" id="partners-note">The logos change every few seconds. Press Enter to stop or start them.</p>
+        <p class="sr-only" aria-live="polite" data-logo-status></p>
+        <ul class="sr-only">
+          {%- for p in shown %}
+          <li>{{ p.name }}</li>
+          {%- endfor %}
         </ul>
-        <ul class="marquee-track marquee-copy" aria-hidden="true">
-          {%- for p in partners.logos %}{% if p.published %}
-          <li><img src="/assets/logo/partners/{{ p.file }}" width="{{ p.width }}" height="{{ p.height }}" alt="" style="--ratio: {{ (p.width / p.height) | round(3) }}" loading="lazy" decoding="async"></li>
+        <ul class="logo-cells" aria-hidden="true" data-logo-pool='[{%- for p in shown %}{"src":"/assets/logo/partners/{{ p.file }}","w":{{ p.width }},"h":{{ p.height }},"ratio":{{ (p.width / p.height) | round(3) }}}{{ "," if not loop.last }}{%- endfor %}]'>
+          {%- for p in shown %}{% if loop.index0 < 6 %}
+          <li class="logo-cell"><img src="/assets/logo/partners/{{ p.file }}" width="{{ p.width }}" height="{{ p.height }}" alt="" style="--ratio: {{ (p.width / p.height) | round(3) }}" decoding="async"></li>
           {%- endif %}{% endfor %}
         </ul>
       </div>
@@ -105,22 +110,37 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
         </a>
       </div>
       <figure class="gel" data-gel>
+        {#- The gel, flat (26 October 2026: the user found the 3D one did not serve the purpose): the
+            poster's read-out drawn in HTML and CSS. The three samples are the subject; the marker and
+            the control are the references they are read against, set quieter. -#}
         <div class="gel-slab" role="img" aria-label="Illustration of a LitLife™ gel, after our conference poster: a size marker, then a patient, an unaffected sample and a carrier, each with its own pattern of bands, and an empty no-DNA control.">
           {%- set lanes = [
             { name: "Marker", kind: "marker", bands: [17.7, 24.6, 30, 35.8, 42.5, 48.3, 54.2, 61.3, 67.3, 73.8, 80.6, 94.2], heavy: [42.5, 67.3] },
             { name: "Patient", bands: [48.5, 80] },
             { name: "Unaffected", bands: [48.5, 65] },
             { name: "Carrier", bands: [48.5, 65, 80] },
-            { name: "Control", note: "No DNA", bands: [] }
+            { name: "Control", kind: "control", note: "No DNA", bands: [] }
           ] %}
           {%- for lane in lanes %}
           <div class="lane{% if lane.kind %} lane-{{ lane.kind }}{% endif %}">
-            <span class="lane-name">{{ lane.name }}</span>
-            <div class="lane-track"><span class="lane-well"></span>{% for y in lane.bands %}<span class="lane-band{% if lane.heavy and y in lane.heavy %} is-heavy{% endif %}" style="--y: {{ y }}%"></span>{% endfor %}</div>
+            <span class="lane-name"><b>{{ lane.name }}</b></span>
+            <div class="lane-track"><span class="lane-well"></span>{% for y in lane.bands %}<span class="lane-band{% if lane.heavy and y in lane.heavy %} is-heavy{% endif %}" style="--y: {{ y }}%"></span>{% endfor %}{% if lane.note %}<span class="lane-note" aria-hidden="true">{{ lane.note }}</span>{% endif %}</div>
           </div>
           {%- endfor %}
         </div>
-        <figcaption>How a LitLife™ gel reads, after our conference poster: a patient, an unaffected person and a carrier each show their own pattern of bands, read against a size marker, in one run. The control, with no DNA, stays empty.</figcaption>
+        {#- The read-out, from the content file (5.1, Innovate: one band lower, patient; one upper,
+            unaffected; both, carrier), named by where the bands stand on the gel as drawn, under the
+            top band that every sample shows. Each one lights its lane, pointed at, focused or chosen. -#}
+        <ul class="gel-key">
+          {%- for key in [
+            { lane: 1, name: "Patient", read: "Bottom band", glyph: "lower" },
+            { lane: 2, name: "Unaffected", read: "Middle band", glyph: "upper" },
+            { lane: 3, name: "Carrier", read: "Middle and bottom", glyph: "both" }
+          ] %}
+          <li><button type="button" class="gel-key-btn" data-gel-lane="{{ key.lane }}" aria-pressed="false"><span class="gel-glyph is-{{ key.glyph }}" aria-hidden="true"><i></i><i></i><i></i></span><span class="gel-key-text"><strong>{{ key.name }}</strong><span>{{ key.read }}</span></span></button></li>
+          {%- endfor %}
+        </ul>
+        <figcaption>How a LitLife™ gel reads, after our conference poster: every sample shows the top band; under it, a patient, an unaffected person and a carrier each show their own pattern, read against a size marker, in one run. The control, with no DNA, stays empty.</figcaption>
       </figure>
     </div>
   </section>

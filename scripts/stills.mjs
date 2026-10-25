@@ -49,7 +49,7 @@ const webp = (input, crop, file, size) => sharp(input).extract(crop).resize(size
 // --- The film: an 1800 by 1000 window, cropped round the film's subject (DESIGN.md: it sits 74% of
 // the way across the page's column), as the approved stills were taken.
 open(1800, 1000);
-hide('.site-header, .hero-text, .hero-veil, .film-foot');
+hide('.site-header, .hero-text, .hero-veil, .film-foot, .hero-foot'); // the partners' row is the page's, not the film's
 const frame = run('const r = document.querySelector("[data-frame]").getBoundingClientRect(); JSON.stringify({ left: r.left, width: r.width })');
 const centre = Math.round(frame.left + frame.width * 0.74);
 const square = { left: centre - 500, top: 0, width: 1000, height: 1000 };
@@ -89,6 +89,8 @@ for (const layer of ['sickle', 'thal', 'work']) {
 // shape), made 1200 by 630. Only the film's button is left out; it does nothing in a picture.
 open(1440, 756);
 hide('.film-toggle');
+// The partners' logos hold still for the picture, as they do while focused.
+run(`document.querySelector('.logo-cycle')?.dispatchEvent(new FocusEvent('focusin')); 1`);
 hold(6.56);
 await sharp(shot('social.png')).resize(1200, 630).png({ palette: true, quality: 90, effort: 10 }).toFile(out('social.png'));
 console.log('  social.png: the opening at the film\'s end, 1200 by 630');
