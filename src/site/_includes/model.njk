@@ -1,0 +1,25 @@
+{#- The testing model (the poster's six steps): four of testing, two of care, each with its icon. The
+    home page's "Transform lives" and the Partners page's programmes section. -#}
+{%- macro testingModel(cls = "") -%}
+<div class="model{{ ' ' + cls if cls }}">
+  <p class="model-phase model-phase-test">Testing</p>
+  <p class="model-phase model-phase-care">Care</p>
+  <ol class="model-steps">
+    {%- set steps = [
+      { icon: "droplet", title: "Collect", body: "A finger-prick sample on a card, in the community or at birth." },
+      { icon: "truck", title: "Transport", body: "To the nearest testing centre, at room temperature." },
+      { icon: "dna", title: "Test", body: "Extraction-free molecular testing with LitLife™." },
+      { icon: "file-check", title: "Report", body: "Results recorded against each sample in the app." },
+      { icon: "stethoscope", title: "Treat and counsel", body: "Treatment, with genetic and social counselling for patients and carriers." },
+      { icon: "heart-handshake", title: "Follow up", body: "Awareness programmes and patient support groups." }
+    ] %}
+    {%- for step in steps %}
+    <li class="model-step{% if loop.index > 4 %} is-care{% endif %}">
+      <span class="icon-tile">{% icon step.icon %}</span>
+      <h3><span class="model-n">{{ loop.index }}</span> {{ step.title }}</h3>
+      <p>{{ step.body }}</p>
+    </li>
+    {%- endfor %}
+  </ol>
+</div>
+{%- endmacro %}

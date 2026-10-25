@@ -11,12 +11,17 @@ export const load = (url) => cheerio(readFileSync(file(url), 'utf8'));
 // Whether a page has been built yet (later phases add most of them).
 export const exists = (url) => existsSync(file(url));
 
+// The old addresses' forwarding pages (content 3.3; src/site/_data/forwards.json): not pages of the
+// site, so pages() leaves them out, as it does the preview cards.
+export const FORWARD_FILES = new Set(JSON.parse(readFileSync('src/site/_data/forwards.json', 'utf8'))
+  .map((f) => `${f.from.replace(/^\//, '').replace(/\/?$/, '/')}index.html`));
+
 // Every built page's URL. 404.html is not an index.html, so it is left out unless asked for. The
-// preview cards under /_social/ are not pages of the site (Task 3.3), so they are never read.
+// preview cards under /_social/ and the forwarding pages are not pages of the site, so they are never read.
 export function pages({ include404 = false } = {}) {
   const urls = readdirSync('dist', { recursive: true })
     .filter((f) => f === 'index.html' || f.endsWith('/index.html'))
-    .filter((f) => !f.startsWith('_social/'))
+    .filter((f) => !f.startsWith('_social/') && !FORWARD_FILES.has(f))
     .map((f) => `/${f.slice(0, -'index.html'.length)}`)
     .sort();
   if (include404 && existsSync('dist/404.html')) urls.push('/404.html');

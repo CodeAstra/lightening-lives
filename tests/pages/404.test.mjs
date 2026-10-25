@@ -20,8 +20,8 @@ test('the page: title, h1 and the sentence (5.18)', () => {
 
 test('the six links, in 5.18\'s order', () => {
   const links = $('[data-not-found] ul a');
-  assert.deepEqual(links.map((i, a) => text(a)).get(), ['Home', 'Solutions', 'Programmes', 'Our work', 'About', 'Contact']);
-  assert.deepEqual(links.map((i, a) => $(a).attr('href')).get(), ['/', '/solutions/', '/programmes/', '/our-work/', '/about/', '/contact/']);
+  assert.deepEqual(links.map((i, a) => text(a)).get(), ['Home', 'Solutions', 'Partners', 'Our work', 'About', 'Contact']);
+  assert.deepEqual(links.map((i, a) => $(a).attr('href')).get(), ['/', '/solutions/', '/partners/', '/our-work/', '/about/', '/contact/']);
 });
 
 test('served at any address: every link and asset is root-relative', () => {
@@ -45,7 +45,7 @@ test('every old address in 3.4 has its new page', () => {
     '/index.php': '/',
     '/about-us.php': '/about/',
     '/services.php': '/solutions/',
-    '/impact-stories.php': '/programmes/#from-the-field',
+    '/impact-stories.php': '/our-work/',
     '/our-team.php': '/about/team/',
     '/abhishek-chandak-details.php': '/about/team/#abhishek-chandak',
     '/manisha-arumalla-details.php': '/about/team/#manisha-arumalla',
@@ -53,7 +53,7 @@ test('every old address in 3.4 has its new page', () => {
     '/mehraj-begum-details.php': '/about/team/#mehraj-begum',
     '/pruthvi-details.php': '/about/team/#pruthvi-bellamkonda',
     '/jyothi-details.php': '/about/team/#jyothi-vislavath',
-    '/partnerships.php': '/partnerships/',
+    '/partnerships.php': '/partners/',
     '/contact-us.php': '/contact/',
   });
 });

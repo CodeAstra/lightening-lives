@@ -28,7 +28,7 @@ const HREFS = [
 test('title, description, label, h1 and lead (5.15, 4.6)', () => {
   assert.equal($('title').text(), 'Contact | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'Contact Lightening Lives about a partnership, tests, awareness and counselling programmes, or an institutional order. Hyderabad, India.');
-  assert.equal(text('.page-open .label'), 'Contact');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'Tell us what your programme needs');
   assert.equal(text('.page-open .lead'), 'Choose where you would like to begin. We work with institutions, and each request is discussed on its own terms.');
@@ -56,13 +56,10 @@ test('where to begin: the four actions, each an email with its subject, the line
   assert.deepEqual(ACTIONS.map((a) => a.label), actions.map((i, a) => text($(a).find('.action-label'))).get());
 });
 
-test('Partnerships keeps its actions without the lines (the home page has its three doors instead, 25 October 2026)', () => {
-  for (const url of ['/partnerships/']) {
-    const page = load(url);
-    assert.equal(page('.actions a.action').length, 4, url);
-    assert.equal(page('.action-line').length, 0, url);
-    assert.deepEqual(page('.actions a.action').map((i, a) => page(a).attr('href')).get(), HREFS, url);
-  }
+test('Partners closes on its own ask, not the four contact actions (one page since 25 October 2026)', () => {
+  const page = load('/partners/');
+  assert.equal(page('.closing .actions a.action').length, 0);
+  assert.deepEqual(page('.closing .btn').map((i, a) => page(a).attr('href')).get(), ['/contact/', '/technology/']);
 });
 
 test('Review Focus 5: without JavaScript every action is already an email with its subject filled in', () => {
@@ -150,7 +147,7 @@ test('an unknown condition, none, or anything that is not a slug leaves the emai
 test('withCondition replaces a body already there rather than adding a second, and leaves other links alone', () => {
   const once = withCondition(HREFS[0], '?condition=sickle-cell-anaemia');
   assert.equal(withCondition(once, '?condition=spinal-muscular-atrophy'), `${HREFS[0]}&body=${encodeURIComponent('Condition: Spinal muscular atrophy')}`);
-  assert.equal(withCondition('/partnerships/', '?condition=sickle-cell-anaemia'), '/partnerships/');
+  assert.equal(withCondition('/partners/', '?condition=sickle-cell-anaemia'), '/partners/');
   assert.equal(withCondition('https://example.org/?a=1', '?condition=sickle-cell-anaemia'), 'https://example.org/?a=1');
 });
 

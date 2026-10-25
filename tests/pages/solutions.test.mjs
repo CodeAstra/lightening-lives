@@ -17,7 +17,7 @@ const ASK = '/solutions/develop-a-test/#musculopathies';
 test('title, description, label, h1 and lead (5.3, 4.6)', () => {
   assert.equal($('title').text(), 'Diagnostic solutions | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'Molecular tests for sickle cell anaemia, thalassaemia, HbD and HbE, spinal muscular atrophy, Duchenne and limb-girdle muscular dystrophy, from a dried blood spot, for hospitals, laboratories and health programmes.');
-  assert.equal(text('.page-open .label'), 'Solutions');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'Diagnostic solutions for inherited conditions');
   assert.equal(text('.page-open .lead'), 'We develop tests for inherited blood and muscle conditions, and make each one something an institution can run: assay, card, method, training and counselling.');
@@ -161,7 +161,7 @@ test('no bracket renders; the notice is present; the closing band is 4.5\'s', ()
   assert.match(text('.notice'), /^For individuals Looking for a test for yourself or your family\? We work with institutions and don't test individuals\./);
   assert.equal(text('.closing h2'), 'Tell us what your programme needs');
   assert.equal(text('.closing .lead'), 'Tell us the condition you need to test for and where the testing will happen. We will take it from there.');
-  assert.deepEqual(links('.closing .btn-solid'), [['Partner with us', '/partnerships/']]);
+  assert.deepEqual(links('.closing .btn-solid'), [['Partner with us', '/partners/']]);
   assert.deepEqual(links('.closing .btn-line'), [['Contact us', '/contact/']]);
 });
 

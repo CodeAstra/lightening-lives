@@ -24,7 +24,7 @@ test('the route is built', () => {
 test('title, description, label, h1, lead and chips (5.5, 4.3, 4.6)', () => {
   assert.equal($('title').text(), 'Thalassaemia, HbD and HbE testing | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'Molecular tests for beta and alpha thalassaemia, sickle-beta thalassaemia, HbD and HbE from a dried blood spot: LitLife™-BThal, LitLife™-AlphaThal and LitLife™-SiBThal217.');
-  assert.equal(text('.page-open .label'), 'Haemoglobinopathy');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'Thalassaemia and other haemoglobinopathies');
   assert.equal(text('.page-open .lead'), 'Tests for the haemoglobin disorders a programme meets alongside sickle cell anaemia: beta and alpha thalassaemia, sickle-beta thalassaemia, HbD and HbE. All from a spot of blood on a card.');
@@ -100,6 +100,6 @@ test('the closing band: its ask, the email naming the condition, Partner with us
   assert.equal(text(band.find('.lead')), 'Tell us who you plan to screen and where the samples will be tested.');
   assert.deepEqual([text(band.find('.btn-solid')), band.find('.btn-solid').attr('href')],
     ['Ask about thalassaemia testing', 'mailto:admin@lighteninglives.in?subject=Request%20tests&body=Condition%3A%20Thalassaemia%2C%20HbD%20or%20HbE']);
-  assert.deepEqual([text(band.find('.btn-line')), band.find('.btn-line').attr('href')], ['Partner with us', '/partnerships/']);
+  assert.deepEqual([text(band.find('.btn-line')), band.find('.btn-line').attr('href')], ['Partner with us', '/partners/']);
   assert.equal($('.notice').length, 1);
 });

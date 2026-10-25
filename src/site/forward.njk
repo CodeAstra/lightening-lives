@@ -1,0 +1,29 @@
+---
+pagination:
+  data: forwards
+  size: 1
+  alias: forward
+permalink: "{{ forward.from | forwardPath }}"
+layout: false
+eleventyExcludeFromCollections: true
+---
+<!doctype html>
+{#- A forwarding page for an old address (content file 3.3; src/site/_data/forwards.json). GitHub Pages
+    cannot send a 301, so the page sends the visitor on at once, keeping any #part of the old address
+    (a person's slug), names the new page as canonical, keeps itself out of search, and shows a link
+    for anyone without script. An old .php address is a folder of that name: GitHub Pages answers
+    /x.php by sending the visitor to /x.php/, where this page waits. -#}
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<title>This page has moved | {{ site.name }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="{{ site.domain }}{{ forward.to }}">
+<meta http-equiv="refresh" content="0; url={{ forward.to }}">
+<script>(function () { var to = {{ forward.to | dump | safe }}; var base = to.split('#')[0]; location.replace(location.hash ? base + location.hash : to); })();</script>
+</head>
+<body>
+<p>This page has moved: <a href="{{ forward.to }}">{{ forward.name }}</a>.</p>
+</body>
+</html>

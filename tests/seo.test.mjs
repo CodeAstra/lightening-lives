@@ -21,8 +21,8 @@ const NAMES = {
   '/solutions/sickle-cell-anaemia/': 'Sickle cell anaemia',
   '/solutions/thalassaemia/': 'Thalassaemia and other haemoglobinopathies',
   '/solutions/spinal-muscular-atrophy/': 'Spinal muscular atrophy',
-  '/solutions/develop-a-test/': 'Develop a test', '/programmes/': 'Programmes', '/our-work/': 'Our work',
-  '/about/': 'About', '/about/team/': 'Team', '/partnerships/': 'Partnerships', '/contact/': 'Contact',
+  '/solutions/develop-a-test/': 'Develop a test', '/our-work/': 'Our work',
+  '/about/': 'About', '/about/team/': 'Team', '/partners/': 'Partners', '/contact/': 'Contact',
   '/privacy/': 'Privacy', '/terms/': 'Terms',
 };
 

@@ -1,0 +1,5 @@
+[
+  { "id": "laboratories", "icon": "hospital", "who": "Hospitals and laboratories", "line": "Run LitLife™ tests in your own laboratory, with standard PCR equipment.", "text": "For laboratories", "href": "/partners/#laboratories" },
+  { "id": "programmes", "icon": "landmark", "who": "Public health programmes", "line": "Screen and confirm in one visit, at district or state scale.", "text": "For programmes", "href": "/partners/#programmes" },
+  { "id": "funders", "icon": "hand-heart", "who": "CSR and NGOs", "line": "Fund screening that ends in a diagnosis and a family in care.", "text": "For funders", "href": "/partners/#funders" }
+]

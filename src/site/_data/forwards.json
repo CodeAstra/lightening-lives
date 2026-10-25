@@ -1,0 +1,17 @@
+[
+  { "from": "/partnerships/", "to": "/partners/", "name": "Partners" },
+  { "from": "/programmes/", "to": "/partners/#programmes", "name": "For public health programmes, on our Partners page" },
+  { "from": "/index.php", "to": "/", "name": "Home" },
+  { "from": "/about-us.php", "to": "/about/", "name": "About" },
+  { "from": "/services.php", "to": "/solutions/", "name": "Solutions" },
+  { "from": "/impact-stories.php", "to": "/our-work/", "name": "Our work" },
+  { "from": "/our-team.php", "to": "/about/team/", "name": "Team" },
+  { "from": "/abhishek-chandak-details.php", "to": "/about/team/#abhishek-chandak", "name": "Mr. Abhishek Chandak, on our team page" },
+  { "from": "/manisha-arumalla-details.php", "to": "/about/team/#manisha-arumalla", "name": "Ms. Manisha Arumalla, on our team page" },
+  { "from": "/punyasri-pskdb-details.php", "to": "/about/team/#punyasri-pskdb", "name": "Ms. Punyasri PSKDB, on our team page" },
+  { "from": "/mehraj-begum-details.php", "to": "/about/team/#mehraj-begum", "name": "Ms. Mehraj Begum, on our team page" },
+  { "from": "/pruthvi-details.php", "to": "/about/team/#pruthvi-bellamkonda", "name": "Mr. Pruthvi Bellamkonda, on our team page" },
+  { "from": "/jyothi-details.php", "to": "/about/team/#jyothi-vislavath", "name": "Jyothi Vislavath, on our team page" },
+  { "from": "/partnerships.php", "to": "/partners/", "name": "Partners" },
+  { "from": "/contact-us.php", "to": "/contact/", "name": "Contact" }
+]

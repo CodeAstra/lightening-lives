@@ -93,7 +93,7 @@
 {% include "header.njk" %}
 <main id="main">
 {%- if not film %}
-{{ opening(label, h1, lead | unbracket, chips | bracketless("text"), leadLine | unbracket) }}
+{{ opening(label, h1, lead | unbracket, chips | bracketless("text"), leadLine | unbracket, proof, openingActions) }}
 {%- endif %}
 {{ content | safe }}
 {%- if not film %}

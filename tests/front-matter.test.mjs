@@ -35,7 +35,7 @@ closing:
   h2: Planning sickle cell screening?
   body: Tell us the district, the numbers and the laboratory you have in mind.
   solid: { text: Ask about LitLife™-SCA, href: "mailto:admin@lighteninglives.in?subject=LitLife%E2%84%A2-SCA" }
-  line: { text: Partner with us, href: /partnerships/ }
+  line: { text: Partner with us, href: /partners/ }
 ---
 `,
   'no-closing.njk': `---
@@ -84,7 +84,7 @@ test('an inner page opens with its label, h1, lead and chips in the seven-and-fi
   const $ = built['/inner/'];
   const head = $('main > section').first().find('.section-head');
   assert.equal(head.length, 1);
-  assert.equal(head.find('.label').text().trim(), 'Diagnose');
+  assert.equal(head.find('.label').length, 0, 'the label stays in the front matter, for the breadcrumbs; no line over the heading (25 October 2026)');
   assert.equal(head.find('h1').text().trim(), 'Diagnostic solutions for inherited conditions');
   assert.equal(head.find('.lead').text().trim(), 'We develop molecular tests for inherited blood and muscle conditions.');
   assert.ok(head.find('h1').parent().is('.lg\\:col-span-7'), 'the heading takes seven columns');
@@ -107,14 +107,14 @@ test('the closing band is the content file\'s 4.5 unless the page asks its own q
   assert.ok(plain.hasClass('closing'));
   assert.equal(plain.find('h2').text().trim(), 'Tell us what your programme needs');
   assert.equal(plain.find('p.lead').text().trim(), 'Tell us the condition you need to test for and where the testing will happen. We will take it from there.');
-  assert.deepEqual([plain.find('.btn-solid').text().trim(), plain.find('.btn-solid').attr('href')], ['Partner with us', '/partnerships/']);
+  assert.deepEqual([plain.find('.btn-solid').text().trim(), plain.find('.btn-solid').attr('href')], ['Partner with us', '/partners/']);
   assert.deepEqual([plain.find('.btn-line').text().trim(), plain.find('.btn-line').attr('href')], ['Contact us', '/contact/']);
 
   const own = band('/asks/');
   assert.equal(own.find('h2').text().trim(), 'Planning sickle cell screening?');
   assert.equal(own.find('p.lead').text().trim(), 'Tell us the district, the numbers and the laboratory you have in mind.');
   assert.deepEqual([own.find('.btn-solid').text().trim(), own.find('.btn-solid').attr('href')], ['Ask about LitLife™-SCA', 'mailto:admin@lighteninglives.in?subject=LitLife%E2%84%A2-SCA']);
-  assert.deepEqual([own.find('.btn-line').text().trim(), own.find('.btn-line').attr('href')], ['Partner with us', '/partnerships/']);
+  assert.deepEqual([own.find('.btn-line').text().trim(), own.find('.btn-line').attr('href')], ['Partner with us', '/partners/']);
 });
 
 test('the notice appears only on pages that ask for it, with or without a closing band', () => {

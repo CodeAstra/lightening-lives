@@ -1,25 +1,13 @@
-// The Not found page (content 5.18) and the current site's old addresses (3.4). Hosting is static, so
-// the server cannot redirect: GitHub Pages serves 404.html at whatever address was asked for, and this
-// script, finding an old .php address there, adds one line above the page's links naming the new page.
+// The Not found page (content 5.18) and the old site's addresses (3.3). Each old address has a
+// forwarding page; should a visitor still reach 404.html at one (a typo in its case, say), this script
+// adds one line above the page's links naming the new page.
 // Nothing else changes, and without script the page's six links are the whole behaviour.
 
-const TEAM = (slug, name) => ({ href: `/about/team/#${slug}`, name: `${name}, on our team page` });
+import FORWARDS from '../../site/_data/forwards.json' with { type: 'json' };
 
-export const OLD = new Map([
-  ['/index.php', { href: '/', name: 'Home' }],
-  ['/about-us.php', { href: '/about/', name: 'About' }],
-  ['/services.php', { href: '/solutions/', name: 'Solutions' }],
-  ['/impact-stories.php', { href: '/programmes/#from-the-field', name: 'From the field, on our Programmes page' }],
-  ['/our-team.php', { href: '/about/team/', name: 'Team' }],
-  ['/abhishek-chandak-details.php', TEAM('abhishek-chandak', 'Mr. Abhishek Chandak')],
-  ['/manisha-arumalla-details.php', TEAM('manisha-arumalla', 'Ms. Manisha Arumalla')],
-  ['/punyasri-pskdb-details.php', TEAM('punyasri-pskdb', 'Ms. Punyasri PSKDB')],
-  ['/mehraj-begum-details.php', TEAM('mehraj-begum', 'Ms. Mehraj Begum')],
-  ['/pruthvi-details.php', TEAM('pruthvi-bellamkonda', 'Mr. Pruthvi Bellamkonda')],
-  ['/jyothi-details.php', TEAM('jyothi-vislavath', 'Jyothi Vislavath')],
-  ['/partnerships.php', { href: '/partnerships/', name: 'Partnerships' }],
-  ['/contact-us.php', { href: '/contact/', name: 'Contact' }],
-]);
+// The old site's .php addresses and where each now lives: the same list the forwarding pages are made
+// from (src/site/_data/forwards.json), so the two cannot disagree.
+export const OLD = new Map(FORWARDS.filter((f) => f.from.endsWith('.php')).map((f) => [f.from, { href: f.to, name: f.name }]));
 
 // The new page for an old address, read without regard to case or a trailing slash; or null.
 export function suggest(pathname) {

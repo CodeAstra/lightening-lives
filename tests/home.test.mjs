@@ -45,7 +45,7 @@ test('the opening: heading, lead with the category, buttons, the proof with icon
   assert.equal(text('.hero-lead'), 'Genetic and molecular diagnostics from a dried blood spot: one test to screen and confirm, patient, carrier or unaffected, built to the REASSURED standard.');
   assert.ok(text('.hero-lead').split(' ').length <= 25, 'R1: the home lead is at most 25 words');
   assert.equal($('.hero-lead a.lead-link').attr('href'), '#reassured');
-  assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/partnerships/'], ['How the test works', '/technology/']]);
+  assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/partners/'], ['How the test works', '/technology/']]);
   assert.ok($('.hero-actions a').first().is('.btn-solid') && $('.hero-actions a').last().is('.btn-line'));
   assert.deepEqual(texts('.hero-proof li'), ['ICMR approved', 'Patents granted in India and Japan', '15 sites, 9 states and Delhi']);
   assert.equal($('.hero-proof li svg.icon').length, 3);

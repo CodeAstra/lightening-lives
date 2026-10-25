@@ -13,7 +13,7 @@
 <section class="section bg-paper closing" aria-labelledby="closing-h">
   <div class="wrap">
     <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
-      <h2 id="closing-h" class="h2 lg:col-span-6">{{ (ask.h2 or site.closing.h2) | unbracket }}</h2>
+      <h2 id="closing-h" class="h2 lg:col-span-6">{{ (ask.h2 or site.closing.h2) | unbracket | safe }}</h2>
       <div class="lg:col-span-6">
         <p class="lead">{{ (ask.body or site.closing.body) | unbracket }}</p>
         {%- if ask.actions %}

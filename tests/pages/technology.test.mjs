@@ -15,7 +15,7 @@ const links = (selector) => $(selector).map((i, a) => [[text(a), $(a).attr('href
 test('title, description, label, h1, lead and the three chips (4.3, 4.6)', () => {
   assert.equal($('title').text(), 'Technology | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'How Lightening Lives runs a genetic test from a dried blood spot: no DNA extraction, room temperature transport, screening and confirmation in one, on standard PCR equipment. Patented in India and Japan.');
-  assert.equal(text('.page-open .label'), 'Technology');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal(text('h1'), 'How a spot of blood on a card becomes a genetic diagnosis');
   assert.equal($('h1').length, 1);
   assert.equal(text('.page-open .lead'), 'Conventional genetic testing was designed for the laboratory. We designed ours for where testing has to happen: a primary health centre, or a maternity ward far from any genetics laboratory.');

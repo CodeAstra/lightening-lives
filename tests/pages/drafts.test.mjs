@@ -63,7 +63,7 @@ test('flipping draft to false in a temporary build renders each page', () => {
     assert.ok($, `${p.file} renders with draft: false`);
     assert.equal($('h1').length, 1);
     assert.equal(text($, 'h1'), p.h1);
-    assert.equal(text($, '.page-open .label'), 'Musculopathy');
+    assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
     assert.equal(text($, '#the-condition h2'), 'The condition');
     assert.equal($('#the-condition .story p:not(.source)').length, p.paragraphs);
     assert.equal(text($, '#why h2'), p.why);
@@ -93,7 +93,7 @@ test('the closing band: the condition\'s email, Partner with us, and the notice'
     assert.equal(text($, band.find('h2')), p.closingH2);
     assert.equal(text($, band.find('.btn-solid')), p.solid);
     assert.equal(band.find('.btn-solid').attr('href'), `mailto:admin@lighteninglives.in?subject=Request%20tests&body=${encodeURIComponent(`Condition: ${p.name}`)}`);
-    assert.deepEqual([text($, band.find('.btn-line')), band.find('.btn-line').attr('href')], ['Partner with us', '/partnerships/']);
+    assert.deepEqual([text($, band.find('.btn-line')), band.find('.btn-line').attr('href')], ['Partner with us', '/partners/']);
     assert.equal(band.find('.notice').length, 1);
   }
 });

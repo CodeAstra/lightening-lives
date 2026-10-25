@@ -12,6 +12,8 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
 {%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' -%}
 {%- from "picture.njk" import picture with context %}
 {%- from "map.njk" import mapSection with context %}
+{%- from "doors.njk" import doorList with context %}
+{%- from "model.njk" import testingModel %}
 
   <!-- The opening: an announcement when there is one, the heading, and the film beside it, which
        comes to rest on a map with every state we work in pinned; the partners slide along its foot -->
@@ -172,27 +174,7 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
         <h2 id="model-h" class="h2 lg:col-span-7"><span class="h-mark">Transform lives.</span> Six steps, from a finger prick to a family in care.</h2>
         <p class="lead lg:col-span-5">A test only matters if its result reaches care. Our testing model follows each sample all the way, with counselling and support for every family.</p>
       </div>
-      <div class="model mt-12">
-        <p class="model-phase model-phase-test">Testing</p>
-        <p class="model-phase model-phase-care">Care</p>
-        <ol class="model-steps">
-          {%- set steps = [
-            { icon: "droplet", title: "Collect", body: "A finger-prick sample on a card, in the community or at birth." },
-            { icon: "truck", title: "Transport", body: "To the nearest testing centre, at room temperature." },
-            { icon: "dna", title: "Test", body: "Extraction-free molecular testing with LitLife™." },
-            { icon: "file-check", title: "Report", body: "Results recorded against each sample in the app." },
-            { icon: "stethoscope", title: "Treat and counsel", body: "Treatment, with genetic and social counselling for patients and carriers." },
-            { icon: "heart-handshake", title: "Follow up", body: "Awareness programmes and patient support groups." }
-          ] %}
-          {%- for step in steps %}
-          <li class="model-step{% if loop.index > 4 %} is-care{% endif %}">
-            <span class="icon-tile">{% icon step.icon %}</span>
-            <h3><span class="model-n">{{ loop.index }}</span> {{ step.title }}</h3>
-            <p>{{ step.body }}</p>
-          </li>
-          {%- endfor %}
-        </ol>
-      </div>
+      {{ testingModel("mt-12") }}
     </div>
   </section>
 
@@ -280,21 +262,7 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
         <h2 id="contact-h" class="h2 lg:col-span-7">Partner with us. <span class="h-mark">Tell us what you need to test for.</span></h2>
         <p class="lead lg:col-span-5">Laboratories, health programmes and funders work with us to bring confirmed genetic diagnosis to the people who need it.</p>
       </div>
-      <ul class="doors mt-12">
-        {%- set doors = [
-          { icon: "hospital", who: "Hospitals and laboratories", line: "Run LitLife™ tests in your own laboratory, with standard PCR equipment.", text: "For laboratories", href: "/partnerships/" },
-          { icon: "landmark", who: "Public health programmes", line: "Screen and confirm in one visit, at district or state scale.", text: "For programmes", href: "/programmes/" },
-          { icon: "hand-heart", who: "CSR and NGOs", line: "Fund screening that ends in a diagnosis and a family in care.", text: "For funders", href: "/partnerships/" }
-        ] %}
-        {%- for door in doors %}
-        <li><a class="door" href="{{ door.href }}">
-          <span class="icon-tile">{% icon door.icon %}</span>
-          <span class="door-who">{{ door.who }}</span>
-          <span class="door-line">{{ door.line }}</span>
-          <span class="door-go">{{ door.text }} {% icon "arrow-right" %}</span>
-        </a></li>
-        {%- endfor %}
-      </ul>
+      {{ doorList(false, "mt-12") }}
       <div class="signed">
         {{ picture("person-founders", "Dr. Giriraj Ratan Chandak and Mrs. Nidhi Chandak", "5rem", { class: "signed-pic" }) }}
         <p><strong>Dr. Giriraj Ratan Chandak</strong>, MD, PhD, DNB. Founder and CEO; formerly Chief Scientist at CSIR-CCMB and Director of CDFD. <a class="link" href="/about/">About us {{ arrow | safe }}</a></p>

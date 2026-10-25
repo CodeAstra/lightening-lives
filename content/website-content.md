@@ -166,54 +166,43 @@ Confident and plain, the way a senior scientist speaks to a colleague.
 
 ### 3.1 Pages
 
-| Route | Page | Purpose | Main action |
-|---|---|---|---|
-| `/` | Home | Who we are, what we invented, why it matters, proof | Talk to our scientific team |
-| `/technology/` | Technology | How the test works, compared, REASSURED, patents, evidence | Request the technical dossier |
-| `/solutions/` | Solutions | The range: two families, in development, custom | Choose a condition |
-| `/solutions/sickle-cell-anaemia/` | Sickle cell anaemia | LitLife™-SCA and LitLife™-SiBThal217; HbD | Talk to our scientific team |
-| `/solutions/thalassaemia/` | Thalassaemia | LitLife™-BThal, LitLife™-AlphaThal; HbE | Talk to our scientific team |
-| `/solutions/spinal-muscular-atrophy/` | SMA | LitLife™-SMA | Talk to our scientific team |
-| `/solutions/duchenne-muscular-dystrophy/` | DMD | Molecular diagnosis and carrier testing | Talk to our scientific team |
-| `/solutions/limb-girdle-muscular-dystrophy/` | LGMD | Molecular confirmation | Talk to our scientific team |
-| `/solutions/develop-a-test/` | Develop a test with us | Any inherited condition, on request | Propose a condition |
-| `/partners/` | Partners | Who we work with, and the three ways to partner; where *Partner with us* leads | Choose how to partner |
-| `/partners/hospitals-and-laboratories/` | For hospitals and laboratories | Audience 1 | Evaluate in your lab |
-| `/partners/public-health-programmes/` | For public health programmes | Audience 2 | Plan a programme |
-| `/partners/csr-and-ngos/` | For CSR and NGOs | Audience 3 | Fund a programme |
-| `/our-work/` | Our work | Field programmes, publications, patents, media, gallery | See an entry; get in touch |
-| `/our-work/<slug>/` | Work entry | One programme, paper, talk or event | Related test; contact |
-| `/about/` | About | Story, mission, values, founder, team, advisers | Contact |
-| `/contact/` | Contact | Enquiry form by audience; address | Send enquiry |
-| `/privacy/` | Privacy policy | Includes the analytics disclosure (no cookie banner) | — |
-| `/terms/` | Terms of use | — | — |
-| `/404.html` | Not found | — | Home, Solutions, Contact |
-| `/sitemap.xml`, `/robots.txt`, `/llms.txt` | Machine files | Search and AI visibility (Part 6) | — |
+**Since 25 October 2026: ten pages at launch.** An expert marketing reviewer tested every route for a distinct reader or search intent *and* enough confirmed content not to read thin ("a thin page is worse than no page"), and the user chose the result on 25 October 2026. The rule throughout: **hide the explanation, never the proof** (bios, answers, method detail, kit contents and a programme's account sit behind a click; the claim, the proof, approvals, equipment, coverage and the action stay visible).
 
-Twenty pages of content, plus machine files. The work entries grow over time.
+| Route | Holds | Main action |
+|---|---|---|
+| `/` | Home, eight sections (the partners slide along the opening's foot) | Partner with us |
+| `/technology/` | Method, compared, your lab, approvals and documents | Request the technical dossier |
+| `/solutions/` | The range, in development, DMD and LGMD as rows (`#dmd`, `#lgmd`), Develop a test (`#develop`) | Choose a condition |
+| `/solutions/sickle-cell-anaemia/` | SCA, sickle-beta, HbD | Talk to our scientific team |
+| `/solutions/thalassaemia/` | Beta, alpha, HbE | Talk to our scientific team |
+| `/solutions/spinal-muscular-atrophy/` | LitLife™-SMA (the reviewer: only if the SMA facts, item 5, are confirmed; kept at the user's choice of ten pages) | Talk to our scientific team |
+| `/partners/` | Three doors as anchors (`#laboratories`, `#programmes`, `#funders`), the partners' logos, how a partnership starts | Choose how to partner |
+| `/our-work/` | Field table, papers and patents, media, photos (with consent) | Get in touch |
+| `/about/` | The founder, the team (`#team`), the fact block | Contact |
+| `/contact/` | Form by audience, direct contact | Send enquiry |
+| `/privacy/`, `/terms/`, `/404.html` | Utility | — |
+| `sitemap.xml`, `robots.txt`, `llms.txt` | Machine files (Part 6) | — |
 
-**Why these routes:**
+**Added later, in this order, each when its content exists:** `/partners/public-health-programmes/` (a one-page brief and rollout figures) · a DMD page (method, product) · `/our-work/<slug>/` entries (six programmes with photos and consent) · `/partners/hospitals-and-laboratories/` and `/partners/csr-and-ngos/` (a case study each) · an LGMD page · `/solutions/develop-a-test/` (a test built on request, documented).
 
-- **Condition pages under `/solutions/`** match how clinicians and programme officers search ("sickle cell anaemia genetic test", "SMA carrier testing India"). One page per condition, with the products on it, rather than one page per product code.
-- **One `/partners/` section, because the site's main action is *Partner with us*.** The button, the nav item and the URL say the same word, so the visitor lands where the button promised. The hub shows the organisations we already work with and the three ways to partner; each audience then has its own page beneath it, written only for them (`/partners/hospitals-and-laboratories/` and the other two). A page called `/csr-and-ngos/` would have spoken to one audience only and hidden the partners from everyone else. It replaces the old site's Partnerships page, which showed logos without names.
-- **HbD and HbE** sit on the pages where clinicians meet them: HbD on sickle cell (it looks like HbS on some methods), HbE on thalassaemia (HbE/β-thalassaemia).
-- **Our work** is the single home of photos, papers, patents, talks and press. Each entry has its own URL, so the section builds search value as it grows.
+**Why fewer pages raises enquiries:** every page is at least 80% confirmed content, so no buyer lands on a page of promises; each audience reaches its proof and its action in one click from any page; and the facts that block launch drop to the dozen that matter (ICMR reference, CDSCO status, mutation coverage, validation n, equipment, kit contents, patent numbers, people screened, logo permissions, the founder's words, the form backend, reply time).
+
+**Condition pages under `/solutions/`** still match how clinicians and programme officers search, one page per condition with its products on it. **HbD** sits on sickle cell, **HbE** on thalassaemia.
 
 ### 3.2 Navigation
 
-**Header (desktop):** Technology · Solutions ▾ · Partners ▾ · Our work · About · **[Partner with us]**
+**Header (desktop):** Technology · Solutions ▾ · Partners · Our work · About · **[Partner with us]**
 
-- *Solutions ▾* opens a panel in two columns, *Blood disorders* (Sickle cell anaemia, Thalassaemia) and *Muscle disorders* (SMA, DMD, LGMD), plus a footer row: *In development: coagulation panel, pharmacogenomics* · *Develop a test with us →*.
-- *Partners ▾*: Our partners · Hospitals and laboratories · Public health programmes · CSR and NGOs.
-- *[Partner with us]* is the one solid button, the site's main action (the user's choice, 24 October 2026). It goes to `/partners/#start`.
+- *Solutions ▾* opens a panel: *Blood disorders* (Sickle cell anaemia, Thalassaemia) and *Muscle disorders* (Spinal muscular atrophy), and a row: *In development: coagulation panel, pharmacogenomics* · *Develop a test with us →* (`/solutions/#develop`). DMD and LGMD are rows on Solutions, not in the menu.
+- *Partners* is a plain link to `/partners/`, and *[Partner with us]*, the one solid button (24 October 2026), goes there too.
 
-**Header (phone and tablet):** logo, *Partner with us*, menu. The menu is a full-screen sheet listing the same items, with Solutions and Partners opening in place.
+**Header (phone and tablet):** logo and the menu, a panel listing the same items.
 
 **Footer:** see 4.2.
 
 ### 3.3 Old addresses
 
-The old site's URLs have been indexed for years. Each needs to forward to its new page:
+Hosting stays on GitHub Pages (the user's choice, 25 October 2026), which cannot send real 301 redirects. Each old address gets a forwarding page: it moves the visitor on at once (keeping any `#` part), names the new page as canonical, asks search engines not to index it, and shows a link for anyone without script. An old `.php` address is a folder of that name holding the forwarding page (GitHub Pages answers `/x.php` by sending the visitor to `/x.php/`), and the 404 page names the new page for any old address it is shown at. A move to Cloudflare Pages would give real redirects later.
 
 | Old | New |
 |---|---|
@@ -221,11 +210,13 @@ The old site's URLs have been indexed for years. Each needs to forward to its ne
 | `/about-us.php` | `/about/` |
 | `/services.php` | `/solutions/` |
 | `/impact-stories.php` | `/our-work/` |
-| `/our-team.php` | `/about/#team` |
-| `/partnerships.php` | `/partners/` |
+| `/our-team.php`, the six `/<name>-details.php` | `/about/#team`, `/about/#<slug>` |
+| `/partnerships.php`, `/partnerships/` | `/partners/` |
+| `/programmes/` | `/partners/#programmes` |
+| `/about/team/` | `/about/#team` |
+| `/solutions/develop-a-test/` | `/solutions/#develop` |
+| `/solutions/duchenne-muscular-dystrophy/`, `/solutions/limb-girdle-muscular-dystrophy/` | `/solutions/#dmd`, `/solutions/#lgmd` |
 | `/contact-us.php` | `/contact/` |
-
-GitHub Pages cannot send real 301 redirects, and it may serve a `.php` file as a download. `[CONFIRM: hosting. Either move to a host that supports redirects (Cloudflare Pages, Netlify) or accept HTML refresh pages, which pass less search value.]`
 
 ---
 
@@ -578,6 +569,8 @@ A compact comparison, three columns: *Today's screening* · *Today's confirmatio
 
 ### 5.2 Technology `/technology/`
 
+**Since 25 October 2026 (3.1): seven sections.** 1 Opening and proof · 2 Method (`#method`, six steps, the gel large; controls and reagents in a disclosure) · 3 Compared (`#compared`) · 4 What your laboratory needs (`#laboratory`; an unknown row reads "in the technical dossier") · 5 Approved, patented, published (`#approvals`: ICMR approved, both patents, papers as one list) · 6 Documents (`#documents`, on request until files exist) · 7 Closing: request the dossier. Cut: "Where today's testing stops" (the table's first two columns say it), REASSURED (one copy, on home) and the 3D kit (it belongs on test pages).
+
 **Title:** How LitLife™ works: extraction-free DBS PCR | Lightening Lives
 **Meta:** A patented genetic test that screens and confirms from a dried blood spot, with no DNA extraction. Method, comparison, evidence and REASSURED criteria.
 
@@ -693,6 +686,8 @@ The one place on this page a box appears: a 3D view of a LitLife™ kit that the
 
 ### 5.3 Solutions `/solutions/`
 
+**Since 25 October 2026 (3.1): six sections.** 1 Opening ("One platform. A test for each inherited condition a programme needs.") · 2 Blood disorders · 3 Muscle disorders (SMA links; DMD and LGMD as rows, `#dmd`, `#lgmd`: "Molecular diagnosis available. Talk to us.") · 4 In development · 5 Develop a test with us (`#develop`, 5.5's five steps as one row, one action) · 6 Closing. Cut: "Every stage of care" and the 3D shelf.
+
 **Title:** Solutions: REASSURED genetic tests for inherited disorders | Lightening Lives
 **Meta:** One platform for screening and confirmatory genetic tests: inherited blood and muscle disorders so far, coagulation and pharmacogenomics next, and new tests on request.
 
@@ -758,6 +753,8 @@ One shelf, the only place outside test pages where boxes appear: the five kits i
 ### 5.4 Test pages
 
 #### 5.4.0 The template
+
+**Since 25 October 2026 (3.1): seven sections.** 1 Opening (what the test does in one sentence; "About the condition" in a disclosure) · 2 What it detects (mutations and coverage, the result, who it is for; sub-conditions such as sickle-beta and HbD as subsections) · 3 Why a DNA test here (three lines) · 4 In the laboratory, with the kit (contents in a disclosure) · 5 Evidence and where it is used · 6 Questions · 7 Family notice and closing. DMD and LGMD (5.4.4, 5.4.5) are rows on Solutions until their facts arrive.
 
 Every test page has these sections, in this order. A section is left out when its facts are missing, never filled with guesses.
 
@@ -895,6 +892,8 @@ Each page carries MedicalWebPage + MedicalCondition + Product schema (Part 6).
 
 ### 5.5 Develop a test with us `/solutions/develop-a-test/`
 
+**Since 25 October 2026 (3.1): not a page.** Its five steps and one action are Solutions' `#develop`; the route forwards there until a test built on request is documented.
+
 **Title:** Custom genetic test development for programmes | Lightening Lives
 **Meta:** Lightening Lives develops and validates new genetic tests for inherited conditions on request, for a community, a disorder or a screening programme.
 
@@ -917,6 +916,8 @@ Each page carries MedicalWebPage + MedicalCondition + Product schema (Part 6).
 ### 5.6 Partners
 
 #### 5.6.0 The hub `/partners/`
+
+**Since 25 October 2026: one page, not four (3.1).** The reviewer found the three audience pages about 70% repetition of Technology and home, with one distinct section each. `/partners/` holds them as sections: 1 Opening, the three doors above the fold (`#start`; the button lands here) · 2 For hospitals and laboratories (`#laboratories`: evaluate on your samples, procurement, when to order; "Talk to our scientific team") · 3 For public health programmes (`#programmes`: screen and confirm in one visit, how a rollout runs, procurement route; "Plan a programme") · 4 For CSR and NGOs (`#funders`: what a funded programme delivers and what you receive; "Fund a programme") · 5 We work with (logos grouped) and how a partnership starts (four steps) · closing. Cut: "What partners say" (none on file). 5.6.1 to 5.6.3 below are the source for sections 2 to 4.
 
 **Title:** Partner with Lightening Lives: hospitals, programmes, CSR and NGOs
 **Meta:** Partner with Lightening Lives to bring confirmed genetic testing to your laboratory, screening programme or community. Our partners include CSIR-CCMB and Tata Trusts.
@@ -998,6 +999,8 @@ Three pages follow, each written for one reader. Each opens with that reader's p
 
 ### 5.7 Our work `/our-work/`
 
+**Since 25 October 2026 (3.1): five sections, no filter, no entry pages yet.** 1 Opening (no numbers strip until people screened is confirmed) · 2 Field programmes (`#field`: the state × condition table; each programme a card whose account expands in place; the map stays on home) · 3 Publications and patents (`#publications`, patents first) · 4 Conferences, media and video (`#media`, the poster first; videos load on a click) · 5 Photos, only with consent on record.
+
 *This is the section the brief asks for: photos, publications and media showing the company's achievements and current projects. It gets a header link, a home section (5.1 §11) and links from every test and audience page, so it is seen from everywhere.*
 
 **Title:** Our work: field programmes, publications and media | Lightening Lives
@@ -1073,6 +1076,8 @@ One template for all kinds: heading, kind, date, state (never the town) or journ
 ---
 
 ### 5.8 About `/about/`
+
+**Since 25 October 2026 (3.1): one page, the founder in full, the team by click.** 1 Opening: the one sentence with the fact block beside it · 2 Founder (`#founder`: portrait, a 60-word bio, his story in his own words when he writes it, Scholar and ORCID links) · 3 People (`#team`: co-founder, patron, advisers and team in one grid of portrait, name and role; a tap reveals a 40-word bio where one exists; nothing invented) · 4 Closing. Cut: Mission, Vision and Values as sections (the mission sentence stays in the opening) and "Our story" until the founder writes it. `/about/team/` forwards to `#team`.
 
 **Title:** About Lightening Lives: healthcare technology from Hyderabad
 **Meta:** (the one sentence, 1.1)

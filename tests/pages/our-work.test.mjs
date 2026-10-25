@@ -27,7 +27,7 @@ const TOWNS = /Udaipur|Bhopal|Jamshedpur|Bilaspur|Nandurbar|Nagpur|Dhule|Valsad|
 test('title, description, label, h1 and lead (5.11, 4.6)', () => {
   assert.equal($('title').text(), 'Our work: 15 sites across India | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'Where Lightening Lives has run population and newborn screening for sickle cell anaemia and thalassaemia: 15 sites in nine states and Delhi. Photographs from the field and the laboratory.');
-  assert.equal(text('.page-open .label'), 'Our work');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'Where we have worked');
   assert.equal(text('.page-open .lead'), 'Population and newborn screening at 15 sites in nine states and Delhi, with government programmes, hospitals and NGOs. We add to this page as the work goes on.');
@@ -119,6 +119,6 @@ test('no bracket renders; no notice; the closing band asks for a partnership', (
   assert.equal($('.notice').length, 0);
   assert.equal(text('.closing h2'), 'Planning work like this?');
   assert.equal(text('.closing .lead'), 'Tell us the community, the condition and who you are working with.');
-  assert.deepEqual(links('.closing .btn-solid'), [['Partner with us', '/partnerships/']]);
-  assert.deepEqual(links('.closing .btn-line'), [['See our programmes', '/programmes/']]);
+  assert.deepEqual(links('.closing .btn-solid'), [['Partner with us', '/partners/']]);
+  assert.deepEqual(links('.closing .btn-line'), [['For programmes', '/partners/#programmes']]);
 });

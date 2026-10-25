@@ -30,7 +30,7 @@ test('About: title, description, label, h1 and lead (5.12)', () => {
   const { $, text } = about;
   assert.equal($('title').text(), 'About Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'Lightening Lives LLP is a Hyderabad healthcare technology company founded by Dr. Giriraj Ratan Chandak, formerly of CSIR-CCMB, to make genetic diagnosis reach everyone. Patented in India and Japan; approved by ICMR.');
-  assert.equal(text('.page-open .label'), 'About');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'A genetic diagnosis should not depend on where you live');
   assert.equal(text('.page-open .lead'), 'Lightening Lives is an innovation-driven healthcare technology company in Hyderabad. We develop genetic tests that work outside specialised laboratories, so that diagnosis can reach everyone.');
@@ -118,14 +118,14 @@ test('About: the company in brief is a table of eight rows, without the registra
 test('About: the evidence, from its one include, then the two links', () => {
   const { $, links } = about;
   assert.equal($('#proof .proof > li').length, 4);
-  assert.deepEqual(links('#proof a.link'), [['Meet the team', '/about/team/'], ['Who we work with', '/partnerships/']]);
+  assert.deepEqual(links('#proof a.link'), [['Meet the team', '/about/team/'], ['Who we work with', '/partners/#partners']]);
 });
 
 test('About: the closing band is 4.5\'s; no notice; no bracket; the portrait is not credited', () => {
   const { $, text, links } = about;
   assert.equal(text('.closing h2'), 'Tell us what your programme needs');
   assert.equal(text('.closing .lead'), 'Tell us the condition you need to test for and where the testing will happen. We will take it from there.');
-  assert.deepEqual(links('.closing .btn'), [['Partner with us', '/partnerships/'], ['Contact us', '/contact/']]);
+  assert.deepEqual(links('.closing .btn'), [['Partner with us', '/partners/'], ['Contact us', '/contact/']]);
   assert.equal($('.notice').length, 0);
   assert.doesNotMatch($('main').clone().find('script').remove().end().text(), /\[|\]|TBC|PLACEHOLDER/);
   assert.equal($('footer .credits').length, 0);
@@ -138,7 +138,7 @@ test('Team: title, description, label, h1 and lead (5.13)', () => {
   const { $, text } = team;
   assert.equal($('title').text(), 'Our team | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'The scientists, laboratory specialists and operations staff of Lightening Lives, with its patron and advisory board.');
-  assert.equal(text('.page-open .label'), 'Team');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'The people behind the tests');
   assert.equal(text('.page-open .lead'), 'A small team of scientists, laboratory specialists and operations staff, led by the company\'s founders and guided by a patron and an advisory board.');
@@ -207,7 +207,7 @@ test('Team: the closing band is 5.13\'s; no bracket; no credits', () => {
   const { $, text, links } = team;
   assert.equal(text('.closing h2'), 'Work with us');
   assert.equal(text('.closing .lead'), 'Most of our work begins as a collaboration with an institution.');
-  assert.deepEqual(links('.closing .btn'), [['Partner with us', '/partnerships/'], ['Contact us', '/contact/']]);
+  assert.deepEqual(links('.closing .btn'), [['Partner with us', '/partners/'], ['Contact us', '/contact/']]);
   assert.doesNotMatch($('main').clone().find('script').remove().end().text(), /\[|\]|TBC|PLACEHOLDER/);
   assert.equal($('footer .credits').length, 0);
 });

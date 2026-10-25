@@ -1,0 +1,179 @@
+---
+name: "Partners"
+title: "Partners: labs, programmes and CSR | Lightening Lives"
+description: "Partner with Lightening Lives to bring confirmed genetic testing to your laboratory, screening programme or community. Our partners include CSIR-CCMB and Tata Trusts."
+label: Partners
+h1: 'Partner with us. <span class="h-mark">Choose how we work together.</span>'
+lead: "Laboratories, health programmes and foundations work with us to bring confirmed genetic diagnosis to the people who need it."
+proof:
+  - { icon: "badge-check", text: "ICMR approved" }
+  - { icon: "award", text: "Patents granted in India and Japan" }
+  - { icon: "map-pin", text: "15 sites, 9 states and Delhi" }
+notice: true
+closing:
+  h2: 'Tell us about your laboratory, <span class="h-mark">programme or community.</span>'
+  body: "Tell us the condition you need to test for and where the testing will happen. We will take it from there."
+  solid: { text: "Start a conversation", href: "/contact/" }
+  line: { text: "How the test works", href: "/technology/" }
+---
+{#- Partners (content file 5.6; one page since 25 October 2026, the reviewer's site map, 3.1). Where
+    every "Partner with us" button leads. The three doors stand above the fold and lead to the three
+    sections written for each reader (5.6.1 to 5.6.3, confirmed lines only: a [CONFIRM] there is left
+    out, never shown); then who we already work with, and how a partnership starts. It replaces
+    /partnerships/ and /programmes/, which forward here (src/site/_data/forwards.json). The bands run
+    mist (the opening and its doors), then paper and stone in turn, to the sprout close. -#}
+{%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' %}
+{%- from "doors.njk" import doorList with context %}
+{%- from "model.njk" import testingModel %}
+{%- from "faq.njk" import faq %}
+
+  <!-- 1. The three ways to partner, under the opening, on its ice white -->
+  <section id="start" class="section on-mist partner-start" aria-label="Three ways to partner">
+    <div class="wrap">
+      {{ doorList(true) }}
+      <p class="doors-else">{% icon "message-circle" %}<span>Something else? Research, a new test or the media: <a class="link" href="/contact/">talk to us {{ arrow | safe }}</a></span></p>
+    </div>
+  </section>
+
+  <!-- 2. For hospitals and laboratories -->
+  <section id="laboratories" class="section bg-paper" aria-labelledby="laboratories-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="laboratories-h" class="h2 lg:col-span-7">For hospitals and laboratories. <span class="h-mark">Confirmed diagnosis, in your own laboratory.</span></h2>
+        <p class="lead lg:col-span-5">Run screening and confirmation in one test, on a dried blood spot, with the PCR equipment you already have.</p>
+      </div>
+      <div class="audience mt-12">
+        <div>
+          <h3 class="audience-h">What changes for your laboratory</h3>
+          <ul class="ticks mt-5">
+            <li>{% icon "flask-conical" %}<p><strong>No DNA extraction.</strong> A punch from the card goes straight into the reaction.</p></li>
+            <li>{% icon "thermometer" %}<p><strong>Samples arrive at room temperature.</strong> Dried cards need no cold chain.</p></li>
+            <li>{% icon "circle-check-big" %}<p><strong>One test instead of two.</strong> Screening and confirmation in a single run.</p></li>
+            <li>{% icon "layers" %}<p><strong>High throughput.</strong> Many cards in one run.</p></li>
+            <li>{% icon "stethoscope" %}<p><strong>Results your clinicians can act on.</strong> Patient, carrier or unaffected.</p></li>
+          </ul>
+        </div>
+        <aside class="audience-card" aria-labelledby="lab-needs-h">
+          <span class="icon-tile">{% icon "microscope" %}</span>
+          <h3 id="lab-needs-h" class="audience-h">What your laboratory needs</h3>
+          <p>A thermal cycler, a gel tank and a punch, and staff who have run PCR or have been trained. We help set the method up.</p>
+          <a class="link" href="/technology/#laboratory">The full list {{ arrow | safe }}</a>
+        </aside>
+      </div>
+      <h3 class="audience-h mt-12">How we work with you</h3>
+      <ol class="flow mt-5">
+        <li><span class="flow-n">1</span><p><strong>A conversation</strong> with our scientific team about the conditions you test for.</p></li>
+        <li><span class="flow-n">2</span><p><strong>Training for your staff,</strong> and help setting the method up.</p></li>
+        <li><span class="flow-n">3</span><p><strong>Supply and ongoing support</strong> as your laboratory runs the tests.</p></li>
+      </ol>
+      <div class="audience-act">
+        <a class="btn btn-line" href="/contact/">Talk to our scientific team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. For public health programmes -->
+  <section id="programmes" class="section" aria-labelledby="programmes-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="programmes-h" class="h2 lg:col-span-7">For public health programmes. <span class="h-mark">Screen and confirm in one visit.</span></h2>
+        <p class="lead lg:col-span-5">For district, state and national programmes: one finger-prick sample, room-temperature transport, a confirmed result, and newborns tested at birth.</p>
+      </div>
+      <ul class="answers mt-12">
+        <li>
+          <span class="icon-tile">{% icon "user-x" %}</span>
+          <p><strong>People lost between screening and confirmation.</strong> One test screens and confirms, so no one waits for a second visit.</p>
+        </li>
+        <li>
+          <span class="icon-tile">{% icon "snowflake" %}</span>
+          <p><strong>A cold chain from village to laboratory.</strong> Dried cards travel at room temperature, by ordinary courier or post.</p>
+        </li>
+        <li>
+          <span class="icon-tile">{% icon "baby" %}</span>
+          <p><strong>Newborns who leave before testing.</strong> A newborn can be tested at birth.</p>
+        </li>
+      </ul>
+      <h3 class="audience-h mt-12">How a programme runs</h3>
+      {{ testingModel("mt-5") }}
+      <div class="audience-foot mt-12">
+        {%- set names = [] %}{% for st in work.states %}{% set names = (names.push(st.name), names) %}{% endfor %}
+        <p class="audience-where">{% icon "map-pin" %}<span>Population and newborn screening at 15 sites in nine states and Delhi: {{ names.slice(0, -1).join(", ") }} and {{ names | last }}.</span></p>
+        <div class="audience-act">
+          <a class="btn btn-line" href="/contact/">Plan a programme</a>
+          <a class="link" href="/our-work/">Our work {{ arrow | safe }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. For CSR and NGOs -->
+  <section id="funders" class="section bg-paper" aria-labelledby="funders-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="funders-h" class="h2 lg:col-span-7">For CSR and NGOs. <span class="h-mark">Fund screening that ends in a diagnosis, not a referral.</span></h2>
+        <p class="lead lg:col-span-5">Your support reaches a confirmed result, counselling and follow-up for every family.</p>
+      </div>
+      <div class="audience mt-12">
+        <div>
+          <h3 class="audience-h">Why it matters</h3>
+          <ul class="ticks mt-5">
+            <li>{% icon "circle-check-big" %}<p><strong>Each rupee reaches an answer.</strong> Screening that stops at a possible case helps no one; one test that confirms does.</p></li>
+            <li>{% icon "megaphone" %}<p><strong>A camp both explains and tests.</strong> Community screening and awareness camps are run together.</p></li>
+            <li>{% icon "heart-handshake" %}<p><strong>Families are not left alone with a result.</strong> Every family a programme finds is counselled and supported.</p></li>
+          </ul>
+        </div>
+        <div class="audience-faq">
+          <h3 class="audience-h">Questions funders ask</h3>
+          {{ faq([
+            { q: "We are an NGO with no laboratory. Can we still run screening?", a: "Yes. Cards travel at room temperature to a nearby testing centre, so the laboratory need not be yours. Tell us where you plan to screen and we will say how the samples would be tested." },
+            { q: "Do you work with CSR funders?", a: "Yes. Most population-level screening is funded that way or by government. Tell us the community and the condition, and we will propose a programme." },
+            { q: "What happens to the families a programme identifies?", a: "Counselling for patients and carriers, a path to treatment where it exists, and support groups. That is part of the programme, not an extra." }
+          ]) }}
+        </div>
+      </div>
+      <div class="audience-act">
+        <a class="btn btn-line" href="/contact/">Fund a programme</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Who we already work with: the logos, in their groups -->
+  <section id="partners" class="section" aria-labelledby="partners-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="partners-h" class="h2 lg:col-span-7">We work with <span class="h-mark">institutions, foundations and patient groups.</span></h2>
+        <p class="lead lg:col-span-5">Thirteen organisations so far, in three groups.</p>
+      </div>
+      <div class="logo-groups is-stacked mt-12">
+        {%- for key, label in partners.groups %}
+        {%- set group = partners.logos | where("group", key) | where("published", true) %}
+        {%- if group.length %}
+        <div class="logo-group" style="--n: {{ group.length }}">
+          <h3 class="logo-group-h">{{ label }}</h3>
+          <ul class="logo-row">
+            {%- for p in group %}
+            <li><img src="/assets/logo/partners/{{ p.file }}" width="{{ p.width }}" height="{{ p.height }}" alt="{{ p.name }}" style="--ratio: {{ (p.width / p.height) | round(3) }}" loading="lazy" decoding="async"></li>
+            {%- endfor %}
+          </ul>
+        </div>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. How a partnership starts: four steps -->
+  <section id="how-it-starts" class="section bg-paper" aria-labelledby="how-it-starts-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="how-it-starts-h" class="h2 lg:col-span-7">How a partnership starts. <span class="h-mark">Four steps, from the first conversation.</span></h2>
+        <p class="lead lg:col-span-5">You bring the condition you need to screen for or diagnose. We bring the test, the method, the training and the counselling that follows a result.</p>
+      </div>
+      <ol class="start-steps mt-12">
+        <li><span class="icon-tile">{% icon "message-circle" %}</span><h3><span class="model-n">1</span> You tell us the need</h3><p>The condition and the setting: who will be tested, roughly how many, where samples will be collected and which laboratory will run them.</p></li>
+        <li><span class="icon-tile">{% icon "clipboard-list" %}</span><h3><span class="model-n">2</span> We agree the scope</h3><p>What the test must detect, how results will be reported, and what training and counselling the programme needs.</p></li>
+        <li><span class="icon-tile">{% icon "dna" %}</span><h3><span class="model-n">3</span> We develop or adapt the test</h3><p>A test we have, or a new one for the mutations your population carries.</p></li>
+        <li><span class="icon-tile">{% icon "graduation-cap" %}</span><h3><span class="model-n">4</span> We train and stay with you</h3><p>Through reporting, counselling and follow-up.</p></li>
+      </ol>
+    </div>
+  </section>

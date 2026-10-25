@@ -22,7 +22,7 @@ test('the route is built', () => {
 test('title, description, label, h1 and lead, the bracket stripped (5.9, 4.6)', () => {
   assert.equal($('title').text(), 'Develop a genetic test with us | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'Tell us the inherited condition your programme or laboratory needs to detect. Lightening Lives develops and validates the test. A coagulation panel and pharmacogenomics are in development now.');
-  assert.equal(text('.page-open .label'), 'Develop a test');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'Tell us the condition. We develop the test');
   assert.equal(text('.page-open .lead'), 'Every test we have developed so far began with an institution that needed it. Yours can be next: any inherited condition, to the same REASSURED standard.');

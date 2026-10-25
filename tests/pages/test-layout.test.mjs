@@ -248,7 +248,7 @@ test('every optional section is left out when its front matter is absent', () =>
 test('the opening: label, h1, lead, the line under the lead, and chips without a bracket-only chip', () => {
   const $ = page('/full/');
   const head = $('.page-open .section-head');
-  assert.equal(text($, head.find('.label')), 'Haemoglobinopathy');
+  assert.equal(head.find('.label').length, 0); // no label over the heading (25 October 2026)
   assert.equal(text($, head.find('h1')), 'Sickle cell anaemia');
   assert.equal(text($, head.find('.lead-line')), 'Early detection. Timely care. Better outcomes.');
   assert.ok(head.find('.lead').next().is('.lead-line'), 'the line sits under the lead');
@@ -379,7 +379,7 @@ test('the closing band carries the notice; its solid button is the email, its li
     assert.equal(text($, band.find('h2')), h2);
     assert.deepEqual([text($, band.find('.btn-solid')), band.find('.btn-solid').attr('href')],
       [solid, `mailto:admin@lighteninglives.in?subject=Request%20tests&body=${encodeURIComponent(`Condition: ${name}`)}`], url);
-    assert.deepEqual([text($, band.find('.btn-line')), band.find('.btn-line').attr('href')], ['Partner with us', '/partnerships/'], url);
+    assert.deepEqual([text($, band.find('.btn-line')), band.find('.btn-line').attr('href')], ['Partner with us', '/partners/'], url);
     assert.equal($('.notice').length, 1, url);
     assert.equal(band.find('.notice').length, 1, `${url}: the notice is in the closing band`);
   }
@@ -391,7 +391,7 @@ test('front matter printed by the layout is unbracketed: title, description, lab
   assert.doesNotMatch($('main').clone().find('script').remove().end().text(), /\[|\]/);
   assert.equal($('title').text(), 'Thalassaemia, HbD and HbE testing | Lightening Lives');
   assert.equal(text($, 'h1'), 'Thalassaemia and other haemoglobinopathies');
-  assert.equal(text($, '.page-open .label'), 'Haemoglobinopathy');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal(text($, '#the-condition h2'), 'The conditions');
   assert.equal(text($, '#the-condition .rows h3:first'), 'Beta thalassaemia');
   assert.equal(text($, '#closing-h'), 'Planning thalassaemia screening?');

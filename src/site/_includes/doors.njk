@@ -1,0 +1,14 @@
+{#- The three ways to partner (src/site/_data/doors.json): the home page's close and the Partners page's
+    opening. On the Partners page each door is an anchor on the page itself. Import with context. -#}
+{%- macro doorList(here = false, cls = "") -%}
+<ul class="doors{{ ' ' + cls if cls }}">
+  {%- for door in doors %}
+  <li><a class="door" href="{{ ('#' + door.id) if here else door.href }}">
+    <span class="icon-tile">{% icon door.icon %}</span>
+    <span class="door-who">{{ door.who }}</span>
+    <span class="door-line">{{ door.line }}</span>
+    <span class="door-go">{{ door.text }} {% icon "arrow-right" %}</span>
+  </a></li>
+  {%- endfor %}
+</ul>
+{%- endmacro %}

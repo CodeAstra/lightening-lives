@@ -24,7 +24,7 @@ test('the route is built', () => {
 test('title, description, label, h1, lead and chips (5.4, 4.3, 4.6)', () => {
   assert.equal($('title').text(), 'Sickle cell anaemia: LitLife™-SCA | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'LitLife™-SCA screens for and confirms sickle cell anaemia in one test from a dried blood spot. Approved by ICMR, patented in India and Japan, used at 15 sites across India.');
-  assert.equal(text('.page-open .label'), 'Haemoglobinopathy');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'Sickle cell anaemia');
   assert.equal(text('.page-open .lead'), 'LitLife™-SCA screens for and confirms sickle cell anaemia in one test, from a dried blood spot. Approved by ICMR, and used at 15 sites in nine states and Delhi.');
@@ -109,6 +109,6 @@ test('the closing band: its ask, the email naming the condition, Partner with us
   assert.equal(text(band.find('.lead')), 'Tell us the district, the numbers and the laboratory you have in mind.');
   assert.deepEqual([text(band.find('.btn-solid')), band.find('.btn-solid').attr('href')],
     ['Ask about LitLife™-SCA', 'mailto:admin@lighteninglives.in?subject=Request%20tests&body=Condition%3A%20Sickle%20cell%20anaemia']);
-  assert.deepEqual([text(band.find('.btn-line')), band.find('.btn-line').attr('href')], ['Partner with us', '/partnerships/']);
+  assert.deepEqual([text(band.find('.btn-line')), band.find('.btn-line').attr('href')], ['Partner with us', '/partners/']);
   assert.equal($('.notice').length, 1);
 });

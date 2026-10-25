@@ -1,16 +1,17 @@
-{#- How an inner page opens (content file 4.6, DESIGN.md "Other pages"): on mist, a label, the h1 and a
-    lead in the seven-and-five split of a section's opening, the lead aligned to the heading's last
-    line, with the page's tags under it. line, where a page has one, sits between the lead and the
-    tags (SMA, content 5.6). A page without a lead (Terms) has no lead paragraph. .section-head is the part that settles in on first view. -#}
-{%- macro opening(label, h1, lead, chips, line) %}
+{#- How an inner page opens (content file 4.6; DESIGN.md "Other pages"), in the home page's direction
+    since 25 October 2026: on mist, with no label line over the heading (the label stays in the front
+    matter, for the breadcrumbs); the h1, which may set its key phrase in DNA blue (one
+    <span class="h-mark">, so it is written in the page's own front matter and rendered as markup); the
+    lead in the seven-and-five split, the lead aligned to the heading's last line; then the page's
+    proof with its icons (proof: [{ icon, text }], the home opening's row), its tags (chips, the test
+    pages) and up to two buttons (openingActions: [{ text, href, solid }]). line, where a page has one, sits
+    between the lead and the tags (SMA, content 5.6). .section-head is the part that settles in. -#}
+{%- macro opening(label, h1, lead, chips, line, proof, actions) %}
 <section class="section page-open" aria-labelledby="page-h">
   <div class="wrap">
     <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
-      {%- if label %}
-      <p class="label lg:col-span-12 -mb-2">{{ label | unbracket }}</p>
-      {%- endif %}
       <div class="lg:col-span-7">
-        <h1 id="page-h" class="display">{{ h1 | unbracket }}</h1>
+        <h1 id="page-h" class="display">{{ h1 | unbracket | safe }}</h1>
       </div>
       <div class="lg:col-span-5">
         {%- if lead | unbracket %}
@@ -25,6 +26,20 @@
           <li class="tag{% if chip.proof %} tag-proof{% endif %}">{{ chip.text }}</li>
           {%- endfor %}
         </ul>
+        {%- endif %}
+        {%- if proof and proof.length %}
+        <ul class="hero-proof page-proof">
+          {%- for item in proof %}
+          <li>{% icon item.icon %}<span>{{ item.text }}</span></li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+        {%- if actions and actions.length %}
+        <div class="page-actions">
+          {%- for action in actions %}
+          <a class="btn {{ 'btn-solid' if action.solid else 'btn-line' }}" href="{{ action.href }}">{{ action.text }}</a>
+          {%- endfor %}
+        </div>
         {%- endif %}
       </div>
     </div>

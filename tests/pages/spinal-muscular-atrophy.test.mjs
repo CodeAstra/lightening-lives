@@ -22,7 +22,7 @@ test('the route is built', () => {
 test('title, description, label, h1, lead, the line under it and chips (5.6, 4.3, 4.6)', () => {
   assert.equal($('title').text(), 'Spinal muscular atrophy: LitLife™-SMA | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'LitLife™-SMA screens for and confirms spinal muscular atrophy from a dried blood spot, with no DNA extraction. Designed for newborn screening, where early detection changes what treatment can do.');
-  assert.equal(text('.page-open .label'), 'Musculopathy');
+  assert.equal($('.page-open .label').length, 0); // no label over the heading (25 October 2026)
   assert.equal($('h1').length, 1);
   assert.equal(text('h1'), 'Spinal muscular atrophy');
   assert.equal(text('.page-open .lead'), 'LitLife™-SMA screens for and confirms spinal muscular atrophy from a dried blood spot. It is built for newborn screening, where finding SMA before symptoms changes what treatment can do.');
@@ -101,6 +101,6 @@ test('the closing band: its ask, the email naming the condition, Partner with us
   assert.equal(text(band.find('.lead')), 'Tell us how many births you expect to screen and which laboratory will run the tests.');
   assert.deepEqual([text(band.find('.btn-solid')), band.find('.btn-solid').attr('href')],
     ['Ask about LitLife™-SMA', 'mailto:admin@lighteninglives.in?subject=Request%20tests&body=Condition%3A%20Spinal%20muscular%20atrophy']);
-  assert.deepEqual([text(band.find('.btn-line')), band.find('.btn-line').attr('href')], ['Partner with us', '/partnerships/']);
+  assert.deepEqual([text(band.find('.btn-line')), band.find('.btn-line').attr('href')], ['Partner with us', '/partners/']);
   assert.equal($('.notice').length, 1);
 });
