@@ -2053,16 +2053,6 @@
 
 /* Solutions, the kit catalogue (25 October 2026: the user's grid, grouped by family). */
 @layer components {
-  /* The navigation under the opening: each kit by its box, then Develop a test and Under development. */
-  .page-open + .section.kit-nav { padding-top: 0.25rem; padding-bottom: clamp(2rem, 3.5vw, 2.75rem); }
-  .kit-jumps { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.25rem, 1fr)); gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
-  .kit-jump { display: flex; align-items: center; gap: 0.55rem; height: 100%; padding: 0.4rem 0.6rem 0.4rem 0.4rem; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); color: var(--canopy); text-decoration: none; transition: border-color 0.16s ease, translate 0.16s ease; }
-  .kit-jump:hover, .kit-jump:focus-visible { border-color: var(--leaf); translate: 0 -0.125rem; }
-  .kit-jump-img { flex: none; width: 2.75rem; height: 2.25rem; object-fit: cover; border-radius: 0.3rem; background: var(--mist); }
-  .kit-jump-plain .icon-tile { width: 2.75rem; height: 2.25rem; }
-  .kit-jump span:last-child { display: grid; gap: 0.05rem; min-width: 0; }
-  .kit-jump b { font-size: 0.9375rem; font-weight: 700; line-height: 1.2; }
-  .kit-jump small { font-size: 0.75rem; line-height: 1.25; color: var(--moss); }
   .kit-shared { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 1.25rem 0 0; padding: 0; list-style: none; font-size: 0.9375rem; font-weight: 600; color: var(--canopy); }
   .kit-shared li { display: inline-flex; align-items: center; gap: 0.45rem; }
   .kit-shared .icon { color: var(--leaf); width: 1.125rem; height: 1.125rem; }
@@ -2075,7 +2065,9 @@
   .section.bg-paper .kit-card:not(.kit-ask) { background: var(--stone); }
   .kit-card:not(.kit-ask):hover, .kit-card:focus-within { border-color: var(--leaf); box-shadow: 0 1rem 2rem -1.5rem rgba(12, 74, 110, 0.45); }
   .kit-card:target { border-color: var(--leaf); box-shadow: 0 0 0 0.125rem var(--leaf); }
-  .kit-stage { position: relative; display: grid; place-items: center; aspect-ratio: 5 / 4; padding: 1.25rem 1.5rem 1rem; background: radial-gradient(70% 62% at 50% 42%, var(--paper), var(--mist) 68%, var(--sprout)); cursor: grab; touch-action: pan-y; outline-offset: -0.1875rem; }
+  /* The stage is a photographer's sweep: white light falling to a warm stone floor, so the cream and
+     red of the print read true; no blue behind the boxes. */
+  .kit-stage { position: relative; display: grid; place-items: center; aspect-ratio: 5 / 4; padding: 1.25rem 1.5rem 1rem; background: linear-gradient(180deg, var(--paper) 0%, var(--paper) 30%, var(--stone) 64%, color-mix(in srgb, var(--stone), #2b2522 6%) 100%); border-bottom: 0.0625rem solid var(--line); cursor: grab; touch-action: pan-y; outline-offset: -0.1875rem; }
   .kit-stage:focus-visible { outline: 0.1875rem solid var(--canopy); }
   .kit-stage.is-dragging { cursor: grabbing; }
   .kit-stage { -webkit-user-select: none; user-select: none; }
@@ -2084,7 +2076,7 @@
   .kit-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease; }
   .kit-stage.is-3d .kit-canvas { opacity: 1; }
   .kit-stage.is-3d .kit-img { opacity: 0; }
-  .kit-hint { position: absolute; left: 0.6rem; top: 0.55rem; display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0.5rem; border-radius: 0.375rem; background: rgba(255, 255, 255, 0.85); font-size: 0.75rem; font-weight: 700; color: var(--leaf); opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
+  .kit-hint { position: absolute; left: 0.75rem; top: 0.65rem; display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; font-weight: 600; color: var(--moss); opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
   .kit-hint .icon { width: 0.95rem; height: 0.95rem; }
   .kit-stage.is-3d .kit-hint { opacity: 0.9; }
   .kit-card:hover .kit-stage.is-3d .kit-hint, .kit-stage.is-dragging .kit-hint { opacity: 0; }
@@ -2107,21 +2099,6 @@
   .kit-also { display: flex; align-items: center; gap: 0.55rem; margin: 1.25rem 0 0; color: var(--canopy); }
   .kit-also .icon { color: var(--leaf); }
 
-  /* Develop a test with us: the page's main ask, on its own sprout panel. */
-  .develop-band { padding: clamp(1.5rem, 3.5vw, 2.75rem); background: var(--sprout); border-radius: var(--radius); }
-  .develop-band .start-steps li { border-top-color: var(--leaf); }
-  .develop-band .icon-tile { background: var(--paper); }
-  .develop-note { max-width: 34rem; font-size: 0.9375rem; color: var(--moss); }
-
-  /* Under development: dashed cards with their tag. */
-  .dev-cards { display: grid; gap: 1.25rem; margin-bottom: 0; padding: 0; list-style: none; }
-  @media (min-width: 48rem) { .dev-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .dev-cards li { position: relative; display: grid; gap: 0.6rem; align-content: start; padding: 1.5rem; border: 0.094rem dashed rgba(12, 74, 110, 0.35); border-radius: var(--radius); }
-  .dev-cards h3 { margin: 0.25rem 0 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.25rem; color: var(--canopy); }
-  .dev-cards p { margin: 0; color: var(--moss); }
-  .dev-tag { position: absolute; top: 1.25rem; right: 1.25rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.15rem 0.55rem; border-radius: 0.375rem; background: color-mix(in srgb, var(--sun) 32%, var(--paper)); font-size: 0.75rem; font-weight: 700; color: var(--canopy); }
-  .dev-tag .icon { width: 0.9rem; height: 0.9rem; }
-
   /* Beyond the kits: four ways in to the Partners page. */
   .beyond { display: grid; gap: 1rem; margin-bottom: 0; padding: 0; list-style: none; }
   @media (min-width: 40rem) { .beyond { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -2136,11 +2113,89 @@
 /* Solutions on a phone: the kit links in one row that scrolls sideways; no broken words in a heading. */
 @layer components {
   @media (max-width: 39.99rem) {
-    .kit-jumps { display: flex; gap: 0.5rem; margin-inline: calc(var(--pad) * -1); padding: 0.15rem var(--pad) 0.5rem; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: var(--pad); scrollbar-width: none; }
-    .kit-jumps::-webkit-scrollbar { display: none; }
-    .kit-jumps li { flex: 0 0 auto; width: 10.5rem; scroll-snap-align: start; }
-  }
+        }
   .page-open .display, .h2 { hyphens: manual; }
   .kit-also { align-items: flex-start; }
   .kit-also .icon { margin-top: 0.2em; }
+}
+
+/* Solutions: Develop a test with us and Under development (25 October 2026, second pass). */
+@layer components {
+  /* The page's main ask: the case on the left, the way a new test is made on the right, as one path. */
+  .develop { display: grid; gap: 2.5rem; padding: clamp(1.5rem, 4vw, 3.25rem); background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
+  @media (min-width: 64rem) { .develop { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 4.5rem; align-items: start; } }
+  .section.bg-paper .develop { background: var(--stone); }
+  .develop-when-h { margin: 2rem 0 0.75rem; font-size: 0.9375rem; font-weight: 700; color: var(--canopy); }
+  .develop-when { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+  .develop-when li { display: flex; align-items: center; gap: 0.7rem; color: var(--canopy); }
+  .develop-when .icon { flex: none; width: 2.25rem; height: 2.25rem; padding: 0.5rem; border-radius: var(--radius); background: var(--sprout); color: var(--leaf); }
+  .develop-act { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 2rem; }
+  .develop-path { position: relative; display: grid; gap: 0; margin: 0; padding: 0; list-style: none; counter-reset: none; }
+  .develop-path li { position: relative; display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 1rem; padding-bottom: 1.5rem; }
+  .develop-path li:last-child { padding-bottom: 0; }
+  .develop-path li:not(:last-child)::before { content: ""; position: absolute; left: 1.5rem; top: 3rem; bottom: 0; width: 0.125rem; translate: -50% 0; background: linear-gradient(var(--leaf), color-mix(in srgb, var(--leaf) 35%, transparent)); }
+  .develop-node { position: relative; z-index: 1; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: var(--paper); border: 0.125rem solid var(--leaf); color: var(--leaf); }
+  .section.bg-paper .develop-node { background: var(--stone); }
+  .develop-path li:last-child .develop-node { background: var(--leaf); color: var(--paper); }
+  .develop-node .icon { width: 1.25rem; height: 1.25rem; }
+  .develop-path h3 { display: flex; align-items: baseline; gap: 0.5rem; margin: 0.6rem 0 0.25rem; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.125rem; line-height: 1.2; letter-spacing: -0.01em; color: var(--canopy); }
+  .develop-n { font-size: 0.8125rem; font-weight: 700; color: var(--leaf); }
+  .develop-path p { margin: 0; color: var(--moss); }
+
+  /* Under development: each family to come as an outline of the kit it will be, on the same stone
+     floor as the kits above, with its tag and its words. */
+  .next-kits { display: grid; gap: 1.25rem; margin-bottom: 0; padding: 0; list-style: none; }
+  @media (min-width: 48rem) { .next-kits { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .next-kit { display: grid; grid-template-columns: minmax(0, 1fr); overflow: hidden; background: var(--paper); border: 0.0625rem dashed color-mix(in srgb, var(--leaf) 45%, transparent); border-radius: var(--radius); }
+  @media (min-width: 72rem) { .next-kit { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
+  .next-stage { position: relative; display: grid; place-items: center; min-height: 11rem; padding: 1rem; background: linear-gradient(180deg, var(--paper) 0%, var(--stone) 70%, color-mix(in srgb, var(--stone), #2b2522 5%) 100%); }
+  .ghost-box { width: min(15rem, 90%); height: auto; overflow: visible; }
+  .ghost-floor { fill: rgba(43, 37, 34, 0.06); }
+  .ghost-edge { fill: none; stroke: var(--leaf); stroke-width: 1.5; stroke-dasharray: 5 5; stroke-linejoin: round; stroke-linecap: round; opacity: 0.7; }
+  .next-mark { position: absolute; left: 50%; top: 56%; translate: -50% -50%; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: var(--paper); border: 0.0625rem solid color-mix(in srgb, var(--leaf) 35%, transparent); color: var(--leaf); box-shadow: 0 0.5rem 1rem -0.75rem rgba(43, 37, 34, 0.4); }
+  .next-mark .icon { width: 1.35rem; height: 1.35rem; }
+  .next-body { display: grid; gap: 0.6rem; align-content: start; padding: 1.4rem 1.5rem 1.5rem; }
+  .next-tag { justify-self: start; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.15rem 0.55rem; border-radius: 0.375rem; background: color-mix(in srgb, var(--sun) 32%, var(--paper)); font-size: 0.75rem; font-weight: 700; color: var(--canopy); }
+  .next-tag .icon { width: 0.9rem; height: 0.9rem; }
+  .next-body h3 { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.01em; color: var(--canopy); }
+  .next-body p { margin: 0; color: var(--moss); }
+}
+
+/* Solutions' opening, third pass (25 October 2026): the heading across the column, and the kits
+   standing together under it as the page's navigation, on the same sweep as their cards. */
+.page-open-wide .section-head { row-gap: 1.75rem; }
+@media (min-width: 64rem) {
+  .page-open-wide .section-head > div { grid-column: 1 / -1; }
+  .page-open-wide .section-head > div:last-child { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 1rem 4rem; align-items: start; }
+  .page-open-wide .section-head > div:last-child .page-proof { margin-top: 0.35rem; }
+  .page-open-wide .display { max-width: 22ch; font-size: clamp(2.4rem, 4.2vw, 4rem); }
+}
+.page-open-wide { padding-bottom: 1.5rem; }
+@layer components {
+  .page-open + .section.kit-lineup { padding-top: 0; }
+  .kit-lineup { background: linear-gradient(180deg, var(--mist) 0%, var(--paper) 26%, var(--paper) 52%, var(--stone) 80%, color-mix(in srgb, var(--stone), #2b2522 5%) 100%); border-bottom: 0.0625rem solid var(--line); }
+  .lineup { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 1fr); gap: 0 1.5rem; align-items: start; }
+  .lineup-family-h { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 0.25rem; font-size: 0.8125rem; font-weight: 700; color: var(--leaf); }
+  .lineup-family-h::after { content: ""; flex: 1; height: 0.0625rem; background: color-mix(in srgb, var(--leaf) 30%, transparent); }
+  .lineup-kits { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+  .lineup-kit { position: relative; display: grid; justify-items: center; gap: 0.1rem; padding: 0.75rem 0.25rem 0.9rem; border-radius: var(--radius); color: var(--canopy); text-decoration: none; text-align: center; transition: background-color 0.2s ease; }
+  .lineup-kit:hover, .lineup-kit:focus-visible { background: color-mix(in srgb, var(--paper) 70%, transparent); }
+  .lineup-kit:focus-visible { outline: 0.1875rem solid var(--canopy); outline-offset: 0; }
+  .lineup-box { display: grid; place-items: end center; width: 100%; height: clamp(7.5rem, 11.5vw, 10.5rem); }
+  .lineup-img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+  .lineup-name { margin-top: 0.6rem; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.0625rem; line-height: 1.15; letter-spacing: -0.01em; }
+  .lineup-condition { font-size: 0.8125rem; line-height: 1.3; color: var(--moss); }
+  .lineup-kit:hover .lineup-name, .lineup-kit:focus-visible .lineup-name { color: var(--leaf); }
+  .lineup-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 0.0625rem solid var(--line); }
+  .lineup-foot .kit-shared { margin: 0; }
+  .lineup-more { display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; margin: 0; padding: 0; list-style: none; }
+  /* Below a laptop, the families side by side become one row that scrolls sideways. */
+  @media (max-width: 63.99rem) {
+    .lineup { display: flex; gap: 1rem; margin-inline: calc(var(--pad) * -1); padding: 0 var(--pad) 0.25rem; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: var(--pad); scrollbar-width: none; }
+    .lineup::-webkit-scrollbar { display: none; }
+    .lineup-family { flex: none; }
+    .lineup-kits { grid-template-columns: repeat(var(--n), 9.5rem); }
+    .lineup-box { height: 7.5rem; }
+    .lineup-kits li { scroll-snap-align: start; }
+  }
 }

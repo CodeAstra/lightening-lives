@@ -1,8 +1,10 @@
 // Captures each kit's 3D box at rest (src/js/kits/viewer.js) as the still Solutions shows before the
-// 3D view has drawn, and without WebGL, and in its jump links: src/images-src/box-render-<kit>.png.
+// 3D view has drawn, and without WebGL: src/images-src/box-render-<kit>.png; and the same box cut to
+// its own edges and shadow for the opening's lineup: src/images-src/box-lineup-<kit>.png.
 //   npm run build && node scripts/serve.mjs 8090 & npm run kit-stills     (needs agent-browser)
 import { execFileSync } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
+import sharp from 'sharp';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -29,7 +31,11 @@ const kits = run(`Object.keys(window.llKits || {})`);
 for (const kit of kits) {
   const url = run(`window.llKits[${JSON.stringify(kit)}](960, 768)`);
   const file = path.join(root, `src/images-src/box-render-${kit}.png`);
-  writeFileSync(file, Buffer.from(url.split(',')[1], 'base64'));
+  const png = Buffer.from(url.split(',')[1], 'base64');
+  writeFileSync(file, png);
   console.log(`  ${path.relative(root, file)}`);
+  const lineup = path.join(root, `src/images-src/box-lineup-${kit}.png`);
+  await sharp(await sharp(png).trim({ threshold: 1 }).toBuffer()).extend({ top: 6, bottom: 6, left: 6, right: 6, background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toFile(lineup);
+  console.log(`  ${path.relative(root, lineup)}`);
 }
 browser('close');

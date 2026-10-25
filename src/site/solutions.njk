@@ -9,6 +9,7 @@ proof:
   - { icon: "badge-check", text: "ICMR approved" }
   - { icon: "award", text: "Patents granted in India and Japan" }
   - { icon: "map-pin", text: "15 sites, 9 states and Delhi" }
+openingWide: true
 notice: true
 closing:
   h2: 'Start with the condition <span class="h-mark">your programme needs.</span>'
@@ -28,22 +29,40 @@ closing:
 {%- from "faq.njk" import faq %}
 <script type="module" src="/assets/js/site-kits.js"></script>
 
-  <!-- The page's navigation: every kit, then the other two ways in; and what every kit shares -->
-  <section id="kits" class="section on-mist kit-nav" aria-label="Kits on this page">
+  <!-- The kits we have, standing together: the page's navigation, each box to its card -->
+  <section id="kits" class="section kit-lineup" aria-labelledby="kits-h">
     <div class="wrap">
-      <ul class="kit-jumps">
-        {%- for family in kits.families %}{% for kit in family.kits %}
-        <li><a class="kit-jump" href="#{{ kit.id }}">{{ picture(kit.image, "", "3.5rem", { class: "kit-jump-img" }) }}<span><b>{{ kit.short }}</b><small>{{ kit.condition }}</small></span></a></li>
-        {%- endfor %}{% endfor %}
-        <li><a class="kit-jump kit-jump-plain" href="#develop"><span class="icon-tile">{% icon "plus" %}</span><span><b>Develop a test</b><small>Propose a condition</small></span></a></li>
-        <li><a class="kit-jump kit-jump-plain" href="#in-development"><span class="icon-tile">{% icon "hourglass" %}</span><span><b>Under development</b><small>Two new families</small></span></a></li>
-      </ul>
-      <ul class="kit-shared">
-        <li>{% icon "droplet" %}<span>A dried blood spot</span></li>
-        <li>{% icon "thermometer" %}<span>Room temperature transport</span></li>
-        <li>{% icon "flask-conical" %}<span>No DNA extraction</span></li>
-        <li>{% icon "microscope" %}<span>Standard PCR equipment</span></li>
-      </ul>
+      <h2 id="kits-h" class="sr-only">The kits, by family</h2>
+      <div class="lineup">
+        {%- for family in kits.families %}
+        <div class="lineup-family" style="--n: {{ family.kits.length }}">
+          <p class="lineup-family-h"><span>{{ family.name }}</span></p>
+          <ul class="lineup-kits">
+            {%- for kit in family.kits %}
+            <li>
+              <a class="lineup-kit" href="#{{ kit.id }}">
+                <span class="lineup-box">{{ picture("box-lineup-" + kit.model.kit, "", "(min-width: 64rem) 17vw, 40vw", { class: "lineup-img" }) }}</span>
+                <span class="lineup-name">{{ kit.code | replace("LitLife™-", "") }}</span>
+                <span class="lineup-condition">{{ kit.condition }}</span>
+              </a>
+            </li>
+            {%- endfor %}
+          </ul>
+        </div>
+        {%- endfor %}
+      </div>
+      <div class="lineup-foot">
+        <ul class="kit-shared">
+          <li>{% icon "droplet" %}<span>A dried blood spot</span></li>
+          <li>{% icon "thermometer" %}<span>Room temperature transport</span></li>
+          <li>{% icon "flask-conical" %}<span>No DNA extraction</span></li>
+          <li>{% icon "microscope" %}<span>Standard PCR equipment</span></li>
+        </ul>
+        <ul class="lineup-more">
+          <li><a class="link" href="#develop">Develop a test with us {{ arrow | safe }}</a></li>
+          <li><a class="link" href="#in-development">Under development {{ arrow | safe }}</a></li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -100,46 +119,68 @@ closing:
   <!-- Develop a test with us: the page's main ask -->
   <section id="develop" class="section bg-paper" aria-labelledby="develop-h">
     <div class="wrap">
-      <div class="develop-band">
-        <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
-          <h2 id="develop-h" class="h2 lg:col-span-7">Develop a test with us. <span class="h-mark">Propose a condition.</span></h2>
-          <p class="lead lg:col-span-5">Every LitLife™ test began with a programme's need. If yours needs a test that doesn't exist, our scientists can develop and validate it.</p>
+      <div class="develop">
+        <div class="develop-ask">
+          <h2 id="develop-h" class="h2">Develop a test with us. <span class="h-mark">Propose a condition.</span></h2>
+          <p class="lead mt-5">Every LitLife™ kit began with a programme's need. If yours needs a test that doesn't exist, our scientists can develop and validate it.</p>
+          <p class="develop-when-h">It makes sense when you have</p>
+          <ul class="develop-when">
+            <li>{% icon "users" %}<span>A condition common in one community</span></li>
+            <li>{% icon "map-pin" %}<span>A mutation profile specific to a region</span></li>
+            <li>{% icon "package" %}<span>A screening format no one makes</span></li>
+          </ul>
+          <div class="develop-act">
+            <a class="btn btn-solid" href="/contact/">Propose a condition</a>
+            <a class="link" href="mailto:{{ site.email }}?subject=Develop%20a%20test">Or write to us {{ arrow | safe }}</a>
+          </div>
         </div>
-        <ol class="start-steps start-five mt-10">
-          <li><span class="icon-tile">{% icon "message-circle" %}</span><h3><span class="model-n">1</span> Brief</h3><p>You tell us the condition, the population and the setting.</p></li>
-          <li><span class="icon-tile">{% icon "search" %}</span><h3><span class="model-n">2</span> Feasibility</h3><p>Our scientists assess the genetics and the method.</p></li>
-          <li><span class="icon-tile">{% icon "dna" %}</span><h3><span class="model-n">3</span> Development</h3><p>We design and optimise the test.</p></li>
-          <li><span class="icon-tile">{% icon "clipboard-check" %}</span><h3><span class="model-n">4</span> Validation</h3><p>We validate it against reference methods on real samples.</p></li>
-          <li><span class="icon-tile">{% icon "graduation-cap" %}</span><h3><span class="model-n">5</span> Rollout</h3><p>Training, supply and support for your programme.</p></li>
+        <ol class="develop-path">
+          {%- set steps = [
+            { icon: "message-circle", title: "Brief", body: "You tell us the condition, the population and the setting." },
+            { icon: "search", title: "Feasibility", body: "Our scientists assess the genetics and the method." },
+            { icon: "dna", title: "Development", body: "We design and optimise the test." },
+            { icon: "clipboard-check", title: "Validation", body: "We validate it against reference methods on real samples." },
+            { icon: "graduation-cap", title: "Rollout", body: "Training, supply and support for your programme." }
+          ] %}
+          {%- for step in steps %}
+          <li>
+            <span class="develop-node">{% icon step.icon %}</span>
+            <div>
+              <h3><span class="develop-n">{{ loop.index }}</span>{{ step.title }}</h3>
+              <p>{{ step.body }}</p>
+            </div>
+          </li>
+          {%- endfor %}
         </ol>
-        <div class="audience-act">
-          <a class="btn btn-solid" href="/contact/">Propose a condition</a>
-          <span class="develop-note">A condition common in one community, a mutation profile specific to a region, or a format no one makes.</span>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- Under development -->
+  <!-- Under development: the kits to come, drawn as outlines beside the kits we have -->
   <section id="in-development" class="section" aria-labelledby="in-development-h">
     <div class="wrap">
       <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
         <h2 id="in-development-h" class="h2 lg:col-span-7">Under development. <span class="h-mark">The next two families.</span></h2>
         <p class="lead lg:col-span-5">Want early access, or to take part in validation? <a class="lead-link" href="/contact/">Tell us</a>.</p>
       </div>
-      <ul class="dev-cards mt-12">
-        <li>
-          <span class="dev-tag">{% icon "hourglass" %}Under development</span>
-          <span class="icon-tile">{% icon "droplets" %}</span>
-          <h3>Blood coagulation panel</h3>
-          <p>Genetic testing for inherited bleeding disorders such as haemophilia A and B. The panel will confirm a diagnosis, identify carriers and support family counselling.</p>
+      {%- set ghost %}<svg class="ghost-box" viewBox="0 0 240 170" aria-hidden="true" focusable="false"><path class="ghost-floor" d="M24 138 L120 162 L216 138 L120 118 Z"/><path class="ghost-edge" d="M40 52 L120 72 L200 52 L120 34 Z M40 52 L40 126 L120 148 L120 72 M200 52 L200 126 L120 148"/></svg>{% endset %}
+      <ul class="next-kits mt-12">
+        {%- for item in [
+          { icon: "droplets", name: "Blood coagulation panel", body: "Genetic testing for inherited bleeding disorders such as haemophilia A and B. The panel will confirm a diagnosis, identify carriers and support family counselling." },
+          { icon: "pill", name: "Pharmacogenomics", body: "Testing for the genetic differences that change how a person responds to a medicine, so that the drug and the dose can be chosen for the person." }
+        ] %}
+        <li class="next-kit">
+          <div class="next-stage">
+            {{ ghost | safe }}
+            <span class="next-mark">{% icon item.icon %}</span>
+          </div>
+          <div class="next-body">
+            <span class="next-tag">{% icon "hourglass" %}Under development</span>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.body }}</p>
+          </div>
         </li>
-        <li>
-          <span class="dev-tag">{% icon "hourglass" %}Under development</span>
-          <span class="icon-tile">{% icon "pill" %}</span>
-          <h3>Pharmacogenomics</h3>
-          <p>Testing for the genetic differences that change how a person responds to a medicine, so that the drug and the dose can be chosen for the person.</p>
-        </li>
+        {%- endfor %}
       </ul>
     </div>
   </section>

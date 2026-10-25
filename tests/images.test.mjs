@@ -158,8 +158,8 @@ test('every placed photograph comes through the picture include: every width, si
       assert.deepEqual([Number(el.attribs.width), Number(el.attribs.height)], [entry.widths[0], entry.height], `${url}: ${base} dimensions`);
       // A photograph's alt describes it; a portrait's (person-, Task 4.5) is the person's name, which
       // can be three words ("Mr. Abhishek Chandak").
-      // A kit's thumbnail in Solutions' jump links is decorative: the link's own words name the kit.
-      if ($(el).is('.kit-jump-img')) { assert.equal(el.attribs.alt, '', `${url}: ${base} thumbnail`); return; }
+      // A kit in Solutions' opening lineup is decorative: the link's own words name the kit.
+      if ($(el).is('.lineup-img')) { assert.equal(el.attribs.alt, '', `${url}: ${base} in the lineup`); return; }
       if (/^person-/.test(base)) assert.ok((el.attribs.alt ?? '').trim(), `${url}: ${base} alt`);
       else assert.ok((el.attribs.alt ?? '').trim().split(/\s+/).length >= 4, `${url}: ${base} alt`);
     });

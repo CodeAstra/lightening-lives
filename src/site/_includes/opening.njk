@@ -6,8 +6,8 @@
     proof with its icons (proof: [{ icon, text }], the home opening's row), its tags (chips, the test
     pages) and up to two buttons (openingActions: [{ text, href, solid }]). line, where a page has one, sits
     between the lead and the tags (SMA, content 5.6). .section-head is the part that settles in. -#}
-{%- macro opening(label, h1, lead, chips, line, proof, actions) %}
-<section class="section page-open" aria-labelledby="page-h">
+{%- macro opening(label, h1, lead, chips, line, proof, actions, wide) %}
+<section class="section page-open{{ ' page-open-wide' if wide }}" aria-labelledby="page-h">
   <div class="wrap">
     <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
       <div class="lg:col-span-7">

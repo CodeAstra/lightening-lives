@@ -25,9 +25,9 @@ function contactShadow() {
   c.width = c.height = 128;
   const g = c.getContext('2d');
   const grad = g.createRadialGradient(64, 64, 4, 64, 64, 64);
-  grad.addColorStop(0, 'rgba(12,74,110,0.42)');
-  grad.addColorStop(0.55, 'rgba(12,74,110,0.14)');
-  grad.addColorStop(1, 'rgba(12,74,110,0)');
+  grad.addColorStop(0, 'rgba(43,37,34,0.40)');
+  grad.addColorStop(0.55, 'rgba(43,37,34,0.13)');
+  grad.addColorStop(1, 'rgba(43,37,34,0)');
   g.fillStyle = grad;
   g.fillRect(0, 0, 128, 128);
   const tex = new CanvasTexture(c);
