@@ -1,0 +1,50 @@
+# Builds the site and publishes it to GitHub Pages on every push to chores/website-revamp
+# (for now the preview, https://lightening-lives.codeastra.com). The tests run first: if one fails,
+# nothing is published and the site stays as it was.
+#
+# Needs Settings > Pages > Build and deployment > Source set to "GitHub Actions". The custom domain
+# is the one in Settings > Pages; a deploy from a workflow ignores any CNAME file.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [chores/website-revamp]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push waits for the running one instead of cutting it off.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # npm test builds dist/ first (pretest), then runs the suite over it.
+      - name: Build and test
+        run: npm test
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
