@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /_social/
+Sitemap: https://lighteninglives.in/sitemap.xml

@@ -1,0 +1,28 @@
+# Lightening Lives
+
+> An innovation-driven healthcare technology company in Hyderabad. We develop molecular diagnostics for inherited blood and muscle conditions that work from a spot of blood on a card, for hospitals, laboratories and public health programmes.
+
+We currently work with hospitals, diagnostic laboratories, public health programmes and NGOs across India.
+
+## Pages
+
+- [Home](https://lighteninglives.in/): Genetic testing for inherited conditions, from a dried blood spot. Currently for hospitals, diagnostic labs, public health programmes and NGOs in India.
+- [About](https://lighteninglives.in/about/): Lightening Lives LLP develops REASSURED genetic tests. Founded by Dr. Giriraj Ratan Chandak, formerly Chief Scientist at CSIR-CCMB. ICMR approved.
+- [Contact](https://lighteninglives.in/contact/): Talk to our scientific team about genetic testing for your hospital, diagnostic lab, public health programme or NGO. Hyderabad, India.
+- [Our work](https://lighteninglives.in/our-work/): Genetic screening in nine states and Delhi, accounts from the field, patents granted in India and Japan, and where we have presented our work.
+- [Partners](https://lighteninglives.in/partners/): Hospitals, diagnostic labs, public health programmes and NGOs partner with us for genetic screening. Our partners include CSIR-CCMB and Tata Trusts.
+- [Privacy](https://lighteninglives.in/privacy/): What the Lightening Lives website collects, why, and how to reach us about it.
+- [Solutions](https://lighteninglives.in/solutions/): LitLife™ tests from a dried blood spot for sickle cell, beta and alpha thalassaemia and SMA, for hospitals, labs and public health. New tests on request.
+- [Sickle cell anaemia](https://lighteninglives.in/solutions/sickle-cell-anaemia/): LitLife™-SCA screens and confirms sickle cell anaemia in one test from a dried blood spot, newborns included. For hospitals and screening programmes.
+- [Spinal muscular atrophy](https://lighteninglives.in/solutions/spinal-muscular-atrophy/): LitLife™-SMA detects the SMN1 deletion behind most spinal muscular atrophy, from a dried blood spot, no DNA extraction. For newborn screening programmes.
+- [Thalassaemia](https://lighteninglives.in/solutions/thalassaemia/): LitLife™-BThal and AlphaThal find thalassaemia carriers routine screening misses, from a dried blood spot. For hospitals, labs and screening programmes.
+- [Technology](https://lighteninglives.in/technology/): How LitLife™ tests screen and confirm from a dried blood spot with no DNA extraction: the patented method, what a laboratory needs, and the approvals.
+- [Terms](https://lighteninglives.in/terms/): The terms on which Lightening Lives LLP publishes this website.
+
+## Facts
+
+- Approved by ICMR: LitLife™-SCA, our sickle cell test, is approved by the Indian Council of Medical Research.
+- Patented in India and Japan: The technology behind our tests holds patents granted in India and Japan, and a patent published internationally.
+- Working with CSIR-CCMB: An MOU with the CSIR-Centre for Cellular and Molecular Biology, Hyderabad, covers developing and commercialising the sickle cell assay.
+- Proven at 15 sites: Population and newborn screening in nine states and Delhi, and a test built for the National Sickle Cell Anaemia Elimination Mission.
+- For individuals: Looking for a test for yourself or your family? We work with institutions and don't test individuals. Please speak to your doctor or visit your nearest government health facility.
