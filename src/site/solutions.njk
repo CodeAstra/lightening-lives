@@ -96,8 +96,9 @@ closing:
         </li>
         {%- endfor %}
         {%- for ask in family.ask %}
+        {%- set askSlug = { dmd: "duchenne-muscular-dystrophy", lgmd: "limb-girdle-muscular-dystrophy" }[ask.id] %}
         <li id="{{ ask.id }}" class="kit-card kit-ask">
-          <a class="kit-link" href="/contact/">
+          <a class="kit-link" {{ { condition: askSlug } | enquire | safe }}>
             <span class="kit-body">
               <span class="icon-tile">{% icon "message-circle" %}</span>
               <span class="kit-condition">Molecular diagnosis available</span>
@@ -130,7 +131,7 @@ closing:
             <li>{% icon "package" %}<span>A screening format no one makes</span></li>
           </ul>
           <div class="develop-act">
-            <a class="btn btn-solid" href="/contact/">Propose a condition</a>
+            <a class="btn btn-solid" {{ { topic: "develop" } | enquire | safe }}>Propose a condition</a>
             <a class="link" href="mailto:{{ site.email }}?subject=Develop%20a%20test">Or write to us {{ arrow | safe }}</a>
           </div>
         </div>
@@ -161,7 +162,7 @@ closing:
     <div class="wrap">
       <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
         <h2 id="in-development-h" class="h2 lg:col-span-7">Under development. <span class="h-mark">The next two families.</span></h2>
-        <p class="lead lg:col-span-5">Want early access, or to take part in validation? <a class="lead-link" href="/contact/">Tell us</a>.</p>
+        <p class="lead lg:col-span-5">Want early access, or to take part in validation? <a class="lead-link" {{ { topic: "early-access" } | enquire | safe }}>Tell us</a>.</p>
       </div>
       {%- set ghost %}<svg class="ghost-box" viewBox="0 0 240 170" aria-hidden="true" focusable="false"><path class="ghost-floor" d="M24 138 L120 162 L216 138 L120 118 Z"/><path class="ghost-edge" d="M40 52 L120 72 L200 52 L120 34 Z M40 52 L40 126 L120 148 L120 72 M200 52 L200 126 L120 148"/></svg>{% endset %}
       <ul class="next-kits mt-12">

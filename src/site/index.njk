@@ -37,7 +37,7 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
       <h1 id="hero-h" class="display rise" style="--i:1">Genetic testing that <span class="h-mark">reaches every community.</span></h1>
       <p class="hero-lead lead rise" style="--i:2">Genetic and molecular diagnostics from a dried blood spot: one test to screen and confirm, patient, carrier or unaffected, built to the <a class="lead-link" href="#reassured">REASSURED</a> standard.</p>
       <div class="hero-actions rise" style="--i:3">
-        <a class="btn btn-solid" href="{{ site.cta.href }}">{{ site.cta.text }}</a>
+        <a class="btn btn-solid" {{ {} | enquire | safe }}>{{ site.cta.text }}</a>
         <a class="btn btn-line" href="/technology/">How the test works</a>
       </div>
       {{ credentials([

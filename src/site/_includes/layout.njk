@@ -117,6 +117,8 @@ if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matche
 {%- endif %}
 </main>
 {% include "footer.njk" %}
+{%- from "enquire.njk" import enquireDialog with context %}
+{{ enquireDialog() }}
 <script>
 /* The header takes a solid ground once the page moves under it. */
 (function () {

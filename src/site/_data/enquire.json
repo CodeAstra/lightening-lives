@@ -1,0 +1,26 @@
+{
+  "_note": "The enquiry form (26 October 2026: Fillout, the user's choice; nothing else on the site collects enquiries). Every 'Partner with us' and 'talk to us' button opens it in a dialog where the visitor is (main.js, initEnquire; markup in enquire.njk), already filled in where the button knows more: who the visitor is (who), the condition (conditions, a test's page) or what they ask about (topics). Each is sent to the form as a URL parameter, enquiry, condition, topic and source (the page it was opened from), so in Fillout register those four under Settings > URL parameters and set each matching field's default value from its parameter. The labels below are what is sent: make each one the same, letter for letter, as the option it should choose in the form. Fillout's script (script) is fetched only when the form is first opened. Without script, each button goes to /contact/, which links to the form (url) and gives the email address.",
+  "id": "mgvxvCY3mxus",
+  "url": "https://forms.fillout.com/t/mgvxvCY3mxus",
+  "script": "https://server.fillout.com/embed/v1/",
+  "title": "Partner with us",
+  "lead": "Our scientific team reads every enquiry and replies with how we would approach it.",
+  "who": {
+    "laboratory": "A hospital or laboratory",
+    "programme": "A public health programme",
+    "funder": "A CSR team or NGO",
+    "other": "Research, media or something else"
+  },
+  "conditions": {
+    "sickle-cell-anaemia": "Sickle cell anaemia",
+    "thalassaemia": "Beta thalassaemia",
+    "spinal-muscular-atrophy": "Spinal muscular atrophy",
+    "duchenne-muscular-dystrophy": "Duchenne muscular dystrophy",
+    "limb-girdle-muscular-dystrophy": "Limb-girdle muscular dystrophy"
+  },
+  "topics": {
+    "dossier": "The technical dossier",
+    "develop": "Developing a new test",
+    "early-access": "Early access or validation"
+  }
+}

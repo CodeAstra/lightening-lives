@@ -50,6 +50,9 @@ test('approvals and documents; nothing unconfirmed renders', () => {
   assert.deepEqual(texts('#approvals h3'), ['ICMR approved', 'Patents granted in India and Japan', 'A globally published patent', 'Built on CSIR-CCMB know-how']);
   assert.equal($('#patents').length, 1, 'the old anchor stays');
   assert.equal($('#documents .doc-list li').length, 3);
-  assert.match($('.closing .btn-solid').attr('href'), /^mailto:admin@lighteninglives\.in\?subject=Technical%20dossier/);
+  // The dossier is asked for through the enquiry form, its topic named (26 October 2026).
+  assert.equal($('.closing .btn-solid').attr('href'), '/contact/?topic=dossier');
+  assert.equal($('.closing .btn-solid').attr('data-topic'), 'dossier');
+  assert.equal($('#documents .btn').attr('data-topic'), 'dossier');
   assert.doesNotMatch($('main').clone().find('script').remove().end().text(), /\[|CONFIRM|TBC/);
 });

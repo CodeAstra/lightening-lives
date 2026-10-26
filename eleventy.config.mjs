@@ -1,8 +1,8 @@
+import { readFileSync } from 'node:fs';
 import { icon, brand } from './src/lib/icons.mjs';
 import { upcoming } from './src/lib/announcements.mjs';
 // Eleventy builds the pages from src/site into dist/. Everything in src/assets (the logo, pictures,
 // type, and the stylesheet and scripts that scripts/build.mjs compiles) is copied to dist/assets.
-import { CONDITIONS } from './src/js/site/contact.js';
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ 'src/assets': 'assets' });
@@ -88,13 +88,23 @@ export default function (eleventyConfig) {
     .map((entry) => (key ? { ...entry, [key]: unbracket(entry[key]) } : unbracket(entry)))
     .filter((entry) => (key ? entry[key] : entry)));
 
-  // A test page's closing ask (the controller's Phase 5 ruling 3): the email itself, so the
-  // condition reaches the company with script off (Review Focus 5). The condition is named as
-  // src/js/site/contact.js names it for the slug; an unknown slug stops the build.
-  eleventyConfig.addFilter('askAbout', (slug, email) => {
-    const name = CONDITIONS.get(slug);
-    if (!name) throw new Error(`closing.solid.condition: no condition "${slug}" in src/js/site/contact.js`);
-    return `mailto:${email}?subject=${encodeURIComponent('Request tests')}&body=${encodeURIComponent(`Condition: ${name}`)}`;
+  // A button that opens the enquiry form (src/site/_data/enquire.json; main.js, initEnquire): its
+  // attributes, from what it knows, { who, condition, topic }. Without script it is a link to Contact
+  // carrying the same; with it, the form opens in a dialog where the reader is, filled in. A key that
+  // enquire.json does not know stops the build, naming it.
+  const ENQUIRE = JSON.parse(readFileSync(new URL('./src/site/_data/enquire.json', import.meta.url), 'utf8'));
+  eleventyConfig.addFilter('enquire', (opts = {}) => {
+    const query = [];
+    const data = [];
+    for (const [key, list, param] of [['who', 'who', 'enquiry'], ['condition', 'conditions', 'condition'], ['topic', 'topics', 'topic']]) {
+      const value = opts[key];
+      if (!value) continue;
+      if (!ENQUIRE[list][value]) throw new Error(`enquire: no ${key} "${value}" in src/site/_data/enquire.json`);
+      query.push(`${param}=${encodeURIComponent(value)}`);
+      data.push(`data-${key === 'who' ? 'enquire' : key}="${value}"`);
+    }
+    if (!opts.who) data.unshift('data-enquire=""');
+    return `href="/contact/${query.length ? `?${query.join('&amp;')}` : ''}" ${data.join(' ')}`;
   });
 
   // A test page's required front matter (condition, test, who, closing): a page missing one stops

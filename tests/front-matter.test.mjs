@@ -107,7 +107,10 @@ test('the closing band is the content file\'s 4.5 unless the page asks its own q
   assert.ok(plain.hasClass('closing'));
   assert.equal(plain.find('h2').text().trim(), 'Tell us what your programme needs');
   assert.equal(plain.find('p.lead').text().trim(), 'Tell us the condition you need to test for and where the testing will happen. We will take it from there.');
-  assert.deepEqual([plain.find('.btn-solid').text().trim(), plain.find('.btn-solid').attr('href')], ['Partner with us', '/partners/']);
+  // Since 26 October 2026 the solid button opens the enquiry form where the reader is (a link to Contact
+  // without script).
+  assert.deepEqual([plain.find('.btn-solid').text().trim(), plain.find('.btn-solid').attr('href')], ['Partner with us', '/contact/']);
+  assert.equal(plain.find('.btn-solid').attr('data-enquire'), '');
   assert.deepEqual([plain.find('.btn-line').text().trim(), plain.find('.btn-line').attr('href')], ['Contact us', '/contact/']);
 
   const own = band('/asks/');

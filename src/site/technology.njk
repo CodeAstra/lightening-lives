@@ -14,7 +14,7 @@ openingActions:
 closing:
   h2: 'See the method in detail. <span class="h-mark">Request our technical dossier.</span>'
   body: "The method, validation and regulatory documents, for your laboratory or your procurement team."
-  solid: { text: "Request the dossier", href: "mailto:admin@lighteninglives.in?subject=Technical%20dossier%20request" }
+  solid: { text: "Request the dossier", topic: dossier }
   line: { text: "Develop a test with us", href: "/solutions/#develop" }
 ---
 {#- Technology (content file 5.2; seven sections since 25 October 2026, the reviewer's site map, 3.1):
@@ -180,7 +180,7 @@ closing:
         <div>
           <h2 id="documents-h" class="h2">Documents. <span class="h-mark">On request.</span></h2>
           <p class="lead mt-5">Write to us and our scientific team sends what your laboratory or procurement team needs.</p>
-          <a class="btn btn-line mt-8" href="mailto:{{ site.email }}?subject=Technical%20dossier%20request">Request the documents</a>
+          <a class="btn btn-line mt-8" {{ { topic: "dossier" } | enquire | safe }}>Request the documents</a>
         </div>
         <ul class="doc-list">
           <li><span class="doc-icon">{% icon "file-text" %}</span><span><b>Instructions for use</b><small>How to run the test, step by step</small></span><span class="doc-tag">On request</span></li>

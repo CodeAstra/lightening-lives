@@ -29,14 +29,16 @@ test('the sections, in the reviewer\'s order, each labelled', () => {
 test('three doors above the fold lead to the three readers\' sections on this page', () => {
   assert.deepEqual($('#start .door').map((i, a) => $(a).attr('href')).get(), ['#laboratories', '#programmes', '#funders']);
   assert.equal($('#start .door .icon-tile svg.icon').length, 3);
-  assert.equal($('#start .doors-else a').attr('href'), '/contact/');
+  assert.equal($('#start .doors-else a').attr('href'), '/contact/?enquiry=other');
+  assert.equal($('#start .doors-else a').attr('data-enquire'), 'other');
 });
 
 test('each reader\'s section ends in its own action', () => {
-  const acts = (id) => $(`#${id} .audience-act .btn`).map((i, a) => [[text(a), $(a).attr('href')]]).get();
-  assert.deepEqual(acts('laboratories'), [['Talk to our scientific team', '/contact/']]);
-  assert.deepEqual(acts('programmes'), [['Plan a programme', '/contact/']]);
-  assert.deepEqual(acts('funders'), [['Fund a programme', '/contact/']]);
+  // Each opens the enquiry form with who the reader is chosen (26 October 2026).
+  const acts = (id) => $(`#${id} .audience-act .btn`).map((i, a) => [[text(a), $(a).attr('href'), $(a).attr('data-enquire')]]).get();
+  assert.deepEqual(acts('laboratories'), [['Talk to our scientific team', '/contact/?enquiry=laboratory', 'laboratory']]);
+  assert.deepEqual(acts('programmes'), [['Plan a programme', '/contact/?enquiry=programme', 'programme']]);
+  assert.deepEqual(acts('funders'), [['Fund a programme', '/contact/?enquiry=funder', 'funder']]);
   assert.equal($('#programmes .model-step').length, 6, 'the testing model');
   assert.equal($('#funders .faq details').length, 3);
 });

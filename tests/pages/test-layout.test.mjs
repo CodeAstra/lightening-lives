@@ -77,12 +77,14 @@ test('the conditions a test also reads have their anchors, as Solutions links to
   for (const id of ['beta', 'alpha', 'hbe']) assert.equal(thal(`#${id}`).length, 1, id);
 });
 
-test('the family and Develop a test, beside the questions; the close asks for the test by email', () => {
+test('the family and Develop a test, beside the questions; the close asks for the test through the enquiry form', () => {
   for (const url of PAGES) {
     const $ = load(url);
     const links = $('#questions .family-links a').map((i, a) => $(a).attr('href')).get();
     assert.equal(links.at(-1), '/solutions/#develop', url);
-    assert.match($('.closing .btn-solid').attr('href'), /^mailto:admin@lighteninglives\.in\?subject=Request%20tests&body=Condition%3A%20/, url);
+    // The form opens with the page's condition ticked (26 October 2026); Contact, with it, without script.
+    assert.match($('.closing .btn-solid').attr('href'), /^\/contact\/\?condition=[a-z-]+$/, url);
+    assert.ok($('.closing .btn-solid').is('[data-enquire][data-condition]'), url);
     assert.equal($('.closing .btn-line').attr('href'), '/partners/', url);
     assert.equal($('.closing .notice').length, 1, url);
   }

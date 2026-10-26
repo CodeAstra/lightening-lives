@@ -59,7 +59,8 @@ test('five kits in their families, each with its box, its features and the way t
 test('DMD and LGMD: cards that ask us, at the anchors the old pages forward to', () => {
   for (const id of ['dmd', 'lgmd']) {
     assert.ok($(`#${id}`).is('.kit-ask'), id);
-    assert.equal($(`#${id} a`).attr('href'), '/contact/', id);
+    assert.equal($(`#${id} a`).attr('href'), `/contact/?condition=${{ dmd: 'duchenne-muscular-dystrophy', lgmd: 'limb-girdle-muscular-dystrophy' }[id]}`, id);
+    assert.ok($(`#${id} a`).is('[data-enquire][data-condition]'), `${id}: opens the enquiry form, the condition ticked`);
     assert.equal(text($(`#${id} .kit-more`)), 'Talk to us', id);
   }
 });
@@ -67,7 +68,7 @@ test('DMD and LGMD: cards that ask us, at the anchors the old pages forward to',
 test('Develop a test with us is the page\'s main ask; Under development names the two families', () => {
   assert.deepEqual($('#develop .develop-path h3').map((i, h) => text(h).replace(/^\d+/, '')).get(), ['Brief', 'Feasibility', 'Development', 'Validation', 'Rollout']);
   assert.equal($('#develop .develop-when li').length, 3);
-  assert.deepEqual($('#develop .btn-solid').map((i, a) => [[text(a), $(a).attr('href')]]).get(), [['Propose a condition', '/contact/']]);
+  assert.deepEqual($('#develop .btn-solid').map((i, a) => [[text(a), $(a).attr('href'), $(a).attr('data-topic')]]).get(), [['Propose a condition', '/contact/?topic=develop', 'develop']]);
   assert.deepEqual($('#in-development .next-kit h3').map((i, h) => text(h)).get(), ['Blood coagulation panel', 'Pharmacogenomics']);
   assert.equal($('#in-development .next-tag').length, 2);
   assert.equal($('#in-development svg.ghost-box[aria-hidden=true]').length, 2);

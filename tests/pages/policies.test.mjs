@@ -42,16 +42,18 @@ test('privacy and terms: no "Last updated" line until a date is supplied', () =>
 test('privacy: what we collect, without the typefaces line (self-hosted), and the analytics line', () => {
   const $ = load('/privacy/');
   const items = texts($, '#what-we-collect li');
-  assert.deepEqual(items.map((s) => s.split('.')[0]), ['What you send us', 'What the server records', 'Analytics']);
+  assert.deepEqual(items.map((s) => s.split('.')[0]), ['What you send us', 'The enquiry form', 'What the server records', 'Analytics']);
+  // The form's provider is named (26 October 2026: Fillout), and when its page loads.
+  assert.match(items[1], /Fillout \(fillout\.com\)/);
   assert.ok(!/Google Fonts|typeface/i.test($('main').text()));
   assert.equal(SITE.analytics ?? null, null);
-  assert.equal(items[2], 'Analytics. We do not use analytics or advertising trackers.');
-  assert.equal(items[1], 'What the server records. Like most websites, ours is hosted by another company, whose servers record the internet address a request comes from, the page asked for and the time.');
+  assert.equal(items[3], 'Analytics. We do not use analytics or advertising trackers.');
+  assert.equal(items[2], 'What the server records. Like most websites, ours is hosted by another company, whose servers record the internet address a request comes from, the page asked for and the time.');
 });
 
 test('privacy: sentences that need their missing facts are left out, the rest read whole', () => {
   const $ = load('/privacy/');
-  assert.equal(text($, '#who-sees-it p'), 'The members of our staff who handle enquiries, and the companies that host our website and email. We disclose it to anyone else only where the law requires.');
+  assert.equal(text($, '#who-sees-it p'), 'The members of our staff who handle enquiries; Fillout, which runs our enquiry form; and the companies that host our website and email. We disclose it to anyone else only where the law requires.');
   const choices = text($, '#your-choices');
   assert.match(choices, /Write to our Grievance Officer at admin@lighteninglives\.in or at the address above\./);
   assert.ok(!/reply within|Officer,|,\s*at admin/.test(choices), choices);

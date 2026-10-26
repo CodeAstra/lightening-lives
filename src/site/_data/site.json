@@ -67,7 +67,7 @@
   ],
   "cta": {
     "text": "Partner with us",
-    "href": "/partners/"
+    "enquire": true
   },
   "footer": {
     "whatWeDo": [
@@ -147,16 +147,11 @@
     "body": "Tell us the condition you need to test for and where the testing will happen. We will take it from there.",
     "solid": {
       "text": "Partner with us",
-      "href": "/partners/"
+      "enquire": true
     },
     "line": {
       "text": "Contact us",
       "href": "/contact/"
     }
-  },
-  "forms": {
-    "_note": "The contact form posts to Web3Forms (web3forms.com, free) when web3formsKey holds the site's access key; with null it opens the visitor's email app with the enquiry written out.",
-    "web3formsKey": null,
-    "endpoint": "https://api.web3forms.com/submit"
   }
 }

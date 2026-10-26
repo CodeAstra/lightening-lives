@@ -3,12 +3,13 @@
     any of the four parts; closing.actions: true sets the four contact actions in the buttons' place
     (Partnerships, content 5.14), under the words in the same five columns, the heading then standing
     level with the words' first line. The notice for individuals follows when the page asks for it.
-    A solid button given a condition's slug in place of an href (solid: { text, condition }, a test's
-    page) is the email asking for that test, the condition named in its body (askAbout). -#}
+    The solid button opens the enquiry form where the reader is (enquire.json; the enquire filter):
+    solid: { text, enquire: true }, or with what it knows, { text, who | condition | topic } (a test's
+    page names its condition, Technology the dossier); one with only an href is a plain link. -#}
 {%- from "actions.njk" import actionList with context -%}
 {%- set ask = closing or {} -%}
 {%- set solid = ask.solid or site.closing.solid -%}
-{%- if solid.condition %}{% set solid = { text: solid.text, href: solid.condition | askAbout(site.email) } %}{% endif -%}
+{%- set solidAttrs = ({ who: solid.who, condition: solid.condition, topic: solid.topic } | enquire) if (solid.enquire or solid.who or solid.condition or solid.topic) else ('href="' + solid.href + '"') -%}
 {%- set line = ask.line or site.closing.line -%}
 <section class="section bg-paper closing" aria-labelledby="closing-h">
   <div class="wrap">
@@ -20,7 +21,7 @@
         {{ actionList("mt-6") }}
         {%- else %}
         <div class="mt-6 flex flex-wrap gap-3">
-          <a class="btn btn-solid" href="{{ solid.href }}">{{ solid.text | unbracket }}</a>
+          <a class="btn btn-solid" {{ solidAttrs | safe }}>{{ solid.text | unbracket }}</a>
           <a class="btn btn-line" href="{{ line.href }}">{{ line.text }}</a>
         </div>
         {%- endif %}

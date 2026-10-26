@@ -45,7 +45,8 @@ test('the opening: heading, lead with the category, buttons, the proof with icon
   assert.equal(text('.hero-lead'), 'Genetic and molecular diagnostics from a dried blood spot: one test to screen and confirm, patient, carrier or unaffected, built to the REASSURED standard.');
   assert.ok(text('.hero-lead').split(' ').length <= 25, 'R1: the home lead is at most 25 words');
   assert.equal($('.hero-lead a.lead-link').attr('href'), '#reassured');
-  assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/partners/'], ['How the test works', '/technology/']]);
+  assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/contact/'], ['How the test works', '/technology/']]);
+  assert.equal($('.hero-actions a').first().attr('data-enquire'), '', 'opens the enquiry form');
   assert.ok($('.hero-actions a').first().is('.btn-solid') && $('.hero-actions a').last().is('.btn-line'));
   // The proof as credentials (25 October 2026, evening): each a badge led by a mark of its kind, and a
   // link to where it can be checked.

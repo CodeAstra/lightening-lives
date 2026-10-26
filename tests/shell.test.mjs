@@ -30,7 +30,9 @@ test('every page has the shell', () => {
     assert.equal($('header details.nav-drop, header .menu-sub').length, 0, `${url}: no dropdown`);
     for (const nav of ['nav.site-nav', 'details.menu .menu-panel']) {
       assert.equal($(`header ${nav} .btn-solid`).length, 1, `${url} ${nav}: one call to action`);
-      assert.equal($(`header ${nav} .btn-solid`).attr('href'), '/partners/', url);
+      // One click to the enquiry form, where the reader is (26 October 2026); Contact without script.
+      assert.equal($(`header ${nav} .btn-solid`).attr('href'), '/contact/', url);
+      assert.equal($(`header ${nav} .btn-solid`).attr('data-enquire'), '', url);
       assert.equal($(`header ${nav} .btn-solid`).text().trim(), 'Partner with us', url);
     }
     const current = $('header nav.site-nav a.nav-link[aria-current=page]').map((i, a) => $(a).attr('href')).get();

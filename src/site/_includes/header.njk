@@ -11,7 +11,7 @@
     {%- for link in site.nav %}
     <a class="nav-link" href="{{ link.href }}"{% if page.url.startsWith(link.href) %} aria-current="page"{% endif %}>{{ link.text }}</a>
     {%- endfor %}
-    <a class="btn btn-solid ml-3" href="{{ site.cta.href }}"{% if page.url.startsWith(site.cta.href) %} aria-current="page"{% endif %}>{{ site.cta.text }}</a>
+    <a class="btn btn-solid ml-3" {{ {} | enquire | safe }}>{{ site.cta.text }}</a>
   </nav>
   <details class="menu" data-menu>
     <summary class="btn btn-line bg-mist" aria-label="Menu"><span class="menu-open">Menu</span><span class="menu-close">Close</span></summary>
@@ -20,7 +20,7 @@
         {%- for link in site.nav %}
         <li><a class="nav-link" href="{{ link.href }}"{% if page.url.startsWith(link.href) %} aria-current="page"{% endif %}>{{ link.text }}</a></li>
         {%- endfor %}
-        <li class="pt-2"><a class="btn btn-solid w-full" href="{{ site.cta.href }}"{% if page.url.startsWith(site.cta.href) %} aria-current="page"{% endif %}>{{ site.cta.text }}</a></li>
+        <li class="pt-2"><a class="btn btn-solid w-full" {{ {} | enquire | safe }}>{{ site.cta.text }}</a></li>
       </ul>
     </nav>
   </details>

@@ -2285,47 +2285,8 @@
   .media-channel small { display: block; font-size: 0.875rem; color: var(--moss); }
   .media-channel > .icon { color: var(--leaf); }
 
-  /* Contact: who you are, then the form, on one paper sheet. */
+  /* Contact: the enquiry form in the page (enquire.njk; styled with the dialog's, at the end). */
   .page-open + .section.contact-form-band { padding-top: 0.5rem; }
-  .enquiry { display: grid; gap: 1.75rem; padding: clamp(1.25rem, 3.5vw, 2.5rem); background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
-  .enquiry fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
-  .enquiry legend { margin-bottom: 0.75rem; padding: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.125rem; color: var(--canopy); }
-  .enquiry legend small { font-family: var(--font-sans); font-stretch: 100%; font-weight: 400; font-size: 0.875rem; color: var(--moss); }
-  .who-choices { display: grid; gap: 0.75rem; }
-  @media (min-width: 40rem) { .who-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 72rem) { .who-choices { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  .who-choice { position: relative; display: block; cursor: pointer; }
-  .who-choice input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-  .who-face { display: grid; gap: 0.35rem; height: 100%; padding: 1rem 1.1rem 1.1rem; background: var(--stone); border: 0.094rem solid var(--line); border-radius: var(--radius); transition: border-color 0.16s ease, background-color 0.16s ease; }
-  .who-face .icon-tile { margin-bottom: 0.3rem; }
-  .who-label { font-weight: 700; color: var(--canopy); }
-  .who-line { font-size: 0.875rem; color: var(--moss); }
-  .who-choice:hover .who-face { border-color: color-mix(in srgb, var(--leaf) 55%, transparent); }
-  .who-choice input:checked + .who-face { background: var(--sprout); border-color: var(--leaf); box-shadow: inset 0 0 0 0.0625rem var(--leaf); }
-  .who-choice input:checked + .who-face .icon-tile { background: var(--leaf); color: var(--paper); }
-  .who-choice input:focus-visible + .who-face { outline: 0.1875rem solid var(--canopy); outline-offset: 0.125rem; }
-  .enquiry-fields { display: grid; gap: 1rem 1.25rem; }
-  @media (min-width: 40rem) { .enquiry-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .field { display: grid; gap: 0.4rem; }
-  .field > span { font-size: 0.9375rem; font-weight: 700; color: var(--canopy); }
-  .field > span small { font-weight: 400; color: var(--moss); }
-  .field input, .field textarea { width: 100%; min-height: 2.875rem; padding: 0.6rem 0.8rem; font: inherit; color: var(--canopy); background: var(--paper); border: 0.0625rem solid color-mix(in srgb, var(--canopy) 30%, transparent); border-radius: var(--radius); transition: border-color 0.16s ease, box-shadow 0.16s ease; }
-  .field textarea { resize: vertical; min-height: 8rem; }
-  .field input::placeholder, .field textarea::placeholder { color: color-mix(in srgb, var(--moss) 75%, transparent); }
-  .field input:focus, .field textarea:focus { outline: none; border-color: var(--leaf); box-shadow: 0 0 0 0.1875rem color-mix(in srgb, var(--leaf) 22%, transparent); }
-  .field input:user-invalid, .field textarea:user-invalid { border-color: var(--drop); }
-  .condition-checks { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .check { position: relative; cursor: pointer; }
-  .check input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-  .check span { display: inline-flex; align-items: center; min-height: 2.5rem; padding: 0.4rem 0.85rem; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); font-size: 0.9375rem; font-weight: 600; color: var(--canopy); transition: background-color 0.16s ease, border-color 0.16s ease; }
-  .check input:checked + span { background: var(--sprout); border-color: var(--leaf); color: var(--leaf); }
-  .check input:focus-visible + span { outline: 0.1875rem solid var(--canopy); outline-offset: 0.125rem; }
-  .enquiry-send { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 0.5rem; border-top: 0.0625rem solid var(--line); }
-  .enquiry-consent { margin: 0; font-size: 0.875rem; color: var(--moss); }
-  .enquiry-send .btn { gap: 0.5rem; }
-  .enquiry-trap { position: absolute; left: -999rem; width: 1px; height: 1px; }
-  .enquiry-status { margin: 0; padding: 0.85rem 1rem; border-radius: var(--radius); background: color-mix(in srgb, var(--sun) 28%, var(--paper)); color: var(--canopy); font-weight: 600; }
-  .enquiry-status.is-error { background: color-mix(in srgb, var(--drop) 12%, var(--paper)); }
   /* Contact: the ways to reach us, and the two addresses. */
   .direct { display: grid; gap: 1.5rem; align-items: start; }
   @media (min-width: 64rem) { .direct { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 3rem; } }
@@ -2948,3 +2909,50 @@ main p { text-wrap: pretty; }
 .pswp-ll-title { font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.2; letter-spacing: -0.01em; }
 .pswp-ll-body { max-width: 40rem; font-size: 0.9375rem; line-height: 1.45; color: rgba(240, 249, 255, 0.78); }
 @media (max-width: 39.99rem) { .pswp-ll-body { display: none; } }
+@layer components {
+  /* The enquiry form (enquire.njk, enquire.js), 26 October 2026: one click from any "Partner with us".
+     A dialog on the page: a paper sheet, the site's corner, up to 44rem wide and nearly the window's
+     height, over a shade of the ink; its heading is the words of the button that opened it, with the
+     reply line under it and a close button beside. On a phone it is the whole screen. The Fillout form
+     sits in it, white on white, growing to its own height; the sheet scrolls. On Contact the same form
+     is a paper sheet in the page. */
+  .enquire { width: min(44rem, calc(100vw - 2rem)); max-width: none; max-height: calc(100dvh - 2rem); margin: auto; padding: 0; border: 0; border-radius: var(--radius); background: var(--paper); color: var(--canopy); box-shadow: 0 1.5rem 4rem -1.5rem rgba(6, 31, 49, 0.55); overflow: hidden; }
+  .enquire::backdrop { background: rgba(6, 31, 49, 0.55); }
+  .enquire[open] { display: flex; }
+  .enquire-sheet { display: flex; flex-direction: column; width: 100%; max-height: calc(100dvh - 2rem); }
+  .enquire-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.25rem 1rem 1.75rem; border-bottom: 0.0625rem solid var(--line); }
+  .enquire-title { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1.3rem, 2.2vw, 1.6rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--canopy); }
+  .enquire-lead { margin: 0.35rem 0 0; font-size: 0.9375rem; line-height: 1.45; color: var(--moss); }
+  .enquire-close { display: grid; place-items: center; flex: none; width: 2.75rem; height: 2.75rem; margin: -0.25rem -0.25rem 0 0; padding: 0; border: 0; border-radius: var(--radius); background: none; color: var(--canopy); cursor: pointer; transition: background-color 0.16s ease; }
+  .enquire-close:hover { background: var(--sprout); }
+  .enquire-close .icon { width: 1.35rem; height: 1.35rem; }
+  .enquire-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0.5rem 0.75rem 1rem; }
+  .enquire-form { position: relative; min-height: 24rem; }
+  .enquire-embed { position: relative; z-index: 1; width: 100%; min-height: 24rem; }
+  .enquire-embed iframe { display: block; width: 100%; }
+  .enquire-loading { position: absolute; inset: 0; z-index: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin: 0; font-size: 0.9375rem; color: var(--moss); }
+  .enquire-loading .icon { width: 1.25rem; height: 1.25rem; color: var(--leaf); }
+  @media (prefers-reduced-motion: no-preference) {
+    .enquire[open] { animation: enquire-in 0.24s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+    .enquire[open]::backdrop { animation: enquire-shade 0.24s ease both; }
+  }
+  @keyframes enquire-in { from { opacity: 0; translate: 0 0.75rem; } }
+  @keyframes enquire-shade { from { opacity: 0; } }
+  .enquire-failed { display: flex; gap: 0.6rem; align-items: flex-start; margin: 1rem 0.75rem 0.5rem; padding: 0.9rem 1rem; border-radius: var(--radius); background: color-mix(in srgb, var(--drop) 8%, var(--paper)); color: var(--canopy); font-size: 0.9375rem; line-height: 1.5; }
+  .enquire-failed[hidden] { display: none; }
+  .enquire-failed .icon { flex: none; width: 1.15rem; height: 1.15rem; margin-top: 0.15rem; color: var(--drop); }
+  /* No scrolling of the page under the dialog. */
+  html:has(.enquire[open]) { overflow: hidden; }
+  /* A phone: the whole screen. */
+  @media (max-width: 39.99rem) {
+    .enquire { width: 100vw; max-height: 100dvh; height: 100dvh; border-radius: 0; }
+    .enquire-sheet { max-height: 100dvh; }
+    .enquire-head { padding: 1rem 0.75rem 0.85rem 1.25rem; }
+    .enquire-body { padding-inline: 0.25rem; }
+  }
+  /* Contact: the same form, a paper sheet in the page. */
+  .enquire-inline { max-width: 52rem; margin-inline: auto; padding: clamp(0.5rem, 2vw, 1.5rem); background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
+  .enquire-inline .enquire-form { min-height: 28rem; }
+  .enquire-noscript { display: flex; gap: 0.6rem; align-items: flex-start; margin: 0; padding: 1.25rem; font-size: 1rem; }
+  .enquire-noscript .icon { flex: none; width: 1.25rem; height: 1.25rem; margin-top: 0.2rem; color: var(--leaf); }
+}

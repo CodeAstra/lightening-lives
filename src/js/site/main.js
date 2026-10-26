@@ -1,5 +1,5 @@
 // The site's behaviour, ported from the approved design (designs/src/js/lumen/main.js): the menu,
-// REASSURED, the map, and loading the opening film; and the contact page's condition (contact.js)
+// REASSURED, the map, and loading the opening film; and the enquiry form (enquire.js)
 // and the Not found page's old addresses (not-found.js), each a few hundred bytes, so it rides in this bundle rather than costing a request of its own). Each
 // part does nothing on a page without its markup. The film is a separate bundle (it carries three.js) and is only fetched when it will play.
 
@@ -8,7 +8,7 @@ import { STATES } from '../map/india-states.js';
 import { BORDERS } from '../map/india-borders.js';
 import { LAYERS, LAYER_ORDER } from '../map/map-layers.js';
 import { initMotion } from './motion.js';
-import { initContact } from './contact.js';
+import { initEnquire } from './enquire.js';
 import { initNotFound, initLostGel } from './not-found.js';
 
 // This file is loaded as a module, where document.currentScript is null: the film's bundle is found
@@ -839,7 +839,7 @@ ready(() => {
   initMosaic();
   initFilm();
   initMotion();
-  initContact();
+  initEnquire();
   initNotFound();
   initLostGel();
 });

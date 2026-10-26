@@ -31,7 +31,7 @@ closing:
   <section id="start" class="section on-mist partner-start" aria-label="Three ways to partner">
     <div class="wrap">
       {{ doorList(true) }}
-      <p class="doors-else">{% icon "message-circle" %}<span>Something else? Research, a new test or the media: <a class="link" href="/contact/">talk to us {{ arrow | safe }}</a></span></p>
+      <p class="doors-else">{% icon "message-circle" %}<span>Something else? Research, a new test or the media: <a class="link" {{ { who: "other" } | enquire | safe }}>talk to us {{ arrow | safe }}</a></span></p>
     </div>
   </section>
 
@@ -67,7 +67,7 @@ closing:
         <li><span class="flow-n">3</span><p><strong>Supply and ongoing support</strong> as your laboratory runs the tests.</p></li>
       </ol>
       <div class="audience-act">
-        <a class="btn btn-line" href="/contact/">Talk to our scientific team</a>
+        <a class="btn btn-line" {{ { who: "laboratory" } | enquire | safe }}>Talk to our scientific team</a>
       </div>
     </div>
   </section>
@@ -99,7 +99,7 @@ closing:
         {%- set names = [] %}{% for st in work.states %}{% set names = (names.push(st.name), names) %}{% endfor %}
         <p class="audience-where">{% icon "map-pin" %}<span>Population and newborn screening at 15 sites in nine states and Delhi: {{ names.slice(0, -1).join(", ") }} and {{ names | last }}.</span></p>
         <div class="audience-act">
-          <a class="btn btn-line" href="/contact/">Plan a programme</a>
+          <a class="btn btn-line" {{ { who: "programme" } | enquire | safe }}>Plan a programme</a>
           <a class="link" href="/our-work/">Our work {{ arrow | safe }}</a>
         </div>
       </div>
@@ -132,7 +132,7 @@ closing:
         </div>
       </div>
       <div class="audience-act">
-        <a class="btn btn-line" href="/contact/">Fund a programme</a>
+        <a class="btn btn-line" {{ { who: "funder" } | enquire | safe }}>Fund a programme</a>
       </div>
     </div>
   </section>

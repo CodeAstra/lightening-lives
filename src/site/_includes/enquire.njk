@@ -1,0 +1,40 @@
+{#- The enquiry form (26 October 2026; src/site/_data/enquire.json, main.js initEnquire). One place to
+    ask, from every "Partner with us" and "talk to us" button: the dialog below opens where the reader
+    is, with the Fillout form in it, filled in with what the button knew. The form is fetched from
+    Fillout only when it is first opened, so no page carries another host's script until then. If it
+    cannot be fetched, the dialog says so and gives the form's own address and the email. Contact shows
+    the same form in its page (enquireInline). -#}
+{%- macro labels() -%}
+data-form-id="{{ enquire.id }}" data-form-script="{{ enquire.script }}" data-labels="{{ { who: enquire.who, condition: enquire.conditions, topic: enquire.topics } | dump }}"
+{%- endmacro -%}
+
+{%- macro failed() -%}
+<p class="enquire-failed" data-enquire-failed hidden>{% icon "triangle-alert" %}<span>The form could not be loaded here. <a class="link" href="{{ enquire.url }}" target="_blank" rel="noopener">Open it in a new tab</a>, or write to <a class="link" href="mailto:{{ site.email }}">{{ site.email }}</a>.</span></p>
+{%- endmacro -%}
+
+{%- macro enquireDialog() -%}
+<dialog class="enquire" aria-labelledby="enquire-h" data-enquire-dialog {{ labels() }}>
+  <div class="enquire-sheet">
+    <div class="enquire-head">
+      <div>
+        <h2 id="enquire-h" class="enquire-title" data-enquire-title>{{ enquire.title }}</h2>
+        <p class="enquire-lead">{{ enquire.lead }}</p>
+      </div>
+      <button type="button" class="enquire-close" data-enquire-close aria-label="Close the form">{% icon "x" %}</button>
+    </div>
+    <div class="enquire-body">
+      <div class="enquire-form" data-enquire-form><p class="enquire-loading" data-enquire-loading>{% icon "loader-circle" %}<span>Loading the form…</span></p></div>
+      {{ failed() }}
+    </div>
+  </div>
+</dialog>
+{%- endmacro -%}
+
+{%- macro enquireInline() -%}
+<div class="enquire-inline" data-enquire-inline {{ labels() }}>
+  <div class="enquire-form" data-enquire-form>
+    <p class="enquire-noscript">{% icon "file-text" %}<span><a class="link" href="{{ enquire.url }}" rel="noopener">Open the enquiry form</a>, or write to <a class="link" href="mailto:{{ site.email }}">{{ site.email }}</a>.</span></p>
+  </div>
+  {{ failed() }}
+</div>
+{%- endmacro -%}

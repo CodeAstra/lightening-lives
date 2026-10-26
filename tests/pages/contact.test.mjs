@@ -1,25 +1,20 @@
-// Contact (content file 5.9; three sections since 25 October 2026, the reviewer's site map, 3.1): who
-// you are (four choices) and the form, direct contact and the addresses, the notice for individuals.
-// The form posts to Web3Forms with a key in site.json, otherwise opens the visitor's email app.
+// Contact (content file 5.9; three sections since 25 October 2026, the reviewer's site map, 3.1): the
+// enquiry form, direct contact and the addresses, the notice for individuals. Since 26 October 2026 the
+// form is the company's Fillout form (src/site/_data/enquire.json): set in this page, and opened in a
+// dialog from every other page's "Partner with us" (enquire.njk, src/js/site/enquire.js), filled in
+// with what the button knew. No page carries Fillout's script until the form is opened.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { exists, load } from '../helpers.mjs';
-import { CONDITIONS, ENQUIRIES, enquiryEmail, initContact, withCondition } from '../../src/js/site/contact.js';
+import { load } from '../helpers.mjs';
+import { paramsFor, paramsFromSearch } from '../../src/js/site/enquire.js';
 
 let cached;
 const $ = (...args) => (cached ??= load('/contact/'))(...args);
 const text = (el) => $(el).text().replace(/\s+/g, ' ').trim();
-const texts = (selector) => $(selector).map((i, el) => text(el)).get();
-const ACTIONS = JSON.parse(readFileSync('src/site/_data/actions.json', 'utf8'));
 const SITE = JSON.parse(readFileSync('src/site/_data/site.json', 'utf8'));
-const MAILTO = 'mailto:admin@lighteninglives.in?subject=';
-const HREFS = [
-  `${MAILTO}Partnership`,
-  `${MAILTO}Request%20tests`,
-  `${MAILTO}Awareness%20and%20counselling`,
-  `${MAILTO}Sales`,
-];
+const ENQUIRE = JSON.parse(readFileSync('src/site/_data/enquire.json', 'utf8'));
+const LABELS = { who: ENQUIRE.who, condition: ENQUIRE.conditions, topic: ENQUIRE.topics };
 
 test('the page: title, a two-tone heading, no label, no closing band asking for contact again', () => {
   assert.equal($('title').text(), 'Contact Lightening Lives | Hyderabad, India');
@@ -30,32 +25,37 @@ test('the page: title, a two-tone heading, no label, no closing band asking for 
   assert.match($('main').text(), /We work with institutions and don't test individuals/);
 });
 
-test('who you are: four choices, the first chosen, each a radio the form sends', () => {
-  const radios = $('form[data-enquiry] input[type=radio][name=enquiry]');
-  assert.deepEqual(radios.map((i, r) => $(r).attr('value')).get(), [...ENQUIRIES.keys()]);
-  assert.ok(radios.first().is('[checked]'));
-  assert.deepEqual($('.who-label').map((i, l) => text(l)).get(), [...ENQUIRIES.values()]);
+test('the form: the company\'s Fillout form in the page, and without script a link to it and the email', () => {
+  const host = $('#enquiry [data-enquire-inline]');
+  assert.equal(host.length, 1);
+  assert.equal(host.attr('data-form-id'), ENQUIRE.id);
+  assert.equal(host.attr('data-form-script'), ENQUIRE.script);
+  assert.deepEqual(JSON.parse(host.attr('data-labels')), LABELS);
+  assert.equal(host.find('.enquire-noscript a').first().attr('href'), ENQUIRE.url);
+  assert.equal(host.find(`.enquire-noscript a[href="mailto:${SITE.email}"]`).length, 1);
+  // If Fillout cannot be reached, the way round is in the page, waiting.
+  assert.ok(host.find('[data-enquire-failed]').is('[hidden]'));
+  // No page carries another host's script: Fillout's is fetched only when the form is shown.
+  assert.equal($(`script[src^="https://server.fillout.com"]`).length, 0);
+  assert.equal($('form').length, 0, 'the old mailto form is gone');
 });
 
-test('the form: its fields, labelled, the required ones required; the conditions; consent and a hidden bot check', () => {
-  const form = $('form[data-enquiry]');
-  for (const name of ['name', 'organisation', 'email', 'message']) assert.ok(form.find(`[name=${name}]`).is('[required]'), name);
-  for (const name of ['role', 'state', 'phone']) assert.ok(!form.find(`[name=${name}]`).is('[required]'), name);
-  form.find('input:not([type=hidden]):not([name=botcheck]):not([type=radio]):not([type=checkbox]), textarea').each((i, el) => assert.ok($(el).closest('label').length, $(el).attr('name')));
-  assert.deepEqual(form.find('input[name="conditions[]"]').map((i, c) => $(c).attr('data-slug')).get(), [...CONDITIONS.keys(), 'other']);
-  assert.equal(form.find('a[href="/privacy/"]').length, 1);
-  assert.equal(form.find('input[name=botcheck]').attr('tabindex'), '-1');
-});
-
-test('without a Web3Forms key the form is a mailto form to the company; with one it posts to Web3Forms', () => {
-  const form = $('form[data-enquiry]');
-  if (SITE.forms.web3formsKey) {
-    assert.equal(form.attr('action'), SITE.forms.endpoint);
-    assert.equal(form.find('input[name=access_key]').attr('value'), SITE.forms.web3formsKey);
-  } else {
-    assert.equal(form.attr('action'), `mailto:${SITE.email}?subject=Enquiry`);
-    assert.equal(form.attr('data-mode'), 'email');
-    assert.equal(form.find('input[name=access_key]').length, 0);
+test('every page has the dialog the buttons open, and the buttons say what they know', () => {
+  for (const url of ['/', '/partners/', '/solutions/', '/solutions/sickle-cell-anaemia/', '/technology/']) {
+    const page = load(url);
+    const dialog = page('dialog[data-enquire-dialog]');
+    assert.equal(dialog.length, 1, url);
+    assert.equal(dialog.attr('aria-labelledby'), 'enquire-h', url);
+    assert.equal(page('#enquire-h').text().trim(), ENQUIRE.title, url);
+    assert.equal(dialog.find('[data-enquire-close]').attr('aria-label'), 'Close the form', url);
+    page('[data-enquire]').each((i, a) => {
+      const href = page(a).attr('href');
+      assert.match(href, /^\/contact\/(\?|$)/, `${url}: ${href}`);
+      const who = a.attribs['data-enquire'];
+      if (who) assert.ok(ENQUIRE.who[who], `${url}: who ${who}`);
+      if (a.attribs['data-condition']) assert.ok(ENQUIRE.conditions[a.attribs['data-condition']], `${url}: ${a.attribs['data-condition']}`);
+      if (a.attribs['data-topic']) assert.ok(ENQUIRE.topics[a.attribs['data-topic']], `${url}: ${a.attribs['data-topic']}`);
+    });
   }
 });
 
@@ -66,82 +66,27 @@ test('direct: email, call and WhatsApp, and both addresses with "Open in maps"',
   assert.doesNotMatch($('main').clone().find('script').remove().end().text(), /\[|CONFIRM|TBC/);
 });
 
-const ASK = '/contact/?about=tests&condition=sickle-cell-anaemia';
-
-test('a test page\'s "Ask about LitLife™-SCA" link resolves to this page', () => {
-  const url = new URL(ASK, 'https://lighteninglives.in');
-  assert.equal(url.pathname, '/contact/');
-  assert.ok(exists(url.pathname));
+test('a button sends the form the labels for what it knows, and the page it was opened from', () => {
+  const link = (data) => ({ dataset: data });
+  assert.deepEqual(paramsFor(link({ enquire: 'programme' }), LABELS, '/partners/'), [['enquiry', 'A public health programme'], ['source', '/partners/']]);
+  assert.deepEqual(paramsFor(link({ enquire: '', condition: 'sickle-cell-anaemia' }), LABELS, '/solutions/sickle-cell-anaemia/'), [['condition', 'Sickle cell anaemia'], ['source', '/solutions/sickle-cell-anaemia/']]);
+  assert.deepEqual(paramsFor(link({ enquire: '', topic: 'dossier' }), LABELS, '/technology/'), [['topic', 'The technical dossier'], ['source', '/technology/']]);
+  assert.deepEqual(paramsFor(link({ enquire: '' }), LABELS, '/'), [['source', '/']]);
 });
 
-test('withCondition adds the condition as the body of each of the four emails', () => {
-  const search = new URL(ASK, 'https://lighteninglives.in').search;
-  assert.deepEqual(HREFS.map((href) => withCondition(href, search)), HREFS.map((href) => `${href}&body=Condition%3A%20Sickle%20cell%20anaemia`));
-  // Decoded, the body reads as the brief writes it.
-  assert.equal(decodeURIComponent(withCondition(HREFS[1], search).split('&body=')[1]), 'Condition: Sickle cell anaemia');
+test('anything a button or the address names that enquire.json does not know is left out', () => {
+  const link = (data) => ({ dataset: data });
+  assert.deepEqual(paramsFor(link({ enquire: '__proto__', condition: 'constructor', topic: '<script>' }), LABELS, '/'), [['source', '/']]);
+  assert.deepEqual(paramsFromSearch('?enquiry=funder&condition=thalassaemia&topic=nope', LABELS, '/contact/'), [['enquiry', 'A CSR team or NGO'], ['condition', 'Beta thalassaemia'], ['source', '/contact/']]);
+  assert.deepEqual(paramsFromSearch('?enquiry=%3Cimg%3E', LABELS, '/contact/'), [['source', '/contact/']]);
 });
 
-test('the five conditions, by slug, named as 5.15\'s list names them', () => {
-  assert.deepEqual([...CONDITIONS], [
-    ['sickle-cell-anaemia', 'Sickle cell anaemia'],
-    ['thalassaemia', 'Thalassaemia, HbD or HbE'],
-    ['spinal-muscular-atrophy', 'Spinal muscular atrophy'],
-    ['duchenne-muscular-dystrophy', 'Duchenne muscular dystrophy'],
-    ['limb-girdle-muscular-dystrophy', 'Limb-girdle muscular dystrophy']]);
-  assert.equal(withCondition(HREFS[0], '?condition=thalassaemia'), `${HREFS[0]}&body=${encodeURIComponent('Condition: Thalassaemia, HbD or HbE')}`);
-});
-
-test('an unknown condition, none, or anything that is not a slug leaves the emails as they are', () => {
-  for (const search of ['', '?about=tests', '?condition=', '?condition=cancer', '?condition=__proto__', '?condition=constructor', '?condition=toString',
-    '?condition=%3Cscript%3Ealert(1)%3C%2Fscript%3E', '?condition=Sickle-Cell-Anaemia'])
-    assert.equal(withCondition(HREFS[1], search), HREFS[1], search);
-});
-
-test('withCondition replaces a body already there rather than adding a second, and leaves other links alone', () => {
-  const once = withCondition(HREFS[0], '?condition=sickle-cell-anaemia');
-  assert.equal(withCondition(once, '?condition=spinal-muscular-atrophy'), `${HREFS[0]}&body=${encodeURIComponent('Condition: Spinal muscular atrophy')}`);
-  assert.equal(withCondition('/partners/', '?condition=sickle-cell-anaemia'), '/partners/');
-  assert.equal(withCondition('https://example.org/?a=1', '?condition=sickle-cell-anaemia'), 'https://example.org/?a=1');
-});
-
-// A form with only what initContact reads at load: the radios and the condition boxes.
-function fakeForm() {
-  const boxes = {};
-  const el = () => ({ checked: false });
-  return {
-    boxes,
-    querySelector(selector) {
-      if (selector === '[data-enquiry]') return this;
-      if (selector === '[data-enquiry-status]') return { hidden: true, classList: { toggle() {} } };
-      const m = selector.match(/value="([^"]+)"|data-slug="([^"]+)"/);
-      if (!m) return null;
-      const key = m[1] || m[2];
-      return (boxes[key] ??= el());
-    },
-    addEventListener() {},
-  };
-}
-
-test('initContact sets who the visitor is and ticks the condition the address names, and nothing for unknown values', () => {
-  const doc = fakeForm();
-  initContact(doc, '?enquiry=programme&condition=sickle-cell-anaemia');
-  assert.equal(doc.boxes.programme.checked, true);
-  assert.equal(doc.boxes['sickle-cell-anaemia'].checked, true);
-  const other = fakeForm();
-  initContact(other, '?enquiry=__proto__&condition=%3Cscript%3E');
-  assert.deepEqual(Object.keys(other.boxes), []);
-});
-
-test('the enquiry as an email: its subject names who is asking, its body one field to a line, empty fields left out', () => {
-  const { subject, body } = enquiryEmail({ enquiry: 'funder', name: 'A. Rao', organisation: 'A Trust', email: 'a@example.org', phone: '', conditions: ['Sickle cell anaemia', 'Spinal muscular atrophy'], message: ' Two districts. ' });
-  assert.equal(subject, 'Enquiry: CSR or NGO');
-  assert.equal(body, 'Who: CSR or NGO\nName: A. Rao\nOrganisation: A Trust\nEmail: a@example.org\nConditions: Sickle cell anaemia, Spinal muscular atrophy\n\nTwo districts.');
-  assert.equal(enquiryEmail({ enquiry: 'nonsense', message: 'x' }).subject, 'Enquiry: Enquiry');
-});
-
-test('the page\'s behaviour loads contact.js; the script never writes markup', () => {
-  assert.match(readFileSync('src/js/site/main.js', 'utf8'), /import \{ initContact \} from '\.\/contact\.js'/);
-  assert.equal($('[data-contact] form[data-enquiry]').length, 1);
-  const code = readFileSync('src/js/site/contact.js', 'utf8').replace(/\/\/.*$/gm, '');
-  assert.doesNotMatch(code, /innerHTML|outerHTML|insertAdjacentHTML|document\.write/);
+test('the page\'s behaviour loads enquire.js, which writes no markup from text', () => {
+  assert.match(readFileSync('src/js/site/main.js', 'utf8'), /import \{ initEnquire \} from '\.\/enquire\.js'/);
+  const code = readFileSync('src/js/site/enquire.js', 'utf8').replace(/\/\/.*$/gm, '');
+  assert.doesNotMatch(code, /innerHTML|insertAdjacentHTML|outerHTML|document\.write/);
+  // The dialog closes on Escape (a modal dialog), its button and a click outside, and gives the focus back.
+  assert.match(code, /showModal\(\)/);
+  assert.match(code, /addEventListener\('close'/);
+  assert.match(code, /event\.target === dialog/);
 });
