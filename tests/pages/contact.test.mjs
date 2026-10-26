@@ -17,7 +17,7 @@ const ENQUIRE = JSON.parse(readFileSync('src/site/_data/enquire.json', 'utf8'));
 const LABELS = { who: ENQUIRE.who, condition: ENQUIRE.conditions, topic: ENQUIRE.topics };
 
 test('the page: title, a two-tone heading, no label, no closing band asking for contact again', () => {
-  assert.equal($('title').text(), 'Contact Lightening Lives | Hyderabad, India');
+  assert.equal($('title').text(), 'Contact our genetic testing team | Lightening Lives');
   assert.equal(text('h1'), 'Talk to us. Tell us who you are and what you need.');
   assert.equal($('.page-open .label').length, 0);
   assert.equal($('.closing').length, 0);

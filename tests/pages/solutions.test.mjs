@@ -12,7 +12,7 @@ const KITS = JSON.parse(readFileSync('src/site/_data/kits.json', 'utf8'));
 const all = KITS.families.flatMap((f) => f.kits);
 
 test('the page: a two-tone heading that says what we have and what we can do, and no label over it', () => {
-  assert.equal($('title').text(), 'Solutions: LitLife™ genetic test kits | Lightening Lives');
+  assert.equal($('title').text(), 'Sickle cell, thalassaemia and SMA tests | Lightening Lives');
   assert.equal(text('h1'), 'Kits we have developed. Solutions for a wide range of diagnostic needs.');
   assert.equal(text('h1 .h-mark'), 'Solutions for a wide range of diagnostic needs.');
   assert.equal($('.page-open .label').length, 0);

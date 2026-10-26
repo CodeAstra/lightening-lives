@@ -15,8 +15,8 @@ const CRIT = JSON.parse(readFileSync('src/site/_data/reassuredCopy.json', 'utf8'
 const PARTNERS = JSON.parse(readFileSync('src/site/_data/partners.json', 'utf8'));
 
 test('the page: title, description, and no inner-page opening or closing band', () => {
-  assert.equal($('title').text(), 'Lightening Lives | Genetic testing that reaches every community');
-  assert.equal($('meta[name=description]').attr('content'), 'Genetic and molecular diagnostics from a dried blood spot: REASSURED tests that screen and confirm inherited disorders in one test. ICMR approved.');
+  assert.equal($('title').text(), 'Genetic testing for every community in India | Lightening Lives');
+  assert.equal($('meta[name=description]').attr('content'), 'Genetic testing for inherited conditions, from a dried blood spot. Currently for hospitals, diagnostic labs, public health programmes and NGOs in India.');
   assert.equal($('.page-open').length, 0);
   assert.equal($('.closing').length, 0);
 });

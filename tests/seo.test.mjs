@@ -94,8 +94,9 @@ test('llms.txt: the company in one paragraph, every public page, then the facts 
   const blocks = llms.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
   assert.equal(blocks[0], '# Lightening Lives');
   assert.equal(blocks[1], `> ${site.about}`);
-  assert.equal(blocks[2], '## Pages');
-  const pageLines = blocks[3].split('\n');
+  assert.equal(blocks[2], site.search.worksWith);
+  assert.equal(blocks[3], '## Pages');
+  const pageLines = blocks[4].split('\n');
   assert.deepEqual(pageLines.map((l) => l.match(/\]\((.+?)\)/)?.[1]).sort(), pages().map((u) => DOMAIN + u).sort());
   for (const line of pageLines) {
     const m = line.match(/^- \[(.+?)\]\((.+?)\): (.+)$/);
@@ -104,8 +105,8 @@ test('llms.txt: the company in one paragraph, every public page, then the facts 
     assert.equal(m[1], NAMES[new URL(m[2]).pathname]);
     assert.equal(m[3], $('meta[name=description]').attr('content'));
   }
-  assert.equal(blocks[4], '## Facts');
-  const facts = blocks.slice(5).join('\n');
+  assert.equal(blocks[5], '## Facts');
+  const facts = blocks.slice(6).join('\n');
   // The proof (proof.njk's four items; About shows the company at a glance since 25 October 2026).
   for (const head of ['- Approved by ICMR', '- Patented in India and Japan', '- Working with CSIR-CCMB', '- Proven at 15 sites']) {
     assert.ok(facts.split('\n').some((l) => l.startsWith(`${head}: `)), head);

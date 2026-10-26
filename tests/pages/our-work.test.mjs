@@ -12,7 +12,7 @@ const SITES = JSON.parse(readFileSync('src/site/_data/sites.json', 'utf8'));
 const TOWNS = /Udaipur|Bhopal|Jamshedpur|Bilaspur|Nandurbar|Nagpur|Dhule|Valsad|Chandrapur|Mumbai|Kothagudem|Mysore|Gudalur/;
 
 test('the page: title, a two-tone heading, no label, the proof', () => {
-  assert.equal($('title').text(), 'Our work: programmes, patents and media | Lightening Lives');
+  assert.equal($('title').text(), 'Genetic screening programmes in India | Lightening Lives');
   assert.equal(text('h1'), 'In the field, in the lab, in print.');
   assert.equal($('.page-open .label').length, 0);
   assert.equal($('.page-open .page-proof li').length, 3);

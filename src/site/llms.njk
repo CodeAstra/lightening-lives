@@ -4,12 +4,14 @@ layout: false
 eleventyExcludeFromCollections: true
 ---
 {#- A text file, so its words are written as they are (| safe), not escaped as HTML.
-    For AI assistants (llmstxt.org; decision D5): the company in one paragraph, every public page by
+    For AI assistants (llmstxt.org; decision D5): the company in one paragraph and who it works with, every public page by
     its name (content 3.1) with its description, then the proof (the home page's "What stands behind
     the tests", proof.njk, word for word) and the notice for individuals. -#}
 # {{ site.name }}
 
 > {{ site.about | safe }}
+
+{{ site.search.worksWith | safe }}
 
 ## Pages
 

@@ -11,7 +11,7 @@ const text = (el) => $(el).text().replace(/\s+/g, ' ').trim();
 const texts = (selector) => $(selector).map((i, el) => text(el)).get();
 
 test('the page: title, description, a two-tone heading, no label, the proof and the dossier', () => {
-  assert.equal($('title').text(), 'How LitLife™ works: extraction-free DBS PCR | Lightening Lives');
+  assert.equal($('title').text(), 'Dried blood spot PCR, no DNA extraction | Lightening Lives');
   assert.equal(text('h1'), "Molecular diagnosis, without the molecular laboratory's burden.");
   assert.equal(text('h1 .h-mark'), "without the molecular laboratory's burden.");
   assert.equal($('.page-open .label').length, 0);

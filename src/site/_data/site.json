@@ -3,6 +3,12 @@
   "legalName": "Lightening Lives LLP",
   "tagline": "Every Life Matters",
   "about": "An innovation-driven healthcare technology company in Hyderabad. We develop molecular diagnostics for inherited blood and muscle conditions that work from a spot of blood on a card, for hospitals, laboratories and public health programmes.",
+  "search": {
+    "_note": "Read behind the scenes, not shown on the page (26 October 2026, the user's choice: the visible text, the footer's sentence above among it, stays as it is). worksWith follows that sentence in the Organization schema (disambiguatingDescription) and in llms.txt; areaServed and knowsAbout are the schema's. Content file 6.5.",
+    "worksWith": "We currently work with hospitals, diagnostic laboratories, public health programmes and NGOs across India.",
+    "areaServed": "India",
+    "knowsAbout": ["Genetic testing", "Molecular diagnostics", "Sickle cell anaemia", "Thalassaemia", "Spinal muscular atrophy", "Newborn screening", "Carrier screening", "Dried blood spot testing"]
+  },
   "words": "Innovate • Diagnose • Transform Lives",
   "domain": "https://lighteninglives.in",
   "email": "admin@lighteninglives.in",

@@ -1184,7 +1184,7 @@ A plain fact block, written for people and for AI systems alike:
 
 | Page | Main terms | Secondary |
 |---|---|---|
-| Home | genetic testing company India; REASSURED genetic test | dried blood spot genetic test |
+| Home | genetic testing in India; genetic testing company India; REASSURED genetic test | dried blood spot genetic test |
 | Technology | dried blood spot PCR; extraction-free PCR | DBS genetic testing; molecular screening |
 | Sickle cell | sickle cell anaemia test; sickle cell genetic test India | sickle cell trait test; newborn sickle cell screening; sickle cell anemia test |
 | Thalassaemia | thalassaemia carrier test; beta thalassaemia test | alpha thalassaemia test; HbE; thalassemia test India |
@@ -1223,6 +1223,30 @@ AI search tools quote pages that state facts plainly, with sources, in a stable 
 ### 6.4 Performance targets
 
 Largest Contentful Paint ≤ 2.5 s on a mid-range phone on 4G; layout shift ≤ 0.1; interaction ≤ 200 ms. The hero film and 3D scenes must not delay the headline: text first, film after. 3D loads only near its section.
+
+### 6.5 Titles and descriptions (26 October 2026)
+
+The user's choices: someone in India types "genetic testing in India", and every result says who we currently work with: hospitals, diagnostic labs, public health programmes and NGOs. The home page keeps the brand line with India added; every other page puts the words a person searches first and the brand last. These supersede the **Title** and **Meta** lines in section 5 (`tests/search.test.mjs` holds the rules).
+
+- **Fit a search result:** a title of at most 65 characters, ending "| Lightening Lives"; a description of 50 to 155 characters. The share preview repeats both.
+- **Individuals are not mentioned** in a title or description (the user: "You don't have to mention individuals"; the tests are REASSURED and may reach individuals later). The visible text, the REASSURED line and the notice for individuals among it, is unchanged.
+- **ICMR approval is claimed only for the sickle cell test,** the one approved. Premarital screening is not claimed until section 9 confirms it.
+- **Behind the scenes only:** the footer's sentence (`site.about`) stays word for word in the Organization schema and `llms.txt`; beside it, both say "We currently work with hospitals, diagnostic laboratories, public health programmes and NGOs across India." The schema adds `areaServed` India and `knowsAbout` (site.json, `search`).
+
+| Page | Title | Description |
+|---|---|---|
+| Home | Genetic testing for every community in India \| Lightening Lives | Genetic testing for inherited conditions, from a dried blood spot. Currently for hospitals, diagnostic labs, public health programmes and NGOs in India. |
+| Solutions | Sickle cell, thalassaemia and SMA tests \| Lightening Lives | LitLife™ tests from a dried blood spot for sickle cell, beta and alpha thalassaemia and SMA, for hospitals, labs and public health. New tests on request. |
+| Sickle cell | ICMR-approved sickle cell test \| Lightening Lives | LitLife™-SCA screens and confirms sickle cell anaemia in one test from a dried blood spot, newborns included. For hospitals and screening programmes. |
+| Thalassaemia | Thalassaemia carrier test, beta and alpha \| Lightening Lives | LitLife™-BThal and AlphaThal find thalassaemia carriers routine screening misses, from a dried blood spot. For hospitals, labs and screening programmes. |
+| SMA | SMA genetic test for newborn screening \| Lightening Lives | LitLife™-SMA detects the SMN1 deletion behind most spinal muscular atrophy, from a dried blood spot, no DNA extraction. For newborn screening programmes. |
+| Technology | Dried blood spot PCR, no DNA extraction \| Lightening Lives | How LitLife™ tests screen and confirm from a dried blood spot with no DNA extraction: the patented method, what a laboratory needs, and the approvals. |
+| Partners | Partner for genetic screening in India \| Lightening Lives | Hospitals, diagnostic labs, public health programmes and NGOs partner with us for genetic screening. Our partners include CSIR-CCMB and Tata Trusts. |
+| Our work | Genetic screening programmes in India \| Lightening Lives | Genetic screening in nine states and Delhi, accounts from the field, patents granted in India and Japan, and where we have presented our work. |
+| About | Genetic diagnostics company in Hyderabad \| Lightening Lives | Lightening Lives LLP develops REASSURED genetic tests. Founded by Dr. Giriraj Ratan Chandak, formerly Chief Scientist at CSIR-CCMB. ICMR approved. |
+| Contact | Contact our genetic testing team \| Lightening Lives | Talk to our scientific team about genetic testing for your hospital, diagnostic lab, public health programme or NGO. Hyderabad, India. |
+
+Privacy, Terms and the 404 page keep theirs.
 
 ---
 

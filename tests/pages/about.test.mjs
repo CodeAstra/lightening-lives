@@ -11,7 +11,7 @@ const text = (el) => $(el).text().replace(/\s+/g, ' ').trim();
 const TEAM = JSON.parse(readFileSync('src/site/_data/team.json', 'utf8'));
 
 test('the page: title, a people-first two-tone heading, no label', () => {
-  assert.equal($('title').text(), 'About us: healthcare technology from Hyderabad | Lightening Lives');
+  assert.equal($('title').text(), 'Genetic diagnostics company in Hyderabad | Lightening Lives');
   assert.equal(text('h1'), 'The scientists and the team behind the tests.');
   assert.equal($('.page-open .label').length, 0);
 });
