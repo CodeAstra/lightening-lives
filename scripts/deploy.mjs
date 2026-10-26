@@ -1,18 +1,20 @@
-// Publishes the site to GitHub Pages (26 October 2026). Pages deploys from a branch, gh-pages, which
-// holds only the built site (dist/), never the sources (no workflow of our own runs on GitHub).
-//   npm run deploy               run the tests, build for Pages, push dist/ to the gh-pages branch
-//   npm run deploy -- --dry-run  the same, but push nothing: says how many files it would publish
+// Gets the site ready to publish (26 October 2026). GitHub Actions stays off (the client's choice), so
+// GitHub Pages publishes the branch's files as they are, from chores/website-revamp's docs/ folder.
+// This runs the tests, builds for Pages and puts the built site in docs/; the user then commits and
+// pushes, and the push is the deploy.
+//   npm run deploy               test, build, then replace docs/ with the new site
+//   npm run deploy -- --dry-run  test and build, but leave docs/ as it is
 //   npm run deploy -- --skip-tests
-// Pages takes its custom domain from the CNAME file in the branch, so a wrong one here moves the site.
-// For now the site is the preview, lightening-lives.codeastra.com (package.json passes --domain);
-// without --domain, dist/CNAME names site.json's domain (lighteninglives.in), so going live is
-// dropping --domain once that domain's DNS points at GitHub Pages.
+// Pages takes its custom domain from docs/CNAME, so a wrong one here moves the site. For now it is the
+// preview, lightening-lives.codeastra.com (package.json passes --domain); without --domain, CNAME names
+// site.json's domain (lighteninglives.in), so going live is dropping --domain once that domain's DNS
+// points at GitHub Pages.
 import { execFileSync } from 'node:child_process';
-import { existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import ghpages from 'gh-pages';
+import { publish } from './publish-docs.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const at = (p) => path.join(root, p);
@@ -44,11 +46,6 @@ const listening = (port) =>
   });
 if (await listening(8080)) fail('Stop the dev server (npm run dev) first: it writes to dist/ as well, and a build beside it drops files.');
 
-const branch = git('rev-parse', '--abbrev-ref', 'HEAD');
-const commit = git('rev-parse', '--short', 'HEAD');
-const changed = git('status', '--porcelain').split('\n').filter(Boolean).length;
-if (changed) console.warn(`\n  Note: ${changed} uncommitted change${changed === 1 ? '' : 's'} will be published with ${commit}.\n`);
-
 if (!skipTests) run('npm', ['test']);
 run('node', ['scripts/build.mjs', '--pages']);
 if (domain) writeFileSync(at('dist/CNAME'), `${domain}\n`);
@@ -57,39 +54,12 @@ for (const f of ['index.html', '404.html', 'CNAME', '.nojekyll']) {
 }
 const host = readFileSync(at('dist/CNAME'), 'utf8').trim();
 
-// The branch holds dist/ and nothing else. The first deploy starts gh-pages from a copy of the default
-// branch, and gh-pages' own clean-up skips dotfiles, so .gitignore and the like would stay (and that
-// .gitignore would then keep files out). Just before the files are added, anything not in dist/ goes.
-const published = new Set(
-  readdirSync(at('dist'), { recursive: true, withFileTypes: true })
-    .filter((entry) => entry.isFile())
-    .map((entry) => path.relative(at('dist'), path.join(entry.parentPath, entry.name)).split(path.sep).join('/')),
-);
-let checkout = '';
-const onlyDist = (repo) => {
-  checkout = repo.cwd;
-  const listed = execFileSync('git', ['ls-files', '-z', '--cached', '--others'], { cwd: repo.cwd, encoding: 'utf8' });
-  const stray = [...new Set(listed.split('\0').filter(Boolean))].filter((f) => !published.has(f));
-  for (const f of stray) rmSync(path.join(repo.cwd, f), { force: true });
-  if (stray.length) execFileSync('git', ['rm', '-q', '-r', '--cached', '--ignore-unmatch', '--', ...stray], { cwd: repo.cwd });
-};
-
-const message = `Deploy ${commit}${changed ? ' with uncommitted changes' : ''} from ${branch}`;
-process.chdir(root);
-await new Promise((resolve, reject) => {
-  // dotfiles: .nojekyll, without which Pages runs the site through Jekyll.
-  const options = { branch: 'gh-pages', dotfiles: true, message, push: !dryRun, beforeAdd: onlyDist };
-  ghpages.publish(at('dist'), options, (error) => (error ? reject(error) : resolve()));
-}).catch((error) => {
-  // A commit left unpushed in gh-pages' cache would stop the next deploy, so the cache goes.
-  ghpages.clean();
-  fail(`Publishing failed, nothing was pushed: ${error.message}`);
-});
-
 if (dryRun) {
-  const files = execFileSync('git', ['ls-files'], { cwd: checkout, encoding: 'utf8' }).split('\n').filter(Boolean).length;
-  ghpages.clean();
-  console.log(`\n  Dry run: "${message}" would publish ${files} files for https://${host}/. Nothing was pushed.\n`);
+  console.log(`\n  Dry run: the build for https://${host}/ is in dist/; docs/ is unchanged.\n`);
 } else {
-  console.log(`\n  Pushed "${message}" to the gh-pages branch. GitHub Pages serves it at https://${host}/ in a minute or two.\n`);
+  const files = publish({ root, from: 'dist', to: 'docs' });
+  const commit = git('rev-parse', '--short', 'HEAD');
+  console.log(`\n  docs/ now holds the site for https://${host}/ (${files} files), built from ${commit}.`);
+  console.log('  Review, then commit and push; GitHub Pages serves it a minute or two after the push:');
+  console.log(`    git add -A docs && git commit -m "Deploy ${commit}" && git push\n`);
 }

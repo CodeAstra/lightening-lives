@@ -1,7 +1,8 @@
 node_modules/
 dist/
 .DS_Store
-docs/*
+# docs/ is the built site GitHub Pages serves (npm run deploy); only the local plans stay out
+docs/superpowers/
 .superpowers/*
 # Compiled by scripts/build.mjs into src/assets and copied to dist/ (not sources)
 src/assets/css/

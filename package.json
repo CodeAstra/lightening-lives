@@ -26,7 +26,6 @@
     "@tailwindcss/cli": "^4.3",
     "cheerio": "^1.1",
     "esbuild": "^0.28",
-    "gh-pages": "^6.3.0",
     "gsap": "^3.13",
     "html-validate": "^10",
     "lucide-static": "^1.61.0",
