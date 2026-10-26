@@ -6,6 +6,7 @@
 
 @import "tailwindcss" source(none);
 @import "./fonts.css";
+@import "photoswipe/style.css"; /* the photograph viewer on Our work (main.js, initMosaic); themed at the end */
 @source "../site";
 @source "../js/site";
 
@@ -2341,50 +2342,93 @@
   .addresses-cards address { font-style: normal; color: var(--moss); font-size: 0.9375rem; }
 }
 
-/* Our work: recent work in photographs (25 October 2026). One wide stage, a slide at a time; a slide
-   with a story carries it on a paper card over the photograph's foot; the dots fill as the time runs. */
+/* Our work: recent work in photographs, as a mosaic (26 October 2026; it was a slideshow with dots,
+   a pause and arrows, which the user found "old and not modern"). All six at once: the feature, a wide
+   photograph with its story under it, two photographs beside it, and a row of three under them. Every
+   photograph sits in a tile shaped for it, edged by a hairline drawn inside; words, a story's or a
+   photograph's caption, sit under it, never over it. Nothing moves
+   by itself; a tile that comes into view develops once (motion.js, the mosaic). */
 @layer components {
   .page-open + .section.gallery-band { padding-top: 0.5rem; }
-  .gallery { position: relative; }
-  .gallery-track { display: flex; gap: 1rem; margin: 0; padding: 0; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: var(--radius); }
-  .gallery-track::-webkit-scrollbar { display: none; }
-  .gallery-slide { position: relative; flex: 0 0 100%; scroll-snap-align: start; overflow: hidden; border-radius: var(--radius); background: var(--stone); }
-  .gallery-img { display: block; width: 100%; height: clamp(20rem, 46vw, 36rem); object-fit: cover; }
-  .gallery-slide::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 52%, rgba(8, 30, 44, 0.55) 100%); }
-  .gallery-story { position: absolute; z-index: 1; left: clamp(0.75rem, 2.5vw, 2rem); bottom: clamp(0.75rem, 2.5vw, 2rem); display: grid; gap: 0.5rem; max-width: min(30rem, calc(100% - 1.5rem)); padding: 1.25rem 1.4rem 1.3rem; background: var(--paper); border-radius: var(--radius); box-shadow: 0 1.25rem 2.5rem -1.5rem rgba(8, 30, 44, 0.6); }
-  .gallery-kind { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8125rem; font-weight: 700; color: var(--leaf); }
-  .gallery-kind .icon, .gallery-caption .icon { width: 1rem; height: 1rem; }
-  .gallery-story h3 { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1.25rem, 2vw, 1.6rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--canopy); }
-  .gallery-story p { margin: 0; color: var(--moss); }
-  .gallery-story .link { margin-top: 0.25rem; }
-  .gallery-caption { position: absolute; z-index: 1; left: clamp(0.75rem, 2.5vw, 2rem); bottom: clamp(0.75rem, 2.5vw, 1.75rem); display: inline-flex; align-items: center; gap: 0.45rem; margin: 0; padding: 0.45rem 0.8rem; border-radius: var(--radius); background: rgba(255, 255, 255, 0.92); font-size: 0.9375rem; font-weight: 600; color: var(--canopy); }
-  .gallery-caption .icon { color: var(--leaf); }
-  .gallery-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; }
-  .gallery-controls[hidden] { display: none; }
-  .gallery-dots { display: flex; flex: 1; gap: 0.5rem; max-width: 32rem; margin: 0; padding: 0; list-style: none; }
-  .gallery-dots li { flex: 1; }
-  .gallery-dot { position: relative; display: block; width: 100%; height: 1.75rem; padding: 0; border: 0; background: none; cursor: pointer; }
-  .gallery-dot::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 0.25rem; translate: 0 -50%; border-radius: 0.125rem; background: color-mix(in srgb, var(--canopy) 18%, transparent); }
-  .gallery-dot-fill { position: absolute; left: 0; top: 50%; height: 0.25rem; width: 0; translate: 0 -50%; border-radius: 0.125rem; background: var(--leaf); }
-  .gallery-dot.is-on .gallery-dot-fill { width: 100%; }
-  .gallery.is-running .gallery-dot.is-on .gallery-dot-fill { width: 0; animation: gallery-fill var(--gallery-interval, 6000ms) linear forwards; }
-  @keyframes gallery-fill { to { width: 100%; } }
-  .gallery-dot:focus-visible { outline: 0.1875rem solid var(--canopy); outline-offset: 0.125rem; border-radius: 0.25rem; }
-  .gallery-buttons { display: flex; gap: 0.5rem; }
-  .gallery-btn { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0.094rem solid var(--canopy); border-radius: 50%; background: var(--paper); color: var(--canopy); cursor: pointer; transition: background-color 0.16s ease; }
-  .gallery-btn:hover, .gallery-btn:focus-visible { background: var(--sprout); }
-  .gallery-btn .icon { grid-area: 1 / 1; width: 1.2rem; height: 1.2rem; }
-  .gallery-btn[aria-pressed="false"] .icon:last-child, .gallery-btn[aria-pressed="true"] .icon:first-child { display: none; }
-  .gallery-note { margin: 0.75rem 0 0; font-size: 0.8125rem; color: var(--moss); }
-  @media (max-width: 39.99rem) {
-    .gallery-img { height: 17rem; }
-    .gallery-slide.has-story { display: flex; flex-direction: column; background: var(--paper); border: 0.0625rem solid var(--line); }
-    .gallery-slide.has-story::after { content: none; }
-    .gallery-slide.has-story .gallery-story { position: static; max-width: none; box-shadow: none; border-radius: 0; }
+  .mosaic { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.75rem 1rem; margin: 0; padding: 0; list-style: none; }
+  .tile { position: relative; display: flex; flex-direction: column; min-width: 0; }
+  .tile-pic { position: relative; display: block; overflow: hidden; aspect-ratio: 3 / 2; border-radius: var(--radius); background: var(--sprout); }
+  /* A photograph opens larger: the tile says so, on pointing or focus, with a small mark in its corner. */
+  .tile-open { position: absolute; z-index: 1; top: 0.6rem; right: 0.6rem; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: var(--radius); background: rgba(255, 255, 255, 0.92); color: var(--canopy); opacity: 0; translate: 0 -0.25rem; transition: opacity 0.2s ease, translate 0.2s ease; pointer-events: none; }
+  .tile-open .icon { width: 1.05rem; height: 1.05rem; }
+  a.tile-pic:hover .tile-open, a.tile-pic:focus-visible .tile-open { opacity: 1; translate: none; }
+  @media (hover: none) { .tile-open { display: none; } }
+  .tile-pic::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 0.0625rem var(--line); pointer-events: none; }
+  .tile-img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+  .tile-caption { display: flex; align-items: center; gap: 0.45rem; margin: 0; padding: 0.7rem 0.125rem 0; font-size: 0.9375rem; font-weight: 600; line-height: 1.3; color: var(--canopy); }
+  .tile-caption .icon { width: 1rem; height: 1rem; flex: none; color: var(--leaf); }
+  .tile-words { display: grid; gap: 0.45rem; justify-items: start; padding: 1rem 0.125rem 0; }
+  .tile-kind { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.01em; color: var(--leaf); }
+  .tile-kind .icon { width: 1rem; height: 1rem; }
+  .tile-words h3 { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1.2rem, 1.6vw, 1.4rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--canopy); text-wrap: balance; }
+  .tile-body { margin: 0; max-width: 34rem; color: var(--moss); font-size: 1rem; line-height: 1.5; }
+  .tile-words .link { margin-top: 0.2rem; }
+  /* The feature: wide, its words beside the two photographs' column. */
+  .slot-1 .tile-pic { aspect-ratio: 16 / 9; }
+  .slot-1 .tile-words h3 { font-size: clamp(1.4rem, 2.2vw, 1.85rem); }
+  a.tile-pic { color: inherit; cursor: zoom-in; }
+  a.tile-pic:focus-visible { outline: 0.1875rem solid var(--canopy); outline-offset: 0.1875rem; box-shadow: 0 0 0 0.1875rem var(--sun); }
+  .tile[hidden] { display: none; }
+
+  /* Two across, from 40rem: the feature the full width, then pairs; the photograph in the middle of a
+     set's row goes wide. A short last set: halves. */
+  @media (min-width: 40rem) {
+    .mosaic { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-flow: row dense; }
+    .tile { grid-column: span 3; }
+    .slot-1 { grid-column: 1 / -1; }
+    .slot-1 .tile-pic { aspect-ratio: 21 / 9; }
+    .slot-5 { grid-column: 1 / -1; }
+    .slot-5 .tile-pic { aspect-ratio: 21 / 8; }
+    .tail-1 { grid-column: 1 / -1; }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .gallery.is-running .gallery-dot.is-on .gallery-dot-fill { animation: none; width: 100%; }
+  /* The mosaic, from 64rem, on twelve columns, in sets of six: the feature over eight columns and two
+     rows, the two photographs stacked beside it, the row of three under them (a story either side of a
+     photograph that fills the row); every other set mirrored. Tiles in a row stretch to one height; a
+     photograph alone fills its tile. A last set short of six is one even row. */
+  @media (min-width: 64rem) {
+    .mosaic { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.25rem; row-gap: 1.25rem; }
+    .slot-1 { grid-column: 1 / span 8; grid-row: span 2; }
+    .slot-1.is-mirror { grid-column: 5 / span 8; }
+    .slot-1 .tile-pic { aspect-ratio: auto; flex: 1 1 auto; min-height: 20rem; }
+    .slot-1 .tile-words { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); column-gap: 2rem; align-items: start; padding-top: 1.1rem; }
+    .slot-1 .tile-kind, .slot-1 h3 { grid-column: 1; }
+    .slot-1 .tile-body, .slot-1 .link { grid-column: 2; }
+    .slot-1 .tile-body { grid-row: 1 / span 2; align-self: start; }
+    .slot-2, .slot-3 { grid-column: span 4; }
+    .slot-2 .tile-pic, .slot-3 .tile-pic { aspect-ratio: auto; flex: 1 1 auto; min-height: 13rem; }
+    .slot-4 { grid-column: span 5; }
+    .slot-5 { grid-column: span 3; }
+    .slot-6 { grid-column: span 4; }
+    .slot-4.is-mirror { grid-column: span 4; }
+    .slot-6.is-mirror { grid-column: span 5; }
+    .slot-5 .tile-pic { aspect-ratio: auto; flex: 1 1 auto; min-height: 16rem; }
+    /* The row's stories: their photographs one height, so their words line up. */
+    .slot-4 .tile-pic, .slot-6 .tile-pic { aspect-ratio: auto; height: clamp(14rem, 19vw, 19rem); flex: none; }
+    .slot-tail { grid-column: span 4; }
+    .tail-1 { grid-column: 1 / -1; }
+    .tail-1 .tile-pic { aspect-ratio: 21 / 8; }
+    .tail-2 { grid-column: span 6; }
+    .tail-4 { grid-column: span 6; }
+    .tail-5:nth-last-child(-n + 2) { grid-column: span 6; }
   }
+  /* More photographs, past the first twelve (main.js): a quiet line button under the mosaic. */
+  .mosaic-more { display: flex; justify-content: center; margin: 2rem 0 0; }
+  .mosaic-more[hidden] { display: none; }
+  .mosaic-more .btn { gap: 0.55rem; }
+  .mosaic-more small { font-weight: 600; color: var(--moss); }
+
+  /* Developing (motion.js): marked before the first paint (layout.njk, html.mosaic-pending), the
+     photographs wait uncovered-from-nothing and their words wait unseen, until the script takes
+     them over; if it never does, the stylesheet uncovers them itself after 2.5 s. */
+  html.mosaic-pending .mosaic .tile-pic { clip-path: inset(100% 0% 0% 0% round 0.5rem); animation: mosaic-fallback 0.6s ease 2.5s forwards; }
+  html.mosaic-pending .mosaic .tile-words { opacity: 0; animation: mosaic-fallback-words 0.4s ease 2.5s forwards; }
+  @keyframes mosaic-fallback { to { clip-path: inset(0% 0% 0% 0% round 0.5rem); } }
+  @keyframes mosaic-fallback-words { to { opacity: 1; } }
 }
 
 /* Our work: the field map and In the news (25 October 2026). */
@@ -2882,3 +2926,25 @@ main p { text-wrap: pretty; }
   }
   @media (max-width: 22.5rem) { .hero-news { margin-bottom: 0.45rem; } }
 }
+/* Outside the layers on purpose: PhotoSwipe's own stylesheet is imported unlayered, and unlayered
+   rules outrank layered ones whatever their specificity, so its theme must be unlayered too. */
+/* The photograph viewer (PhotoSwipe, Our work): the photograph on a deep DNA-blue ground, the
+   controls quiet in ice white (a thin close, the count as "3 of 18", thin chevrons at the sides on a
+   screen with a pointer; on a touch screen the photograph is swiped), and its words under it, in the
+   page's type: the kind in life green, the title, the line. */
+.pswp-ll { --pswp-bg: #061f31; --pswp-placeholder-bg: #0b3550; --pswp-icon-color: #f0f9ff; --pswp-icon-color-secondary: #0c4a6e; --pswp-icon-stroke-color: transparent; --pswp-icon-stroke-width: 0; --pswp-preloader-color: rgba(186, 230, 253, 0.25); --pswp-preloader-color-secondary: #6ee7b7; font-family: var(--font-sans); }
+.pswp-ll .pswp__icn { fill: none; stroke: var(--pswp-icon-color); }
+.pswp-ll .pswp__button { opacity: 0.8; transition: opacity 0.16s ease; }
+.pswp-ll .pswp__button:hover, .pswp-ll .pswp__button:focus-visible { opacity: 1; }
+.pswp-ll .pswp__button:focus-visible { outline: 0.1875rem solid var(--sun); outline-offset: -0.375rem; border-radius: var(--radius); }
+.pswp-ll .pswp__button--zoom { display: none; }
+.pswp-ll .pswp__button--close .pswp__icn { width: 1.5rem; height: 1.5rem; top: 1.125rem; left: 1.125rem; }
+.pswp-ll .pswp__counter { height: 1.875rem; margin-top: 1.125rem; margin-inline-start: 1.375rem; font-size: 0.875rem; font-weight: 600; line-height: 1.875rem; letter-spacing: 0.02em; color: rgba(240, 249, 255, 0.78); text-shadow: none; opacity: 1; }
+.pswp-ll .pswp__button--arrow .pswp__icn { width: 1.875rem; height: 1.875rem; margin-top: -0.9375rem; }
+.pswp-ll .pswp__img { border-radius: 0.25rem; }
+.pswp-ll .pswp__words { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; display: grid; justify-items: center; gap: 0.3rem; padding: 1.25rem 1.5rem 1.6rem; text-align: center; color: #f0f9ff; pointer-events: none; }
+.pswp-ll .pswp__words:empty { display: none; }
+.pswp-ll-kind { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--sun); }
+.pswp-ll-title { font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.2; letter-spacing: -0.01em; }
+.pswp-ll-body { max-width: 40rem; font-size: 0.9375rem; line-height: 1.45; color: rgba(240, 249, 255, 0.78); }
+@media (max-width: 39.99rem) { .pswp-ll-body { display: none; } }

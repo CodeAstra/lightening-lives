@@ -234,79 +234,109 @@ function initFieldMap() {
   select(current);
 }
 
-// ---- Our work's photographs -------------------------------------------------------------------
-// A row of slides that scrolls by itself, one slide every data-interval ms, from the slide in view.
-// It holds while the pointer is over it or a control has the focus, stops for good with its pause
-// button, and never moves by itself for a reader who has asked for less motion; the arrows, the dots,
-// a swipe and the arrow keys move it by hand. Without script it is a row that scrolls sideways.
-function initGallery() {
-  const root = document.querySelector('[data-gallery]');
-  if (!root) return;
-  const track = root.querySelector('[data-gallery-track]');
-  const slides = [...root.querySelectorAll('[data-gallery-slide]')];
-  const dots = [...root.querySelectorAll('[data-gallery-dot]')];
-  const toggle = root.querySelector('[data-gallery-toggle]');
-  const controls = root.querySelector('[data-gallery-controls]');
-  if (!track || slides.length < 2) return;
-  controls.hidden = false;
-  root.classList.add('is-live');
-  const every = Number(root.dataset.interval) || 6000;
-  let index = 0;
-  let timer = 0;
-  let stopped = reducedMotion.matches;
-  let held = false;
-  const show = (i, smooth = true) => {
-    index = (i + slides.length) % slides.length;
-    track.scrollTo({ left: slides[index].offsetLeft - track.offsetLeft, behavior: smooth && !reducedMotion.matches ? 'smooth' : 'auto' });
-    dots.forEach((d, k) => { d.classList.toggle('is-on', k === index); d.setAttribute('aria-current', k === index ? 'true' : 'false'); });
-    restart();
-  };
-  const restart = () => {
-    clearTimeout(timer);
-    root.classList.remove('is-running');
-    void root.offsetWidth; // restart the dot's fill
-    if (stopped || held) return;
-    root.classList.add('is-running');
-    timer = setTimeout(() => show(index + 1), every);
-  };
-  const setStopped = (value) => {
-    stopped = value;
-    toggle.setAttribute('aria-pressed', String(value));
-    toggle.setAttribute('aria-label', value ? 'Play the photos' : 'Pause the photos');
-    root.classList.toggle('is-stopped', value);
-    restart();
-  };
-  root.style.setProperty('--gallery-interval', `${every}ms`);
-  root.querySelector('[data-gallery-prev]').addEventListener('click', () => show(index - 1));
-  root.querySelector('[data-gallery-next]').addEventListener('click', () => show(index + 1));
-  dots.forEach((d, k) => d.addEventListener('click', () => show(k)));
-  toggle.addEventListener('click', () => setStopped(!stopped));
-  root.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { held = true; restart(); } });
-  root.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { held = false; restart(); } });
-  root.addEventListener('focusin', () => { held = true; restart(); });
-  root.addEventListener('focusout', (e) => { if (!root.contains(e.relatedTarget)) { held = false; restart(); } });
-  root.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') { e.preventDefault(); show(index - 1); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); show(index + 1); }
-  });
-  // A swipe or a scroll by hand: follow the slide that ends up in view.
-  let settle = 0;
-  track.addEventListener('scroll', () => {
-    clearTimeout(settle);
-    settle = setTimeout(() => {
-      const near = slides.reduce((best, s, k) => (Math.abs(s.offsetLeft - track.offsetLeft - track.scrollLeft) < Math.abs(slides[best].offsetLeft - track.offsetLeft - track.scrollLeft) ? k : best), 0);
-      if (near !== index) { index = near; dots.forEach((d, k) => d.classList.toggle('is-on', k === index)); restart(); }
-    }, 120);
-  }, { passive: true });
-  // Only while it is on screen.
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => {
-      const seen = entries[entries.length - 1].isIntersecting;
-      if (seen) restart(); else { clearTimeout(timer); root.classList.remove('is-running'); }
-    }, { threshold: 0.35 }).observe(root);
+// ---- Our work's photographs -----------------------------------------------------------------------
+// A mosaic in sets of six (our-work.njk). Past the first twelve the rest wait behind "Show more
+// photographs", a set at a time, so the sets keep their shape (all are in the page; without script all
+// show); focus moves to the first new photograph. Each opens large in PhotoSwipe, fetched on this page
+// only and its core only when one is opened: it grows out of its tile, is swiped, dragged or stepped
+// with the arrow keys through all of them, carries its words under it, and goes back to its tile with
+// Escape or the close button, where the focus returns. A click before the viewer is ready waits for it.
+const MOSAIC_FIRST = 12;
+const MOSAIC_STEP = 6;
+const CHEVRON = (d) => `<svg aria-hidden="true" class="pswp__icn" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
+function initMosaic() {
+  const mosaic = document.querySelector('[data-mosaic]');
+  if (!mosaic) return;
+  const tiles = [...mosaic.querySelectorAll('[data-mosaic-tile]')];
+  const more = document.querySelector('[data-mosaic-more]');
+  if (more && tiles.length > MOSAIC_FIRST) {
+    const left = more.querySelector('[data-mosaic-left]');
+    let shown = MOSAIC_FIRST;
+    const count = () => {
+      const rest = tiles.length - shown;
+      if (left) left.textContent = `${rest} more`;
+      more.hidden = rest <= 0;
+    };
+    tiles.slice(shown).forEach((tile) => { tile.hidden = true; });
+    count();
+    more.querySelector('button').addEventListener('click', () => {
+      const next = tiles.slice(shown, shown + MOSAIC_STEP);
+      next.forEach((tile) => { tile.hidden = false; });
+      shown += next.length;
+      count();
+      document.dispatchEvent(new CustomEvent('ll:mosaic-more', { detail: { tiles: next } }));
+      const first = next[0] && next[0].querySelector('a.tile-pic');
+      if (first) first.focus({ preventScroll: true });
+    });
   }
-  if (stopped) setStopped(true);
-  show(0, false);
+
+  // The viewer.
+  const links = () => [...mosaic.querySelectorAll('a.tile-pic')];
+  let viewer = null;
+  const words = (link) => {
+    const tile = link && link.closest('[data-mosaic-tile]');
+    const read = (sel) => (tile && tile.querySelector(sel) ? tile.querySelector(sel).textContent.trim() : '');
+    return { kind: read('.tile-kind span'), title: read('.tile-words h3') || read('.tile-caption span'), body: read('.tile-body') };
+  };
+  const ready = () => {
+    if (viewer) return viewer;
+    viewer = import('photoswipe/lightbox').then(({ default: PhotoSwipeLightbox }) => {
+      const box = new PhotoSwipeLightbox({
+        gallery: mosaic,
+        children: 'a.tile-pic',
+        pswpModule: () => import('photoswipe'),
+        mainClass: 'pswp-ll',
+        showHideAnimationType: 'zoom',
+        bgOpacity: 1,
+        padding: { top: 64, bottom: 150, left: 24, right: 24 },
+        wheelToZoom: false,
+        closeTitle: 'Close (Escape)',
+        zoomTitle: 'Zoom in or out',
+        arrowPrevTitle: 'Previous photograph',
+        arrowNextTitle: 'Next photograph',
+        indexIndicatorSep: ' of ',
+        errorMsg: 'This photograph could not be loaded.',
+        arrowPrevSVG: CHEVRON('m15 5-7 7 7 7'),
+        arrowNextSVG: CHEVRON('m15 5-7 7 7 7'), // PhotoSwipe mirrors the next arrow itself
+        closeSVG: CHEVRON('M6 6l12 12M18 6 6 18'),
+      });
+      // A photograph still waiting behind "Show more" has no tile to grow from: it fades in instead.
+      box.addFilter('thumbBounds', (bounds, data) => (data.element && data.element.closest('[hidden]') ? undefined : bounds));
+      box.on('uiRegister', () => {
+        box.pswp.ui.registerElement({
+          name: 'words',
+          order: 9,
+          isButton: false,
+          appendTo: 'root',
+          html: '',
+          onInit: (el, pswp) => {
+            el.setAttribute('aria-live', 'polite');
+            pswp.on('change', () => {
+              const { kind, title, body } = words(pswp.currSlide && pswp.currSlide.data.element);
+              const parts = [];
+              if (kind) { const k = document.createElement('span'); k.className = 'pswp-ll-kind'; k.textContent = kind; parts.push(k); }
+              if (title) { const t = document.createElement('span'); t.className = 'pswp-ll-title'; t.textContent = title; parts.push(t); }
+              if (body) { const b = document.createElement('span'); b.className = 'pswp-ll-body'; b.textContent = body; parts.push(b); }
+              el.replaceChildren(...parts);
+            });
+          },
+        });
+      });
+      box.init();
+      return box;
+    });
+    return viewer;
+  };
+  // Fetched at once (a few kilobytes; the core waits for the first photograph opened); a click that
+  // comes before it is ready waits for it and opens the same photograph.
+  mosaic.addEventListener('click', (event) => {
+    const link = event.target.closest('a.tile-pic');
+    if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+    if (viewer && viewer.done) return;
+    event.preventDefault();
+    ready().then((box) => box.loadAndOpen(links().indexOf(link)));
+  });
+  ready().then(() => { viewer.done = true; }).catch(() => { viewer = null; });
 }
 
 // ---- The film's pins --------------------------------------------------------------------------
@@ -801,12 +831,12 @@ ready(() => {
   initMenu();
   initNews();
   initPins();
-  initGallery();
   initFieldMap();
   initReassured();
   initMap();
   initGel();
   initCredentials();
+  initMosaic();
   initFilm();
   initMotion();
   initContact();

@@ -3,6 +3,7 @@ name: "Our work"
 title: "Our work: programmes, patents and media | Lightening Lives"
 description: "Genetic screening programmes across nine states and Delhi, accounts from the field, patents granted in India and Japan, and where Lightening Lives has presented its work."
 label: Our work
+mosaic: true
 h1: 'In the field, in the lab, <span class="h-mark">in print.</span>'
 lead: "Screening programmes across India, the research behind our tests, and where we have presented it."
 proof:
@@ -17,7 +18,7 @@ closing:
 ---
 {#- Our work (content file 5.7; five sections since 25 October 2026, the reviewer's site map, 3.1): the
     company's record. The opening (no numbers strip until people screened is confirmed); recent work
-    in photographs (#recent, src/site/_data/gallery.json, sliding by themselves); the field
+    in photographs (#recent, src/site/_data/gallery.json, a mosaic, all at once); the field
     programmes (#field: the poster's table by state, never by town, and three accounts from the field
     whose second half opens in place); patents (#publications, the patents first; papers wait for
     the company's list); conferences and media (#media: the poster first, opened full size, and the
@@ -31,38 +32,50 @@ closing:
   <section id="recent" class="section on-mist gallery-band" aria-labelledby="recent-h">
     <div class="wrap">
       <h2 id="recent-h" class="sr-only">Recent work, in photographs</h2>
-      <div class="gallery" data-gallery data-interval="6000">
-        <ul class="gallery-track" data-gallery-track>
-          {%- for slide in gallery.slides %}
-          <li class="gallery-slide{% if slide.title %} has-story{% endif %}" data-gallery-slide role="group" aria-roledescription="slide" aria-label="{{ loop.index }} of {{ gallery.slides | length }}">
-            {{ picture(slide.image, slide.alt, "(min-width: 82rem) 80rem, 100vw", { class: "gallery-img", eager: loop.index <= 2 }) }}
-            {%- if slide.title %}
-            <div class="gallery-story">
-              <span class="gallery-kind">{% icon slide.icon or "camera" %}{{ slide.kind }}</span>
-              <h3>{{ slide.title }}</h3>
-              {%- if slide.body %}<p>{{ slide.body }}</p>{% endif %}
-              {%- if slide.link %}<a class="link" href="{{ slide.link.href }}">{{ slide.link.text }} {{ arrow | safe }}</a>{% endif %}
-            </div>
-            {%- else %}
-            <p class="gallery-caption">{% icon slide.icon or "camera" %}<span>{{ slide.caption }}</span></p>
-            {%- endif %}
-          </li>
-          {%- endfor %}
-        </ul>
-        <div class="gallery-controls" data-gallery-controls hidden>
-          <ol class="gallery-dots">
-            {%- for slide in gallery.slides %}
-            <li><button type="button" class="gallery-dot" data-gallery-dot="{{ loop.index0 }}" aria-label="Photo {{ loop.index }}: {{ slide.title or slide.caption }}"><span class="gallery-dot-fill"></span></button></li>
-            {%- endfor %}
-          </ol>
-          <div class="gallery-buttons">
-            <button type="button" class="gallery-btn" data-gallery-prev aria-label="Previous photo">{% icon "chevron-left" %}</button>
-            <button type="button" class="gallery-btn" data-gallery-toggle aria-pressed="false" aria-label="Pause the photos">{% icon "pause" %}{% icon "play" %}</button>
-            <button type="button" class="gallery-btn" data-gallery-next aria-label="Next photo">{% icon "chevron-right" %}</button>
+      {#- The photographs as a mosaic (26 October 2026; the user found the slideshow's progress bars,
+          pause and arrows "old and not modern", and many more photographs are to come). In sets of
+          six: a feature over two rows, two beside it, three under them; every other set mirrored; a
+          last set short of six is set as one even row. Words, a story's or a caption, sit under their
+          photograph, never over it. Each photograph opens large in the viewer (main.js, PhotoSwipe);
+          without script its link opens the largest file. Past the first twelve the rest wait behind
+          "Show more photographs" (all are in the page; without script all show). Each is sized to its
+          slot; a photograph that comes into view develops once (motion.js). -#}
+      {%- set n = gallery.slides | length %}
+      {%- set full = (n / 6) | int * 6 %}
+      {%- set tail = n - full %}
+      {%- set sizes = {
+        "slot-1": "(min-width: 64rem) 52rem, 100vw",
+        "slot-2": "(min-width: 64rem) 26rem, (min-width: 40rem) 50vw, 100vw",
+        "slot-3": "(min-width: 64rem) 26rem, (min-width: 40rem) 50vw, 100vw",
+        "slot-4": "(min-width: 64rem) 33rem, (min-width: 40rem) 50vw, 100vw",
+        "slot-5": "(min-width: 64rem) 20rem, 100vw",
+        "slot-6": "(min-width: 64rem) 26rem, (min-width: 40rem) 50vw, 100vw",
+        "slot-tail": "(min-width: 64rem) 40rem, (min-width: 40rem) 50vw, 100vw"
+      } %}
+      <ul class="mosaic" data-mosaic>
+        {%- for slide in gallery.slides %}
+        {%- set i = loop.index0 %}
+        {%- if i < full %}{% set slot = "slot-" + (i % 6 + 1) %}{% set mirror = ((i / 6) | int) % 2 == 1 %}{% else %}{% set slot = "slot-tail" %}{% set mirror = false %}{% endif %}
+        {%- set entry = images[slide.image] %}
+        {%- set big = entry.widths | last %}
+        <li class="tile {{ slot }}{{ ' is-mirror' if mirror }}{{ ' tail-' + tail if slot == 'slot-tail' }}{% if slide.title %} tile-story{% else %} tile-photo{% endif %}" data-mosaic-tile>
+          <a class="tile-pic" href="/assets/img/{{ slide.image }}-{{ big }}.webp" data-pswp-width="{{ big }}" data-pswp-height="{{ (entry.height * big / entry.widths[0]) | round }}" data-pswp-srcset="{% for w in entry.widths %}/assets/img/{{ slide.image }}-{{ w }}.webp {{ w }}w{% if not loop.last %}, {% endif %}{% endfor %}" data-pswp-cropped="true">{{ picture(slide.image, slide.alt, sizes[slot], { class: "tile-img", eager: i < 3 }) }}<span class="tile-open" aria-hidden="true">{% icon "maximize-2" %}</span></a>
+          {%- if not slide.title %}
+          <p class="tile-caption">{% icon slide.icon or "camera" %}<span>{{ slide.caption }}</span></p>
+          {%- else %}
+          <div class="tile-words">
+            <p class="tile-kind">{% icon slide.icon or "camera" %}<span>{{ slide.kind }}</span></p>
+            <h3>{{ slide.title }}</h3>
+            {%- if slide.body %}<p class="tile-body">{{ slide.body }}</p>{% endif %}
+            {%- if slide.link %}<a class="link" href="{{ slide.link.href }}">{{ slide.link.text }} {{ arrow | safe }}</a>{% endif %}
           </div>
-        </div>
-      </div>
-      <p class="gallery-note">{{ gallery.note }}</p>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+      {%- if n > 12 %}
+      <p class="mosaic-more" data-mosaic-more hidden><button type="button" class="btn btn-line">{% icon "images" %}<span>Show more photographs</span> <small data-mosaic-left></small></button></p>
+      {%- endif %}
     </div>
   </section>
 

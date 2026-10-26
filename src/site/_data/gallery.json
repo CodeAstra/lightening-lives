@@ -1,6 +1,5 @@
 {
-  "_note": "Our work's recent-work photographs (25 October 2026). Representative Unsplash photographs until the company's own arrive (credited in src/assets/img/CREDITS.md and the footer). A slide is { image, alt, caption } or, to tell a story, { image, alt, kind, icon, title, body, link: { text, href } }; title, body and link are each optional. Captions name a kind of work, never claim a photograph is the company's.",
-  "note": "Representative photographs, until our own from the field and the laboratory arrive.",
+  "_note": "Our work's photographs (since 26 October 2026 a mosaic; our-work.njk). The order here is the order read and seen, in sets of six: the first of a set is its feature (best a wide photograph, and best a story), the next two stand beside it, the next three make a row under them; every other set is mirrored, and a last set short of six is one even row. The first twelve show at once; the rest come a set at a time with 'Show more photographs'. Every photograph opens large in the viewer. To add one: put the original (jpg or png, at most 2400 px on its long side) in src/images-src, named work-<name> if it is the company's own (it needs no credit) or gallery-<name> for a stand-in (give it a row in src/assets/img/CREDITS.md); run npm run images; then add a slide here. A slide is { image, alt, caption, icon } or, to tell a story, { image, alt, kind, icon, title, body, link: { text, href } }; title, body and link are each optional. Captions name a kind of work, never claim a stand-in photograph is the company's.",
   "slides": [
     {
       "image": "gallery-camp",
@@ -19,6 +18,12 @@
       "alt": "A gloved hand with a micropipette at a laboratory bench.",
       "caption": "In the laboratory",
       "icon": "flask-conical"
+    },
+    {
+      "image": "gallery-plate",
+      "alt": "A pipette dispensing into a rack of tubes in a 96-well layout.",
+      "caption": "Many samples in one run",
+      "icon": "layers"
     },
     {
       "image": "gallery-newborn",
@@ -49,12 +54,6 @@
         "text": "For laboratories",
         "href": "/partners/#laboratories"
       }
-    },
-    {
-      "image": "gallery-plate",
-      "alt": "A pipette dispensing into a rack of tubes in a 96-well layout.",
-      "caption": "Many samples in one run",
-      "icon": "layers"
     }
   ]
 }

@@ -76,6 +76,14 @@
 })();
 </script>
 {%- endif %}
+{%- if mosaic %}
+<script>
+/* Our work's photographs develop as the page opens (motion.js). Marked before the first paint, so a
+   photograph is never shown and then hidden to be shown again; for a reader who asked for less motion
+   nothing is marked. The stylesheet uncovers them by itself after 2.5 s if the script never runs. */
+if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.documentElement.classList.add('mosaic-pending');
+</script>
+{%- endif %}
 <script src="/assets/js/site.js" type="module" defer></script>
 {%- set beacon = site.analytics | analytics %}
 {%- if beacon %}

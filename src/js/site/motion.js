@@ -37,6 +37,8 @@ export const BOUND = {
   compare: '.compare-table',
   develop: '.develop-path',
   sequence: '.method-steps, .start-steps',
+  mosaic: '[data-mosaic]',
+  tile: '[data-mosaic-tile]',
 };
 
 const EASE = 'power2.out'; // decelerates, no overshoot: nothing here was thrown
@@ -202,6 +204,45 @@ function bind(signal) {
     const tl = gsap.timeline({ scrollTrigger: once(list) });
     tl.from(items, { opacity: 0, x: -10, duration: 0.5, ease: EASE, stagger: STAGGER }, 0);
     if (list.matches('.start-steps')) tl.fromTo(items, { '--draw': 0 }, { '--draw': 1, duration: 0.5, ease: PATH, stagger: STAGGER }, 0);
+  }
+
+  // Our work's photographs develop, once, the way a print comes up in the tray: each is uncovered from
+  // its foot upwards (0.9 s) while it settles from a little larger, and its words follow, 0.09 s apart.
+  // Those on screen as the page opens develop then, after its heading has risen; the rest as they come
+  // into view. The page marks them before its first paint (html.mosaic-pending, layout.njk), so none
+  // is ever seen and then hidden; here they are taken over and the mark lifted.
+  for (const mosaic of all(BOUND.mosaic)) {
+    const tiles = [...mosaic.querySelectorAll(BOUND.tile)];
+    const parts = (tile) => ({ pic: tile.querySelector('.tile-pic'), img: tile.querySelector('.tile-img'), words: tile.querySelector('.tile-words') });
+    const marked = document.documentElement.classList.contains('mosaic-pending');
+    const later = tiles.filter((tile) => !marked ? !inView(tile, 0.01) : true);
+    later.forEach((tile) => {
+      const { pic, img, words } = parts(tile);
+      gsap.set(pic, { clipPath: 'inset(100% 0% 0% 0% round 0.5rem)' });
+      if (img) gsap.set(img, { scale: 1.08 });
+      if (words) gsap.set(words, { opacity: 0, y: 10 });
+    });
+    document.documentElement.classList.remove('mosaic-pending');
+    const develop = (batch, after = 0) => batch.forEach((tile, k) => {
+      const { pic, img, words } = parts(tile);
+      const at = after + k * STAGGER;
+      gsap.to(pic, { clipPath: 'inset(0% 0% 0% 0% round 0.5rem)', duration: 0.9, delay: at, ease: 'power3.inOut', clearProps: 'clipPath' });
+      if (img) gsap.to(img, { scale: 1, duration: 1.3, delay: at, ease: 'power2.out', clearProps: 'transform' });
+      if (words) gsap.to(words, { opacity: 1, y: 0, duration: 0.5, delay: at + 0.35, ease: EASE, clearProps: 'opacity,transform' });
+    });
+    const now = later.filter((tile) => !tile.hidden && inView(tile, 0.01));
+    if (now.length) develop(now, 0.25);
+    const rest = later.filter((tile) => !tile.hidden && !now.includes(tile));
+    if (rest.length) ScrollTrigger.batch(rest, { start: 'top 88%', once: true, onEnter: (batch) => develop(batch) });
+    // Those that "Show more photographs" brings out (main.js) develop as they come into view.
+    on(document, 'll:mosaic-more', (event) => {
+      const fresh = (event.detail && event.detail.tiles) || [];
+      ScrollTrigger.refresh();
+      const seen = fresh.filter((tile) => inView(tile, 0.01));
+      if (seen.length) develop(seen, 0.05);
+      const below = fresh.filter((tile) => !seen.includes(tile));
+      if (below.length) ScrollTrigger.batch(below, { start: 'top 88%', once: true, onEnter: (batch) => develop(batch) });
+    });
   }
 
   // A jump within the page lands with a ring: after the scroll, the card asked for is outlined in life

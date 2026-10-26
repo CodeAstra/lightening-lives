@@ -153,8 +153,8 @@ test('every placed photograph comes through the picture include: every width, si
       assert.equal(el.attribs.src, `/assets/img/${base}-${entry.widths[0]}.webp`, `${url}: ${base} src`);
       assert.equal(el.attribs.srcset, entry.widths.map((w) => `/assets/img/${base}-${w}.webp ${w}w`).join(', '), `${url}: ${base} srcset`);
       assert.ok(el.attribs.sizes, `${url}: ${base} sizes`);
-      // Lazy, but for the first slides of Our work's photographs, which are seen at once.
-      if (!$(el).closest('[data-gallery-slide]').length || $(el).closest('li').index() > 1) assert.equal(el.attribs.loading, 'lazy', `${url}: ${base} loading`);
+      // Lazy, but for the first three of Our work's photographs, which are seen at once.
+      if (!$(el).closest('[data-mosaic-tile]').length || $(el).closest('li').index() > 2) assert.equal(el.attribs.loading, 'lazy', `${url}: ${base} loading`);
       assert.equal(el.attribs.decoding, 'async', `${url}: ${base} decoding`);
       assert.deepEqual([Number(el.attribs.width), Number(el.attribs.height)], [entry.widths[0], entry.height], `${url}: ${base} dimensions`);
       // A photograph's alt describes it; a portrait's (person-, Task 4.5) is the person's name, which

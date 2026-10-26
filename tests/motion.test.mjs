@@ -87,9 +87,11 @@ test('initMotion binds exactly the listed selectors, and reaches elements only t
     compare: '.compare-table',
     develop: '.develop-path',
     sequence: '.method-steps, .start-steps',
+    mosaic: '[data-mosaic]',
+    tile: '[data-mosaic-tile]',
   });
   // Every query in motion.js goes through all(BOUND.…) or looks inside an element it was given.
   const queries = [...code().matchAll(/\.querySelector(?:All)?\(\s*(['"`][^'"`]*['"`]|[^)'"`]+)/g)].map((m) => m[1]);
-  for (const q of queries) assert.ok(!/^['"`]/.test(q.trim()) || /^['"`](svg|input:checked|label|span|\.menu-panel|:scope > :not\(summary\)|:scope > summary|\[data-logo-pool\]|\.logo-cycle|\[data-logo-status\]|\.model-phase-test|\.model-phase-care|\.model-step|\.is-ours|\.develop-node)['"`]$/.test(q.trim()), `unlisted query ${q}`);
+  for (const q of queries) assert.ok(!/^['"`]/.test(q.trim()) || /^['"`](svg|input:checked|label|span|\.menu-panel|:scope > :not\(summary\)|:scope > summary|\[data-logo-pool\]|\.logo-cycle|\[data-logo-status\]|\.model-phase-test|\.model-phase-care|\.model-step|\.is-ours|\.develop-node|\.tile-pic|\.tile-img|\.tile-words)['"`]$/.test(q.trim()), `unlisted query ${q}`);
   assert.doesNotMatch(code(), /document\.querySelectorAll\(\s*['"`]/);
 });
