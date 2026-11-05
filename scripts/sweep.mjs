@@ -10,8 +10,8 @@
 //   1 scroll   no horizontal scroll: scrollWidth equals innerWidth
 //   2 overlap  no two visible things meet by more than 2 px: every text line box, picture, button,
 //              input, summary, tag and chip box against every other that is not its ancestor or
-//              descendant; checked once the film has ended, and on the hero at 0.5, 1.6, 3.4 and
-//              5.2 s into the film
+//              descendant (two emblem pins, which are discs, as circles); checked once the film
+//              has ended, and on the hero at 0.5, 1.6, 3.4 and 5.2 s into the film
 //   3 film     where the film fills the opening beside the text, its drawing never comes within 3rem
 //              of the text's widest line: the text (and the header, the caption bar and the labels)
 //              are hidden, the film is held at each of those moments and at its end, and the
@@ -44,6 +44,10 @@ import { promisify } from 'node:util';
 import sharp from 'sharp';
 
 const run = promisify(execFile);
+// The Chrome already installed on this Mac, not a copy agent-browser downloads (each is about 300 MB;
+// the user's disk is nearly full, 5 November 2026). AGENT_BROWSER_EXECUTABLE_PATH, if set, still wins.
+const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+if (!process.env.AGENT_BROWSER_EXECUTABLE_PATH && existsSync(CHROME)) process.env.AGENT_BROWSER_EXECUTABLE_PATH = CHROME;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
 
@@ -163,7 +167,9 @@ for (let n = walker.nextNode(); n; n = walker.nextNode()) {
   range.selectNodeContents(n);
   for (const r of range.getClientRects()) add(n.parentElement, r, 'text');
 }
-const things = 'img, button, input, select, textarea, summary, .tag, .places b, .map-names li.is-shown b';
+// A film pin's button is its tap area, drawn as nothing (DESIGN.md: at least 2.75rem, a tap goes to the
+// nearest pin): what is seen is its emblem, measured as a picture.
+const things = 'img, button:not(.place-pin), input, select, textarea, summary, .tag, .places b, .map-names li.is-shown b';
 for (const el of scope.querySelectorAll(things)) if (seen(el)) add(el, el.getBoundingClientRect(), el.matches('.places b, .map-names b') ? 'chip' : el.tagName.toLowerCase());
 const docW = document.documentElement.scrollWidth;
 const live = boxes.filter((b) => b.x + b.w > 0 && b.x < docW);
@@ -183,6 +189,15 @@ for (let i = 0; i < live.length; i += 1) {
     if (onStill(a, b) || onStill(b, a)) continue;
     const dx = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
     const dy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+    // Two emblem pins are discs: side by side on a slant their square boxes can cross while the discs
+    // stand clear, so they are measured as circles (by the same 2 px).
+    const disc = (p) => p.el.matches('.place-emblem, .map-emblem');
+    if (disc(a) && disc(b)) {
+      const apart = Math.hypot(a.x + a.w / 2 - b.x - b.w / 2, a.y + a.h / 2 - b.y - b.h / 2);
+      const into = (a.w + b.w) / 2 - apart;
+      if (into > 2) hits.push(label(a.el) + ' x ' + label(b.el) + ' (discs ' + Math.round(into) + ' px into each other)');
+      continue;
+    }
     if (dx > 2 && dy > 2) hits.push(label(a.el) + ' x ' + label(b.el) + ' (' + Math.round(dx) + 'x' + Math.round(dy) + ')');
   }
 }
@@ -261,7 +276,10 @@ async function sweepOne(page, [kind, width, height], url) {
         if (!inline && r.height < 43.5) small.push(where(el) + ' "' + el.textContent.replace(/\\s+/g, ' ').trim().slice(0, 24) + '" ' + Math.round(r.height) + 'px');
       }
       const type = new Map();
-      const VOICE = '.label, .tag, .brand-line, .places, .map-names, .state-facts, [class*="label"]';
+      // The label voice by name: since the production audit (5 November 2026) also the tags, chips,
+      // step numbers, kinds and states, the gel's lane names, the map's names and the footer's column
+      // heads, each set in DESIGN.md's label sizes (Task 2.0 Step 7 ruling). Reading text is not here.
+      const VOICE = '.label, .tag, .brand-line, .places, .map-names, .state-facts, [class*="label"], [class*="-tag"], [class*="-kind"], .flow-n, .develop-n, .family-code, .family-sub, .patent-state, .patent-flags, .lane-name, .lane-note, .kit-condition, .lineup-condition, .lineup-family-h, .kit-proof, .fm-chip small, .fieldmap-pins, .facts-grid dt, .foot-h';
       let voice = 0;
       if (innerWidth === 390) {
         const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -343,7 +361,11 @@ async function sweepOne(page, [kind, width, height], url) {
         s.textContent = '.site-header, .hero-text, .film-foot, .places { visibility: hidden !important; }';
         document.head.append(s);
         await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-        return { top, bottom, right, rem: parseFloat(getComputedStyle(document.documentElement).fontSize) };
+        // On a wide screen the partners' band lies over the film's foot, ruled along its top to the
+        // window's edges by design; the map is fitted above it (scene.js), so that is where it ends.
+        const foot = document.querySelector('.hero-foot');
+        const over = foot && getComputedStyle(foot).position === 'absolute' ? foot.getBoundingClientRect().top : null;
+        return { top, bottom, right, over, rem: parseFloat(getComputedStyle(document.documentElement).fontSize) };
       `);
       const file = path.join(out, `${tag}-film-${at}.png`);
       await page.call('screenshot', file);
@@ -363,11 +385,13 @@ async function sweepOne(page, [kind, width, height], url) {
       if (t === null) {
         result.notes.push(`film clear ${Number.isFinite(clear) ? Math.round(clear) : 'all'} px`);
         // At its end the film is the map alone on the page's ice white: it must be whole on the first
-        // screen, touching neither the fold nor the window's right edge.
+        // screen, touching neither the fold (or the partners' band laid over the film's foot) nor the
+        // window's right edge.
         const drawn = (x, y) => { const k = (y * info.width + x) * info.channels; const [r, g, b] = [data[k], data[k + 1], data[k + 2]]; return Math.min(r, g, b) < 215 || Math.max(r, g, b) - Math.min(r, g, b) > 40; };
+        const floor = band.over === null ? info.height : Math.max(1, Math.min(info.height, Math.floor(band.over)));
         let cut = 0;
-        for (let x = Math.ceil(band.right); x < info.width; x += 1) if (drawn(x, info.height - 2)) cut += 1;
-        for (let y = 0; y < info.height; y += 1) if (drawn(info.width - 2, y)) cut += 1;
+        for (let x = Math.ceil(band.right); x < info.width; x += 1) if (drawn(x, floor - 2)) cut += 1;
+        for (let y = 0; y < floor; y += 1) if (drawn(info.width - 2, y)) cut += 1;
         if (cut) result.fails.push(`film at end: the map is cut by the fold or the window's edge (${cut} px drawn on the last row or column)`);
       }
     }

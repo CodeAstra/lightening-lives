@@ -33,6 +33,7 @@ import {
 import logoUrl from './logo-768.png';
 // The map's data: one list of states, places and what the company does where.
 import { GRID, LABELS, PLACES, RUNS } from '../map/india-cells.js';
+import { spread } from './pins.js';
 import { STATES } from '../map/india-states.js';
 import { LAYERS } from '../map/map-layers.js';
 
@@ -948,22 +949,19 @@ function init(root) {
         camera.updateMatrixWorld();
         const spots = [];
         LABELS.forEach((place) => {
-          const label = placeLabels.get(place.id);
-          if (!label) return;
+          if (!placeLabels.has(place.id)) return;
           point.set(place.x, 0, place.z).project(camera);
-          const x = (point.x * 0.5 + 0.5) * view.width;
-          const y = (-point.y * 0.5 + 0.5) * view.height;
-          label.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
-          spots.push({ id: place.id, x, y });
+          spots.push({ id: place.id, x: (point.x * 0.5 + 0.5) * view.width, y: (-point.y * 0.5 + 0.5) * view.height });
         });
-        arrangePlaces(spots);
+        arrangePlaces(spots); // sizes the pins, eases apart any that would still meet, and sets each in place
       }
     }
     showProgress();
   }
 
   // The pins and their names (25 October 2026: every state we work in, the emblem as the pin). The pins
-  // are sized so that no two meet, however small the map is drawn; then each name, in the list's order,
+  // are sized so that no two meet, however small the map is drawn (at the smallest size, eased apart
+  // where they still would); then each name, in the list's order,
   // takes the first place beside its pin (under it, then right, left, above) where it meets no pin, no
   // name already placed, the page's text or the edge of the film. A name with no such place is left
   // off; its pin stays. Sizes are measured once for each size of the film.
@@ -988,6 +986,10 @@ function init(root) {
     for (let i = 0; i < spots.length; i += 1) for (let j = i + 1; j < spots.length; j += 1) nearest = Math.min(nearest, Math.hypot(spots[i].x - spots[j].x, spots[i].y - spots[j].y));
     const pin = clamp(Math.floor(nearest - PIN.gap * 2), PIN.min, pinMax);
     placeList.style.setProperty('--pin', `${pin}px`);
+    // At the smallest size two pins can still meet (Delhi inside Haryana, on a small window): those
+    // are eased apart by the few pixels needed (pins.js). Then each pin is set at its spot.
+    if (nearest < pin + PIN.gap * 2) spread(spots, pin + PIN.gap * 2);
+    spots.forEach((spot) => { placeLabels.get(spot.id).style.transform = `translate(${spot.x.toFixed(1)}px, ${spot.y.toFixed(1)}px)`; });
     const r = pin / 2 + PIN.gap;
     const taken = spots.map((spot) => ({ l: spot.x - r, r: spot.x + r, t: spot.y - r, b: spot.y + r }));
     const meets = (a, b) => a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b;

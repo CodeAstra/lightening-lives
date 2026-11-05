@@ -100,14 +100,14 @@ closing:
         {{ iconRows(detects.rows, "spec-cards") }}
         {%- set who = (detects.who or []) | bracketless %}
         {%- if who.length %}
-        <aside class="who" aria-labelledby="who-h">
+        <div class="who" role="group" aria-labelledby="who-h">
           <h3 id="who-h" class="audience-h">Who it is for</h3>
           <ul class="ticks mt-4">
             {%- for item in who %}
             <li>{% icon "circle-check-big" %}<p>{{ item }}</p></li>
             {%- endfor %}
           </ul>
-        </aside>
+        </div>
         {%- endif %}
       </div>
       {%- set subs = (detects.subs or []) | bracketless("body") %}

@@ -457,7 +457,7 @@ const NAME_NUDGE = { MP: [-4.2, -0.6], JH: [2, 0.5], CG: [0.3, 2.4], OD: [4.2, 2
 const NAME_NUDGE_SMALL = { GJ: [-4.5, -0.6], MP: [-1.5, -4.2], MH: [1.5, 0.9], JH: [3.5, 2.6], TS: [2, 2.4], CG: [-1.2, 3.4], OD: [7.2, 4.4], DL: [8.2, 0.4], PB: [-1.5, -1], WB: [5.5, 3] };
 // A state with the emblem has it on the state itself, and its name under it: these move the pair
 // where the state's middle would put it on a neighbour's name, or off a state too small to hold it.
-const EMBLEM_NUDGE = { MP: [-2.5, -1.8], CG: [0.3, -1.2], JH: [0.6, -0.6], MH: [-1.2, -0.8], DL: [0, -0.4] };
+const EMBLEM_NUDGE = { MP: [-4, -1.8], CG: [0.3, -1.2], JH: [0.6, -0.6], MH: [-1.2, -0.8], DL: [0, -0.4] };
 const EMBLEM = '/assets/logo/lightening-lives-emblem.svg';
 const SMALL_MAP = 430; // pixels across, below which the names use the second set
 const NAMES_FROM = 235; // and below which the map is too small to carry more than one name
