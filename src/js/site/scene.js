@@ -85,8 +85,13 @@ const SKY = Math.PI - KEY.intensity * (KEY.from.y / KEY.from.length());
 // the available width is the room the text leaves: from the text's widest line, plus `GAP` root ems,
 // to the right edge of the page's column (R3: the map once ran under the text on wide screens, where
 // a fixed share of the column was used). The subject sits a little low, clear of the header.
-const WIDE = { across: 0.96, up: 0.79, shiftY: -0.032 };
+const WIDE = { across: 0.96, up: 0.86, shiftY: -0.032 };
 const NARROW = { across: 0.9, up: 0.86, shiftY: 0 }; // the film in a frame of its own, text above and below
+// The room runs past the page's column, to EDGE root ems from the window's right edge: the client
+// review (P1, 27 October 2026) asked for a larger map where the space allows it. The map's far east
+// (the north-east states and the islands) may sit past the column; the pins stay well inside it.
+const EDGE = 2;
+const REACH = 8; // and never more than this many root ems past the column, so a very wide window keeps the map by the text
 const GAP = 4.5; // rem between the text's widest line and the subject's room: the page's veil is solid
 // for 3rem past that line and gone by 5rem (site.css, .hero-veil)
 
@@ -1110,7 +1115,8 @@ function init(root) {
       if (Number.isFinite(edge)) view.textRight = edge - whole.left + rem;
       if (filmRoot && Number.isFinite(edge)) filmRoot.style.setProperty('--text-edge', `${(edge - filmRoot.getBoundingClientRect().left).toFixed(1)}px`);
       const left = Math.max(column.left, edge + GAP * rem);
-      room = { left, width: Math.max(column.right - left, width * 0.2) };
+      const right = Math.max(column.right, Math.min(whole.right - EDGE * rem, column.right + REACH * rem));
+      room = { left, width: Math.max(right - left, width * 0.2) };
     }
     view.across = (room.width * view.layout.across) / width;
     view.shiftX = (room.left - whole.left + room.width / 2) / width - 0.5;

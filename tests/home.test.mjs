@@ -33,16 +33,16 @@ test('eight sections, in the review\'s order, each labelled by its own heading',
 });
 
 test('two-tone headings: the key phrase in DNA blue, never life green, and no eyebrow labels', () => {
-  assert.equal(text('h1 .h-mark'), 'reaches every community.');
+  assert.equal(text('h1 .h-mark'), 'built in India for the world.'); // the client review, P1
   assert.deepEqual(texts('main h2 .h-mark'), ['Innovate.', 'Diagnose.', 'letter by letter', 'Transform lives.', 'Built for any inherited condition.', 'and where we work', 'Tell us what you need to test for.']);
   const css = readFileSync('dist/assets/css/site.css', 'utf8').replace(/\s+/g, '');
   assert.match(css, /\.h-mark\{color:var\(--leaf\)/);
 });
 
 test('the opening: heading, lead with the category, buttons, the proof with icons; no caption and no replay', () => {
-  assert.equal(text('h1'), 'Genetic testing that reaches every community.');
+  assert.equal(text('h1'), 'Precision genetic diagnostics, built in India for the world.');
   assert.equal($('h1').closest('section').attr('id'), 'top');
-  assert.equal(text('.hero-lead'), 'Genetic and molecular diagnostics from a dried blood spot: one test to screen and confirm, patient, carrier or unaffected, built to the REASSURED standard.');
+  assert.equal(text('.hero-lead'), 'Genetic and molecular diagnostics for national and global needs, focused on haemoglobinopathies and musculopathies. LitLife™-SCA screens and confirms sickle cell, built to the REASSURED standard.');
   assert.ok(text('.hero-lead').split(' ').length <= 25, 'R1: the home lead is at most 25 words');
   assert.equal($('.hero-lead a.lead-link').attr('href'), '#reassured');
   assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/contact/'], ['How the test works', '/technology/']]);

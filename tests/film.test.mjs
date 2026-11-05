@@ -59,6 +59,20 @@ test('the film renders at no more than twice the window\'s pixels', () => {
   assert.match(source('scene.js'), /ratio:\s*Math\.min\(window\.devicePixelRatio \|\| 1, 2\)/);
 });
 
+// The client review (P1, 27 October 2026): "The map size can be bigger, there is space available."
+// On wide windows the map's room runs past the page's column towards the window's edge (keeping a
+// gutter), and it may take more of the height; the film's timing is not touched (the user, 4 November).
+test('on wide windows the map may use the space past the column, and more of the height', () => {
+  const scene = source('scene.js');
+  const resize = scene.match(/function resize\(\) \{[\s\S]*?\n {2}\}/)?.[0] ?? '';
+  assert.match(resize, /whole\.right - EDGE \* rem/);
+  assert.match(scene, /const EDGE = 2;/);
+  const up = Number(scene.match(/const WIDE = \{[^}]*up: ([\d.]+)/)?.[1]);
+  assert.ok(up >= 0.85, `WIDE.up ${up}`);
+  assert.match(scene, /const SPEED = 1\.4;/);
+  assert.match(scene, /end: 6\.56,/);
+});
+
 test('the film waits for the opening to be painted, and compiles its shaders before its first frame', () => {
   // Measured with Lighthouse in Task 1.5: fetched at once and compiled on its first draw, the film's
   // start-up was one 1.7 s task on the emulated phone (mobile performance 57); fetched after the

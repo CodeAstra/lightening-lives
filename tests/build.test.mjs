@@ -8,7 +8,7 @@ test('build writes the home page and copies assets', () => {
   execSync('npm run build', { stdio: 'inherit' });
   assert.ok(existsSync('dist/index.html'));
   assert.ok(existsSync('dist/assets/logo/icons/icon-32.png'));
-  assert.match(readFileSync('dist/index.html', 'utf8'), /<h1[^>]*>Genetic testing that <span class="h-mark">reaches every community\.<\/span><\/h1>/);
+  assert.match(readFileSync('dist/index.html', 'utf8'), /<h1[^>]*>Precision genetic diagnostics, <span class="h-mark">built in India for the world\.<\/span><\/h1>/);
 });
 
 test('built html validates', () => {
