@@ -2417,30 +2417,29 @@
 
 @layer components { .fm-panel[hidden] { display: none; } }
 
-/* About, people first (25 October 2026, second pass): the founders in a spotlight, the team as portrait
+/* About, people first (25 October 2026, second pass; client review, 27 October 2026): the founders side by side, the team as
    cards in their groups, and a bio in a side panel that slides in from the right (a native popover). */
 @layer components {
-  .page-open + .section.founder-band { padding-top: 0.5rem; }
-  .spotlight { display: grid; gap: 2rem; align-items: center; padding: clamp(1rem, 2.5vw, 1.75rem); background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
-  @media (min-width: 64rem) { .spotlight { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 3.5rem; padding: 1.75rem 3rem 1.75rem 1.75rem; } }
-  .spotlight-photo img { display: block; width: 100%; height: auto; aspect-ratio: 670 / 860; max-height: 36rem; object-fit: cover; object-position: center 20%; border-radius: calc(var(--radius) - 0.125rem); }
-  .spotlight-kind { margin: 0; font-size: 0.8125rem; font-weight: 700; color: var(--leaf); }
-  .spotlight-name { margin: 0.4rem 0 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1.9rem, 3.4vw, 3rem); line-height: 1.05; letter-spacing: -0.03em; color: var(--canopy); }
-  .spotlight-role { margin: 0.6rem 0 0; font-weight: 700; color: var(--canopy); }
-  .spotlight-role span { font-weight: 600; color: var(--moss); }
-  .spotlight-record { display: grid; gap: 0.75rem; margin: 1.75rem 0 0; padding: 0; list-style: none; }
-  @media (min-width: 40rem) { .spotlight-record { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .spotlight-record li { display: flex; gap: 0.75rem; align-items: flex-start; padding: 0.9rem 1rem; background: var(--stone); border-radius: var(--radius); }
-  .spotlight-record .icon { flex: none; width: 1.35rem; height: 1.35rem; color: var(--leaf); margin-top: 0.1rem; }
-  .spotlight-record span { display: grid; gap: 0.1rem; font-size: 0.875rem; color: var(--moss); }
-  .spotlight-record b { font-size: 0.9375rem; color: var(--canopy); }
-  .spotlight-line { margin: 1.5rem 0 0; max-width: 34rem; font-size: 1.0625rem; color: var(--moss); }
-  .spotlight-act { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.75rem; }
-  .spotlight-co { display: inline-flex; align-items: center; gap: 0.9rem; padding: 0.55rem 0.9rem; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); font: inherit; color: var(--canopy); cursor: pointer; text-align: left; transition: border-color 0.16s ease; }
-  .spotlight-co:hover, .spotlight-co:focus-visible { border-color: var(--leaf); }
-  .spotlight-co span { display: grid; font-size: 0.875rem; color: var(--moss); }
-  .spotlight-co b { font-size: 0.9375rem; color: var(--canopy); }
-  .spotlight-co .icon { color: var(--leaf); width: 1.1rem; height: 1.1rem; }
+  /* The founders (client review, 27 October 2026): a large capitals heading, then two blocks side by
+     side, each with a portrait of its own beside the name; the founder's record under his. */
+  .page-open + .section.founders-band { padding-top: 1rem; }
+  .founders-h { margin: 0 0 clamp(1.5rem, 3vw, 2.25rem); padding-bottom: 0.9rem; border-bottom: 0.125rem solid var(--canopy); font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 800; font-size: clamp(1.75rem, 3.6vw, 2.75rem); line-height: 1; letter-spacing: 0.06em; text-transform: uppercase; color: var(--canopy); }
+  .founders { display: grid; gap: 1.25rem; }
+  @media (min-width: 64rem) { .founders { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; align-items: start; } }
+  .founder { display: flex; flex-direction: column; gap: 1.25rem; padding: clamp(1.25rem, 2.5vw, 2rem); background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); scroll-margin-top: calc(var(--header-h) + 1rem); }
+  .founder-top { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(1rem, 2vw, 1.5rem); align-items: end; }
+  .founder-photo { display: block; width: clamp(6.5rem, 24vw, 11rem); height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 20%; border-radius: calc(var(--radius) - 0.125rem); background: var(--mist); }
+  .founder-name { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1.4rem, 2.6vw, 2.125rem); line-height: 1.08; letter-spacing: -0.02em; color: var(--canopy); text-wrap: balance; }
+  .founder-role { margin: 0.55rem 0 0; font-weight: 700; color: var(--leaf); }
+  .founder-role span { font-weight: 600; color: var(--moss); }
+  .founder-record { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+  .founder-record li { display: flex; gap: 0.8rem; align-items: flex-start; padding: 0.8rem 0.95rem; background: var(--stone); border-radius: var(--radius); }
+  .founder-record img { flex: none; width: 1.6rem; height: auto; margin-top: 0.1rem; }
+  .founder-record .icon { flex: none; width: 1.35rem; height: 1.35rem; margin: 0.1rem 0.125rem 0; color: var(--leaf); }
+  .founder-record span { display: grid; gap: 0.1rem; font-size: 0.9375rem; line-height: 1.45; color: var(--moss); }
+  .founder-record b { color: var(--canopy); }
+  .founder-line { margin: 0; max-width: 36rem; font-size: 1.0625rem; line-height: 1.6; color: var(--moss); }
+  .founder-act { padding-top: 0.25rem; }
 
   /* The team: portrait cards, the name over the photograph's foot. */
   .tgroup { margin-top: clamp(2.25rem, 4vw, 3rem); }
@@ -2449,19 +2448,35 @@
   .tgrid { display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   @media (min-width: 48rem) { .tgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (min-width: 72rem) { .tgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; } }
+  /* A person's card, light since the client review (27 October 2026; "brighter"): the portrait on a
+     pale ground, the name and role on a white panel under it, no shade over the photograph. A row card
+     (the leadership, the patron and advisers) sets the portrait beside the words. */
   .tcard { scroll-margin-top: calc(var(--header-h) + 1rem); }
-  .tcard-face { position: relative; display: block; width: 100%; padding: 0; overflow: hidden; border: 0; border-radius: var(--radius); background: var(--stone); font: inherit; text-align: left; color: var(--paper); }
+  .tcard-face { position: relative; display: flex; flex-direction: column; width: 100%; height: 100%; padding: 0; overflow: hidden; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); font: inherit; text-align: left; color: var(--canopy); transition: border-color 0.16s ease, box-shadow 0.2s ease; }
   button.tcard-face { cursor: pointer; }
+  button.tcard-face:hover, button.tcard-face:focus-visible { border-color: var(--leaf); box-shadow: 0 1rem 2rem -1.5rem rgba(12, 74, 110, 0.4); }
+  .tcard-pic { display: block; flex: none; overflow: hidden; background: linear-gradient(180deg, var(--mist), var(--sprout)); }
   .tcard-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 22%; transition: scale 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
   button.tcard-face:hover .tcard-photo, button.tcard-face:focus-visible .tcard-photo { scale: 1.04; }
-  .tcard-face::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 50%, rgba(6, 28, 42, 0.82) 100%); }
-  .tcard-text { position: absolute; z-index: 1; left: 0; right: 2.75rem; bottom: 0; display: grid; gap: 0.15rem; padding: 0.9rem 1rem; }
-  .tcard-name { font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1rem, 1.5vw, 1.1875rem); line-height: 1.15; letter-spacing: -0.01em; }
-  .tcard-role { font-size: 0.8125rem; color: rgba(255, 255, 255, 0.82); }
-  .tcard-open { position: absolute; z-index: 1; right: 0.75rem; bottom: 0.85rem; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--paper); color: var(--canopy); transition: background-color 0.16s ease, rotate 0.2s ease; }
+  .tcard-initials { display: grid; place-items: center; width: 100%; aspect-ratio: 4 / 5; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(2.25rem, 4vw, 3.25rem); letter-spacing: 0.02em; color: var(--leaf); }
+  .tcard-text { display: grid; align-content: start; gap: 0.2rem; padding: 0.9rem 1rem 1rem; }
+  .tcard-name { font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1rem, 1.5vw, 1.1875rem); line-height: 1.2; letter-spacing: -0.01em; }
+  .tcard-role { font-size: 0.9375rem; font-weight: 600; color: var(--leaf); }
+  .tcard-line { margin-top: 0.45rem; font-size: 0.9375rem; line-height: 1.5; color: var(--moss); }
+  .tcard-open { position: absolute; top: 0.7rem; right: 0.7rem; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--paper); color: var(--canopy); box-shadow: 0 0.25rem 0.6rem -0.3rem rgba(12, 74, 110, 0.45); transition: background-color 0.16s ease, rotate 0.2s ease; }
   .tcard-open .icon { width: 1.05rem; height: 1.05rem; }
   button.tcard-face:hover .tcard-open, button.tcard-face:focus-visible .tcard-open { background: var(--sun); rotate: 90deg; }
   button.tcard-face:focus-visible { outline: 0.1875rem solid var(--canopy); outline-offset: 0.1875rem; }
+  .tgrid.is-lead, .tgrid.is-advisers { grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 48rem) { .tgrid.is-lead { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 72rem) { .tgrid.is-advisers { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  :is(.is-lead, .is-advisers) .tcard-face { flex-direction: row; }
+  :is(.is-lead, .is-advisers) .tcard-pic { width: clamp(6.5rem, 26vw, 10rem); }
+  :is(.is-lead, .is-advisers) .tcard-photo, :is(.is-lead, .is-advisers) .tcard-initials { height: 100%; min-height: 100%; }
+  :is(.is-lead, .is-advisers) .tcard-text { align-self: center; padding: 1.1rem 1.25rem; }
+  :is(.is-lead, .is-advisers) button.tcard-face .tcard-text { padding-right: 3.5rem; }
+  :is(.is-lead, .is-advisers) .tcard-open { top: auto; bottom: 0.95rem; right: 0.85rem; background: var(--sprout); box-shadow: none; }
+  .is-lead .tcard-name { font-size: clamp(1.125rem, 1.8vw, 1.375rem); }
 
   /* The bio: a side panel over a dimmed page. */
   .bio-panel { position: fixed; inset: 0 0 0 auto; width: min(30rem, 100vw); height: 100dvh; max-height: none; margin: 0; padding: 0; overflow-y: auto; border: 0; background: var(--paper); color: var(--canopy); box-shadow: -1.5rem 0 3rem -1.5rem rgba(6, 28, 42, 0.45); translate: 100% 0; transition: translate 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), overlay 0.35s allow-discrete, display 0.35s allow-discrete; }
@@ -2488,10 +2503,9 @@
     .tcard-photo { aspect-ratio: 5 / 6; }
   }
   @media (max-width: 39.99rem) {
-    .tcard-text { right: 2.25rem; padding: 0.7rem 0.75rem; }
-    .tcard-name { font-size: 0.9375rem; }
-    .tcard-role { font-size: 0.75rem; }
-    .tcard-open { right: 0.5rem; bottom: 0.6rem; width: 1.75rem; height: 1.75rem; }
+    .tcard-text { padding: 0.75rem 0.8rem 0.85rem; }
+    .tcard-name, .tcard-role, .tcard-line, .founder-record span { font-size: 1rem; }
+    .tcard-open { top: 0.5rem; right: 0.5rem; width: 1.75rem; height: 1.75rem; }
   }
 }
 
@@ -2553,10 +2567,6 @@ main p { text-wrap: pretty; }
     .map-names b { font-size: 0.75rem; }
     .map-key, .map-key-emblem { font-size: 0.9375rem; }
   }
-  /* 6. About: names stay readable over any photograph. */
-  .tcard-face::after { background: linear-gradient(180deg, transparent 38%, rgba(6, 28, 42, 0.55) 62%, rgba(6, 28, 42, 0.9) 100%); }
-  .tcard-name, .tcard-role { text-shadow: 0 0.0625rem 0.25rem rgba(6, 28, 42, 0.6); }
-  @media (max-width: 47.99rem) { .tcard-name { font-size: 0.9375rem; } .tcard-role { font-size: 0.75rem; } }
   .tgroup-h { text-wrap: balance; }
   /* 8, 9. Cards beside a taller panel fill its height instead of leaving a hole. */
   .detects, .audience { align-items: stretch; }
@@ -3112,6 +3122,9 @@ main p { text-wrap: pretty; }
   .pillar-body { margin: 0; color: var(--canopy); }
   .pillar-tag { display: flex; align-self: start; gap: 0.45rem; margin: 0; padding-top: 0.85rem; border-top: 0.0625rem solid var(--line); font-size: 0.875rem; font-weight: 700; color: var(--leaf); }
   .pillar-tag .icon { flex: none; width: 1rem; height: 1rem; margin-top: 0.15em; }
+  /* About's mission: three pillars, each a heading and its words. */
+  @media (min-width: 64rem) { .pillars.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .pillars.is-three .pillar { grid-row: span 2; }
 
   .fm-hatch-ground { fill: var(--paper); }
   .fm-hatch-line { fill: var(--sun); }

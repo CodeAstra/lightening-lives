@@ -79,7 +79,7 @@ test('each new page is named, and each exists in the build', () => {
   }
   assert.equal(OLD.get('/services.php').name, 'Solutions');
   assert.equal(OLD.get('/our-team.php').name, 'Our people, on our About page');
-  assert.equal(OLD.get('/abhishek-chandak-details.php').name, 'Mr. Abhishek Chandak, on our About page');
+  assert.equal(OLD.get('/abhishek-chandak-details.php').name, 'Abhishek Chandak, on our About page');
 });
 
 test('suggest: an old address, whatever its case or a trailing slash; nothing for any other', () => {

@@ -42,30 +42,35 @@ test('tests.json: 11 rows in three families', () => {
   assert.equal(tests[9].status, 'Coming soon');
 });
 
-test('team.json: founders, team, patron, advisers', () => {
+test('team.json: founders, leadership, team, patron, advisers', () => {
   assert.equal(team.founders.length, 2);
-  assert.equal(team.team.length, 6);
+  assert.equal(team.leadership.length, 2);
+  assert.equal(team.team.length, 5);
   assert.equal(team.patron.length, 1);
   assert.equal(team.advisers.length, 2);
-  assert.deepEqual([...team.founders, ...team.team, ...team.patron, ...team.advisers].map((p) => p.slug), [
-    'giriraj-ratan-chandak', 'nidhi-chandak', 'abhishek-chandak', 'manisha-arumalla', 'punyasri-pskdb', 'mehraj-begum',
+  assert.deepEqual([...team.founders, ...team.leadership, ...team.team, ...team.patron, ...team.advisers].map((p) => p.slug), [
+    'giriraj-ratan-chandak', 'nidhi-chandak', 'vivek-sharma', 'abhishek-chandak', 'manisha-arumalla', 'punyasri-pskdb', 'mehraj-begum',
     'pruthvi-bellamkonda', 'jyothi-vislavath', 'd-nageshwar-reddy', 'kalyanaraman-kumaran', 'gv-krishnaveni']);
   assert.equal(team.founders[0].name, 'Dr. Giriraj Ratan Chandak');
   assert.equal(team.founders[0].credentials, 'MD, PhD, DNB');
   assert.equal(team.founders[0].role, 'Founder and CEO');
   assert.equal(team.founders[1].role, 'Co-Founder');
   assert.ok(team.founders.every((p) => p.photo === 'founder-1.jpg'));
-  assert.equal(team.team[0].name, 'Mr. Abhishek Chandak');
-  assert.equal(team.team[5].name, 'Jyothi Vislavath');
-  assert.equal(team.patron[0].role, 'Founder of AIG Hospitals');
-  assert.equal(team.advisers[0].name, 'Prof Kalyanaraman Kumaran');
-  for (const p of [...team.founders, ...team.team, ...team.patron, ...team.advisers]) {
-    assert.ok(existsSync(new URL(`../content/assets/people/${p.photo}`, import.meta.url)), `${p.slug} photo ${p.photo}`);
+  assert.equal(team.founders[1].name, 'Nidhi Chandak');
+  assert.equal(team.leadership[1].name, 'Abhishek Chandak');
+  assert.equal(team.leadership[1].role, 'Head, Finance and Operations');
+  assert.equal(team.leadership[0].photo, undefined, 'no photo until the client sends one');
+  assert.equal(team.team[4].name, 'Jyothi Vislavath');
+  assert.equal(team.patron[0].role, 'Patron');
+  assert.equal(team.advisers[0].name, 'Prof. Kalyanaraman Kumaran');
+  for (const p of [...team.founders, ...team.leadership, ...team.team, ...team.patron, ...team.advisers]) {
+    if (p.photo) assert.ok(existsSync(new URL(`../content/assets/people/${p.photo}`, import.meta.url)), `${p.slug} photo ${p.photo}`);
     assert.ok(p.name && p.slug);
+    assert.doesNotMatch(p.name, /^(Mr|Mrs|Ms)\b/, p.slug);
   }
-  for (const p of [...team.founders, ...team.team]) assert.ok(Array.isArray(p.bio) && p.bio.length >= 1, p.slug);
+  for (const p of [...team.founders, team.leadership[1], ...team.team]) assert.ok(Array.isArray(p.bio) && p.bio.length >= 1, p.slug);
   for (const p of [...team.patron, ...team.advisers]) assert.equal(p.bio, undefined, p.slug);
-  assert.equal(team.founders[0].bio.length, 2);
+  assert.equal(team.founders[0].bio.length, 3);
 });
 
 test('collaborators.json: thirteen names as 5.14 types them', () => {

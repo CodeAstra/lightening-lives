@@ -7,33 +7,43 @@
       "slug": "giriraj-ratan-chandak",
       "photo": "founder-1.jpg",
       "bio": [
+        "With over twenty-five years of research into the genetic and nutritional basis of inherited and complex disorders in India, he founded Lightening Lives to turn molecular biology into affordable, field-ready diagnostics for the communities that need them most.",
         "Dr. Chandak is a physician, scientist and medical researcher who works on molecular diagnostics and genetic disorders. He was Chief Scientist at the CSIR-Centre for Cellular and Molecular Biology (CCMB), Hyderabad, and is a founding faculty member and former Director of the Centre for DNA Fingerprinting and Diagnostics (CDFD). His research on genetic disease includes work on sickle cell anaemia among populations in several states that have had little access to testing.",
         "He is a recipient of the Sir J.C. Bose Fellowship, a Fellow of all four Indian national science academies and of The World Academy of Sciences, and a member of national and international consortia that work on non-communicable diseases such as diabetes and cardiovascular disease. He founded Lightening Lives to develop affordable diagnostic tests that reduce the burden of disease."
-      ]
+      ],
+      "line": "Twenty-five years of research, innovation and laboratory work on inherited genetic disorders, now reaching the market and communities, with impact on the ground."
     },
     {
-      "name": "Mrs. Nidhi Chandak",
+      "name": "Nidhi Chandak",
       "role": "Co-Founder",
       "slug": "nidhi-chandak",
       "photo": "founder-1.jpg",
       "bio": [
         "Nidhi Chandak holds an MSc in Operations Research and a postgraduate diploma in Computer Applications. She brings statistical data management and operations planning to the company, and supports the delivery of diagnostic services for musculopathies and haemoglobinopathies. She works directly with patients, families and support groups."
+      ],
+      "line": "Drives the social enterprise vision, institutional partnerships and community-first ethos, so laboratory innovation becomes equitable care on the ground."
+    }
+  ],
+  "leadership": [
+    {
+      "name": "Dr. Vivek Sharma",
+      "role": "Chief Strategy Advisor",
+      "slug": "vivek-sharma",
+      "initials": "VS"
+    },
+    {
+      "name": "Abhishek Chandak",
+      "role": "Head, Finance and Operations",
+      "slug": "abhishek-chandak",
+      "photo": "abhishek-chandak.jpg",
+      "bio": [
+        "A finance leader with more than 20 years' experience at PwC, GE, Wipro, SenecaGlobal and Fourth Frontier, in audit and assurance, manufacturing, IT services and start-ups. He was named MSME CFO of the Year by CII Southern Region in 2021, for his work at SenecaGlobal IT Services."
       ]
     }
   ],
   "team": [
     {
-      "name": "Mr. Abhishek Chandak",
-      "role": "Head, Finance",
-      "slug": "abhishek-chandak",
-      "photo": "abhishek-chandak.jpg",
-      "bio": [
-        "A finance leader with more than 20 years' experience at PwC, GE, Wipro, SenecaGlobal and Fourth Frontier, in audit and assurance, manufacturing, IT services and start-ups. He was named MSME CFO of the Year by CII Southern Region in 2021, for his work at SenecaGlobal IT Services."
-      ],
-      "group": "operations"
-    },
-    {
-      "name": "Ms. Manisha Arumalla",
+      "name": "Manisha Arumalla",
       "role": "Scientific Officer",
       "slug": "manisha-arumalla",
       "photo": "manisha-arumalla.jpg",
@@ -43,7 +53,7 @@
       "group": "science"
     },
     {
-      "name": "Ms. Punyasri PSKDB",
+      "name": "Punyasri PSKDB",
       "role": "Technical Officer",
       "slug": "punyasri-pskdb",
       "photo": "punyasri-pskdb.jpg",
@@ -53,7 +63,7 @@
       "group": "science"
     },
     {
-      "name": "Ms. Mehraj Begum",
+      "name": "Mehraj Begum",
       "role": "Admin and Operations Executive",
       "slug": "mehraj-begum",
       "photo": "mehraj-begum.jpg",
@@ -63,7 +73,7 @@
       "group": "operations"
     },
     {
-      "name": "Mr. Pruthvi Bellamkonda",
+      "name": "Pruthvi Bellamkonda",
       "role": "Accounts Executive",
       "slug": "pruthvi-bellamkonda",
       "photo": "pruthvi.png",
@@ -86,34 +96,37 @@
   "patron": [
     {
       "name": "Dr. D. Nageshwar Reddy",
-      "role": "Founder of AIG Hospitals",
+      "role": "Patron",
       "slug": "d-nageshwar-reddy",
-      "photo": "dr-nageswar.png"
+      "photo": "dr-nageswar.png",
+      "line": "Founder and Chairman, AIG Hospitals, and Padma Vibhushan recipient, guiding our clinical translation and hospital strategy."
     }
   ],
   "advisers": [
     {
-      "name": "Prof Kalyanaraman Kumaran",
+      "name": "Prof. Kalyanaraman Kumaran",
       "slug": "kalyanaraman-kumaran",
       "photo": "prof-kalyanaraman.png",
-      "role": "Adviser"
+      "role": "Advisory board",
+      "line": "Clinical epidemiologist and public health scientist in maternal and child nutrition, life-course epidemiology and NCD prevention."
     },
     {
-      "name": "Prof GV Krishnaveni",
+      "name": "Prof. G.V. Krishnaveni",
       "slug": "gv-krishnaveni",
       "photo": "prof-krishnaveni.png",
-      "role": "Adviser"
+      "role": "Advisory board",
+      "line": "Epidemiologist working on the developmental origins of health and disease, maternal-fetal nutrition and cohort studies in India."
     }
   ],
   "groups": [
     {
       "id": "science",
-      "name": "Science and laboratory",
+      "name": "Science and laboratory operations",
       "icon": "flask-conical"
     },
     {
       "id": "operations",
-      "name": "Finance and operations",
+      "name": "Administration and accounts",
       "icon": "briefcase"
     }
   ]
