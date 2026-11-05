@@ -10,6 +10,7 @@ import { LAYERS, LAYER_ORDER } from '../map/map-layers.js';
 import { initMotion } from './motion.js';
 import { initEnquire } from './enquire.js';
 import { initNotFound, initLostGel } from './not-found.js';
+import { initTabs } from './tabs.js';
 
 // This file is loaded as a module, where document.currentScript is null: the film's bundle is found
 // beside this one through import.meta.url.
@@ -832,6 +833,7 @@ ready(() => {
   initNews();
   initPins();
   initFieldMap();
+  initTabs(document.querySelector('[data-tabs]'));
   initReassured();
   initMap();
   initGel();

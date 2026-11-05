@@ -266,7 +266,8 @@ test('our latest work, under the map: three real items, each a compact card with
 });
 
 test('three ways to partner, signed by the founder, with the email and the phone', () => {
-  assert.deepEqual(texts('#contact .door-who'), ['Hospitals and laboratories', 'Public health programmes', 'CSR and NGOs']);
+  assert.deepEqual(texts('#contact .door-who'), ['Hospitals, standalone labs and diagnostic chains', 'Public health and government programmes', 'CSR foundations and NGOs']);
+  assert.deepEqual($('#contact .door').map((i, a) => a.attribs.href).get(), ['/partner-with-us/#laboratories', '/partner-with-us/#programmes', '/partner-with-us/#funders']);
   assert.equal($('#contact .door .icon-tile svg.icon').length, 3);
   assert.match(text('#contact .signed'), /Dr\. Giriraj Ratan Chandak, MD, PhD, DNB\. Founder and CEO; formerly Chief Scientist at CSIR-CCMB and Director of CDFD\./);
   assert.deepEqual($('#contact .signed-reach a').map((i, a) => a.attribs.href).get(), ['mailto:admin@lighteninglives.in', 'tel:+919182588191']);

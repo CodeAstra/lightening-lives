@@ -1,5 +1,5 @@
 [
-  { "id": "laboratories", "icon": "hospital", "who": "Hospitals and laboratories", "line": "Run LitLife™ tests in your own laboratory, with standard PCR equipment.", "text": "For laboratories", "href": "/partners/#laboratories" },
-  { "id": "programmes", "icon": "landmark", "who": "Public health programmes", "line": "Screen and confirm in one visit, at district or state scale.", "text": "For programmes", "href": "/partners/#programmes" },
-  { "id": "funders", "icon": "hand-heart", "who": "CSR and NGOs", "line": "Fund screening that ends in a diagnosis and a family in care.", "text": "For funders", "href": "/partners/#funders" }
+  { "id": "laboratories", "icon": "hospital", "who": "Hospitals, standalone labs and diagnostic chains", "line": "Run LitLife™ in your own laboratory on standard PCR equipment, or widen your sample collection without cold-chain costs.", "text": "View lab partnership", "href": "/partner-with-us/#laboratories" },
+  { "id": "programmes", "icon": "landmark", "who": "Public health and government programmes", "line": "Screen and confirm in a single visit, at block, district or state scale, from newborns to adults.", "text": "View programme partnership", "href": "/partner-with-us/#programmes" },
+  { "id": "funders", "icon": "hand-heart", "who": "CSR foundations and NGOs", "line": "Fund genetic and nutritional screening that ends in a confirmed diagnosis and a family in care.", "text": "View CSR and NGO partnership", "href": "/partner-with-us/#funders" }
 ]

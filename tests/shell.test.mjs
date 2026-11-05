@@ -30,9 +30,9 @@ test('every page has the shell', () => {
     assert.equal($('header details.nav-drop, header .menu-sub').length, 0, `${url}: no dropdown`);
     for (const nav of ['nav.site-nav', 'details.menu .menu-panel']) {
       assert.equal($(`header ${nav} .btn-solid`).length, 1, `${url} ${nav}: one call to action`);
-      // One click to the enquiry form, where the reader is (26 October 2026); Contact without script.
-      assert.equal($(`header ${nav} .btn-solid`).attr('href'), '/contact/', url);
-      assert.equal($(`header ${nav} .btn-solid`).attr('data-enquire'), '', url);
+      // To the page for partners (client review, 27 October 2026; plan 2026-11-05 Task 6), a plain link.
+      assert.equal($(`header ${nav} .btn-solid`).attr('href'), '/partner-with-us/', url);
+      assert.equal($(`header ${nav} .btn-solid`).attr('data-enquire'), undefined, url);
       assert.equal($(`header ${nav} .btn-solid`).text().trim(), 'Partner with us', url);
     }
     const current = $('header nav.site-nav a.nav-link[aria-current=page]').map((i, a) => $(a).attr('href')).get();
@@ -60,9 +60,17 @@ test('every page has the shell', () => {
 
 test('the notice for individuals appears where the content file says', () => {
   // These pages arrive in Phase 4; each is checked once it exists.
-  for (const url of ['/solutions/', '/partners/', '/contact/'].filter(exists))
+  for (const url of ['/solutions/', '/partner-with-us/', '/contact/'].filter(exists))
     assert.match(load(url)('.notice').text(), /don't test individuals/, url);
   // The home page no longer carries it (nine sections, 25 October 2026); the footer says it on every page.
   assert.equal(load('/')('main .notice').length, 0);
   assert.match(load('/')('footer').text(), /We don't offer testing to individuals/);
+});
+
+test('the footer links Partner With Us; no page links the old ways to partner on /partners/', () => {
+  for (const url of pages()) {
+    const $ = load(url);
+    assert.equal($('footer a[href="/partner-with-us/"]').length, 1, url);
+    assert.equal($('a[href^="/partners/#"]').length, 0, url);
+  }
 });

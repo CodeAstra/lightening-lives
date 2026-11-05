@@ -85,7 +85,7 @@ test('the family and Develop a test, beside the questions; the close asks for th
     // The form opens with the page's condition ticked (26 October 2026); Contact, with it, without script.
     assert.match($('.closing .btn-solid').attr('href'), /^\/contact\/\?condition=[a-z-]+$/, url);
     assert.ok($('.closing .btn-solid').is('[data-enquire][data-condition]'), url);
-    assert.equal($('.closing .btn-line').attr('href'), '/partners/', url);
+    assert.equal($('.closing .btn-line').attr('href'), '/partner-with-us/', url);
     assert.equal($('.closing .notice').length, 1, url);
   }
   assert.deepEqual(load(PAGES[2])('#questions .family-links a').map((i, a) => load(PAGES[2])(a).attr('href')).get(), ['/solutions/#dmd', '/solutions/#lgmd', '/solutions/#develop']);

@@ -73,7 +73,7 @@
   ],
   "cta": {
     "text": "Partner with us",
-    "enquire": true
+    "href": "/partner-with-us/"
   },
   "footer": {
     "whatWeDo": [
@@ -102,6 +102,10 @@
       {
         "text": "Team",
         "href": "/about/#team"
+      },
+      {
+        "text": "Partner with us",
+        "href": "/partner-with-us/"
       },
       {
         "text": "Contact",

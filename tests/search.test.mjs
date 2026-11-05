@@ -48,9 +48,9 @@ test('the home page answers "genetic testing in India" and says who we currently
 });
 
 test('the pages for each kind of partner name them, and Contact asks each of them', () => {
-  assert.match(meta('/partners/').description, WHO);
+  assert.match(meta('/partner-with-us/').description, WHO);
   assert.match(meta('/contact/').description, /\bhospital\b.*\bdiagnostic lab\b.*\bpublic health programme\b.*\bNGO\b/);
-  for (const url of ['/', '/partners/', '/our-work/']) assert.match(meta(url).title, /\bIndia\b/, url);
+  for (const url of ['/', '/partners/', '/partner-with-us/', '/our-work/']) assert.match(meta(url).title, /\bIndia\b/, url);
 });
 
 test('each test is searched for by its condition, which opens its title', () => {

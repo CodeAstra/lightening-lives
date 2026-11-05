@@ -1,13 +1,13 @@
 [
   {
     "from": "/partnerships/",
-    "to": "/partners/",
-    "name": "Partners"
+    "to": "/partner-with-us/",
+    "name": "Partner with us"
   },
   {
     "from": "/programmes/",
-    "to": "/partners/#programmes",
-    "name": "For public health programmes, on our Partners page"
+    "to": "/partner-with-us/#programmes",
+    "name": "Public health programmes, on our Partner with us page"
   },
   {
     "from": "/about/team/",
@@ -86,8 +86,8 @@
   },
   {
     "from": "/partnerships.php",
-    "to": "/partners/",
-    "name": "Partners"
+    "to": "/partner-with-us/",
+    "name": "Partner with us"
   },
   {
     "from": "/contact-us.php",

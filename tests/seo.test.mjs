@@ -22,7 +22,7 @@ const NAMES = {
   '/solutions/thalassaemia/': 'Thalassaemia',
   '/solutions/spinal-muscular-atrophy/': 'Spinal muscular atrophy',
   '/our-work/': 'Our Work',
-  '/about/': 'About Us', '/partners/': 'Partners', '/contact/': 'Contact',
+  '/about/': 'About Us', '/partners/': 'Partners', '/partner-with-us/': 'Partner With Us', '/contact/': 'Contact',
   '/privacy/': 'Privacy', '/terms/': 'Terms',
 };
 

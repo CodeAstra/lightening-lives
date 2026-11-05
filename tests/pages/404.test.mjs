@@ -65,7 +65,7 @@ test('every old address in 3.4 has its new page', () => {
     '/mehraj-begum-details.php': '/about/#mehraj-begum',
     '/pruthvi-details.php': '/about/#pruthvi-bellamkonda',
     '/jyothi-details.php': '/about/#jyothi-vislavath',
-    '/partnerships.php': '/partners/',
+    '/partnerships.php': '/partner-with-us/',
     '/contact-us.php': '/contact/',
   });
 });

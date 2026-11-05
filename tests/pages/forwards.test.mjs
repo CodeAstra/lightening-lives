@@ -43,9 +43,10 @@ test('the forwarding pages are not in the sitemap', () => {
 
 test('the old routes that moved on 25 October 2026 forward to their new places', () => {
   const to = Object.fromEntries(FORWARDS.map((f) => [f.from, f.to]));
-  assert.equal(to['/partnerships/'], '/partners/');
-  assert.equal(to['/programmes/'], '/partners/#programmes');
-  assert.equal(to['/partnerships.php'], '/partners/');
+  // Since the client review (plan 2026-11-05 Task 6), the ways to partner are on /partner-with-us/.
+  assert.equal(to['/partnerships/'], '/partner-with-us/');
+  assert.equal(to['/programmes/'], '/partner-with-us/#programmes');
+  assert.equal(to['/partnerships.php'], '/partner-with-us/');
   assert.equal(to['/impact-stories.php'], '/our-work/');
   assert.ok(!existsSync('src/site/partnerships.njk') && !existsSync('src/site/programmes.njk'));
 });
