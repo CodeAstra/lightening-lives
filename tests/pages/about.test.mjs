@@ -38,15 +38,21 @@ test('THE FOUNDERS: two blocks, each with its own portrait, record, line and sto
   assert.equal(srcs.length, 2);
   assert.notEqual(srcs[0], srcs[1], 'each founder has a portrait of their own');
   assert.deepEqual(blocks.map((i, b) => $(b).find('img.founder-photo').attr('alt')).get(), ['Dr. Giriraj Ratan Chandak', 'Nidhi Chandak']);
-  assert.deepEqual(texts('#founders .founder-name'), ['Dr. Giriraj Ratan Chandak', 'Nidhi Chandak']);
-  assert.deepEqual(texts('#founders .founder-role'), ['Founder and CEO · MD, PhD, DNB', 'Co-Founder']);
+  // The degrees beside the name, as in the bio (polish, 5 November 2026); the role on its own line.
+  assert.deepEqual(texts('#founders .founder-name'), ['Dr. Giriraj Ratan Chandak MD, PhD, DNB', 'Nidhi Chandak']);
+  assert.equal(text(`#${ff.slug} .founder-cred`), 'MD, PhD, DNB');
+  assert.deepEqual(texts('#founders .founder-role'), ['Founder and CEO', 'Co-Founder']);
   const record = $(`#${ff.slug} .founder-record li`);
   assert.equal(record.length, 4);
   assert.equal($(record[0]).find('img').attr('src'), '/assets/logo/partners/logo-ccmb.webp', 'CSIR-CCMB by its logo');
+  assert.equal($(record[0]).find('img').attr('alt'), '', 'the line beside it names CCMB');
   assert.match(text(record[3]), /Indian National Science Academy, Indian Academy of Sciences, National Academy of Sciences, India, and National Academy of Medical Sciences; and The World Academy of Sciences/);
   assert.equal(text(`#${ff.slug} .founder-line`), 'Twenty-five years of research, innovation and laboratory work on inherited genetic disorders, now reaching the market and communities, with impact on the ground.');
   assert.equal(text(`#${co.slug} .founder-line`), 'Drives the social enterprise vision, institutional partnerships and community-first ethos, so laboratory innovation becomes equitable care on the ground.');
-  assert.deepEqual(blocks.map((i, b) => [[text($(b).find('[popovertarget]')), $(b).find('[popovertarget]').attr('popovertarget')]]).get(), [['His story', `bio-${ff.slug}`], ['Her story', `bio-${co.slug}`]]);
+  // Equal rank: the same kind of button for both, each naming its person for a screen reader.
+  assert.deepEqual(blocks.map((i, b) => { const btn = $(b).find('[popovertarget]'); return [[text(btn), btn.attr('popovertarget'), btn.attr('aria-label'), btn.is('.btn-line')]]; }).get(),
+    [['His story', `bio-${ff.slug}`, `His story: ${ff.name}`, true], ['Her story', `bio-${co.slug}`, `Her story: ${co.name}`, true]]);
+  assert.equal($('#founders .founders').length, 1);
   assert.match(text(`#bio-${ff.slug} .bio-body > p:not(.bio-role)`), /^With over twenty-five years of research into the genetic and nutritional basis/);
   for (const p of [ff, co]) assert.equal($(`#bio-${p.slug}[popover][role=dialog]`).length, 1, p.slug);
 });
@@ -60,17 +66,22 @@ test('the leadership: two cards, the finance head opening a bio, the strategy ad
   assert.equal($('#abhishek-chandak button.tcard-face').attr('popovertarget'), 'bio-abhishek-chandak');
 });
 
-test('the team: two groups, five lighter cards, no dark scrim', () => {
+test('the team: one grid of five lighter cards, no categories, no dark scrim', () => {
   assert.equal(text('#team h2'), 'The team. Behind our tests and programmes.');
   assert.equal(text('#team .lead'), 'Molecular scientists, laboratory specialists and operations staff, working together in Hyderabad.');
-  assert.deepEqual(texts('#team .tgroup-h'), ['Science and laboratory operations', 'Administration and accounts']);
-  assert.deepEqual($('#team .tgroup').map((i, g) => [$(g).find('.tcard').map((j, c) => $(c).attr('id')).get()]).get(),
-    [['manisha-arumalla', 'punyasri-pskdb', 'jyothi-vislavath'], ['mehraj-begum', 'pruthvi-bellamkonda']]);
+  // No group headings (the user, 5 November 2026: "no category needed in team").
+  assert.equal($('#team .tgroup, #team .tgroup-h').length + $('#team h3').not('.bio-name').length, 0);
+  assert.equal($('#team .tgrid').length, 1);
+  assert.deepEqual($('#team .tcard').map((i, c) => $(c).attr('id')).get(), ['manisha-arumalla', 'punyasri-pskdb', 'jyothi-vislavath', 'mehraj-begum', 'pruthvi-bellamkonda']);
   $('#team .tcard').each((i, c) => {
     assert.equal($(c).find(`button.tcard-face[popovertarget="bio-${$(c).attr('id')}"]`).length, 1);
     assert.equal($(c).find('img').attr('alt'), text($(c).find('.tcard-name')));
   });
-  assert.doesNotMatch(readFileSync('src/css/site.css', 'utf8'), /\.tcard-face::after/, 'no gradient over the photographs');
+  const css = readFileSync('src/css/site.css', 'utf8');
+  assert.doesNotMatch(css, /\.tcard-face::after/, 'no gradient over the photographs');
+  // As many columns as people, so the row is always complete (the user, 5 November 2026).
+  assert.equal($('#team .tgrid').attr('style'), `--n: ${TEAM.team.length}`);
+  assert.match(css, /\.tgrid\.is-team \{ grid-template-columns: repeat\(var\(--n, 5\), minmax\(0, 1fr\)\); gap: 1rem; \}/);
 });
 
 test('patron and advisers: what each brings, on the card', () => {

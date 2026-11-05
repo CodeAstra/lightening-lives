@@ -34,7 +34,7 @@ closing:
 {%- macro bioPanel(p) -%}
 <div class="bio-panel" id="bio-{{ p.slug }}" popover role="dialog" aria-labelledby="bio-{{ p.slug }}-h">
   <button type="button" class="bio-close" popovertarget="bio-{{ p.slug }}" popovertargetaction="hide" aria-label="Close">{% icon "x" %}</button>
-  {{ picture("person-" + p.slug, p.name, "24rem", { class: "bio-photo" }) }}
+  {{ picture("person-" + p.slug, p.name, "12rem", { class: "bio-photo" }) }}
   <div class="bio-body">
     <h3 id="bio-{{ p.slug }}-h" class="bio-name">{{ p.name }}{% if p.credentials %} <span>{{ p.credentials }}</span>{% endif %}</h3>
     <p class="bio-role">{{ p.role }}</p>
@@ -70,32 +70,31 @@ closing:
 
 {%- set ff = team.founders[0] %}
 
-  <!-- 1. The founders: two blocks, each with its own portrait -->
+  <!-- 1. The founders: one after the other, each a row with its own portrait -->
   <section id="founders" class="section on-mist founders-band" aria-labelledby="founders-h">
     <div class="wrap">
       <h2 id="founders-h" class="founders-h">The founders</h2>
       <div class="founders">
         {%- for p in team.founders %}
+        {%- set story = "His story" if loop.first else "Her story" %}
         <article class="founder" id="{{ p.slug }}" aria-labelledby="{{ p.slug }}-h">
-          <div class="founder-top">
-            {{ picture("person-" + p.slug, p.name, "(min-width: 64rem) 12rem, (min-width: 40rem) 11rem, 38vw", { class: "founder-photo" }) }}
-            <div class="founder-id">
-              <h3 id="{{ p.slug }}-h" class="founder-name">{{ p.name }}</h3>
-              <p class="founder-role">{{ p.role }}{% if p.credentials %} <span>· {{ p.credentials }}</span>{% endif %}</p>
+          {{ picture("person-" + p.slug, p.name, "(min-width: 64rem) 11rem, (min-width: 40rem) 9rem, 7rem", { class: "founder-photo" }) }}
+          <div class="founder-main">
+            <h3 id="{{ p.slug }}-h" class="founder-name">{{ p.name }}{% if p.credentials %} <span class="founder-cred">{{ p.credentials }}</span>{% endif %}</h3>
+            <p class="founder-role">{{ p.role }}</p>
+            <p class="founder-line">{{ p.line }}</p>
+            <div class="founder-act">
+              <button type="button" class="btn btn-line" popovertarget="bio-{{ p.slug }}" aria-label="{{ story }}: {{ p.name }}">{{ story }}</button>
             </div>
           </div>
           {%- if loop.first %}
           <ul class="founder-record">
-            <li><img src="/assets/logo/partners/logo-ccmb.webp" alt="CSIR-CCMB" width="282" height="345" loading="lazy" decoding="async"><span><b>Former Mission Director and Chief Scientist</b>CSIR-Sickle Cell Anaemia Mission, CSIR-CCMB, Hyderabad</span></li>
+            <li><img src="/assets/logo/partners/logo-ccmb.webp" alt="" width="282" height="345" loading="lazy" decoding="async"><span><b>Former Mission Director and Chief Scientist</b>CSIR-Sickle Cell Anaemia Mission, CSIR-CCMB, Hyderabad</span></li>
             <li>{% icon "graduation-cap" %}<span><b>Former Director</b>CDFD, Hyderabad, founding faculty</span></li>
             <li>{% icon "award" %}<span><b>Sir J.C. Bose National Fellow</b>Government of India</span></li>
             <li>{% icon "users" %}<span><b>Fellow of the four Indian national science academies</b>Indian National Science Academy, Indian Academy of Sciences, National Academy of Sciences, India, and National Academy of Medical Sciences; and The World Academy of Sciences</span></li>
           </ul>
           {%- endif %}
-          <p class="founder-line">{{ p.line }}</p>
-          <div class="founder-act">
-            <button type="button" class="btn {{ 'btn-solid' if loop.first else 'btn-line' }}" popovertarget="bio-{{ p.slug }}">{{ "His story" if loop.first else "Her story" }}</button>
-          </div>
           {{- bioPanel(p) }}
         </article>
         {%- endfor %}
@@ -120,14 +119,10 @@ closing:
         <h2 id="team-h" class="h2 lg:col-span-7">The team. <span class="h-mark">Behind our tests and programmes.</span></h2>
         <p class="lead lg:col-span-5">Molecular scientists, laboratory specialists and operations staff, working together in Hyderabad.</p>
       </div>
-      {%- for g in team.groups %}
-      <div class="tgroup">
-        <h3 class="tgroup-h">{% icon g.icon %}{{ g.name }}</h3>
-        <ul class="tgrid">
-          {%- for p in team.team %}{% if p.group == g.id %}{{ card(p) }}{% endif %}{% endfor %}
-        </ul>
-      </div>
-      {%- endfor %}
+      {#- One grid, no categories (the user, 5 November 2026); the scientists first, as the data groups them. #}
+      <ul class="tgrid is-team mt-12" style="--n: {{ team.team | length }}">
+        {%- for g in team.groups %}{% for p in team.team %}{% if p.group == g.id %}{{ card(p, "(min-width: 72rem) 14rem, (min-width: 48rem) 19vw, 5.5rem") }}{% endif %}{% endfor %}{% endfor %}
+      </ul>
     </div>
   </section>
 

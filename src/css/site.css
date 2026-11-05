@@ -2420,31 +2420,44 @@
 /* About, people first (25 October 2026, second pass; client review, 27 October 2026): the founders side by side, the team as
    cards in their groups, and a bio in a side panel that slides in from the right (a native popover). */
 @layer components {
-  /* The founders (client review, 27 October 2026): a large capitals heading, then two blocks side by
-     side, each with a portrait of its own beside the name; the founder's record under his. */
+  /* The founders (client review, 27 October 2026; one after the other since the user's look on 5
+     November): a large capitals heading, then a row for each founder: the portrait, then name, role,
+     line and story, then (the founder's) record. On a phone each stacks: portrait, words, record. The
+     portraits stay small (stand-in crops of 400 and 272 px). */
   .page-open + .section.founders-band { padding-top: 1rem; }
-  .founders-h { margin: 0 0 clamp(1.5rem, 3vw, 2.25rem); padding-bottom: 0.9rem; border-bottom: 0.125rem solid var(--canopy); font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 800; font-size: clamp(1.75rem, 3.6vw, 2.75rem); line-height: 1; letter-spacing: 0.06em; text-transform: uppercase; color: var(--canopy); }
-  .founders { display: grid; gap: 1.25rem; }
-  @media (min-width: 64rem) { .founders { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; align-items: start; } }
-  .founder { display: flex; flex-direction: column; gap: 1.25rem; padding: clamp(1.25rem, 2.5vw, 2rem); background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); scroll-margin-top: calc(var(--header-h) + 1rem); }
-  .founder-top { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(1rem, 2vw, 1.5rem); align-items: end; }
-  .founder-photo { display: block; width: clamp(6.5rem, 24vw, 11rem); height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 20%; border-radius: calc(var(--radius) - 0.125rem); background: var(--mist); }
-  .founder-name { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1.4rem, 2.6vw, 2.125rem); line-height: 1.08; letter-spacing: -0.02em; color: var(--canopy); text-wrap: balance; }
-  .founder-role { margin: 0.55rem 0 0; font-weight: 700; color: var(--leaf); }
-  .founder-role span { font-weight: 600; color: var(--moss); }
-  .founder-record { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
-  .founder-record li { display: flex; gap: 0.8rem; align-items: flex-start; padding: 0.8rem 0.95rem; background: var(--stone); border-radius: var(--radius); }
-  .founder-record img { flex: none; width: 1.6rem; height: auto; margin-top: 0.1rem; }
-  .founder-record .icon { flex: none; width: 1.35rem; height: 1.35rem; margin: 0.1rem 0.125rem 0; color: var(--leaf); }
-  .founder-record span { display: grid; gap: 0.1rem; font-size: 0.9375rem; line-height: 1.45; color: var(--moss); }
-  .founder-record b { color: var(--canopy); }
-  .founder-line { margin: 0; max-width: 36rem; font-size: 1.0625rem; line-height: 1.6; color: var(--moss); }
-  .founder-act { padding-top: 0.25rem; }
+  /* The client's capitals, set as a section title: the display face at its normal width (the wide cut
+     at 800 read as a shout), open tracking, and a hairline running out to the measure. */
+  .founders-h { display: flex; align-items: center; gap: clamp(1rem, 2vw, 1.5rem); margin: 0 0 clamp(1.25rem, 2.5vw, 2rem); font-family: var(--font-display); font-stretch: 100%; font-weight: 700; font-size: clamp(1.125rem, 1.7vw, 1.5rem); line-height: 1.2; letter-spacing: 0.16em; text-transform: uppercase; color: var(--canopy); }
+  .founders-h::after { content: ""; flex: 1; height: 0.0625rem; background: color-mix(in srgb, var(--canopy) 28%, transparent); }
+  /* One panel for both, a hairline between them, so the room beside the shorter row reads as air. */
+  .founders { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; align-items: start; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
+  .founder { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; align-items: start; padding: clamp(1.25rem, 3vw, 2.5rem); scroll-margin-top: calc(var(--header-h) + 1rem); }
+  .founder + .founder { border-top: 0.0625rem solid var(--line); }
+  @media (min-width: 40rem) {
+    .founder { grid-template-columns: auto minmax(0, 1fr); gap: 1.25rem 2rem; }
+    .founder-record { grid-column: 2; }
+  }
+  @media (min-width: 64rem) {
+    .founder { grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.15fr); gap: 2.5rem; }
+    .founder-record { grid-column: 3; }
+  }
+  .founder-photo { display: block; width: clamp(7rem, 15vw, 11rem); height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 20%; border-radius: calc(var(--radius) - 0.125rem); background: var(--mist); }
+  .founder-main { display: flex; flex-direction: column; gap: 0.5rem; min-width: 0; }
+  .founder-name { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1.6rem, 2.6vw, 2.25rem); line-height: 1.08; letter-spacing: -0.025em; color: var(--canopy); text-wrap: balance; }
+  .founder-cred { display: inline-block; margin-left: 0.15em; font-family: var(--font-sans); font-stretch: 100%; font-size: 1rem; font-weight: 600; letter-spacing: 0.01em; color: var(--moss); white-space: nowrap; }
+  .founder-role { margin: 0.15rem 0 0; font-weight: 700; color: var(--leaf); }
+  /* The record as a ruled list (not grey boxes in a white card): each line under a hairline. */
+  .founder-record { display: grid; margin: 0; padding: 0; list-style: none; border-top: 0.125rem solid var(--canopy); }
+  .founder-record li { display: grid; grid-template-columns: 1.75rem minmax(0, 1fr); gap: 0.9rem; align-items: start; padding: 0.9rem 0; border-bottom: 0.0625rem solid var(--line); }
+  .founder-record li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .founder-record img { display: block; width: 1.75rem; height: auto; }
+  .founder-record .icon { width: 1.4rem; height: 1.4rem; margin: 0.1rem auto 0; color: var(--leaf); }
+  .founder-record span { display: grid; gap: 0.15rem; font-size: 0.9375rem; line-height: 1.45; color: var(--moss); }
+  .founder-record b { font-size: 1rem; line-height: 1.3; color: var(--canopy); }
+  .founder-line { margin: 0.6rem 0 0; max-width: 34rem; font-size: 1.0625rem; line-height: 1.6; color: var(--moss); }
+  .founder-act { padding-top: 0.75rem; }
 
   /* The team: portrait cards, the name over the photograph's foot. */
-  .tgroup { margin-top: clamp(2.25rem, 4vw, 3rem); }
-  .tgroup-h { display: flex; align-items: center; gap: 0.55rem; margin: 0 0 1rem; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.125rem; color: var(--canopy); }
-  .tgroup-h .icon { color: var(--leaf); width: 1.2rem; height: 1.2rem; }
   .tgrid { display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   @media (min-width: 48rem) { .tgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (min-width: 72rem) { .tgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; } }
@@ -2458,7 +2471,7 @@
   .tcard-pic { display: block; flex: none; overflow: hidden; background: linear-gradient(180deg, var(--mist), var(--sprout)); }
   .tcard-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 22%; transition: scale 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
   button.tcard-face:hover .tcard-photo, button.tcard-face:focus-visible .tcard-photo { scale: 1.04; }
-  .tcard-initials { display: grid; place-items: center; width: 100%; aspect-ratio: 4 / 5; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(2.25rem, 4vw, 3.25rem); letter-spacing: 0.02em; color: var(--leaf); }
+  .tcard-initials { display: grid; place-items: center; width: 100%; aspect-ratio: 4 / 5; font-family: var(--font-display); font-stretch: 100%; font-weight: 600; font-size: clamp(1.5rem, 2.2vw, 1.875rem); letter-spacing: 0.12em; color: var(--moss); }
   .tcard-text { display: grid; align-content: start; gap: 0.2rem; padding: 0.9rem 1rem 1rem; }
   .tcard-name { font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: clamp(1rem, 1.5vw, 1.1875rem); line-height: 1.2; letter-spacing: -0.01em; }
   .tcard-role { font-size: 0.9375rem; font-weight: 600; color: var(--leaf); }
@@ -2487,7 +2500,9 @@
   @starting-style { .bio-panel:popover-open::backdrop { background: rgba(6, 28, 42, 0); } }
   .bio-close { position: absolute; top: 0.9rem; right: 0.9rem; z-index: 1; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; border-radius: 50%; background: var(--paper); color: var(--canopy); cursor: pointer; box-shadow: 0 0.25rem 0.75rem -0.25rem rgba(6, 28, 42, 0.4); }
   .bio-close:hover, .bio-close:focus-visible { background: var(--sprout); }
-  .bio-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 22%; }
+  /* An inset portrait, not a full-width picture: the portraits are small files (the founders' are
+     stand-in crops of 400 and 272 px), so they are never shown larger than they are. */
+  .bio-photo { display: block; width: min(12rem, 55%); height: auto; aspect-ratio: 4 / 5; margin: 1.75rem 1.75rem 0; object-fit: cover; object-position: center 22%; border-radius: var(--radius); background: var(--mist); }
   .bio-body { display: grid; gap: 0.85rem; padding: 1.5rem 1.75rem 2.5rem; }
   .bio-name { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.02em; }
   .bio-name span { font-family: var(--font-sans); font-stretch: 100%; font-size: 1rem; font-weight: 600; letter-spacing: 0; color: var(--moss); }
@@ -2497,11 +2512,27 @@
 }
 @layer components {
   @media (min-width: 64rem) {
-    .tgroup { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: 2rem; align-items: start; }
-    .tgroup-h { margin-top: 0.25rem; }
     .tgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .tcard-photo { aspect-ratio: 5 / 6; }
   }
+  /* The team (the user, 5 November 2026: smaller portraits, no categories, and a row that looks
+     complete): as many columns as people, so the row always closes; square portraits keep them at
+     the founders' height. On a phone, where five never pair up, a list of slim rows instead, a small
+     portrait beside each name, as the leadership's cards are. */
+  .tgrid.is-team { grid-template-columns: minmax(0, 1fr); gap: 0.75rem; }
+  .is-team .tcard-face { flex-direction: row; }
+  .is-team .tcard-pic { width: 5.5rem; }
+  .is-team .tcard-text { align-self: center; padding: 0.85rem 3.5rem 0.85rem 1.1rem; }
+  .is-team .tcard-open { top: auto; bottom: 50%; right: 0.9rem; translate: 0 50%; background: var(--sprout); box-shadow: none; }
+  @media (min-width: 48rem) {
+    .tgrid.is-team { grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); gap: 1rem; }
+    .is-team .tcard-face { flex-direction: column; }
+    .is-team .tcard-pic { width: auto; }
+    .is-team .tcard-photo { aspect-ratio: 1; }
+    .is-team .tcard-text { align-self: stretch; padding: 0.85rem 0.95rem 1rem; }
+    .is-team .tcard-open { top: 0.6rem; bottom: auto; right: 0.6rem; translate: none; background: var(--paper); box-shadow: 0 0.25rem 0.6rem -0.3rem rgba(12, 74, 110, 0.45); }
+  }
+  @media (min-width: 72rem) { .tgrid.is-team { gap: 1.25rem; } }
   @media (max-width: 39.99rem) {
     .tcard-text { padding: 0.75rem 0.8rem 0.85rem; }
     .tcard-name, .tcard-role, .tcard-line, .founder-record span { font-size: 1rem; }
@@ -2567,7 +2598,6 @@ main p { text-wrap: pretty; }
     .map-names b { font-size: 0.75rem; }
     .map-key, .map-key-emblem { font-size: 0.9375rem; }
   }
-  .tgroup-h { text-wrap: balance; }
   /* 8, 9. Cards beside a taller panel fill its height instead of leaving a hole. */
   .detects, .audience { align-items: stretch; }
   .detects .spec-cards { align-content: stretch; }
