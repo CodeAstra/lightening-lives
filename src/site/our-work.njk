@@ -114,6 +114,7 @@ pillars:
         <p class="lead lg:col-span-5">Fifteen sites in nine states and Delhi, concentrated in the sickle cell and thalassaemia belt of central and western India, where the need is greatest.</p>
       </div>
       <div class="fieldmap mt-12" id="sites" data-fieldmap>
+        <div class="fieldmap-figure">
         <div class="fieldmap-stage">
           <svg class="fieldmap-svg" viewBox="{{ fieldmap.viewBox }}" aria-hidden="true" focusable="false">
             {#- A field account's state (no site of ours there) is hatched, not filled: the key says so. #}
@@ -127,10 +128,12 @@ pillars:
             <li style="left: {{ st.pin.left }}%; top: {{ st.pin.top }}%" data-fm-pin="{{ st.id }}"{% if st.account %} class="is-account"{% endif %}>{% if st.account %}<i class="fm-ring">{% icon "book-open" %}</i>{% else %}<img src="/assets/logo/lightening-lives-emblem.svg" alt="" width="60" height="60">{% endif %}<span>{{ st.name }}</span></li>
             {%- endfor %}
           </ul>
-          <ul class="fieldmap-key" aria-hidden="true">
-            <li><i class="is-site"></i>Screening sites</li>
-            <li><i class="is-account"></i>Field account</li>
-          </ul>
+        </div>
+        {#- The key sits under the stage, not in it: the pins are placed in percent of the stage's height. #}
+        <ul class="fieldmap-key" aria-hidden="true">
+          <li><i class="is-site"></i>Screening sites</li>
+          <li><i class="is-account"></i>Field account</li>
+        </ul>
         </div>
         <div class="fieldmap-side">
           <p class="fieldmap-hint">{% icon "mouse-pointer-click" %}<span>Choose a state, on the map or below.</span></p>

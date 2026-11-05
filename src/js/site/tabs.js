@@ -24,8 +24,10 @@ export function initTabs(root) {
     panel.tabIndex = 0;
   });
 
-  const select = (id, { focus = false, keepHash = false } = {}) => {
+  const motion = () => (matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
+  const select = (id, { focus = false, keepHash = false, settle = false } = {}) => {
     if (!panels.has(id)) return false;
+    const switching = tabs.find((t) => t.dataset.tabFor === id).getAttribute('aria-selected') !== 'true';
     tabs.forEach((tab) => {
       const on = tab.dataset.tabFor === id;
       tab.setAttribute('aria-selected', String(on));
@@ -34,9 +36,14 @@ export function initTabs(root) {
       if (on && focus) tab.focus();
     });
     if (!keepHash && location.hash !== `#${id}`) history.replaceState(null, '', `#${id}`);
+    // Chosen from the bar while it is held under the header (the reader is down in a panel): bring the
+    // new panel's top back into view, rather than leaving them partway down it or past its end.
+    if (!settle && switching && root.getBoundingClientRect().top < 0) root.scrollIntoView({ block: 'start', behavior: motion() });
     return true;
   };
-  const fromHash = () => decodeURIComponent(location.hash.slice(1));
+  // An address that is not valid percent-encoding (#100%) reads as no tab, never as an error that
+  // would stop the page's other scripts.
+  const fromHash = () => { try { return decodeURIComponent(location.hash.slice(1)); } catch { return ''; } };
 
   tabs.forEach((tab, k) => {
     tab.addEventListener('click', () => select(tab.dataset.tabFor));
@@ -50,16 +57,19 @@ export function initTabs(root) {
 
   // A link to a panel (the doors, or one typed into the address) opens its tab, with the bar in view.
   document.addEventListener('click', (e) => {
+    // Left alone: a click meant for a new tab or window (Ctrl, Cmd, Shift, a middle click) or one
+    // another handler has taken.
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const link = e.target.closest('a[href^="#"]');
     if (!link || !panels.has(link.getAttribute('href').slice(1))) return;
     e.preventDefault();
-    select(link.getAttribute('href').slice(1));
-    root.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    select(link.getAttribute('href').slice(1), { settle: true });
+    root.scrollIntoView({ block: 'start', behavior: motion() });
   });
-  window.addEventListener('hashchange', () => { if (select(fromHash(), { keepHash: true })) root.scrollIntoView({ block: 'start' }); });
+  window.addEventListener('hashchange', () => { if (select(fromHash(), { keepHash: true, settle: true })) root.scrollIntoView({ block: 'start' }); });
 
   // Arriving at a tab's address: the bar in view once the page has settled (fonts and pictures move it).
-  if (!select(fromHash(), { keepHash: true })) select(tabs[0].dataset.tabFor, { keepHash: true });
+  if (!select(fromHash(), { keepHash: true, settle: true })) select(tabs[0].dataset.tabFor, { keepHash: true, settle: true });
   else {
     const land = () => root.scrollIntoView({ block: 'start' });
     requestAnimationFrame(land);

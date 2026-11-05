@@ -173,3 +173,8 @@ test('the β and α names wherever the page shows a thalassaemia kit by name (P1
   assert.match(load('/solutions/thalassaemia/')('main').text(), /LitLife™-αThal/);
   assert.match(load('/solutions/sickle-cell-anaemia/')('main').text(), /LitLife™-SiβThal217/);
 });
+
+test('kit-stills fails loudly when it finds no 3D boxes, instead of writing nothing', () => {
+  const js = readFileSync('scripts/kit-stills.mjs', 'utf8');
+  assert.match(js, /if \(kits\.length !== 5\)[\s\S]*?process\.exit\(1\)/);
+});

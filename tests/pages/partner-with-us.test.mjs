@@ -86,6 +86,16 @@ test('the tabs script: the WAI-ARIA pattern, chosen by the address, the address 
   assert.match(readFileSync('src/js/site/main.js', 'utf8'), /initTabs/);
 });
 
+test('the tabs script, after the final review: the bar comes back into view, odd addresses and new-tab clicks are safe', () => {
+  const js = readFileSync('src/js/site/tabs.js', 'utf8');
+  // Choosing a tab from the bar held under the header brings the new panel's top into view.
+  assert.match(js, /const select = [\s\S]*?root\.getBoundingClientRect\(\)\.top < 0[\s\S]*?scrollIntoView/);
+  // A malformed address (#100%) does not throw and stop the page's other scripts.
+  assert.match(js, /try \{ return decodeURIComponent\(/);
+  // Ctrl-, Cmd-, Shift- or middle-clicking a door opens it in a new tab as usual.
+  for (const k of ['e.metaKey', 'e.ctrlKey', 'e.shiftKey', 'e.button', 'e.defaultPrevented']) assert.ok(js.includes(k), k);
+});
+
 test('nothing unconfirmed renders, and no town is named', () => {
   const words = $('main').clone().find('script').remove().end().text();
   assert.doesNotMatch(words, /\[|CONFIRM|TBC/);
