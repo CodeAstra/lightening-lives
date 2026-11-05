@@ -10,12 +10,13 @@ const $ = load('/partners/');
 const text = (el) => $(el).text().replace(/\s+/g, ' ').trim();
 const PARTNERS = JSON.parse(readFileSync('src/site/_data/partners.json', 'utf8'));
 
-test('the page: title, description, a two-tone heading in the opening, and no label over it', () => {
+test('the page: title, description, a two-tone heading in the opening, under its label', () => {
   assert.equal($('title').text(), 'Partner for genetic screening in India | Lightening Lives');
   assert.match($('meta[name=description]').attr('content'), /^Hospitals, diagnostic labs, public health programmes and NGOs partner with us/);
   assert.equal(text('h1'), 'Partner with us. Choose how we work together.');
   assert.equal(text('h1 .h-mark'), 'Choose how we work together.');
-  assert.equal($('.page-open .label').length, 0, 'no eyebrow label');
+  // The client review's opening label (U2, 5 November 2026).
+  assert.deepEqual($('.page-open .label').map((i, e) => $(e).text().trim()).get(), ['Institutional collaboration models']);
   assert.deepEqual($('.page-open .page-proof .cred-text').map((i, li) => text(li)).get(), ['ICMR approved', 'Patents granted in India and Japan', '15 sites, 9 states and Delhi']);
 });
 

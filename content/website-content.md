@@ -40,6 +40,7 @@ Third draft, written from scratch on 24 October 2026. It replaces every earlier 
 7. Motion, 3D and every screen
 8. What we removed, and why
 9. Facts to confirm
+10. Client review, 27 October 2026
 
 ---
 
@@ -276,6 +277,8 @@ Each section lists: *purpose*, **key message**, copy, *section notes*.
 ---
 
 ### 5.1 Home `/`
+
+*Since 5 November 2026: changed by the client review; see Part 10 and the plan it names.*
 
 **Title tag:** Lightening Lives | REASSURED genetic tests for inherited disorders
 **Meta description (≤ 155 characters):** A Hyderabad healthcare technology company developing REASSURED genetic tests that screen and confirm inherited disorders in one test. Approved by ICMR.
@@ -569,6 +572,8 @@ A compact comparison, three columns: *Today's screening* · *Today's confirmatio
 
 ### 5.2 Technology `/technology/`
 
+*Since 5 November 2026: changed by the client review; see Part 10 and the plan it names.*
+
 **Since 25 October 2026 (3.1): seven sections.** 1 Opening and proof · 2 Method (`#method`, six steps, the gel large; controls and reagents in a disclosure) · 3 Compared (`#compared`) · 4 What your laboratory needs (`#laboratory`; an unknown row reads "in the technical dossier") · 5 Approved, patented, published (`#approvals`: ICMR approved, both patents, papers as one list) · 6 Documents (`#documents`, on request until files exist) · 7 Closing: request the dossier. Cut: "Where today's testing stops" (the table's first two columns say it), REASSURED (one copy, on home) and the 3D kit (it belongs on test pages).
 
 **Title:** How LitLife™ works: extraction-free DBS PCR | Lightening Lives
@@ -685,6 +690,8 @@ The one place on this page a box appears: a 3D view of a LitLife™ kit that the
 ---
 
 ### 5.3 Solutions `/solutions/`
+
+*Since 5 November 2026: changed by the client review; see Part 10 and the plan it names.*
 
 **Since 25 October 2026: a kit catalogue (the user).** One page that shows the kits we have developed and says we can meet a wide range of diagnostic needs: 1 Opening ("Kits we have developed. Solutions for a wide range of diagnostic needs."), a jump to each kit and to the two other ways in, and what every kit shares · 2 Blood disorders: LitLife™-SCA, -SiBThal217, -BThal, -AlphaThal, each a card with its box in 3D, its key features and Read more; HbD and HbE also available · 3 Muscle disorders: LitLife™-SMA; DMD and LGMD as cards that ask us (`#dmd`, `#lgmd`) · 4 Develop a test with us (`#develop`, Propose a condition) · 5 Under development: blood coagulation panel, pharmacogenomics · 6 Beyond the kits: testing programmes, awareness and counselling, training, laboratory set-up and consultancy (from the old Services page, without prenatal screening, biobank data, NCD kits or individual testing) · questions · closing. The SCA box, with its CSIR-CCMB logo and printed claims, was cleared by the user on 25 October 2026. The kits are shown in 3D, built from their print artwork; the SiBThal box's name reads SiBThal217 (the user). Print files for BThal and AlphaThal would replace their rebuilt faces.
 
@@ -915,6 +922,8 @@ Each page carries MedicalWebPage + MedicalCondition + Product schema (Part 6).
 
 ### 5.6 Partners
 
+*Since 5 November 2026: changed by the client review; see Part 10 and the plan it names.*
+
 #### 5.6.0 The hub `/partners/`
 
 **Since 25 October 2026: one page, not four (3.1).** The reviewer found the three audience pages about 70% repetition of Technology and home, with one distinct section each. `/partners/` holds them as sections: 1 Opening, the three doors above the fold (`#start`; the button lands here) · 2 For hospitals and laboratories (`#laboratories`: evaluate on your samples, procurement, when to order; "Talk to our scientific team") · 3 For public health programmes (`#programmes`: screen and confirm in one visit, how a rollout runs, procurement route; "Plan a programme") · 4 For CSR and NGOs (`#funders`: what a funded programme delivers and what you receive; "Fund a programme") · 5 We work with (logos grouped) and how a partnership starts (four steps) · closing. Cut: "What partners say" (none on file). 5.6.1 to 5.6.3 below are the source for sections 2 to 4.
@@ -999,6 +1008,8 @@ Three pages follow, each written for one reader. Each opens with that reader's p
 
 ### 5.7 Our work `/our-work/`
 
+*Since 5 November 2026: changed by the client review; see Part 10 and the plan it names.*
+
 **Since 25 October 2026 (3.1): five sections, no filter, no entry pages yet.** 1 Opening (no numbers strip until people screened is confirmed) · 2 Field programmes (`#field`: the state × condition table; each programme a card whose account expands in place; the map stays on home) · 3 Publications and patents (`#publications`, patents first) · 4 Conferences, media and video (`#media`, the poster first; videos load on a click) · 5 Photos, only with consent on record.
 
 *This is the section the brief asks for: photos, publications and media showing the company's achievements and current projects. It gets a header link, a home section (5.1 §11) and links from every test and audience page, so it is seen from everywhere.*
@@ -1076,6 +1087,8 @@ One template for all kinds: heading, kind, date, state (never the town) or journ
 ---
 
 ### 5.8 About `/about/`
+
+*Since 5 November 2026: changed by the client review; see Part 10 and the plan it names.*
 
 **Since 25 October 2026 (3.1): one page, the founder in full, the team by click.** 1 Opening: the one sentence with the fact block beside it · 2 Founder (`#founder`: portrait, a 60-word bio, his story in his own words when he writes it, Scholar and ORCID links) · 3 People (`#team`: co-founder, patron, advisers and team in one grid of portrait, name and role; a tap reveals a 40-word bio where one exists; nothing invented) · 4 Closing. Cut: Mission, Vision and Values as sections (the mission sentence stays in the opening) and "Our story" until the founder writes it. `/about/team/` forwards to `#team`.
 
@@ -1377,3 +1390,42 @@ Each item blocks the section named. Grouped by who is likely to answer.
 40. Hosting that supports redirects (3.3).
 41. Where form submissions go (5.9).
 42. Analytics tool, for the privacy policy.
+
+---
+
+## 10. Client review, 27 October 2026
+
+Two people at the company reviewed the built site ("Website discussion-input 2-2.docx.pdf": pages 1 to 6 the first reviewer, P1; pages 7 to 24 the second, P2). Their direction: the site speaks to decision makers (government and CSR heads, medical directors, doctors, laboratory owners), not to patients. Government and CSR want scale, fit with the National Sickle Cell Anaemia Elimination Mission, cost per person, reach without infrastructure and measurable impact; laboratories want turnaround, accuracy, easy dried blood spot logistics and a profitable test menu; hospitals want reliability, prenatal and newborn answers and counselling.
+
+The user's rulings (4 and 5 November 2026):
+
+- U1. The hero film's timing stays as it is (P1 asked for 8 s; the user: "Do not make change to the video timing. It is perfect for now").
+- U2. A small capitals label above each inner page's main heading, and "THE FOUNDERS" on About; section headings keep no label.
+- U3. Where the reviewers differ, the defaults below are used and listed for the client to confirm.
+- U4. The client's copy is trimmed to the limits in 2.7 (R1), keeping its facts and key phrases.
+- U5. One page at a time, each reviewed and committed by the user.
+
+What changes (the plan, docs/superpowers/plans/2026-11-05-client-review.md, holds the exact copy):
+
+- Shell: navigation Technology, Solutions, Our Work, Partners, About Us, then the Partner with us button; the name beside the emblem larger; "Every Life Matters" in title case.
+- Home: heading "Precision genetic diagnostics, built in India for the world."; a new lead; a larger map in the film's last frame.
+- Technology: P2's headings and lines, four credentials, "Request the technical dossier" and "Book a lab demo", step 6 "Read and report" with a clear gel, the LitLife™ column reworded, the laboratory rows renamed, one dossier ask instead of two.
+- Solutions: P2's opening; the 3D boxes replaced by cards that open; β and α in the thalassaemia kit names; new family leads and kit points; the pharmacogenomics panel and the coagulation panel; Beyond the kits without its three buttons; the questions reviewed.
+- Our Work: P2's opening; four areas of work; Odisha on the map as a field account; the three accounts rewritten with what each led to always shown; patents, the poster and the channel in one section.
+- Partners splits in two: /partners/ shows who we work with, in three groups; /partner-with-us/ (new) holds the three ways to partner as tabs, and every "Partner with us" leads there.
+- About Us: P2's opening with P1's company sentence; THE FOUNDERS, each with their own photo and story; a Leadership section (Dr. Vivek Sharma, Abhishek Chandak); the team on brighter cards and without Mr., Mrs. or Ms.; the patron and advisers; the mission in three parts.
+
+### To confirm with the client
+
+1. About headline: P2's wording is used; P1 wanted "The Founders, The Leadership, The Scientists and The Team Behind the Innovation".
+2. Accuracy figure: 100% (ICMR, LitLife™-SCA) is used; P1 wrote ">99%".
+3. Is Odisha a screening site (a tenth state), or only the place of one field account? Shown as an account only.
+4. Abhishek Chandak's title: "Head, Finance and Operations" (P1) is used; P2 wrote "Head, Finance".
+5. Is ICMR approval for SCA only? Are the patents for all kits or SCA only?
+6. "Five ready-to-run kits": can all five be ordered today?
+7. A peer-reviewed paper to name (P2 wrote "Globally published: peer-reviewed internationally")?
+8. Screening numbers per state for the map.
+9. A statement of DMD testing's clinical edge.
+10. Written agreement from Dr. D. Nageshwar Reddy and the advisers to be named.
+11. To send: the latest logo; separate photos of Dr. Chandak and Mrs. Chandak (stand-in crops used); Dr. Vivek Sharma's photo and bio; CDFD logo if wanted; a Tata Motors logo and permission (P2 named Tata Motors; the site has Tata Trusts and Tata Steel Foundation); the poster as a PDF; the lab readiness checklist PDF; the technical dossier.
+12. Fillout: add the option "A laboratory demonstration" to the topic question.

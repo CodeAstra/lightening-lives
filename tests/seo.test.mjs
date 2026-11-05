@@ -21,8 +21,8 @@ const NAMES = {
   '/solutions/sickle-cell-anaemia/': 'Sickle cell anaemia',
   '/solutions/thalassaemia/': 'Thalassaemia',
   '/solutions/spinal-muscular-atrophy/': 'Spinal muscular atrophy',
-  '/our-work/': 'Our work',
-  '/about/': 'About', '/partners/': 'Partners', '/contact/': 'Contact',
+  '/our-work/': 'Our Work',
+  '/about/': 'About Us', '/partners/': 'Partners', '/contact/': 'Contact',
   '/privacy/': 'Privacy', '/terms/': 'Terms',
 };
 

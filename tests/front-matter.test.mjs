@@ -26,6 +26,15 @@ notice: true
 ---
 <section class="section" id="body-copy"><div class="wrap"><p>Body.</p></div></section>
 `,
+  'kicker.njk': `---
+title: Kicker | Lightening Lives
+description: A fixture page whose opening carries a small capitals label and stacks its lead under the heading.
+kicker: About Lightening Lives LLP
+openingStacked: true
+h1: The people behind the tests
+lead: A lead under the heading.
+---
+`,
   'asks.njk': `---
 title: Asks | Lightening Lives
 description: A fixture page whose closing band asks its own question with its own buttons.
@@ -93,6 +102,20 @@ test('an inner page opens with its label, h1, lead and chips in the seven-and-fi
     [['Approved by ICMR', true], ['Dried blood spot', false]]);
   // The page's own sections follow the opening.
   assert.equal($('main > section').eq(1).attr('id'), 'body-copy');
+});
+
+// The client review (27 October 2026, the user's ruling U2): a page may set one small capitals label
+// above its heading, kicker in its front matter; openingStacked puts the lead under the heading.
+test('a kicker renders once, as a label just above the h1, and openingStacked stacks the lead', () => {
+  const head = built['/kicker/']('main > section').first().find('.section-head');
+  const kicker = head.find('.page-kicker');
+  assert.equal(kicker.length, 1);
+  assert.ok(kicker.is('p.label'), 'in the label voice');
+  assert.equal(kicker.text().trim(), 'About Lightening Lives LLP');
+  assert.ok(kicker.next().is('h1'), 'directly above the heading');
+  assert.ok(head.closest('.page-open').is('.page-open-stacked'));
+  assert.equal(head.find('.lg\\:col-span-7, .lg\\:col-span-5').length, 0, 'no seven-and-five split');
+  assert.equal(head.find('h1').parent().next('.page-open-rest').find('.lead').text().trim(), 'A lead under the heading.', 'the lead follows the heading');
 });
 
 test('an opening without a label or chips leaves them out', () => {

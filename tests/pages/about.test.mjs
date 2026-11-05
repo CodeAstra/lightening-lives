@@ -13,7 +13,8 @@ const TEAM = JSON.parse(readFileSync('src/site/_data/team.json', 'utf8'));
 test('the page: title, a people-first two-tone heading, no label', () => {
   assert.equal($('title').text(), 'Genetic diagnostics company in Hyderabad | Lightening Lives');
   assert.equal(text('h1'), 'The scientists and the team behind the tests.');
-  assert.equal($('.page-open .label').length, 0);
+  // The client review's opening label (U2, 5 November 2026).
+  assert.deepEqual($('.page-open .label').map((i, e) => $(e).text().trim()).get(), ['About Lightening Lives LLP']);
 });
 
 test('people first: the founders, the team, then the facts', () => {

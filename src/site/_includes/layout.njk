@@ -104,7 +104,7 @@ if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matche
 {% include "header.njk" %}
 <main id="main">
 {%- if not film and not ownOpening %}
-{{ opening(label, h1, lead | unbracket, chips | bracketless("text"), leadLine | unbracket, proof, openingActions, openingWide) }}
+{{ opening(label, h1, lead | unbracket, chips | bracketless("text"), leadLine | unbracket, proof, openingActions, openingWide, kicker, openingStacked) }}
 {%- endif %}
 {{ content | safe }}
 {%- if not film %}

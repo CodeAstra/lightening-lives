@@ -7,9 +7,9 @@ import { exists, load, pages } from './helpers.mjs';
 const NAV = [
   ['Technology', '/technology/'],
   ['Solutions', '/solutions/'],
+  ['Our Work', '/our-work/'],
   ['Partners', '/partners/'],
-  ['Our work', '/our-work/'],
-  ['About', '/about/'],
+  ['About Us', '/about/'],
 ];
 
 test('every page has the shell', () => {

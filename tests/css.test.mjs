@@ -13,6 +13,17 @@ test('tokens carry the chosen variation', () => {
     assert.ok(css.includes(s.toLowerCase()), s);
 });
 
+// The client review (P1, 27 October 2026): the name beside the emblem larger, and the tagline
+// written as "Every Life Matters", not in capitals.
+test('the brand line is in title case and the brand name larger', () => {
+  const css = built().replace(/\s+/g, '');
+  const lines = css.match(/(?:^|[{},])\.brand-line\{[^}]*\}/g) ?? [];
+  assert.ok(lines.length > 0);
+  for (const r of lines) assert.doesNotMatch(r, /text-transform:uppercase/, r);
+  const names = (css.match(/(?:^|[{},])\.brand-name\{[^}]*font-size:([^;}]+)/g) ?? []).map((r) => r.split('font-size:')[1]);
+  assert.ok(names.includes('1.6rem'), `brand name sizes: ${names}`);
+});
+
 test('the highlight is life green, and no amber is left (DESIGN.md, 24 October 2026)', () => {
   const css = built().replace(/\s+/g, '').toLowerCase();
   assert.doesNotMatch(css, /#ffc53d/);

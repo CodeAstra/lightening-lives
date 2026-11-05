@@ -14,7 +14,8 @@ const TOWNS = /Udaipur|Bhopal|Jamshedpur|Bilaspur|Nandurbar|Nagpur|Dhule|Valsad|
 test('the page: title, a two-tone heading, no label, the proof', () => {
   assert.equal($('title').text(), 'Genetic screening programmes in India | Lightening Lives');
   assert.equal(text('h1'), 'In the field, in the lab, in print.');
-  assert.equal($('.page-open .label').length, 0);
+  // The client review's opening label (U2, 5 November 2026).
+  assert.deepEqual($('.page-open .label').map((i, e) => $(e).text().trim()).get(), ['Real-world impact and evidence']);
   assert.equal($('.page-open .page-proof li').length, 3);
 });
 

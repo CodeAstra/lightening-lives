@@ -11,11 +11,12 @@ const text = (el) => $(el).text().replace(/\s+/g, ' ').trim();
 const KITS = JSON.parse(readFileSync('src/site/_data/kits.json', 'utf8'));
 const all = KITS.families.flatMap((f) => f.kits);
 
-test('the page: a two-tone heading that says what we have and what we can do, and no label over it', () => {
+test('the page: a two-tone heading that says what we have and what we can do, under its label', () => {
   assert.equal($('title').text(), 'Sickle cell, thalassaemia and SMA tests | Lightening Lives');
   assert.equal(text('h1'), 'Kits we have developed. Solutions for a wide range of diagnostic needs.');
   assert.equal(text('h1 .h-mark'), 'Solutions for a wide range of diagnostic needs.');
-  assert.equal($('.page-open .label').length, 0);
+  // The client review's opening label (U2, 5 November 2026).
+  assert.deepEqual($('.page-open .label').map((i, e) => $(e).text().trim()).get(), ['Institutional diagnostic solutions']);
 });
 
 test('the sections, in order', () => {

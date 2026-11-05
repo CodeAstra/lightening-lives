@@ -221,7 +221,7 @@
   .brand-mark { flex: none; width: 3.25rem; height: 3.25rem; }
   .brand-text { display: grid; gap: 0.32rem; }
   .brand-name { font-family: var(--font-display); font-weight: 700; font-stretch: var(--display-stretch); font-size: 1.4rem; letter-spacing: var(--display-tracking); color: var(--canopy); line-height: 1; white-space: nowrap; }
-  .brand-line { font-family: var(--font-sans); font-weight: 800; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--leaf); line-height: 1; white-space: nowrap; }
+  .brand-line { font-family: var(--font-sans); font-weight: 800; font-size: 0.8rem; letter-spacing: 0.02em; color: var(--leaf); line-height: 1; white-space: nowrap; }
   @media (min-width: 75rem) {
     .brand { gap: 0.8rem; }
     .brand-mark { width: 3.75rem; height: 3.75rem; }
@@ -231,8 +231,8 @@
   @media (max-width: 26rem) {
     .brand { gap: 0.55rem; }
     .brand-mark { width: 2.875rem; height: 2.875rem; }
-    .brand-name { font-size: clamp(1rem, 4.7vw, 1.4rem); }
-    .brand-line { font-size: clamp(0.58rem, 2.8vw, 0.75rem); }
+    .brand-name { font-size: clamp(1.05rem, 5.2vw, 1.5rem); }
+    .brand-line { font-size: clamp(0.66rem, 3.1vw, 0.8rem); }
   }
   @media (max-width: 21.99rem) { .brand-text { display: none; } }
   .site-nav { display: none; align-items: center; gap: 0.25rem; }
@@ -796,7 +796,7 @@
   /* The label voice, in the body face at --label-weight: the small capitals, the chips on the film and the map, the tags
      on the tests and the facts about a state. Sizes and casing are Design 10's. */
   .label, .brand-line, .state-facts dt, .places b, .tag { font-family: var(--font-mono); font-weight: var(--label-weight); }
-  .label, .brand-line, .state-facts dt { letter-spacing: var(--label-tracking); }
+  .label, .state-facts dt { letter-spacing: var(--label-tracking); }
 
   /* DNA blue for every action: the solid button and the chosen layer, deepening to the ink on hover. */
   .btn-solid { background: var(--leaf); border-color: var(--leaf); }
@@ -1490,7 +1490,7 @@
   .why h3, .criteria h3, .person-name, .policy-h { font-size: 1.125rem; line-height: 1.25; font-stretch: var(--display-stretch); }
   .why p, .criteria p, .about > p { font-size: 1rem; line-height: 1.5; }
   .vision-line { font-size: clamp(1.5rem, 2.6vw, 2.35rem); line-height: 1.16; max-width: 56rem; }
-  .brand-name { font-size: 1.25rem; }
+  .brand-name { font-size: 1.5rem; }
 
   /* Space. */
   .section { padding-block: var(--section-y); }
@@ -2955,4 +2955,17 @@ main p { text-wrap: pretty; }
   .enquire-inline .enquire-form { min-height: 28rem; }
   .enquire-noscript { display: flex; gap: 0.6rem; align-items: flex-start; margin: 0; padding: 1.25rem; font-size: 1rem; }
   .enquire-noscript .icon { flex: none; width: 1.25rem; height: 1.25rem; margin-top: 0.2rem; color: var(--leaf); }
+}
+
+/* The client review, 27 October 2026 (plan docs/superpowers/plans/2026-11-05-client-review.md).
+   The name beside the emblem larger (P1), with room for it only where the header has room; the
+   tagline in its own case, "Every Life Matters". Each inner page's kicker: one small capitals label
+   over the heading (the user's ruling U2). A stacked opening keeps the lead under the heading at
+   full width, larger and more open (About, P1). */
+@layer components {
+  @media (min-width: 64rem) and (max-width: 77.99rem) { .brand-name { font-size: 1.35rem; } }
+  @media (min-width: 78rem) { .brand-name { font-size: 1.6rem; } }
+  .page-kicker { margin-bottom: 1rem; }
+  .page-open-stacked .page-open-rest { max-width: 54rem; }
+  .page-open-stacked .lead { font-size: clamp(1.2rem, 1.7vw, 1.55rem); line-height: 1.6; }
 }
