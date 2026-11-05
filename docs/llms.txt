@@ -7,10 +7,11 @@ We currently work with hospitals, diagnostic laboratories, public health program
 ## Pages
 
 - [Home](https://lighteninglives.in/): Genetic testing for inherited conditions, from a dried blood spot. Currently for hospitals, diagnostic labs, public health programmes and NGOs in India.
-- [About](https://lighteninglives.in/about/): Lightening Lives LLP develops REASSURED genetic tests. Founded by Dr. Giriraj Ratan Chandak, formerly Chief Scientist at CSIR-CCMB. ICMR approved.
+- [About Us](https://lighteninglives.in/about/): Lightening Lives LLP develops REASSURED genetic tests. Founded by Dr. Giriraj Ratan Chandak, formerly Chief Scientist at CSIR-CCMB, and Nidhi Chandak.
 - [Contact](https://lighteninglives.in/contact/): Talk to our scientific team about genetic testing for your hospital, diagnostic lab, public health programme or NGO. Hyderabad, India.
-- [Our work](https://lighteninglives.in/our-work/): Genetic screening in nine states and Delhi, accounts from the field, patents granted in India and Japan, and where we have presented our work.
-- [Partners](https://lighteninglives.in/partners/): Hospitals, diagnostic labs, public health programmes and NGOs partner with us for genetic screening. Our partners include CSIR-CCMB and Tata Trusts.
+- [Our Work](https://lighteninglives.in/our-work/): Genetic screening in nine states and Delhi, accounts from the field, patents granted in India and Japan, and where we have presented our work.
+- [Partner With Us](https://lighteninglives.in/partner-with-us/): Three ways to partner with us for genetic screening in India: hospitals and diagnostic labs, public health programmes, and CSR foundations and NGOs.
+- [Partners](https://lighteninglives.in/partners/): CSIR-CCMB, Tata Trusts, Tata Steel Foundation and patient groups across India: the institutions, foundations and NGOs Lightening Lives works with.
 - [Privacy](https://lighteninglives.in/privacy/): What the Lightening Lives website collects, why, and how to reach us about it.
 - [Solutions](https://lighteninglives.in/solutions/): LitLife™ tests from a dried blood spot for sickle cell, beta and alpha thalassaemia and SMA, for hospitals, labs and public health. New tests on request.
 - [Sickle cell anaemia](https://lighteninglives.in/solutions/sickle-cell-anaemia/): LitLife™-SCA screens and confirms sickle cell anaemia in one test from a dried blood spot, newborns included. For hospitals and screening programmes.
@@ -19,10 +20,17 @@ We currently work with hospitals, diagnostic laboratories, public health program
 - [Technology](https://lighteninglives.in/technology/): How LitLife™ tests screen and confirm from a dried blood spot with no DNA extraction: the patented method, what a laboratory needs, and the approvals.
 - [Terms](https://lighteninglives.in/terms/): The terms on which Lightening Lives LLP publishes this website.
 
+## Ways to partner
+
+- [Hospitals, standalone labs and diagnostic chains](https://lighteninglives.in/partner-with-us/#laboratories): Run LitLife™ in your own laboratory on standard PCR equipment, or widen your sample collection without cold-chain costs.
+- [Public health and government programmes](https://lighteninglives.in/partner-with-us/#programmes): Screen and confirm in a single visit, at block, district or state scale, from newborns to adults.
+- [CSR foundations and NGOs](https://lighteninglives.in/partner-with-us/#funders): Fund genetic and nutritional screening that ends in a confirmed diagnosis and a family in care.
+
 ## Facts
 
 - Approved by ICMR: LitLife™-SCA, our sickle cell test, is approved by the Indian Council of Medical Research.
 - Patented in India and Japan: The technology behind our tests holds patents granted in India and Japan, and a patent published internationally.
 - Working with CSIR-CCMB: An MOU with the CSIR-Centre for Cellular and Molecular Biology, Hyderabad, covers developing and commercialising the sickle cell assay.
 - Proven at 15 sites: Population and newborn screening in nine states and Delhi, and a test built for the National Sickle Cell Anaemia Elimination Mission.
+- Founded in September 2023: by Dr. Giriraj Ratan Chandak (Founder and CEO) and Nidhi Chandak (Co-Founder), in Hyderabad.
 - For individuals: Looking for a test for yourself or your family? We work with institutions and don't test individuals. Please speak to your doctor or visit your nearest government health facility.
