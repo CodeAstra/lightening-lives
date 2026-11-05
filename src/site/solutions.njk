@@ -4,8 +4,8 @@ title: "Sickle cell, thalassaemia and SMA tests | Lightening Lives"
 description: "LitLife™ tests from a dried blood spot for sickle cell, beta and alpha thalassaemia and SMA, for hospitals, labs and public health. New tests on request."
 label: Solutions
 kicker: "Institutional diagnostic solutions"
-h1: 'Kits we have developed. <span class="h-mark">Solutions for a wide range of diagnostic needs.</span>'
-lead: "Five LitLife™ kits for inherited blood and muscle disorders, each reading mutations from a dried blood spot, and the next test built on request."
+h1: 'Five ready-to-run LitLife™ kits. <span class="h-mark">Custom tests built on request.</span>'
+lead: "Molecular tests for inherited blood and muscle disorders that work directly from a dried blood spot, for hospitals, lab chains, CSR initiatives and public health programmes."
 proof:
   - { icon: "badge-check", text: "ICMR approved" }
   - { icon: "award", text: "Patents granted in India and Japan" }
@@ -14,21 +14,21 @@ openingWide: true
 notice: true
 closing:
   h2: 'Start with the condition <span class="h-mark">your programme needs.</span>'
-  body: "Who will be tested, roughly how many, and where. We reply with how we would approach it."
-  solid: { text: "Talk to our scientific team", href: "/contact/" }
+  body: "Tell us who will be tested, roughly how many, and where. Our scientific and operations team replies with a technical and commercial approach."
+  solid: { text: "Talk to our scientific team", enquire: true }
   line: { text: "Partner with us", href: "/partners/" }
 ---
-{#- Solutions (content file 5.3), since 25 October 2026 the user's catalogue grid, grouped by family:
-    the kits we have developed, each a card with its box in 3D (it turns as the pointer moves over it;
-    src/js/kits/viewer.js), its condition, its key features and "Read more" to its place on a test page;
-    DMD and LGMD as cards that ask us; Develop a test with us (#develop, the page's main ask); what is
-    under development; and Beyond the kits, what still holds of the old Services page, each item
-    leading to the Partners page. The kits come from src/site/_data/kits.json. The jump links under
+{#- Solutions (content file 5.3), since 25 October 2026 the user's catalogue grid, grouped by family;
+    since the client review (5 November 2026, plan Task 4) each kit a clear card that opens (P2:
+    "replace 'Drag to Turn' product boxes with clear expandable cards"): its box as a picture, its
+    condition, its name (β and α, P1), the points that matter on the card and Details for the rest,
+    with "Read more" to its test page and "Request product sheet"; DMD and LGMD as cards that ask our
+    scientific team; under development (the client's order: the pipeline, then co-development);
+    Develop a test with us (#develop); and Beyond the kits, four things we bring, without buttons. The kits come from src/site/_data/kits.json. The jump links under
     the opening are the page's navigation. -#}
 {%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' %}
 {%- from "picture.njk" import picture with context %}
 {%- from "faq.njk" import faq %}
-<script type="module" src="/assets/js/site-kits.js"></script>
 
   <!-- The kits we have, standing together: the page's navigation, each box to its card -->
   <section id="kits" class="section kit-lineup" aria-labelledby="kits-h">
@@ -43,8 +43,8 @@ closing:
             <li>
               <a class="lineup-kit" href="#{{ kit.id }}">
                 <span class="lineup-box">{{ picture("box-lineup-" + kit.model.kit, "", "(min-width: 64rem) 17vw, 40vw", { class: "lineup-img" }) }}</span>
-                <span class="lineup-name">{{ kit.code | replace("LitLife™-", "") }}</span>
-                <span class="lineup-condition">{{ kit.condition }}</span>
+                <span class="lineup-name">{{ kit.name | replace("LitLife™-", "") }}</span>
+                <span class="lineup-condition">{{ kit.title }}</span>
               </a>
             </li>
             {%- endfor %}
@@ -60,8 +60,8 @@ closing:
           <li>{% icon "microscope" %}<span>Standard PCR equipment</span></li>
         </ul>
         <ul class="lineup-more">
-          <li><a class="link" href="#develop">Develop a test with us {{ arrow | safe }}</a></li>
           <li><a class="link" href="#in-development">Under development {{ arrow | safe }}</a></li>
+          <li><a class="link" href="#develop">Develop a test with us {{ arrow | safe }}</a></li>
         </ul>
       </div>
     </div>
@@ -77,39 +77,54 @@ closing:
       </div>
       <ul class="kit-grid mt-12">
         {%- for kit in family.kits %}
-        <li id="{{ kit.id }}" class="kit-card">
-          <div class="kit-stage" data-kit3d="{{ kit.model | dump }}" tabindex="0" role="img" aria-label="{{ kit.code }} box, in 3D. Drag to turn it, or use the arrow keys.">
-            {{ picture(kit.image, kit.alt, "(min-width: 72rem) 22vw, (min-width: 40rem) 45vw, 92vw", { class: "kit-img" }) }}
-            <span class="kit-hint" aria-hidden="true">{% icon "rotate-3d" %}Drag to turn</span>
+        {#- A datasheet card (the user, 5 November 2026: "the details etc can be included in the card
+            without clicking"): the box; the condition, the name and the proof as a seal; every
+            point; then the two ways on, along the foot. -#}
+        {%- set points = [] %}
+        {%- for f in kit.features.concat(kit.more) %}{% if f != "ICMR approved" %}{% set points = (points.push(f), points) %}{% endif %}{% endfor %}
+        {%- set proof = "ICMR approved" in kit.features %}
+        <li id="{{ kit.id }}" class="kit-card kit-sheet">
+          <div class="kit-shot">
+            {{ picture(kit.image, kit.alt, "(min-width: 72rem) 18vw, (min-width: 40rem) 45vw, 92vw", { class: "kit-img" }) }}
           </div>
-          <a class="kit-link" href="{{ kit.href }}">
-            <span class="kit-body">
-              <span class="kit-condition">{{ kit.condition }}</span>
-              <span class="kit-name" id="{{ kit.id }}-name">{{ kit.code }}</span>
-              <span class="kit-features">
-                {%- for f in kit.features %}
-                <span>{% icon "circle-check-big" %}{{ f }}</span>
-                {%- endfor %}
+          <div class="kit-body">
+            <div class="kit-head">
+              <span class="kit-condition">{{ kit.title }}</span>
+              <h3 class="kit-name" id="{{ kit.id }}-name">{{ kit.name }}</h3>
+              {%- if proof %}
+              <p class="kit-proof"><span class="cred-mark cred-seal">{% icon "badge-check" %}</span>ICMR approved</p>
+              {%- endif %}
+            </div>
+            <ul class="kit-points">
+              {%- for f in points %}
+              <li>{% icon "circle-check-big" %}<span>{{ f }}</span></li>
+              {%- endfor %}
+            </ul>
+            <p class="kit-acts">
+              <a class="kit-act kit-act-main" href="{{ kit.href }}">Read more {% icon "arrow-right" %}</a>
+              <a class="kit-act" {{ { condition: kit.enquire, topic: "dossier" } | enquire | safe }}>{% icon "file-text" %}Request product sheet</a>
+            </p>
+          </div>
+        </li>
+        {%- endfor %}
+        {%- if family.ask and family.ask.length %}
+        <li class="kit-asks">
+          {%- for ask in family.ask %}
+          {%- set askSlug = { dmd: "duchenne-muscular-dystrophy", lgmd: "limb-girdle-muscular-dystrophy" }[ask.id] %}
+          <div id="{{ ask.id }}" class="kit-card kit-ask">
+            <a class="kit-link" {{ { condition: askSlug } | enquire | safe }}>
+              <span class="kit-body">
+                <span class="icon-tile">{% icon "message-circle" %}</span>
+                <span class="kit-condition">Molecular diagnosis available</span>
+                <span class="kit-name">{{ ask.condition }}</span>
+                <span class="kit-line">{{ ask.line | unbracket }}</span>
+                <span class="kit-more">Talk to our scientific team {% icon "arrow-right" %}</span>
               </span>
-              <span class="kit-more">Read more {% icon "arrow-right" %}</span>
-            </span>
-          </a>
+            </a>
+          </div>
+          {%- endfor %}
         </li>
-        {%- endfor %}
-        {%- for ask in family.ask %}
-        {%- set askSlug = { dmd: "duchenne-muscular-dystrophy", lgmd: "limb-girdle-muscular-dystrophy" }[ask.id] %}
-        <li id="{{ ask.id }}" class="kit-card kit-ask">
-          <a class="kit-link" {{ { condition: askSlug } | enquire | safe }}>
-            <span class="kit-body">
-              <span class="icon-tile">{% icon "message-circle" %}</span>
-              <span class="kit-condition">Molecular diagnosis available</span>
-              <span class="kit-name">{{ ask.condition }}</span>
-              <span class="kit-line">{{ ask.line }}</span>
-              <span class="kit-more">Talk to us {% icon "arrow-right" %}</span>
-            </span>
-          </a>
-        </li>
-        {%- endfor %}
+        {%- endif %}
       </ul>
       {%- if family.also %}
       <p class="kit-also">{% icon "plus" %}<span>{{ family.also.text }} <span class="kit-also-links">{% for l in family.also.links %}<a class="link" href="{{ l.href }}">{{ l.text }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</span></span></p>
@@ -118,22 +133,54 @@ closing:
   </section>
   {%- endfor %}
 
+  <!-- Under development: the kits to come, drawn as outlines beside the kits we have -->
+  <section id="in-development" class="section bg-paper" aria-labelledby="in-development-h">
+    <div class="wrap">
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <h2 id="in-development-h" class="h2 lg:col-span-7">Under development. <span class="h-mark">Expanding accessible precision medicine.</span></h2>
+        <p class="lead lg:col-span-5">Want early access for your hospital or laboratory, or to join multi-centre clinical validation? Tell us.</p>
+      </div>
+      {%- set ghost %}<svg class="ghost-box" viewBox="0 0 240 170" aria-hidden="true" focusable="false"><path class="ghost-floor" d="M24 138 L120 162 L216 138 L120 118 Z"/><path class="ghost-edge" d="M40 52 L120 72 L200 52 L120 34 Z M40 52 L40 126 L120 148 L120 72 M200 52 L200 126 L120 148"/></svg>{% endset %}
+      <ul class="next-kits mt-12">
+        {%- for item in [
+          { icon: "droplets", name: "Blood coagulation panel", body: "Genetic testing for inherited bleeding disorders, including haemophilia A and B, to confirm a clinical diagnosis, identify carriers and support family counselling." },
+          { icon: "pill", name: "Pharmacogenomics panel", body: "Testing for the genetic variations that decide how a patient responds to key medicines, so clinicians can choose the right drug and dose and avoid adverse reactions." }
+        ] %}
+        <li class="next-kit">
+          <div class="next-stage">
+            {{ ghost | safe }}
+            <span class="next-mark">{% icon item.icon %}</span>
+          </div>
+          <div class="next-body">
+            <span class="next-tag">{% icon "hourglass" %}Under development</span>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.body }}</p>
+          </div>
+        </li>
+        {%- endfor %}
+      </ul>
+      <div class="next-act">
+        <a class="btn btn-line" {{ { topic: "early-access" } | enquire | safe }}>Partner with us for early access</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Develop a test with us: the page's main ask -->
-  <section id="develop" class="section bg-paper" aria-labelledby="develop-h">
+  <section id="develop" class="section" aria-labelledby="develop-h">
     <div class="wrap">
       <div class="develop">
         <div class="develop-ask">
           <h2 id="develop-h" class="h2">Develop a test with us. <span class="h-mark">Propose a condition.</span></h2>
-          <p class="lead mt-5">Every LitLife™ kit began with a programme's need. If yours needs a test that doesn't exist, our scientists can develop and validate it.</p>
+          <p class="lead mt-5">Every LitLife™ kit began with a programme's need. If your hospital, lab chain or state health mission needs a test that doesn't exist, our scientists can develop and validate it.</p>
           <p class="develop-when-h">It makes sense when you have</p>
           <ul class="develop-when">
-            <li>{% icon "users" %}<span>A condition common in one community</span></li>
-            <li>{% icon "map-pin" %}<span>A mutation profile specific to a region</span></li>
-            <li>{% icon "package" %}<span>A screening format no one makes</span></li>
+            <li>{% icon "users" %}<span>A condition common in one community or region</span></li>
+            <li>{% icon "map-pin" %}<span>A regional mutation no test covers</span></li>
+            <li>{% icon "package" %}<span>A dried blood spot format no manufacturer offers</span></li>
           </ul>
           <div class="develop-act">
             <a class="btn btn-solid" {{ { topic: "develop" } | enquire | safe }}>Propose a condition</a>
-            <a class="link" href="mailto:{{ site.email }}?subject=Develop%20a%20test">Or write to us {{ arrow | safe }}</a>
+            <a class="link" href="mailto:{{ site.email }}?subject=Develop%20a%20test">Write to our R&amp;D team {{ arrow | safe }}</a>
           </div>
         </div>
         <ol class="develop-path">
@@ -158,47 +205,18 @@ closing:
     </div>
   </section>
 
-  <!-- Under development: the kits to come, drawn as outlines beside the kits we have -->
-  <section id="in-development" class="section" aria-labelledby="in-development-h">
-    <div class="wrap">
-      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
-        <h2 id="in-development-h" class="h2 lg:col-span-7">Under development. <span class="h-mark">The next two families.</span></h2>
-        <p class="lead lg:col-span-5">Want early access, or to take part in validation? <a class="lead-link" {{ { topic: "early-access" } | enquire | safe }}>Tell us</a>.</p>
-      </div>
-      {%- set ghost %}<svg class="ghost-box" viewBox="0 0 240 170" aria-hidden="true" focusable="false"><path class="ghost-floor" d="M24 138 L120 162 L216 138 L120 118 Z"/><path class="ghost-edge" d="M40 52 L120 72 L200 52 L120 34 Z M40 52 L40 126 L120 148 L120 72 M200 52 L200 126 L120 148"/></svg>{% endset %}
-      <ul class="next-kits mt-12">
-        {%- for item in [
-          { icon: "droplets", name: "Blood coagulation panel", body: "Genetic testing for inherited bleeding disorders such as haemophilia A and B. The panel will confirm a diagnosis, identify carriers and support family counselling." },
-          { icon: "pill", name: "Pharmacogenomics", body: "Testing for the genetic differences that change how a person responds to a medicine, so that the drug and the dose can be chosen for the person." }
-        ] %}
-        <li class="next-kit">
-          <div class="next-stage">
-            {{ ghost | safe }}
-            <span class="next-mark">{% icon item.icon %}</span>
-          </div>
-          <div class="next-body">
-            <span class="next-tag">{% icon "hourglass" %}Under development</span>
-            <h3>{{ item.name }}</h3>
-            <p>{{ item.body }}</p>
-          </div>
-        </li>
-        {%- endfor %}
-      </ul>
-    </div>
-  </section>
-
-  <!-- Beyond the kits: what still holds of the old Services page, each to the Partners page -->
+  <!-- Beyond the kits: four things we bring to a programme (P2: no buttons) -->
   <section id="beyond" class="section bg-paper" aria-labelledby="beyond-h">
     <div class="wrap">
       <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
         <h2 id="beyond-h" class="h2 lg:col-span-7">Beyond the kits. <span class="h-mark">What we bring to a programme.</span></h2>
-        <p class="lead lg:col-span-5">A kit is the middle of the work. Around it, we help programmes and laboratories run it well.</p>
+        <p class="lead lg:col-span-5">The clinical, nutritional, operational and training support a programme needs, in public health, CSR, hospital and laboratory settings.</p>
       </div>
       <ul class="beyond mt-12">
-        <li><a href="/partners/#programmes"><span class="icon-tile">{% icon "users" %}</span><b>Testing programmes</b><span>Screening for patients, carriers and newborns, and custom panels for a community.</span><span class="kit-more">For programmes {% icon "arrow-right" %}</span></a></li>
-        <li><a href="/partners/#funders"><span class="icon-tile">{% icon "megaphone" %}</span><b>Awareness and counselling</b><span>Screening and awareness camps, and genetic counselling for families.</span><span class="kit-more">For funders {% icon "arrow-right" %}</span></a></li>
-        <li><a href="/partners/#laboratories"><span class="icon-tile">{% icon "graduation-cap" %}</span><b>Training</b><span>Hands-on workshops for laboratory staff and health workers.</span><span class="kit-more">For laboratories {% icon "arrow-right" %}</span></a></li>
-        <li><a href="/partners/#laboratories"><span class="icon-tile">{% icon "microscope" %}</span><b>Laboratory set-up and consultancy</b><span>Setting up a molecular laboratory, and planning a programme or a grant.</span><span class="kit-more">For laboratories {% icon "arrow-right" %}</span></a></li>
+        <li><div><span class="icon-tile">{% icon "users" %}</span><b>Testing and nutrition programmes</b><span>End-to-end screening for patients, carriers and newborns, custom community panels, and nutritional assessment.</span></div></li>
+        <li><div><span class="icon-tile">{% icon "megaphone" %}</span><b>Awareness and genetic counselling</b><span>Community awareness drives, dried blood spot screening camps, prenatal diagnosis guidance and genetic counselling for carrier families.</span></div></li>
+        <li><div><span class="icon-tile">{% icon "graduation-cap" %}</span><b>Hands-on technical training</b><span>Workshops and certification for laboratory technicians and health workers, so every laboratory runs the test the same way.</span></div></li>
+        <li><div><span class="icon-tile">{% icon "microscope" %}</span><b>Lab set-up and grant consultancy</b><span>Setting up cost-effective district or hospital molecular laboratories, and technical planning for government and CSR proposals.</span></div></li>
       </ul>
     </div>
   </section>
@@ -210,9 +228,10 @@ closing:
       <div class="lg:col-span-7">
         {{ faq([
           { q: "Do you test individuals?", a: "No. We work with hospitals, laboratories, clinicians, NGOs, CSR funders and government health programmes. If you are looking for a test for yourself or your family, please speak to your doctor or visit your nearest government health facility." },
-          { q: "What does our laboratory need to run the kits?", a: "A thermal cycler, a gel electrophoresis tank and a punch, a bench, and staff who have run PCR or have been trained. We help set the method up and train your staff." },
+          { q: "What does our laboratory need to run the kits?", a: "A thermal cycler, a gel electrophoresis tank and a punch, a bench, and staff who have run PCR or have been trained. No proprietary system. We help set the method up and train your staff." },
           { q: "How do samples reach the laboratory?", a: "On the card, at room temperature, by ordinary courier or post. No cold chain." },
-          { q: "Are the kits approved?", a: "LitLife™-SCA, our sickle cell kit, is approved by ICMR. The technology behind our kits is patented in India and Japan." },
+          { q: "Are the kits approved?", a: "LitLife™-SCA, our sickle cell kit, is approved by ICMR, which validated it with 100% sensitivity and specificity. The technology behind our kits is patented in India and Japan." },
+          { q: "How quickly are results ready?", a: "The same day. Many cards run together, and screening and confirmation come from the same run." },
           { q: "Can you develop a test for a condition that isn't listed?", a: "Yes. Each test we have developed began with an institution that needed it. Tell us the condition and the setting, and we take it from there." }
         ]) }}
       </div>

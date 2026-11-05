@@ -2035,7 +2035,6 @@
   /* The kits: a card each, the box on a lit stage, drawn in 3D (src/js/kits/viewer.js) over its photograph. */
   .kit-grid { display: grid; gap: 1.25rem; margin-bottom: 0; padding: 0; list-style: none; }
   @media (min-width: 40rem) { .kit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 72rem) { .kit-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   .kit-card { display: flex; flex-direction: column; scroll-margin-top: calc(var(--header-h) + 1rem); background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); overflow: hidden; transition: border-color 0.16s ease, box-shadow 0.2s ease; }
   .section.bg-paper .kit-card:not(.kit-ask) { background: var(--stone); }
   .kit-card:not(.kit-ask):hover, .kit-card:focus-within { border-color: var(--leaf); box-shadow: 0 1rem 2rem -1.5rem rgba(12, 74, 110, 0.45); }
@@ -2604,7 +2603,6 @@ main p { text-wrap: pretty; }
   .detects .spec-cards { align-content: stretch; }
   .audience > .audience-card, .audience > .who { align-self: stretch; }
   /* 10. Muscle disorders: three across, the ask cards centred, not stretched empty. */
-  @media (min-width: 72rem) { #musculopathies .kit-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .kit-ask .kit-body { justify-content: center; }
   .kit-ask .kit-more { margin-top: 0.4rem; }
   /* 11. HbD · HbE together. */
@@ -3086,4 +3084,53 @@ main p { text-wrap: pretty; }
     .method-read.gel { padding: 0; background: none; border: 0; }
     .gel .lane-name b { padding-inline: 0.2rem; }
   }
+}
+
+/* Solutions' kit cards (client review, 5 November 2026). P2 asked for clear cards in place of the
+   drag-to-turn boxes; then the user: "the details etc can be included in the card without clicking".
+   Each kit is a datasheet: the box on its paper-to-stone ground, then the condition, the name and,
+   where it is earned, the proof as the credentials' seal; every point; and the two ways on along a
+   ruled foot. Two to a row, the box beside the words from 72rem; stacked below that. In Muscle
+   disorders SMA takes the row and DMD and LGMD share the row under it. Beyond the kits loses its buttons, so its items are no longer links. */
+@layer components {
+  .kit-grid { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+  @media (min-width: 40rem) { .kit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .kit-sheet { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
+  .kit-card.kit-sheet:hover { border-color: var(--line); box-shadow: none; }
+  .kit-card.kit-sheet:focus-within { border-color: var(--leaf); }
+  .kit-shot { display: grid; place-items: center; height: 13rem; padding: 1.25rem 1.5rem 1rem; background: linear-gradient(180deg, var(--paper) 0%, var(--paper) 30%, var(--stone) 64%, color-mix(in srgb, var(--stone), #2b2522 6%) 100%); border-bottom: 0.0625rem solid var(--line); }
+  .kit-shot .kit-img { aspect-ratio: auto; width: auto; max-width: 100%; height: auto; max-height: 10.5rem; }
+  @media (min-width: 72rem) {
+    .kit-sheet { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); grid-template-rows: none; }
+    .kit-sheet .kit-shot { height: auto; min-height: 14rem; padding: 1.5rem 1.25rem; border-bottom: 0; border-right: 0.0625rem solid var(--line); }
+    .kit-sheet .kit-shot .kit-img { max-height: 12rem; }
+  }
+  .kit-sheet .kit-body { display: flex; flex-direction: column; gap: 1rem; padding: 1.4rem 1.5rem 1.1rem; }
+  .kit-head { display: grid; gap: 0.3rem; justify-items: start; }
+  .kit-card .kit-name { margin: 0; color: var(--canopy); }
+  .kit-proof { display: inline-flex; align-items: center; gap: 0.45rem; margin: 0.4rem 0 0; padding: 0.3rem 0.75rem 0.3rem 0.4rem; background: var(--sprout); border-radius: var(--radius); font-size: 0.875rem; font-weight: 700; color: var(--canopy); }
+  .kit-proof .cred-mark { min-width: 1.35rem; height: 1.35rem; }
+  .kit-proof .cred-seal .icon { width: 1.35rem; height: 1.35rem; }
+  .kit-points { display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none; font-size: 0.9375rem; line-height: 1.4; color: var(--canopy); }
+  .kit-points li { display: flex; gap: 0.5rem; align-items: flex-start; }
+  .kit-points .icon { flex: none; width: 1rem; height: 1rem; margin-top: 0.2em; color: var(--leaf); }
+  .kit-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.5rem; margin: auto 0 0; padding-top: 0.6rem; border-top: 0.0625rem solid var(--line); font-size: 1rem; font-weight: 700; }
+  .kit-act { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2.75rem; color: var(--leaf); text-decoration: none; text-underline-offset: 0.22em; }
+  .kit-act:hover { text-decoration: underline; }
+  .kit-act .icon { flex: none; width: 1rem; height: 1rem; }
+  .kit-act-main { color: var(--canopy); }
+  .kit-act-main .icon { transition: translate 0.16s ease; }
+  .kit-act-main:hover .icon, .kit-act-main:focus-visible .icon { translate: 0.2rem 0; }
+  .kit-act:focus-visible { outline: 0.1875rem solid var(--canopy); outline-offset: 0.15rem; border-radius: 0.25rem; }
+  .kit-asks { display: grid; gap: 1.25rem; }
+  .kit-asks > .kit-ask { height: 100%; }
+  /* A family with one kit and the conditions we diagnose on request (Muscle disorders): the kit takes
+     the whole row, the two asks share the row below. */
+  @media (min-width: 40rem) {
+    .kit-grid:has(> .kit-asks):not(:has(> .kit-sheet + .kit-sheet)) > .kit-sheet, .kit-grid > .kit-asks { grid-column: 1 / -1; }
+    .kit-asks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  .beyond li > div { display: flex; flex-direction: column; gap: 0.55rem; height: 100%; padding: 1.25rem; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); color: var(--canopy); }
+  .beyond li > div > span:not(.icon-tile) { color: var(--moss); font-size: 0.9375rem; }
+  .next-act { margin-top: 1.75rem; }
 }

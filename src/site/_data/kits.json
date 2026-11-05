@@ -1,26 +1,31 @@
 {
-  "_note": "The LitLife™ kits developed so far (Solutions, 25 October 2026: the user's catalogue grid, grouped by family). Box photographs from content/Design revision request.pdf (SCA, SMA) and the earlier box stills (SiBThal217, BThal, AlphaThal). The user cleared the SCA box, with its CSIR-CCMB logo and printed claims, on 25 October 2026. Features are confirmed facts only (content file 5.3 and 5.4). Since 25 October 2026 each kit is drawn in 3D (src/js/kits/viewer.js) from its print artwork in src/assets/kits/<kit>/: SCA and SMA from their flat panels; SiBThal217 from the photograph's faces, its name set as SiBThal217 (the user); BThal and AlphaThal built on the same box from their photographs' words and cells. model.box is width, height and depth.",
+  "_note": "The LitLife™ kits developed so far (Solutions, 25 October 2026: the user's catalogue grid, grouped by family). Box photographs from content/Design revision request.pdf (SCA, SMA) and the earlier box stills (SiBThal217, BThal, AlphaThal). The user cleared the SCA box, with its CSIR-CCMB logo and printed claims, on 25 October 2026. Features are confirmed facts only (content file 5.3 and 5.4). Since 25 October 2026 each kit is drawn in 3D (src/js/kits/viewer.js) from its print artwork in src/assets/kits/<kit>/: SCA and SMA from their flat panels; SiBThal217 from the photograph's faces, its name set as SiBThal217 (the user); BThal and AlphaThal built on the same box from their photographs' words and cells. model.box is width, height and depth. Since the client review (5 November 2026, plan 2026-11-05 Task 4) Solutions shows each kit as a card that opens, not in 3D (the viewer and model stay for the box stills, npm run kit-stills): name is the display name (β and α for the thalassaemia kits, P1; SiβThal217 too, the user, 5 November 2026), code the Latin name kept for titles, alt texts and search; title is the condition in the client's Title Case (P2); features stand on the card, more opens under Details; enquire is the condition the product-sheet request ticks (none where the form has no matching option).",
   "families": [
     {
       "id": "haemoglobinopathies",
       "name": "Blood disorders",
       "sub": "Haemoglobinopathies",
       "icon": "droplets",
-      "lead": "Inherited disorders of haemoglobin, among the most common single-gene conditions in India.",
+      "lead": "Among India's most common single-gene conditions. Our kits skip two-tier screening and give a definitive molecular result in one test, from a dried blood spot.",
       "kits": [
         {
           "id": "kit-sca",
           "code": "LitLife™-SCA",
+          "name": "LitLife™-SCA",
           "short": "SCA",
           "condition": "Sickle cell anaemia",
+          "title": "Sickle Cell Anaemia",
           "image": "box-render-sca",
           "alt": "The LitLife™-SCA box, printed with the Lightening Lives and CSIR-CCMB logos, sickled red blood cells and a strand of DNA.",
           "features": [
-            "Screens and confirms in one test",
             "ICMR approved",
-            "Tells patients from carriers",
-            "Newborns, from birth"
+            "Screens and confirms in a single test"
           ],
+          "more": [
+            "Tells patients from carriers (trait)",
+            "Newborn ready: works at birth from a heel prick"
+          ],
+          "enquire": "sickle-cell-anaemia",
           "href": "/solutions/sickle-cell-anaemia/",
           "model": {
             "kit": "sca",
@@ -57,14 +62,19 @@
         {
           "id": "kit-sibthal217",
           "code": "LitLife™-SiBThal217",
+          "name": "LitLife™-SiβThal217",
           "short": "SiBThal217",
           "condition": "Sickle-beta thalassaemia",
+          "title": "Sickle-Beta Thalassaemia",
           "image": "box-render-sibthal217",
           "alt": "The LitLife™-SiBThal217 box, printed with the Lightening Lives logo, sickled red blood cells and a strand of DNA.",
           "features": [
-            "Sickle cell anaemia and beta thalassaemia together",
-            "Resolves the compound state often misread as sickle cell disease or trait"
+            "Detects sickle cell anaemia and beta thalassaemia together"
           ],
+          "more": [
+            "Resolves the compound state routine screening often misreads as sickle cell disease or trait"
+          ],
+          "enquire": "sickle-cell-anaemia",
           "href": "/solutions/sickle-cell-anaemia/#sickle-beta",
           "model": {
             "kit": "sibthal217",
@@ -95,14 +105,19 @@
         {
           "id": "kit-bthal",
           "code": "LitLife™-BThal",
+          "name": "LitLife™-βThal",
           "short": "BThal",
           "condition": "Beta thalassaemia",
+          "title": "Beta Thalassaemia",
           "image": "box-render-bthal",
           "alt": "The LitLife™-BThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.",
           "features": [
-            "Finds carriers and patients",
-            "Including carriers mistaken for iron deficiency"
+            "Identifies both patients and carriers"
           ],
+          "more": [
+            "Tells carriers from iron-deficiency anaemia, a frequent misdiagnosis"
+          ],
+          "enquire": "thalassaemia",
           "href": "/solutions/thalassaemia/#beta",
           "model": {
             "kit": "bthal",
@@ -133,13 +148,17 @@
         {
           "id": "kit-alphathal",
           "code": "LitLife™-AlphaThal",
+          "name": "LitLife™-αThal",
           "short": "AlphaThal",
           "condition": "Alpha thalassaemia",
+          "title": "Alpha Thalassaemia",
           "image": "box-render-alphathal",
           "alt": "The LitLife™-AlphaThal box, printed with the Lightening Lives logo, red blood cells and a strand of DNA.",
           "features": [
-            "Detects the common gene deletions",
-            "Finds the carriers routine screening misses"
+            "Detects the common gene deletions directly"
+          ],
+          "more": [
+            "Finds carriers that routine screening misses"
           ],
           "href": "/solutions/thalassaemia/#alpha",
           "model": {
@@ -170,7 +189,7 @@
         }
       ],
       "also": {
-        "text": "Also available: testing for HbD and HbE.",
+        "text": "Also available: targeted molecular testing for HbD and HbE.",
         "links": [
           {
             "text": "HbD",
@@ -188,20 +207,24 @@
       "name": "Muscle disorders",
       "sub": "Musculopathies",
       "icon": "activity",
-      "lead": "Inherited muscle disorders, which children often live with for years before anyone names them.",
+      "lead": "Rapid, affordable molecular confirmation on a dried blood spot card, replacing years of diagnostic delay for children with neuromuscular disorders.",
       "kits": [
         {
           "id": "kit-sma",
           "code": "LitLife™-SMA",
+          "name": "LitLife™-SMA",
           "short": "SMA",
           "condition": "Spinal muscular atrophy",
+          "title": "Spinal Muscular Atrophy",
           "image": "box-render-sma",
           "alt": "The LitLife™-SMA box, printed with the Lightening Lives logo and drawings of DNA, muscle and nerve cells.",
           "features": [
-            "Detects the SMN1 deletion behind most cases",
-            "Built for newborn screening",
-            "Direct PCR, no DNA extraction"
+            "Detects the SMN1 deletion behind more than 95% of SMA cases"
           ],
+          "more": [
+            "Built for high-throughput newborn screening, with no DNA extraction"
+          ],
+          "enquire": "spinal-muscular-atrophy",
           "href": "/solutions/spinal-muscular-atrophy/",
           "model": {
             "kit": "sma",
@@ -240,12 +263,12 @@
         {
           "id": "dmd",
           "condition": "Duchenne muscular dystrophy",
-          "line": "Molecular diagnosis in boys, and carrier testing for mothers and sisters."
+          "line": "Molecular diagnosis for affected boys, and carrier testing for mothers and sisters. [CONFIRM: the clinical edge, P2]"
         },
         {
           "id": "lgmd",
           "condition": "Limb-girdle muscular dystrophy",
-          "line": "Molecular confirmation that ends diagnostic uncertainty."
+          "line": "Definitive molecular confirmation that ends prolonged diagnostic uncertainty."
         }
       ]
     }
