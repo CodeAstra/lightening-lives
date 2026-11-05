@@ -2241,28 +2241,27 @@
 @layer components {
   /* Our work: the accounts from the field, the second half on a tap. */
   .field-note { margin: 0.5rem 0 0; color: var(--moss); }
-  .field-stories { display: grid; gap: 1.25rem; margin-bottom: 0; padding: 0; list-style: none; align-items: start; }
+  .field-stories { display: grid; gap: 1.25rem; margin-bottom: 0; padding: 0; list-style: none; align-items: stretch; }
   @media (min-width: 56rem) { .field-stories { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .field-story { display: grid; gap: 0.75rem; padding: 1.4rem 1.4rem 1.2rem; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
+  .field-story { display: grid; grid-template-rows: subgrid; grid-row: span 4; row-gap: 0.75rem; padding: 1.4rem; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
   .field-story-head { display: flex; align-items: center; gap: 0.75rem; }
   .field-story-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
   .field-story-tags span { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.1rem 0.5rem; border-radius: 0.375rem; background: var(--paper); font-size: 0.75rem; font-weight: 700; color: var(--canopy); }
   .field-story-tags .icon { width: 0.85rem; height: 0.85rem; color: var(--leaf); }
   .field-story h4 { margin: 0.25rem 0 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.01em; color: var(--canopy); }
   .field-story p { margin: 0; color: var(--canopy); }
-  .field-more > summary { display: inline-flex; align-items: center; gap: 0.3rem; list-style: none; cursor: pointer; font-weight: 700; font-size: 0.9375rem; color: var(--leaf); }
-  .field-more > summary::-webkit-details-marker { display: none; }
-  .field-more > summary .icon { width: 1rem; height: 1rem; transition: rotate 0.16s ease; }
-  .field-more[open] > summary .icon { rotate: 180deg; }
-  .field-more:not([open]) .field-close, .field-more[open] .field-open { display: none; }
-  .field-more[open] p { margin-top: 0.6rem; }
+  .field-led { padding: 1rem 1.1rem 1.05rem; background: var(--paper); border-radius: calc(var(--radius) - 0.125rem); }
+  .field-story p.field-led-h { margin: 0 0 0.6rem; font-size: 0.8125rem; font-weight: 700; color: var(--leaf); }
+  .field-impact { display: grid; gap: 0.55rem; margin: 0; padding: 0; list-style: none; }
+  .field-impact li { display: flex; gap: 0.55rem; font-size: 0.9375rem; line-height: 1.45; color: var(--canopy); }
+  .field-impact .icon { flex: none; width: 1rem; height: 1rem; margin-top: 0.2em; color: var(--leaf); }
   /* Our work: the patents. */
   .patents { display: grid; gap: 0.75rem; margin-bottom: 0; padding: 0; list-style: none; }
   @media (min-width: 56rem) { .patents { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; } }
   .patents li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 1rem; align-items: center; padding: 1.15rem 1.25rem; background: var(--paper); border: 0.0625rem solid var(--line); border-radius: var(--radius); }
   .patent-flag { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: var(--sprout); font-weight: 800; color: var(--leaf); letter-spacing: 0.02em; }
   .patent-flag .icon { width: 1.35rem; height: 1.35rem; }
-  .patents h3 { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.0625rem; line-height: 1.2; color: var(--canopy); }
+  .patents :is(h3, h4) { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.0625rem; line-height: 1.2; color: var(--canopy); }
   .patent-state { padding: 0.15rem 0.55rem; border-radius: 0.375rem; background: color-mix(in srgb, var(--sun) 32%, var(--paper)); font-size: 0.75rem; font-weight: 700; color: var(--canopy); }
   .patent-state.is-published { background: var(--sprout); color: var(--leaf); }
   /* Our work: the poster and the channel. */
@@ -3133,4 +3132,49 @@ main p { text-wrap: pretty; }
   .beyond li > div { display: flex; flex-direction: column; gap: 0.55rem; height: 100%; padding: 1.25rem; background: var(--stone); border: 0.0625rem solid var(--line); border-radius: var(--radius); color: var(--canopy); }
   .beyond li > div > span:not(.icon-tile) { color: var(--moss); font-size: 0.9375rem; }
   .next-act { margin-top: 1.75rem; }
+}
+
+/* Our work, the client review (27 October 2026; plan 2026-11-05 Task 5): the four pillars as one panel
+   in ruled columns (who each serves, or where it runs, at its foot); Odisha, a field account with no
+   site of ours, marked apart on the map (hatched, a ring pin, a dashed chip and panel edge, and a key);
+   the patents under the poster in #media. */
+@layer components {
+  .pillars { display: grid; gap: 0.0625rem; margin-bottom: 0; padding: 0; list-style: none; background: var(--line); border: 0.0625rem solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  @media (min-width: 40rem) { .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 72rem) { .pillars { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  /* Each pillar spans three rows of the panel's grid (heading, words, who it serves), so across a row
+     the headings, the words and the feet line up. */
+  .pillar { display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: 0.85rem; padding: clamp(1.25rem, 2vw, 1.75rem); background: var(--paper); }
+  .pillar h3 { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 700; font-size: 1.1875rem; line-height: 1.25; letter-spacing: -0.01em; color: var(--canopy); text-wrap: balance; }
+  .pillar h3 .icon { display: block; width: 1.5rem; height: 1.5rem; margin-bottom: 0.9rem; color: var(--leaf); }
+  .pillar-line { color: var(--leaf); }
+  .pillar-body { margin: 0; color: var(--canopy); }
+  .pillar-tag { display: flex; align-self: start; gap: 0.45rem; margin: 0; padding-top: 0.85rem; border-top: 0.0625rem solid var(--line); font-size: 0.875rem; font-weight: 700; color: var(--leaf); }
+  .pillar-tag .icon { flex: none; width: 1rem; height: 1rem; margin-top: 0.15em; }
+
+  .fm-hatch-ground { fill: var(--paper); }
+  .fm-hatch-line { fill: var(--sun); }
+  .fm-state.is-account, .fm-state.is-account.is-on { fill: url(#fm-hatch); fill-opacity: 1; stroke-opacity: 0.5; }
+  .fm-state.is-account.is-on { stroke: var(--canopy); stroke-opacity: 1; stroke-width: 2.2; }
+  .fieldmap.is-live .fm-state.is-account { cursor: pointer; }
+  .fieldmap-pins .fm-ring { position: absolute; left: 0; top: 0; translate: -50% -50%; display: grid; place-items: center; width: clamp(1.25rem, 2.6vw, 1.75rem); height: clamp(1.25rem, 2.6vw, 1.75rem); border: 0.125rem dashed var(--leaf); border-radius: 50%; background: var(--paper); color: var(--leaf); box-shadow: 0 0.25rem 0.5rem -0.2rem rgba(12, 74, 110, 0.45); transition: scale 0.2s ease; }
+  .fieldmap-pins .fm-ring .icon { width: 55%; height: 55%; }
+  .fieldmap-pins li.is-on .fm-ring { scale: 1.25; border-style: solid; border-color: var(--canopy); }
+  .fieldmap-key { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.25rem; margin: 1rem 0 0; padding: 0; list-style: none; font-size: 0.875rem; font-weight: 600; color: var(--moss); }
+  .fieldmap-key li { display: inline-flex; align-items: center; gap: 0.45rem; }
+  .fieldmap-key i { width: 1.1rem; height: 0.8rem; border: 0.0625rem solid color-mix(in srgb, var(--canopy) 45%, transparent); border-radius: 0.1875rem; }
+  .fieldmap-key .is-site { background: color-mix(in srgb, var(--sun) 55%, var(--paper)); }
+  .fieldmap-key .is-account { background: repeating-linear-gradient(45deg, var(--sun) 0 0.15rem, var(--paper) 0.15rem 0.35rem); }
+  @media (max-width: 39.99rem) { .pillar-tag, .fieldmap-key, .field-story p.field-led-h { font-size: 1rem; } }
+  .fm-chip { min-height: 2.75rem; }
+  .fm-chip.is-account { border-style: dashed; }
+  .fm-chip .icon { width: 1rem; height: 1rem; color: var(--leaf); }
+  .fm-chip[aria-pressed="true"] .icon { color: var(--sun); }
+  .fm-panel.is-account { border-top-style: dashed; }
+  .fm-account { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 700; color: var(--leaf); }
+  .fm-account .icon { width: 1rem; height: 1rem; }
+
+  .patents-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 1rem; margin-bottom: 1.25rem; }
+  .patents-line { margin: 0; color: var(--moss); }
+  .section:not(.bg-paper) .media-channel { background: var(--paper); }
 }

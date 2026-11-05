@@ -11,19 +11,38 @@ const text = (el) => $(el).text().replace(/\s+/g, ' ').trim();
 const SITES = JSON.parse(readFileSync('src/site/_data/sites.json', 'utf8'));
 const TOWNS = /Udaipur|Bhopal|Jamshedpur|Bilaspur|Nandurbar|Nagpur|Dhule|Valsad|Chandrapur|Mumbai|Kothagudem|Mysore|Gudalur/;
 
-test('the page: title, a two-tone heading, no label, the proof', () => {
+test('the page: title, the kicker, the client\'s heading and lead, the proof', () => {
   assert.equal($('title').text(), 'Genetic screening programmes in India | Lightening Lives');
-  assert.equal(text('h1'), 'In the field, in the lab, in print.');
+  assert.equal(text('h1'), 'In the field. In the lab. In print.');
+  assert.equal(text('h1 .h-mark'), 'In print.');
+  assert.equal(text('.page-open .lead'), "Public health screening across India's underserved belts, hands-on laboratory capacity building, and the scientific evidence behind every LitLife™ test.");
   // The client review's opening label (U2, 5 November 2026).
   assert.deepEqual($('.page-open .label').map((i, e) => $(e).text().trim()).get(), ['Real-world impact and evidence']);
   assert.equal($('.page-open .page-proof li').length, 3);
 });
 
-test('the sections, in order: recent work, the field, patents, media; the news only with articles', () => {
+test('the sections, in order: the pillars, recent work, the field, media (with the patents); the news only with articles', () => {
   const NEWS = JSON.parse(readFileSync('src/site/_data/news.json', 'utf8'));
-  const expected = ['recent', 'field', 'publications', ...(NEWS.articles.length ? ['news'] : []), 'media'];
+  const expected = ['pillars', 'recent', 'field', 'media', ...(NEWS.articles.length ? ['news'] : [])];
   assert.deepEqual($('main > section[id]').map((i, s) => $(s).attr('id')).get(), expected);
   assert.equal($('.map-band, [data-filter]').length, 0, 'not the home page\'s map, and no filter');
+});
+
+test('the pillars: four ways the work happens, each with who it serves or where it runs', () => {
+  assert.equal(text('#pillars h2'), 'Where screening has to reach. How we make it happen.');
+  assert.equal(text('#pillars .lead'), 'From remote tribal villages to district molecular laboratories, we work with state governments, CSR foundations, NGOs and hospitals to build self-sustaining diagnostic programmes.');
+  const cards = $('#pillars .pillar');
+  assert.equal(cards.length, 4);
+  assert.deepEqual(cards.map((i, c) => text($(c).find('h3'))).get(), [
+    'In the community: screening and awareness camps',
+    'Newborn screening: a diagnosis from day one',
+    'In the laboratory: high-throughput batches',
+    'Capacity building: training the people who run the tests',
+  ]);
+  assert.deepEqual(cards.map((i, c) => text($(c).find('.pillar-tag'))).get(), [
+    'For public health and CSR programmes', 'Rajasthan and Maharashtra', 'For hospitals and diagnostic chains', 'For laboratories and health workers',
+  ]);
+  cards.each((i, c) => assert.ok(text($(c).find('.pillar-body')).length > 40));
 });
 
 test('recent work: the photographs as a mosaic, all at once, a story under some, and the representative note', () => {
@@ -72,33 +91,64 @@ test('recent work: the photographs as a mosaic, all at once, a story under some,
 
 test('the field map: every worked state drawn and pinned, a chip and a panel for each, in the page without script', () => {
   const states = [...new Set(SITES.map((s) => s.state))];
+  assert.equal(text('#field .lead'), 'Fifteen sites in nine states and Delhi, concentrated in the sickle cell and thalassaemia belt of central and western India, where the need is greatest.');
   assert.equal($('#field path.fm-state.is-worked').length, states.length);
-  assert.equal($('#field [data-fm-pin]').length, states.length);
-  assert.equal($('#field [data-fm-pick]').length, states.length);
+  assert.equal($('#field [data-fm-pin]').length, states.length + 1, 'and Odisha, the field account');
+  assert.equal($('#field [data-fm-pick]').length, states.length + 1);
   const panels = $('#field [data-fm-panel]');
-  assert.equal(panels.length, states.length);
-  assert.deepEqual(panels.map((i, p) => text($(p).find('h3'))).get().sort(), states.sort());
-  const total = panels.map((i, p) => Number(text($(p).find('.fm-sites')).split(' ')[0])).get().reduce((a, b) => a + b, 0);
+  assert.equal(panels.length, states.length + 1);
+  assert.deepEqual(panels.map((i, p) => text($(p).find('h3'))).get().sort(), [...states, 'Odisha'].sort());
+  const total = panels.find('.fm-sites').map((i, s) => Number(text(s).split(' ')[0])).get().reduce((a, b) => a + b, 0);
   assert.equal(total, SITES.length);
-  assert.equal($('#field [data-fm-panel]:not([hidden])').length, states.length, 'every panel shows without script');
+  assert.equal($('#field [data-fm-panel]:not([hidden])').length, states.length + 1, 'every panel shows without script');
   assert.ok($('#fm-panel-MP a[href="#a-diagnosis-at-three"]').length, 'an account links from its state');
-  assert.match(text('#field .sites-thanks'), /^Source: Lightening Lives field records/);
+  assert.match(text('#field .sites-thanks'), /^Source: Lightening Lives field records, 15 sites in 9 states and Delhi\./);
 });
 
-test('three accounts from the field, each by its state, the second half opening in place', () => {
+test('Odisha: a field account, selectable, marked apart, with no site count and not in the totals', () => {
+  assert.ok(!SITES.some((s) => s.state === 'Odisha'), 'no site of ours in Odisha');
+  assert.equal($('#field path.fm-state.is-account[data-fm-state="OD"]').length, 1);
+  assert.equal($('#field path.fm-state.is-worked[data-fm-state="OD"]').length, 0);
+  assert.equal($('#field [data-fm-pin="OD"].is-account').length, 1);
+  assert.equal($('#field [data-fm-pick="OD"] small').length, 0, 'no count on its chip');
+  const panel = $('#fm-panel-OD');
+  assert.equal(panel.find('.fm-sites').length, 0);
+  assert.equal(text(panel.find('.fm-account')), 'Field account');
+  assert.equal(panel.find('a[href="#what-had-been-called-fate"]').length, 1);
+  assert.deepEqual($('#field .fieldmap-key li').map((i, l) => text(l)).get(), ['Screening sites', 'Field account']);
+});
+
+test('three accounts from the field, each by its state, with what it led to in sight', () => {
+  assert.equal(text('#field #accounts'), 'From the field: when molecular diagnosis reaches the last mile');
+  assert.equal(text('#field .field-note'), 'Three accounts from our work with partner institutions, NGOs and government programmes. Identifying details have been left out to protect families.');
   const stories = $('#field .field-story');
-  assert.equal(stories.length, 3);
-  stories.each((i, s) => {
-    assert.ok($(s).attr('id'));
-    assert.equal($(s).find('details.field-more').length, 1);
-    assert.ok(!$(s).find('details').is('[open]'));
-  });
+  assert.deepEqual(stories.map((i, s) => $(s).attr('id')).get(), ['a-diagnosis-at-three', 'two-carriers-one-plan', 'what-had-been-called-fate']);
+  assert.deepEqual(stories.map((i, s) => text($(s).find('h4'))).get(), ['A diagnosis at three, ending the poor-nutrition myth', 'Two carriers, one plan', 'Replacing fate with informed prevention']);
+  assert.deepEqual(stories.map((i, s) => $(s).find('.field-impact li').length).get(), [3, 2, 2]);
+  assert.equal($('#field details').length, 0, 'nothing to open');
+  assert.equal(text($(stories[0]).find('.field-impact li').first()), 'Ended the search for a diagnosis, and treatments that could not help.');
 });
 
-test('patents and media: three patent lines, the poster first, opened full size, and the channel', () => {
-  assert.equal($('#patents li').length, 3);
+test('conferences, publications and media: the poster, the patents, the channel, in one section', () => {
+  assert.equal(text('#media h2'), 'Conferences, publications and media. Where we have presented.');
+  assert.equal(text('#media .lead'), 'Our patents, our poster to the haematology community, and talks and films from our work.');
+  assert.equal($('#media #patents li').length, 3);
+  assert.equal(text('#media .patents-line'), 'Protecting the direct dried blood spot amplification chemistry behind our tests.');
   assert.equal($('#media .media-poster').attr('href'), '/assets/img/work-fullposter-v9-1920.webp');
-  assert.equal($('#media a[href="https://www.youtube.com/@LighteningLivesLLP"]').length, 1);
+  assert.equal(text('#media .media-body > p'), 'How LitLife™ meets the WHO REASSURED criteria, the six-step dried blood spot workflow, a comparison with HPLC and point-of-care tests, our hub-and-spoke model and field results from 15 sites.');
+  assert.equal(text('#media .media-act .btn'), 'See the full poster');
+  const yt = $('#media a[href="https://www.youtube.com/@LighteningLivesLLP"]');
+  assert.equal(yt.length, 1);
+  assert.equal(text(yt.find('small')), 'Talks by Dr. Giriraj Ratan Chandak, laboratory demonstrations of the LitLife™ workflow, and films from our screening camps.');
+  assert.equal($('#publications').length, 0);
+});
+
+test('the closing: programmes and CSR in the form, laboratories as the second door', () => {
+  assert.equal(text('.closing h2'), 'Want to run a screening programme like these?');
+  assert.equal(text('.closing .lead'), 'Tell us the community, the condition and the institution you work with. We help design, run and monitor it.');
+  assert.equal(text('.closing .btn-solid'), 'Talk to us about programmes and CSR');
+  assert.equal($('.closing .btn-solid').attr('data-enquire'), 'programme');
+  assert.equal(text('.closing .btn-line'), 'Partner with us: labs and hospitals');
 });
 
 test('places by state (R2): no town in the words; nothing unconfirmed renders', () => {

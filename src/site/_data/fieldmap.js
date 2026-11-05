@@ -20,21 +20,25 @@ const COLUMNS = [
   { key: 'bt_pop', condition: 'Beta thalassaemia', kind: 'Population' },
 ];
 const ORDER = ['DL', 'RJ', 'MP', 'JH', 'CG', 'MH', 'GJ', 'TS', 'KA', 'TN'];
+// States with an account from the field but no site of ours (client review, 27 October 2026: Odisha).
+// Selectable and marked apart (hatched, a ring pin, no count), never in the totals.
+const ACCOUNTS = { OD: 'An account from community dried blood spot screening, outside our 15 sites.' };
 
 const states = STATES.map((s, i) => {
   const here = sites.filter((site) => site.state === s.n);
   const worked = here.length > 0;
+  const account = !worked && s.id in ACCOUNTS;
   const [dx, dy] = NUDGE[s.id] || [0, 0];
   const screened = COLUMNS.filter((c) => here.some((site) => site[c.key]));
   const conditions = [...new Set(screened.map((c) => c.condition))].map((condition) => ({
     condition, kinds: screened.filter((c) => c.condition === condition).map((c) => c.kind),
   }));
   return {
-    id: s.id, name: s.n, d: BORDERS[i], worked,
+    id: s.id, name: s.n, d: BORDERS[i], worked, account,
     pin: { left: (((s.x + dx - VIEW.x) / VIEW.w) * 100).toFixed(2), top: (((s.z + dy - VIEW.y) / VIEW.h) * 100).toFixed(2) },
     sites: here.length, conditions,
     // The panel's line only where it adds to the list of what was screened: the laboratory's state.
-    line: s.id === 'TS' ? 'Our laboratory and office are here.' : '',
+    line: s.id === 'TS' ? 'Our laboratory and office are here.' : (account ? ACCOUNTS[s.id] : ''),
     newborn: screened.some((c) => c.kind === 'Newborn'),
     stories: stories.filter((st) => st.state === s.n).map((st) => ({ id: st.id, title: st.title, condition: st.condition })),
   };
@@ -44,5 +48,7 @@ export default {
   viewBox: `${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`,
   states,
   worked: ORDER.map((id) => states.find((s) => s.id === id)).filter((s) => s && s.worked),
+  // What the reader can choose: the worked states, then the field accounts.
+  picks: [...ORDER, ...Object.keys(ACCOUNTS)].map((id) => states.find((s) => s.id === id)).filter((s) => s && (s.worked || s.account)),
   totals: { sites: sites.length, states: ORDER.length - 1 },
 };
