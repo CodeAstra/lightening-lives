@@ -105,8 +105,14 @@ test('llms.txt: the company in one paragraph, every public page, then the facts 
     assert.equal(m[1], NAMES[new URL(m[2]).pathname]);
     assert.equal(m[3], $('meta[name=description]').attr('content'));
   }
-  assert.equal(blocks[5], '## Facts');
-  const facts = blocks.slice(6).join('\n');
+  // The three ways to partner (Partner With Us, since the client review of 27 October 2026), each by its tab.
+  const doors = JSON.parse(readFileSync('src/site/_data/doors.json', 'utf8'));
+  assert.equal(blocks[5], '## Ways to partner');
+  assert.deepEqual(blocks[6].split('\n'), doors.map((d) => `- [${d.who}](${DOMAIN}${d.href}): ${d.line}`));
+  assert.equal(blocks[7], '## Facts');
+  const facts = blocks.slice(8).join('\n');
+  // Who founded the company, and when (About: both founders, of equal rank).
+  assert.ok(facts.split('\n').includes('- Founded in September 2023: by Dr. Giriraj Ratan Chandak (Founder and CEO) and Nidhi Chandak (Co-Founder), in Hyderabad.'));
   // The proof (proof.njk's four items; About shows the company at a glance since 25 October 2026).
   for (const head of ['- Approved by ICMR', '- Patented in India and Japan', '- Working with CSIR-CCMB', '- Proven at 15 sites']) {
     assert.ok(facts.split('\n').some((l) => l.startsWith(`${head}: `)), head);
@@ -126,5 +132,24 @@ test('every page\'s main is in headed sections, and no heading is set as a pictu
       for (const id of $(s).attr('aria-labelledby').split(' ')) assert.equal($(`[id="${id}"]`).length, 1, `${url} #${id}`);
     });
     assert.equal($('main :is(h1, h2, h3, h4) img').length, 0, url);
+  }
+});
+
+// AI visibility after the client review (5 November 2026): the company's profiles, founders and founding
+// date, as the site already shows them (the footer's links; About's founders and "Established in
+// September 2023"), so an assistant or a search engine can tell this company from any other.
+test('the Organization names its profiles, its founders and its founding date', () => {
+  const site = JSON.parse(readFileSync('src/site/_data/site.json', 'utf8'));
+  const team = JSON.parse(readFileSync('src/site/_data/team.json', 'utf8'));
+  for (const url of ['/', '/about/', '/partner-with-us/']) {
+    const org = ofType(load(url), 'Organization')[0];
+    assert.deepEqual(org.sameAs, site.social.map((s) => s.href), url);
+    assert.equal(org.foundingDate, '2023-09', url);
+    assert.deepEqual(org.foundingLocation, { '@type': 'Place', name: 'Hyderabad, India' }, url);
+    assert.deepEqual(org.founder, [
+      { '@type': 'Person', name: 'Giriraj Ratan Chandak', honorificPrefix: 'Dr.', jobTitle: 'Founder and CEO', url: `${DOMAIN}/about/#giriraj-ratan-chandak` },
+      { '@type': 'Person', name: 'Nidhi Chandak', jobTitle: 'Co-Founder', url: `${DOMAIN}/about/#nidhi-chandak` },
+    ], url);
+    assert.deepEqual(org.founder.map((f) => f.url.split('#')[1]), team.founders.map((f) => f.slug));
   }
 });

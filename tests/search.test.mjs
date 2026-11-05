@@ -1,7 +1,7 @@
 // What a search result and an AI assistant read (26 October 2026, the user's choices): someone in India
 // types "genetic testing in India", and every page should say who the company currently works with:
-// hospitals, diagnostic labs, public health programmes and NGOs. The home page keeps its brand line
-// with India added; every other page puts the words a person searches first and the brand last.
+// hospitals, diagnostic labs, public health programmes and NGOs. The home page follows its hero heading
+// with the searched words kept (5 November 2026); every other page puts the words a person searches first and the brand last.
 // Individuals are not mentioned (the user: "You don't have to mention individuals"), and only the
 // sickle cell test claims ICMR approval, because it is the one approved. The visible text, the footer's
 // sentence among it, is unchanged; what is added is read behind the scenes: the structured data and
@@ -40,7 +40,7 @@ test('every page\'s description fits a search result: 50 to 155 characters (cont
 
 test('the home page answers "genetic testing in India" and says who we currently work with', () => {
   const { title, description } = meta('/');
-  assert.equal(title, 'Genetic testing for every community in India | Lightening Lives');
+  assert.equal(title, 'Precision genetic testing, built in India | Lightening Lives');
   assert.match(description, /^Genetic testing\b/);
   assert.match(description, /\bCurrently for\b/);
   assert.match(description, WHO);
@@ -102,4 +102,19 @@ test('llms.txt says who we work with straight after the company\'s sentence', ()
   const blocks = read('llms.txt').split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
   assert.equal(blocks[2], 'We currently work with hospitals, diagnostic laboratories, public health programmes and NGOs across India.');
   assert.equal(blocks[3], '## Pages');
+});
+
+// After the client review (5 November 2026): About names both founders, of equal rank on the page.
+test('About\'s description names both founders', () => {
+  assert.match(meta('/about/').description, /Dr\. Giriraj Ratan Chandak\b.*\bNidhi Chandak\b/);
+});
+
+// Content file 6.5 is the record of every title and description: it cannot drift from the pages.
+test('content file 6.5\'s table is every page\'s title and description, word for word', () => {
+  const md = readFileSync('content/website-content.md', 'utf8');
+  const section = md.slice(md.indexOf('### 6.5 '), md.indexOf('\n---\n', md.indexOf('### 6.5 ')));
+  const rows = section.split('\n').filter((l) => l.startsWith('| ') && !l.startsWith('| Page')).map((l) => l.replace(/\\\|/g, '¦').split('|').slice(1, -1).map((c) => c.trim().replace(/¦/g, '|')));
+  const built = pages().filter((u) => !['/privacy/', '/terms/'].includes(u)).map(meta);
+  assert.deepEqual(rows.map(([, t]) => t).sort(), built.map((m) => m.title).sort());
+  for (const [page, title, description] of rows) assert.equal(description, built.find((m) => m.title === title).description, page);
 });

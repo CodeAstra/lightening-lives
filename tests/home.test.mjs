@@ -15,7 +15,7 @@ const CRIT = JSON.parse(readFileSync('src/site/_data/reassuredCopy.json', 'utf8'
 const PARTNERS = JSON.parse(readFileSync('src/site/_data/partners.json', 'utf8'));
 
 test('the page: title, description, and no inner-page opening or closing band', () => {
-  assert.equal($('title').text(), 'Genetic testing for every community in India | Lightening Lives');
+  assert.equal($('title').text(), 'Precision genetic testing, built in India | Lightening Lives');
   assert.equal($('meta[name=description]').attr('content'), 'Genetic testing for inherited conditions, from a dried blood spot. Currently for hospitals, diagnostic labs, public health programmes and NGOs in India.');
   assert.equal($('.page-open').length, 0);
   assert.equal($('.closing').length, 0);
@@ -45,8 +45,9 @@ test('the opening: heading, lead with the category, buttons, the proof with icon
   assert.equal(text('.hero-lead'), 'Genetic and molecular diagnostics for national and global needs, focused on haemoglobinopathies and musculopathies. LitLife™-SCA screens and confirms sickle cell, built to the REASSURED standard.');
   assert.ok(text('.hero-lead').split(' ').length <= 25, 'R1: the home lead is at most 25 words');
   assert.equal($('.hero-lead a.lead-link').attr('href'), '#reassured');
-  assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/contact/'], ['How the test works', '/technology/']]);
-  assert.equal($('.hero-actions a').first().attr('data-enquire'), '', 'opens the enquiry form');
+  // To the page for partners, as the header's (the user, 5 November 2026).
+  assert.deepEqual(links('.hero-actions a'), [['Partner with us', '/partner-with-us/'], ['How the test works', '/technology/']]);
+  assert.equal($('.hero-actions a').first().attr('data-enquire'), undefined, 'a plain link, not the form');
   assert.ok($('.hero-actions a').first().is('.btn-solid') && $('.hero-actions a').last().is('.btn-line'));
   // The proof as credentials (25 October 2026, evening): each a badge led by a mark of its kind, and a
   // link to where it can be checked.

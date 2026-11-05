@@ -5,8 +5,9 @@ eleventyExcludeFromCollections: true
 ---
 {#- A text file, so its words are written as they are (| safe), not escaped as HTML.
     For AI assistants (llmstxt.org; decision D5): the company in one paragraph and who it works with, every public page by
-    its name (content 3.1) with its description, then the proof (the home page's "What stands behind
-    the tests", proof.njk, word for word) and the notice for individuals. -#}
+    its name (content 3.1) with its description, the three ways to partner (doors.json, each to its
+    tab on Partner With Us), then the proof (the home page's "What stands behind
+    the tests", proof.njk, word for word), who founded the company and when (About), and the notice for individuals. -#}
 # {{ site.name }}
 
 > {{ site.about | safe }}
@@ -18,10 +19,17 @@ eleventyExcludeFromCollections: true
 {% for item in collections.publicPages -%}
 - [{{ item.data.name | safe }}]({{ site.domain }}{{ item.url }}): {{ item.data.description | unbracket | safe }}
 {% endfor %}
+## Ways to partner
+
+{% for d in doors -%}
+- [{{ d.who | safe }}]({{ site.domain }}{{ d.href }}): {{ d.line | safe }}
+{% endfor %}
 ## Facts
 
 - Approved by ICMR: LitLife™-SCA, our sickle cell test, is approved by the Indian Council of Medical Research.
 - Patented in India and Japan: The technology behind our tests holds patents granted in India and Japan, and a patent published internationally.
 - Working with CSIR-CCMB: An MOU with the CSIR-Centre for Cellular and Molecular Biology, Hyderabad, covers developing and commercialising the sickle cell assay.
 - Proven at 15 sites: Population and newborn screening in nine states and Delhi, and a test built for the National Sickle Cell Anaemia Elimination Mission.
+{%- set ff = team.founders[0] %}{% set co = team.founders[1] %}
+- Founded in September 2023: by {{ ff.name }} ({{ ff.role }}) and {{ co.name }} ({{ co.role }}), in Hyderabad.
 - {{ site.notice.label }}: {{ site.notice.body | safe }}

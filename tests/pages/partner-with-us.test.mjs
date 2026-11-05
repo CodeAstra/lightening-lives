@@ -13,7 +13,8 @@ const texts = (selector) => $(selector).map((i, el) => text(el)).get();
 
 test('the page: title, description, kicker, heading, lead and proof', () => {
   assert.equal($('title').text(), 'Partner for genetic screening in India | Lightening Lives');
-  assert.match($('meta[name=description]').attr('content'), /^Hospitals, diagnostic labs, public health programmes and NGOs partner with us/);
+  // The three ways to partner, as the tabs name them; the partner network is the Partners page's (5 November 2026).
+  assert.equal($('meta[name=description]').attr('content'), 'Three ways to partner with us for genetic screening in India: hospitals and diagnostic labs, public health programmes, and CSR foundations and NGOs.');
   assert.deepEqual(texts('.page-open .label'), ['Institutional collaboration models']);
   assert.equal(text('h1'), 'Partner with us. Choose how we work together.');
   assert.equal(text('.page-open .lead'), 'Diagnostic lab chains, hospitals, national health missions and CSR foundations partner with us to bring confirmed, affordable molecular diagnosis to the people who need it most.');

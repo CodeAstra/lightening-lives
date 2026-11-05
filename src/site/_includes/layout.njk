@@ -10,6 +10,21 @@
 {%- for key, a in site.addresses -%}
   {%- set addresses = addresses.concat([{ "@type": "PostalAddress", "name": a.label, "streetAddress": a.street, "addressLocality": a.locality, "addressRegion": a.region, "postalCode": a.postcode, "addressCountry": "IN" }]) -%}
 {%- endfor -%}
+{#- The founders, as About shows them (client review, 5 November 2026): a title such as Dr. is the
+    Person's honorificPrefix, not part of the name. -#}
+{%- set founders = [] -%}
+{%- for f in team.founders -%}
+  {%- set first = f.name.split(" ")[0] -%}
+  {%- if first == "Dr." or first == "Prof." -%}
+    {%- set person = { "@type": "Person", "name": f.name.slice(first.length + 1), "honorificPrefix": first, "jobTitle": f.role, "url": site.domain + "/about/#" + f.slug } -%}
+  {%- else -%}
+    {%- set person = { "@type": "Person", "name": f.name, "jobTitle": f.role, "url": site.domain + "/about/#" + f.slug } -%}
+  {%- endif -%}
+  {%- set founders = founders.concat([person]) -%}
+{%- endfor -%}
+{#- The company's own profiles, the footer's links. -#}
+{%- set profiles = [] -%}
+{%- for s in site.social %}{% set profiles = profiles.concat([s.href]) %}{% endfor -%}
 {%- set organization = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -22,6 +37,10 @@
   "disambiguatingDescription": site.search.worksWith,
   "areaServed": { "@type": "Country", "name": site.search.areaServed },
   "knowsAbout": site.search.knowsAbout,
+  "foundingDate": site.search.foundingDate,
+  "foundingLocation": { "@type": "Place", "name": site.search.foundingLocation },
+  "founder": founders,
+  "sameAs": profiles,
   "email": site.email,
   "telephone": site.phone,
   "address": addresses
