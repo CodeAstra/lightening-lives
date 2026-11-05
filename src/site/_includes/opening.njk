@@ -6,7 +6,8 @@
     the client review of 27 October 2026; that review also gave each inner page a kicker, one small
     capitals label over the heading, the user's ruling U2), the lead aligned to the heading's last line; then the page's
     proof with its icons (proof: [{ icon, text }], the home opening's row), its tags (chips, the test
-    pages) and up to two buttons (openingActions: [{ text, href, solid }]). line, where a page has one, sits
+    pages) and up to two buttons (openingActions: [{ text, href, solid }], or { text, topic | who | condition, solid } to open
+    the enquiry form). line, where a page has one, sits
     between the lead and the tags (SMA, content 5.6). .section-head is the part that settles in. -#}
 {%- from "credentials.njk" import credentials %}
 {%- macro opening(label, h1, lead, chips, line, proof, actions, wide, kicker, stacked) %}
@@ -39,7 +40,11 @@
         {%- if actions and actions.length %}
         <div class="page-actions rise" style="--i:4">
           {%- for action in actions %}
+          {%- if action.topic or action.who or action.condition %}
+          <a class="btn {{ 'btn-solid' if action.solid else 'btn-line' }}" {{ { who: action.who, condition: action.condition, topic: action.topic } | enquire | safe }}>{{ action.text }}</a>
+          {%- else %}
           <a class="btn {{ 'btn-solid' if action.solid else 'btn-line' }}" href="{{ action.href }}">{{ action.text }}</a>
+          {%- endif %}
           {%- endfor %}
         </div>
         {%- endif %}

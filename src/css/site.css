@@ -3071,3 +3071,19 @@ main p { text-wrap: pretty; }
     }
   }
 }
+
+/* Technology's step 6, the drawn gel (client review, 5 November 2026): on a wide screen the gel on
+   the left, "Read and report" and the gel's key stacked on the right; on a phone the step loses its
+   box so the gel has the width its five lane names need. */
+@layer components {
+  @media (min-width: 64rem) {
+    .method-read.gel { grid-template-rows: auto auto; align-items: start; row-gap: 1.25rem; }
+    .method-read.gel .gel-slab { grid-column: 1; grid-row: 1 / span 2; }
+    .method-read.gel figcaption { grid-column: 2; grid-row: 1; align-self: end; }
+    .method-read.gel .gel-key { grid-column: 2; grid-row: 2; grid-template-columns: minmax(0, 1fr); margin: 0; align-self: start; }
+  }
+  @media (max-width: 29.99rem) {
+    .method-read.gel { padding: 0; background: none; border: 0; }
+    .gel .lane-name b { padding-inline: 0.2rem; }
+  }
+}

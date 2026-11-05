@@ -4,21 +4,24 @@ title: "Dried blood spot PCR, no DNA extraction | Lightening Lives"
 description: "How LitLife™ tests screen and confirm from a dried blood spot with no DNA extraction: the patented method, what a laboratory needs, and the approvals."
 label: Technology
 kicker: "Indigenous molecular diagnosis platform"
-h1: 'Molecular diagnosis, <span class="h-mark">without the molecular laboratory''s burden.</span>'
-lead: "LitLife™ reads disease-causing mutations directly from a dried blood spot. It needs no DNA extraction, no cold chain and no second test."
+h1: 'Without the molecular <span class="h-mark">laboratory''s burden.</span>'
+lead: "LitLife™ reads disease-causing mutations directly from a dried blood spot. No DNA extraction. No cold chain. No second confirmatory test. Built for hospitals, diagnostic lab networks and public health programmes."
 proof:
   - { icon: "badge-check", text: "ICMR approved" }
   - { icon: "award", text: "Patents granted in India and Japan" }
-  - { icon: "flask-conical", text: "No DNA extraction" }
+  - { icon: "landmark", text: "Built on CSIR-CCMB know-how" }
+  - { icon: "target", text: "100% sensitivity and specificity", href: "#approvals" }
 openingActions:
-  - { text: "Request the technical dossier", href: "#documents", solid: false }
+  - { text: "Request the technical dossier", topic: dossier, solid: true }
+  - { text: "Book a lab demo", topic: demo, solid: false }
 closing:
-  h2: 'See the method in detail. <span class="h-mark">Request our technical dossier.</span>'
-  body: "The method, validation and regulatory documents, for your laboratory or your procurement team."
-  solid: { text: "Request the dossier", topic: dossier }
+  h2: 'See it run in your laboratory. <span class="h-mark">Book a lab demo.</span>'
+  body: "Our scientists show your team the method on your own equipment."
+  solid: { text: "Book a lab demo", topic: demo }
   line: { text: "Develop a test with us", href: "/solutions/#develop" }
 ---
-{#- Technology (content file 5.2; seven sections since 25 October 2026, the reviewer's site map, 3.1):
+{#- Technology (content file 5.2; seven sections since 25 October 2026, the reviewer's site map, 3.1;
+    worded to the client review of 27 October 2026 since 5 November, plan 2026-11-05 Task 3):
     for clinicians and laboratory heads, the page that must survive expert scrutiny. The opening; the
     method in the poster's six pictures (the company's own, cut from Lightening Lives Poster v9), the
     sixth, the gel read-out, large, with the controls in a disclosure; the poster's comparison; what a
@@ -26,14 +29,15 @@ closing:
     documents, on request; the close. Cut: "Where today's testing stops" (the table's first two
     columns say it), REASSURED (one copy, on home) and the card. Brackets never render. -#}
 {%- from "picture.njk" import picture with context %}
+{%- from "gel.njk" import gelDrawing %}
 {%- set arrow = '<svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6h15M11 1l5 5-5 5"/></svg>' %}
 
   <!-- 2. The method: the poster's six pictures, the read-out large -->
   <section id="method" class="section bg-paper" aria-labelledby="method-h">
     <div class="wrap">
       <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
-        <h2 id="method-h" class="h2 lg:col-span-7">The method. <span class="h-mark">Six steps, nothing hidden.</span></h2>
-        <p class="lead lg:col-span-5">Mutation-specific PCR and agarose gel electrophoresis, methods taught in every molecular biology course. What we invented is how they work together on a dried spot.</p>
+        <h2 id="method-h" class="h2 lg:col-span-7">The six-step method. <span class="h-mark">Nothing hidden.</span></h2>
+        <p class="lead lg:col-span-5">Textbook PCR and agarose gel electrophoresis. Our patented innovation lets them work directly on a raw dried blood spot, with no DNA extraction.</p>
       </div>
       <div class="method mt-12">
         <!-- [html-validate-disable-next no-redundant-role, prefer-native-element: preflight's list-style: none drops the list role in Safari/VoiceOver] -->
@@ -53,17 +57,19 @@ closing:
           </li>
           {%- endfor %}
         </ol>
-        <figure class="method-read">
-          {{ picture("work-method-6", "An agarose gel read-out with five lanes labelled Marker, Patient, Normal, Carrier and NTC: the patient's lane shows two bands, the normal and the carrier lanes their own patterns, the no-template control none.", "(min-width: 64rem) 38vw, 92vw", { class: "method-gel" }) }}
+        {#- Step 6 is the drawn gel the home page uses (client review, 5 November 2026: the poster's photo
+            "is not clear"), each sample's lane lit from its key. -#}
+        <figure class="method-read gel" data-gel>
+          {{ gelDrawing() }}
           <figcaption>
-            <h3><span class="sr-only">Step 6: </span>Read</h3>
-            <p>Bands show the result: unaffected, carrier or patient, in one run.</p>
+            <h3><span class="sr-only">Step 6: </span>Read and report</h3>
+            <p>Bands read as patient, carrier or unaffected, and the result is reported the same day.</p>
             <details class="method-controls">
               <summary>{% icon "list-checks" %}<span>The controls on every run</span>{% icon "chevron-down" %}</summary>
               <ul>
                 <li><b>Marker:</b> a DNA ladder, to size each band.</li>
                 <li><b>Normal and carrier:</b> known samples beside the patient's, so each result is read against both.</li>
-                <li><b>No-template control (NTC):</b> no DNA, so any band would show contamination.</li>
+                <li><b>No-template control (NTC):</b> the lane marked Control. It has no DNA, so any band would show contamination.</li>
               </ul>
             </details>
           </figcaption>
@@ -77,10 +83,10 @@ closing:
     <div class="wrap">
       <div class="section-head grid gap-6 lg:grid-cols-12 lg:items-start">
         <h2 id="compared-h" class="h2 lg:col-span-7">Compared. <span class="h-mark">One test where there were two.</span></h2>
-        <p class="lead lg:col-span-5">How <span class="whitespace-nowrap">LitLife™</span> compares with the screening and confirmatory tests a programme would otherwise use.</p>
+        <p class="lead lg:col-span-5">Stop choosing between cheap, inaccurate screening and costly, complex confirmation. <span class="whitespace-nowrap">LitLife™</span> replaces both in a single step.</p>
       </div>
       <table class="compare-table mt-12" aria-labelledby="compared-h">
-        <caption>From our presentation to the haematology community, October 2026.</caption>
+        <caption>Data: our presentation to the haematology community, October 2026.</caption>
         <thead>
           <tr>
             <td></td>
@@ -92,13 +98,13 @@ closing:
         <tbody>
           {%- set compared = [
             ["Sample", "20 to 50 µl of blood", "1 to 2 ml of EDTA blood", "A spot of blood on a card"],
-            ["Collection", "Finger prick", "Venepuncture", "Finger prick"],
-            ["Storage and transport", "Cold chain", "Cold chain", "Room temperature"],
-            ["Pre-processing", "Yes", "Yes", "None"],
-            ["Throughput", "Low", "Low", "High"],
-            ["A second test to confirm", "Yes", "No", "No"],
+            ["Collection", "Finger prick", "Venepuncture", "Finger or heel prick"],
+            ["Storage and transport", "Cold chain", "Cold chain", "Room temperature, no cold chain"],
+            ["Pre-processing", "Yes", "Yes", "None: direct to PCR"],
+            ["Throughput", "Low", "Low", "High: scalable for mass screening"],
+            ["A second test to confirm", "Yes", "No", "No: screens and confirms in one go"],
             ["Adults", "Yes", "Yes", "Yes"],
-            ["Newborns", "No", "After 72 hours of birth", "At birth"],
+            ["Newborns", "No", "After 72 hours of birth", "Yes, at birth"],
             ["Specificity", "Low", "99 to 100%", "100%"],
             ["Sensitivity", "Low", "99 to 100%", "100%"]
           ] %}
@@ -119,23 +125,23 @@ closing:
   <section id="laboratory" class="section bg-paper" aria-labelledby="laboratory-h">
     <div class="wrap">
       <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
-        <h2 id="laboratory-h" class="h2 lg:col-span-7">What your laboratory needs. <span class="h-mark">If you run PCR today, you can run LitLife™.</span></h2>
-        <p class="lead lg:col-span-5">The equipment of a district or hospital laboratory, not a genetics institute.</p>
+        <h2 id="laboratory-h" class="h2 lg:col-span-7">If you run PCR today, <span class="h-mark">you can run LitLife™.</span></h2>
+        <p class="lead lg:col-span-5">Built for everyday diagnostic labs and hospitals, not only genetics institutes. Use the equipment you already own.</p>
       </div>
       <dl class="lab-needs mt-12">
         {%- for row in [
-          { icon: "microscope", term: "Equipment", def: "A thermal cycler, a gel electrophoresis tank and a card punch." },
+          { icon: "microscope", term: "Equipment needed", def: "A thermal cycler, a gel electrophoresis tank and a card punch. No proprietary system." },
           { icon: "flask-conical", term: "DNA extraction", def: "None. A disc from the card goes straight into the reaction." },
-          { icon: "thermometer", term: "Samples", def: "Cards keep and travel at room temperature. No cold chain." },
-          { icon: "layers", term: "Throughput", def: "High: many cards in one run." },
-          { icon: "timer", term: "Time to result", def: "In the technical dossier.", dossier: true },
-          { icon: "package", term: "Storage and shelf life", def: "In the technical dossier.", dossier: true },
-          { icon: "graduation-cap", term: "People", def: "Staff who have run PCR before, or who have been trained. We train them." },
-          { icon: "smartphone", term: "Monitoring", def: "Test details are captured on a mobile app at the point of collection, so a programme can follow its screening as it happens." }
+          { icon: "thermometer", term: "Sample logistics", def: "Cards keep and travel at room temperature. Zero cold chain." },
+          { icon: "layers", term: "Throughput", def: "High. Many cards in a single run, for mass screening." },
+          { icon: "timer", term: "Time to result", def: "Same-day turnaround.", link: "Full protocol timing in the technical dossier.", dossier: true },
+          { icon: "package", term: "Storage and shelf life", def: "Long-term stability for dried samples and kits.", link: "Full data in the technical dossier.", dossier: true },
+          { icon: "graduation-cap", term: "Staff and training", def: "Any technician who has run basic PCR. We provide hands-on training and certification." },
+          { icon: "scan-barcode", term: "Monitoring", def: "Every card is barcoded, so each sample can be followed from collection to report." }
         ] %}
         <div{% if row.dossier %} class="is-dossier"{% endif %}>
           <dt><span class="icon-tile">{% icon row.icon %}</span>{{ row.term }}</dt>
-          <dd>{% if row.dossier %}<a class="link" href="#documents">{{ row.def }}</a>{% else %}{{ row.def }}{% endif %}</dd>
+          <dd>{{ row.def }}{% if row.dossier %} <a class="link" href="#documents">{{ row.link }}</a>{% endif %}</dd>
         </div>
         {%- endfor %}
       </dl>
@@ -146,14 +152,14 @@ closing:
   <section id="approvals" class="section" aria-labelledby="approvals-h">
     <div class="wrap">
       <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
-        <h2 id="approvals-h" class="h2 lg:col-span-7">Approved, patented, <span class="h-mark">published.</span></h2>
-        <p class="lead lg:col-span-5">The evidence a hospital's purchase team and a programme's technical committee ask for.</p>
+        <h2 id="approvals-h" class="h2 lg:col-span-7">Approved. Patented. <span class="h-mark">Published.</span></h2>
+        <p class="lead lg:col-span-5">The clinical and regulatory evidence that hospital purchase committees, NABL-accredited labs and government technical bodies ask for.</p>
       </div>
       <ul class="approvals mt-12" id="patents">
         <li>
           <span class="approval-mark">{% icon "badge-check" %}</span>
           <h3>ICMR approved</h3>
-          <p>LitLife™-SCA, our sickle cell test, is approved by the Indian Council of Medical Research.</p>
+          <p>LitLife™-SCA, validated by ICMR with 100% sensitivity and specificity for sickle cell anaemia.</p>
         </li>
         <li>
           <span class="approval-mark">{% icon "award" %}</span>
@@ -179,9 +185,9 @@ closing:
     <div class="wrap">
       <div class="documents">
         <div>
-          <h2 id="documents-h" class="h2">Documents. <span class="h-mark">On request.</span></h2>
-          <p class="lead mt-5">Write to us and our scientific team sends what your laboratory or procurement team needs.</p>
-          <a class="btn btn-line mt-8" {{ { topic: "dossier" } | enquire | safe }}>Request the documents</a>
+          <h2 id="documents-h" class="h2">The technical dossier. <span class="h-mark">On request.</span></h2>
+          <p class="lead mt-5">Instructions for use, the product sheet and the validation summary, in one dossier for your laboratory or procurement team.</p>
+          <a class="btn btn-line mt-8" {{ { topic: "dossier" } | enquire | safe }}>Request the technical dossier</a>
         </div>
         <ul class="doc-list">
           <li><span class="doc-icon">{% icon "file-text" %}</span><span><b>Instructions for use</b><small>How to run the test, step by step</small></span><span class="doc-tag">On request</span></li>

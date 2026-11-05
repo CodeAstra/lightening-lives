@@ -15,6 +15,7 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
 {%- from "doors.njk" import doorList with context %}
 {%- from "model.njk" import testingModel %}
 {%- from "credentials.njk" import credentials %}
+{%- from "gel.njk" import gelDrawing %}
 
   <!-- The opening: an announcement when there is one, the heading, and the film beside it, which
        comes to rest on a map with every state we work in pinned; the partners slide along its foot -->
@@ -116,33 +117,7 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
         {#- The gel, flat (26 October 2026: the user found the 3D one did not serve the purpose): the
             poster's read-out drawn in HTML and CSS. The three samples are the subject; the marker and
             the control are the references they are read against, set quieter. -#}
-        <div class="gel-slab" role="img" aria-label="Illustration of a LitLife™ gel, after our conference poster: a size marker, then a patient, an unaffected sample and a carrier, each with its own pattern of bands, and an empty no-DNA control.">
-          {%- set lanes = [
-            { name: "Marker", kind: "marker", bands: [17.7, 24.6, 30, 35.8, 42.5, 48.3, 54.2, 61.3, 67.3, 73.8, 80.6, 94.2], heavy: [42.5, 67.3] },
-            { name: "Patient", bands: [48.5, 80] },
-            { name: "Unaffected", bands: [48.5, 65] },
-            { name: "Carrier", bands: [48.5, 65, 80] },
-            { name: "Control", kind: "control", note: "No DNA", bands: [] }
-          ] %}
-          {%- for lane in lanes %}
-          <div class="lane{% if lane.kind %} lane-{{ lane.kind }}{% endif %}">
-            <span class="lane-name"><b>{{ lane.name }}</b></span>
-            <div class="lane-track"><span class="lane-well"></span>{% for y in lane.bands %}<span class="lane-band{% if lane.heavy and y in lane.heavy %} is-heavy{% endif %}" style="--y: {{ y }}%"></span>{% endfor %}{% if lane.note %}<span class="lane-note" aria-hidden="true">{{ lane.note }}</span>{% endif %}</div>
-          </div>
-          {%- endfor %}
-        </div>
-        {#- The read-out, from the content file (5.1, Innovate: one band lower, patient; one upper,
-            unaffected; both, carrier), named by where the bands stand on the gel as drawn, under the
-            top band that every sample shows. Each one lights its lane, pointed at, focused or chosen. -#}
-        <ul class="gel-key">
-          {%- for key in [
-            { lane: 1, name: "Patient", read: "Bottom band", glyph: "lower" },
-            { lane: 2, name: "Unaffected", read: "Middle band", glyph: "upper" },
-            { lane: 3, name: "Carrier", read: "Middle and bottom", glyph: "both" }
-          ] %}
-          <li><button type="button" class="gel-key-btn" data-gel-lane="{{ key.lane }}" aria-pressed="false"><span class="gel-glyph is-{{ key.glyph }}" aria-hidden="true"><i></i><i></i><i></i></span><span class="gel-key-text"><strong>{{ key.name }}</strong><span>{{ key.read }}</span></span></button></li>
-          {%- endfor %}
-        </ul>
+        {{ gelDrawing() }}
         <figcaption>How a LitLife™ gel reads, after our conference poster: every sample shows the top band; under it, a patient, an unaffected person and a carrier each show their own pattern, read against a size marker, in one run. The control, with no DNA, stays empty.</figcaption>
       </figure>
     </div>

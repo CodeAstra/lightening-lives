@@ -21,6 +21,7 @@
   "topics": {
     "dossier": "The technical dossier",
     "develop": "Developing a new test",
-    "early-access": "Early access or validation"
+    "early-access": "Early access or validation",
+    "demo": "A laboratory demonstration"
   }
 }
