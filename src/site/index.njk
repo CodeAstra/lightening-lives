@@ -42,8 +42,7 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
       </div>
       {{ credentials([
         { icon: "badge-check", text: "ICMR approved" },
-        { icon: "award", text: "Patents granted in India and Japan" },
-        { icon: "map-pin", text: "15 sites, 9 states and Delhi" }
+        { icon: "award", text: "Patents granted in India and Japan" }
       ], "hero-note rise", "--i:4") }}
     </div>
 
@@ -70,6 +69,10 @@ socialAlt: "One test to screen. The same test to confirm. A map of India made of
         Play the film
       </button>
     </div>
+
+    <!-- The map's key, under the map once the film ends (5 November 2026: the sites moved here from the
+           proof under the buttons, beside the picture they describe); on a wide screen scene.js places it under the pins; on a phone it is the row under the film -->
+      <p class="hero-key" data-hero-key>{% icon "map-pin" %}<a class="link" href="#map">15 sites · 9 states and Delhi</a><span class="hero-key-hint">Choose a state</span></p>
 
     <!-- Who works with us, along the foot of the opening: a row of cells whose logos change in place, a
          few at a time (main.js, initLogos); every name is in the list a screen reader hears -->

@@ -22,6 +22,27 @@ test('the brand line is in title case and the brand name larger', () => {
   for (const r of lines) assert.doesNotMatch(r, /text-transform:uppercase/, r);
   const names = (css.match(/(?:^|[{},])\.brand-name\{[^}]*font-size:([^;}]+)/g) ?? []).map((r) => r.split('font-size:')[1]);
   assert.ok(names.includes('1.6rem'), `brand name sizes: ${names}`);
+  // On a 360 px phone the larger name pushed the Menu button 15 px off the screen (found 5 November
+  // 2026): the unconditional size is fluid, 1.2rem on the narrowest phones.
+  assert.ok(names.includes('clamp(1.2rem,5.4vw,1.5rem)'), `brand name sizes: ${names}`);
+  assert.ok(!names.includes('1.5rem'), `an unconditional 1.5rem: ${names}`);
+});
+
+// The hero's use of space (5 November 2026): after the film the text's veil draws back off the map;
+// on wide screens the hero and the header keep to a wider frame; the map's key shows once the film ends.
+test('the hero: the veil draws back after the film, a wider frame on wide screens, the key after the film', () => {
+  const css = built().replace(/\s+/g, '');
+  // A registered property's initial value must not depend on the font size (rem, em), or the
+  // browser drops the registration and the veil's gradient with it (5 November 2026: the film ran
+  // behind the heading with no veil). The 27rem is set on the veil itself.
+  assert.match(css, /@property--veil-reach\{syntax:"<length>";inherits:true;initial-value:0(px)?\}/);
+  for (const m of css.matchAll(/@property(--[\w-]+)\{[^}]*initial-value:([^;}]+)/g)) assert.doesNotMatch(m[2], /\d(r?em|ch|ex|lh|vw|vh)\b/, `${m[1]}: ${m[2]}`);
+  assert.match(css, /\.hero-veil\{--veil-reach:27rem;--veil-top:8\.25rem/);
+  assert.match(css, /\[data-film-state="?ended"?\]\.hero-veil\{[^}]*--veil-reach:1\.75rem/);
+  assert.match(css, /--hero-frame:clamp\(82rem,calc\(var\(--text-w\)\+2rem\+61vh\+2\*var\(--pad\)\),min\(88vw,150rem\)\)/);
+  assert.match(css, /\.hero,:root:has\(\.hero\)\.site-header\{--frame:var\(--hero-frame\);--gutter:/);
+  assert.match(css, /\.hero-key\{[^}]*opacity:0/);
+  assert.match(css, /\[data-film-state="?ended"?\]\.hero-key\{[^}]*opacity:1/);
 });
 
 test('the highlight is life green, and no amber is left (DESIGN.md, 24 October 2026)', () => {

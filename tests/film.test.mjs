@@ -68,9 +68,22 @@ test('on wide windows the map may use the space past the column, and more of the
   assert.match(resize, /whole\.right - EDGE \* rem/);
   assert.match(scene, /const EDGE = 2;/);
   const up = Number(scene.match(/const WIDE = \{[^}]*up: ([\d.]+)/)?.[1]);
-  assert.ok(up >= 0.85, `WIDE.up ${up}`);
+  assert.equal(up, 0.9, `WIDE.up ${up}`);
   assert.match(scene, /const SPEED = 1\.4;/);
   assert.match(scene, /end: 6\.56,/);
+});
+
+// The hero's use of space (the user's choice, 5 November 2026, after the impeccable critique): the map
+// sits one short gap from the heading, and where its height is what limits it, at the left of its room
+// (beside the text), not centred in it; on a phone it fills more of its frame.
+test('the map sits close to the heading: a 2rem gap, and left in its room when its height limits it', () => {
+  const scene = source('scene.js');
+  const resize = scene.match(/function resize\(\) \{[\s\S]*?\n {2}\}/)?.[0] ?? '';
+  assert.match(scene, /const GAP = 2;/);
+  assert.match(scene, /function subjectCentre\(room\) \{[\s\S]*TAKE\[TAKE\.length - 1\]/);
+  assert.match(resize, /view\.shiftX = \(subjectCentre\(room\) - whole\.left\) \/ width - 0\.5;/);
+  const narrowUp = Number(scene.match(/const NARROW = \{[^}]*up: ([\d.]+)/)?.[1]);
+  assert.ok(narrowUp >= 0.92, `NARROW.up ${narrowUp}`);
 });
 
 test('the film waits for the opening to be painted, and compiles its shaders before its first frame', () => {

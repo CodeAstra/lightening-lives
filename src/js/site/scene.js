@@ -85,15 +85,16 @@ const SKY = Math.PI - KEY.intensity * (KEY.from.y / KEY.from.length());
 // the available width is the room the text leaves: from the text's widest line, plus `GAP` root ems,
 // to the right edge of the page's column (R3: the map once ran under the text on wide screens, where
 // a fixed share of the column was used). The subject sits a little low, clear of the header.
-const WIDE = { across: 0.96, up: 0.86, shiftY: -0.032 };
-const NARROW = { across: 0.9, up: 0.86, shiftY: 0 }; // the film in a frame of its own, text above and below
+const WIDE = { across: 0.96, up: 0.9, shiftY: -0.032 };
+const NARROW = { across: 0.92, up: 0.94, shiftY: 0 }; // the film in a frame of its own, text above and below
 // The room runs past the page's column, to EDGE root ems from the window's right edge: the client
 // review (P1, 27 October 2026) asked for a larger map where the space allows it. The map's far east
 // (the north-east states and the islands) may sit past the column; the pins stay well inside it.
 const EDGE = 2;
 const REACH = 8; // and never more than this many root ems past the column, so a very wide window keeps the map by the text
-const GAP = 4.5; // rem between the text's widest line and the subject's room: the page's veil is solid
-// for 3rem past that line and gone by 5rem (site.css, .hero-veil)
+const GAP = 2; // rem between the text's widest line and the subject's room: once the film has ended the
+// page's veil is solid to half a rem past that line and gone by 1.75rem (site.css, .hero-veil; 4.5rem
+// until 5 November 2026, when the user found "a lot of gap between map and heading")
 
 // The camera's one take. Each row is where the camera is at that second (`at`); between rows it
 // follows a smooth curve through them (see `curve`), so it has no stop to arrive at or to leave: it
@@ -383,6 +384,7 @@ function init(root) {
   const heroText = root.querySelector('[data-hero-text]');
   const placeList = root.querySelector('[data-places]');
   const placesWrap = root.querySelector('[data-places-wrap]');
+  const mapKey = root.querySelector('[data-hero-key]'); // the line under the map once the film ends (5 November 2026)
   const foot = root.querySelector('.hero-foot'); // the partners' band, laid over the film's foot on a wide screen
   const placeLabels = new Map([...root.querySelectorAll('[data-place]')].map((el) => [el.dataset.place, el]));
 
@@ -1019,6 +1021,19 @@ function init(root) {
         name.style.visibility = 'hidden';
       }
     });
+    // The map's key goes under the lowest pin or name, centred on them (site.css, .hero-key).
+    if (mapKey && taken.length) {
+      const l = Math.min(...taken.map((b) => b.l));
+      const rr = Math.max(...taken.map((b) => b.r));
+      // Never reaching back past the text: its left edge stays a rem clear of the text's widest line.
+      const half = (mapKey.offsetWidth || 0) / 2;
+      const x = Math.max((l + rr) / 2, (view.textRight ?? -Infinity) + half);
+      mapKey.style.setProperty('--key-x', `${x.toFixed(1)}px`);
+      // Under the lowest pin or name, and inside the frame (a phone held sideways has little height).
+      const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const y = Math.min(Math.max(...taken.map((b) => b.b)) + 0.75 * rem, view.height - (view.band || 0) - (mapKey.offsetHeight || 0) - 0.5 * rem);
+      mapKey.style.setProperty('--key-y', `${y.toFixed(1)}px`);
+    }
   }
 
   // Whether the film is playing, paused (a hidden tab) or over, for the stylesheet.
@@ -1095,6 +1110,20 @@ function init(root) {
     heroText.querySelectorAll('a, button').forEach((el) => { edge = Math.max(edge, el.getBoundingClientRect().right); });
     return edge;
   }
+  // Where the subject's middle goes across the frame, in page pixels. In the wide layout, when the
+  // map's height is what limits it (it is narrower than its room), it keeps to the left of its room,
+  // beside the text, and the spare width lies beyond it rather than between it and the heading (the
+  // user, 5 November 2026: "a lot of gap between map and heading"). Otherwise it is centred.
+  function subjectCentre(room) {
+    const middle = room.left + room.width / 2;
+    if (view.layout !== WIDE) return middle;
+    const last = TAKE[TAKE.length - 1];
+    const tan = Math.tan((FOV * DEG) / 2);
+    const across = last.span / (2 * tan * view.aspect * view.across);
+    const up = last.tall / (2 * tan * view.up);
+    const used = across / Math.max(across, up); // the share of the subject's width that the map fills
+    return middle - (room.width * view.layout.across * (1 - used)) / 2;
+  }
   function resize() {
     const width = mount.clientWidth;
     const height = mount.clientHeight;
@@ -1119,7 +1148,6 @@ function init(root) {
       room = { left, width: Math.max(right - left, width * 0.2) };
     }
     view.across = (room.width * view.layout.across) / width;
-    view.shiftX = (room.left - whole.left + room.width / 2) / width - 0.5;
     // The opening is at least 36rem tall, so on a short window (a phone held sideways, a television's
     // browser at 960 by 540) it runs past the first screen: the subject is fitted into the part of it
     // that is on the first screen, so the map is never cut by the fold (R3, defect 3).
@@ -1127,7 +1155,9 @@ function init(root) {
     const band = view.layout === WIDE && foot && getComputedStyle(foot).position === 'absolute' ? foot.offsetHeight : 0;
     const shown = clamp(Math.min(window.innerHeight - (whole.top + window.scrollY), height) - band, height * 0.5, height);
     view.up = view.layout.up * (shown / height);
+    view.band = band; // the partners' band over the film's foot, which the map's key keeps above
     view.shiftY = 0.5 - (shown * (0.5 - view.layout.shiftY)) / height;
+    view.shiftX = (subjectCentre(room) - whole.left) / width - 0.5;
     renderer.setPixelRatio(view.ratio);
     renderer.setSize(width, height, false);
     camera.aspect = view.aspect;

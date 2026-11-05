@@ -91,7 +91,11 @@ open(1440, 756);
 hide('.film-toggle');
 // The partners' logos hold still for the picture, as they do while focused.
 run(`document.querySelector('.logo-cycle')?.dispatchEvent(new FocusEvent('focusin')); 1`);
-hold(6.56);
+// The film runs to its end, as a visitor sees it: only then does the text's veil draw back off the map
+// and the map's key come up (5 November 2026), so a held frame would not show them.
+for (let i = 0; i < 60 && run('document.querySelector("[data-film]").dataset.filmState') !== 'ended'; i += 1) pause(250);
+run('window.scrollTo(0, 0); 1');
+pause(1600); // the veil draws back over 0.9 s, and the key fades in by 0.75 s
 await sharp(shot('social.png')).resize(1200, 630).png({ palette: true, quality: 90, effort: 10 }).toFile(out('social.png'));
 console.log('  social.png: the opening at the film\'s end, 1200 by 630');
 

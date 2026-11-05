@@ -50,12 +50,23 @@ test('the opening: heading, lead with the category, buttons, the proof with icon
   assert.ok($('.hero-actions a').first().is('.btn-solid') && $('.hero-actions a').last().is('.btn-line'));
   // The proof as credentials (25 October 2026, evening): each a badge led by a mark of its kind, and a
   // link to where it can be checked.
-  assert.deepEqual(texts('.hero-proof .cred-text'), ['ICMR approved', 'Patents granted in India and Japan', '15 sites, 9 states and Delhi']);
+  assert.deepEqual(texts('.hero-proof .cred-text'), ['ICMR approved', 'Patents granted in India and Japan']); // the sites moved to the map's key (5 November 2026)
   assert.equal($('.hero-proof .cred-seal svg.icon').length, 1, 'ICMR: a seal');
   assert.deepEqual(texts('.hero-proof .cred-codes b'), ['IN', 'JP'], 'the patents: the two countries');
-  assert.equal($('.hero-proof .cred-sites svg.icon').length, 1, 'the sites: a pin, not a big number');
   assert.equal($('.hero-proof .cred-codes').attr('aria-hidden'), 'true');
-  assert.deepEqual($('.hero-proof .cred a').map((i, a) => a.attribs.href).get(), ['/technology/#approvals', '/technology/#patents', '/our-work/#sites']);
+  assert.deepEqual($('.hero-proof .cred a').map((i, a) => a.attribs.href).get(), ['/technology/#approvals', '/technology/#patents']);
+  // The map's key, under the map once the film ends (the user's choice, 5 November 2026): the sites, by
+  // the picture they describe, and how to use the pins.
+  const key = $('#top > .hero-key');
+  assert.equal(key.length, 1);
+  assert.equal(key.find('a').attr('href'), '#map');
+  assert.equal(key.find('a').text().replace(/\s+/g, ' ').trim(), '15 sites · 9 states and Delhi');
+  assert.equal(key.find('.hero-key-hint').text().trim(), 'Choose a state');
+  // The map section's legend is the one [data-map-key] (main.js fills it); the hero's key must not be
+  // taken for it (on 5 November 2026 it was, and the legend's lines landed in the hero).
+  assert.equal($('[data-map-key]').length, 1);
+  assert.equal($('[data-map-key]').closest('#map').length, 1);
+  assert.equal(key.attr('data-hero-key'), '');
   // The film plays once, within five seconds, and rests on the map: no caption line, no replay.
   assert.equal($('[data-film-caption], .film-toggle, [data-film-toggle]').length, 0);
   const scene = readFileSync('src/js/site/scene.js', 'utf8');
